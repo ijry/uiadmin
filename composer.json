@@ -1,0 +1,33 @@
+{
+    "name": "thinkvue/thinkvue",
+    "description": "the new thinkphp framework",
+    "type": "project",
+    "keywords": [
+        "framework",
+        "thinkphp",
+        "thinkvue"
+    ],
+    "homepage": "http://thinkvue.com/",
+    "license": "Apache-2.0",
+    "authors": [
+        {
+            "name": "jry",
+            "email": "598821125@qq.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.6.0",
+        "topthink/framework": "5.1.*"
+    },
+    "autoload": {
+        "psr-4": {
+            "app\\": "application"
+        }
+    },
+    "extra": {
+        "think-path": "thinkphp"
+    },
+    "config": {
+        "preferred-install": "dist"
+    }
+}
