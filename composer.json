@@ -1,13 +1,13 @@
 {
-    "name": "thinkvue/thinkvue",
+    "name": "tpvue/tpvue",
     "description": "the new thinkphp framework",
     "type": "project",
     "keywords": [
         "framework",
         "thinkphp",
-        "thinkvue"
+        "tpvue"
     ],
-    "homepage": "http://thinkvue.com/",
+    "homepage": "http://tpvue.com/",
     "license": "Apache-2.0",
     "authors": [
         {
