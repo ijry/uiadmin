@@ -12,12 +12,11 @@
 // +----------------------------------------------------------------------
 // | 应用设置
 // +----------------------------------------------------------------------
-
 return [
     // 应用名称
-    'app_name'               => '',
+    'app_name'               => 'tpvue',
     // 应用地址
-    'app_host'               => '',
+    'app_host'               => 'tpvue.com',
     // 应用调试模式
     'app_debug'              => false,
     // 应用Trace
@@ -39,7 +38,7 @@ return [
     // 默认时区
     'default_timezone'       => 'Asia/Shanghai',
     // 是否开启多语言
-    'lang_switch_on'         => false,
+    'lang_switch_on'         => true,
     // 默认全局过滤方法 用逗号分隔多个
     'default_filter'         => '',
     // 默认语言
@@ -97,7 +96,7 @@ return [
     // 是否开启路由延迟解析
     'url_lazy_route'         => false,
     // 是否强制使用路由
-    'url_route_must'         => false,
+    'url_route_must'         => true,
     // 合并路由规则
     'route_rule_merge'       => false,
     // 路由是否完全匹配
