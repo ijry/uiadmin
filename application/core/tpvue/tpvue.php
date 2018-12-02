@@ -23,7 +23,7 @@ return array(
     'route'     => array(
         // 资源路由
         'resource' => array(
-            'core/user' => 'core/user',
+            'api/core/user' => 'core/user',
         )
     ),
 );

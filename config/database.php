@@ -10,24 +10,24 @@
 // +----------------------------------------------------------------------
 
 // 数据库配置请在根目录下.env文件里修改，不要在这里修改，格式请参考官网文档。
-$env_type = Env::get('env_type');
+$env_type = env('env_type');
 switch ($env_type) {
     case 'dev': // 开发模式
         $_db_conf_env = [
-            'hostname' => Env::get('dev.database.hostname'),
-            'database' => Env::get('dev.database.database'),
-            'username' => Env::get('dev.database.username'),
-            'password' => Env::get('dev.database.password'),
-            'hostport' => Env::get('dev.database.hostport'),
+            'hostname' => env('dev.database.hostname'),
+            'database' => env('dev.database.database'),
+            'username' => env('dev.database.username'),
+            'password' => env('dev.database.password'),
+            'hostport' => env('dev.database.hostport'),
         ];
         break;
     case 'prod': // 生产模式
         $_db_conf_env = [
-            'hostname' => Env::get('prod.database.hostname'),
-            'database' => Env::get('prod.database.database'),
-            'username' => Env::get('prod.database.username'),
-            'password' => Env::get('prod.database.password'),
-            'hostport' => Env::get('prod.database.hostport'),
+            'hostname' => env('prod.database.hostname'),
+            'database' => env('prod.database.database'),
+            'username' => env('prod.database.username'),
+            'password' => env('prod.database.password'),
+            'hostport' => env('prod.database.hostport'),
         ];
         break;
 }
