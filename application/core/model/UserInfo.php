@@ -9,7 +9,7 @@
 // | Author: jry <598821125@qq.com>
 // +----------------------------------------------------------------------
 
-namespace app\core\model;
+namespace tpvue\core\model;
 
 use think\Model;
 
