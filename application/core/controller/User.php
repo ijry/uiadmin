@@ -9,7 +9,7 @@
 // | Author: jry <598821125@qq.com>
 // +----------------------------------------------------------------------
 
-namespace app\core\controller;
+namespace tpvue\core\controller;
 
 use think\Controller;
 use think\Request;
@@ -24,7 +24,9 @@ class User extends Controller
     public function index()
     {
         //
-        echo 'user';
+        dump($_SERVER);
+        $user_list = db('UserInfo')->select();
+        dump($user_list);
     }
 
     /**

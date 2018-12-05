@@ -9,7 +9,7 @@
 // | Author: jry <598821125@qq.com>
 // +----------------------------------------------------------------------
 
-namespace app\core\service;
+namespace tpvue\core\service;
 
 class UserInfo
 {
