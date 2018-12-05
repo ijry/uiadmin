@@ -24,8 +24,7 @@ class User extends Controller
     public function index()
     {
         //
-        dump($_SERVER);
-        $user_list = db('UserInfo')->select();
+        $user_list = db('core_user_info')->select();
         dump($user_list);
     }
 
