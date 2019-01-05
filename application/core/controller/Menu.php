@@ -14,7 +14,7 @@ namespace tpvue\core\controller;
 use think\Controller;
 use think\Request;
 
-class User extends Controller
+class Menu extends Controller
 {
     /**
      * 显示资源列表
@@ -23,9 +23,13 @@ class User extends Controller
      */
     public function index()
     {
-        //
-        $user_list = db('core_user_info')->select();
-        dump($user_list);
+        $_module_conf_list = cache('_module_conf_list');
+        $menu_list = $_module_conf_list['core']['muenu_cate_top'];
+        foreach ($_module_conf_list as $key => $val) {
+            $menu_list = array_merge($menu_list, $val['admin_menu']);
+        }
+        //dump($menu_list);
+        return json(['code' => 200, 'msg' => '成功', 'data' => ['menu_list' => $menu_list]]);
     }
 
     /**
