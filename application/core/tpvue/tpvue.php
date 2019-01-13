@@ -21,7 +21,7 @@ return [
         'version'      => '0.1.0',
         'build'        => 'Alpha1_2019010500'
     ],
-    
+
     // 后台左侧功能一级分类，除了核心模块需要此配置，其它任何模块都不需要。
     'muenu_cate_top'  => [
         'system' => [
@@ -56,58 +56,61 @@ return [
 
     // 模块路由
     'route'     => [
-        // 规则路由
-        'rule' => [
-            'menu/lists' => ['Menu/lists'],
-            'user/login' => ['User/login'],
-            'user/lists' => ['User/lists']
+        'v1' => [
+            // 规则路由
+            'rule' => [
+                'menu/lists' => ['Menu/lists'],
+                'user/login' => ['User/login']
+            ]
         ]
     ],
 
     // 路由API注释
     'route_api'     => [
-        'user/login' => [
-            '0' => [
-                'method' => 'POST', // 请求方法
-                'title' => '用户登录', // 接口名称
-                'description' => '使用账号密码登录系统', // 接口功能描述
-                'params' => [
-                    'account' => [
-                        'is_must' => 1, //该参数是否必须
-                        'title' => '账号', //字段名称
-                        'description' => '账号支持手机号/邮箱/用户名', // 字段描述
-                        'example' => 'test', // 字段传值示例
-                    ],
-                    'password' => [
-                        'is_must' => 1, //该参数是否必须
-                        'title' => '密码哈希', //字段名称
-                        'description' => '密码必须在前台用公钥加密传输，这样系统跟安全，密码不容易在传输中被劫持。', // 字段描述
-                        'example' => 'test123', // 字段传值示例
-                    ]
-                ],
-                'return' => [
-                    'success' => [
-                        'code' => 200,
-                        'msg'  => '登录成功',
-                        'data'  => [
-                            'token' => 'abcdefghijklmnabcdefghijklmn',
-                            'user_info' => [
-                                'id' => 999,  // 用户的UID
-                                'username' => 'test',  // 用户名可以登录系统,不允许重复
-                                'nickname' => '测试账号',  // 用户昵称不可以登录系统，允许重复
-                                'avatar' => '头像地址',  // 用户的头像图片地址
-                            ]
+        'v1' => [
+            'user/login' => [
+                '0' => [
+                    'method' => 'POST', // 请求方法
+                    'title' => '用户登录', // 接口名称
+                    'description' => '使用账号密码登录系统', // 接口功能描述
+                    'params' => [
+                        'account' => [
+                            'is_must' => 1, //该参数是否必须
+                            'title' => '账号', //字段名称
+                            'description' => '账号支持手机号/邮箱/用户名', // 字段描述
+                            'example' => 'test', // 字段传值示例
+                        ],
+                        'password' => [
+                            'is_must' => 1, //该参数是否必须
+                            'title' => '密码哈希', //字段名称
+                            'description' => '密码必须在前台用公钥加密传输，这样系统跟安全，密码不容易在传输中被劫持。', // 字段描述
+                            'example' => 'test123', // 字段传值示例
                         ]
                     ],
-                    'error' => [
-                        'code' => 0,
-                        'msg'  => '密码错误'
+                    'return' => [
+                        'success' => [
+                            'code' => 200,
+                            'msg'  => '登录成功',
+                            'data'  => [
+                                'token' => 'abcdefghijklmnabcdefghijklmn',
+                                'user_info' => [
+                                    'id' => 999,  // 用户的UID
+                                    'username' => 'test',  // 用户名可以登录系统,不允许重复
+                                    'nickname' => '测试账号',  // 用户昵称不可以登录系统，允许重复
+                                    'avatar' => '头像地址',  // 用户的头像图片地址
+                                ]
+                            ]
+                        ],
+                        'error' => [
+                            'code' => 0,
+                            'msg'  => '密码错误'
+                        ]
                     ]
                 ]
             ]
         ]
     ],
-    
+
     // 后台左侧导航菜单列表
     'admin_menu'     => [
         'core' => [
