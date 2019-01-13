@@ -17,11 +17,11 @@ use think\Request;
 class Menu extends Controller
 {
     /**
-     * 显示资源列表
+     * 后台左侧导航列表
      *
      * @return \think\Response
      */
-    public function index()
+    public function lists()
     {
         $_module_conf_list = cache('_module_conf_list');
         $menu_list = $_module_conf_list['core']['muenu_cate_top'];
@@ -30,50 +30,5 @@ class Menu extends Controller
         }
         //dump($menu_list);
         return json(['code' => 200, 'msg' => '成功', 'data' => ['menu_list' => $menu_list]]);
-    }
-
-    /**
-     * 保存新建的资源
-     *
-     * @param  \think\Request  $request
-     * @return \think\Response
-     */
-    public function save(Request $request)
-    {
-        //
-    }
-
-    /**
-     * 显示指定的资源
-     *
-     * @param  int $id
-     * @return \think\Response
-     */
-    public function read($id)
-    {
-        //
-    }
-
-    /**
-     * 保存更新的资源
-     *
-     * @param  \think\Request  $request
-     * @param  int  $id
-     * @return \think\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * 删除指定资源
-     *
-     * @param  int  $id
-     * @return \think\Response
-     */
-    public function delete($id)
-    {
-        //
     }
 }
