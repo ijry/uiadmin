@@ -21,21 +21,21 @@ foreach ($module_list as $key => $value) {
     $_module_conf_list[$value['name']] = $conf;
     if (isset($conf['route']['rule']) && is_array($conf['route']['rule'])) {
         foreach ($conf['route']['rule'] as $key1 => $value1) {
-            Route::rule($_api_pat.$key1, $value1['name'].'/'.$value1[1]);
+            Route::rule($_api_pat.$key1, $value['name'].'/'.$value1[0]);
         }
     }
     if (isset($conf['route']['resource']) && is_array($conf['route']['resource'])) {
         foreach ($conf['route']['resource'] as $key2 => $value2) {
-            Route::rule($_api_pat.$key2, $value2['name'].'/'.$value2[1]);
+            Route::rule($_api_pat.$key2, $value['name'].'/'.$value2[0]);
         }
     }
     if (isset($conf['route']['alias']) && is_array($conf['route']['alias'])) {
         foreach ($conf['route']['alias'] as $key3 => $value3) {
             // 别名路由不支持根路径
             if (strpos($value3[1], '\\') == 0) {
-                Route::alias($$key3, $value3[1]);
+                Route::alias($key3, $value3[0]);
             } else {
-                Route::alias($$key3, $value['name'].'/'.$value3[1]);
+                Route::alias($key3, $value['name'].'/'.$value3[0]);
             }
         }
     }
