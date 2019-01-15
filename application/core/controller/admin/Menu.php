@@ -9,7 +9,7 @@
 // | Author: jry <598821125@qq.com>
 // +----------------------------------------------------------------------
 
-namespace tpvue\core\controller;
+namespace tpvue\core\controller\admin;
 
 use think\Controller;
 use think\Request;
@@ -24,7 +24,7 @@ class Menu extends Controller
     public function lists()
     {
         $_module_conf_list = cache('_module_conf_list');
-        $menu_list = $_module_conf_list['core']['muenu_cate_top'];
+        $menu_list = [];
         foreach ($_module_conf_list as $key => $val) {
             $menu_list = array_merge($menu_list, $val['admin_menu']);
         }

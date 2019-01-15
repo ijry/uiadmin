@@ -43,6 +43,7 @@ foreach ($module_list as $key => $value) {
         }
     }
 }
+//dump(Route::getNames());
 // 缓存所有模块的配置
 cache('_module_conf_list', $_module_conf_list);
 

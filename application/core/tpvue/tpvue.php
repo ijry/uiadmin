@@ -22,35 +22,21 @@ return [
         'build'        => 'Alpha1_2019010500'
     ],
 
-    // 后台左侧功能一级分类，除了核心模块需要此配置，其它任何模块都不需要。
-    'muenu_cate_top'  => [
-        'system' => [
-            'name' => 'system',
+    // 后台左侧导航菜单列表
+    'admin_menu'     => [
+        'core_0' => [
             'title' => '系统',
-            'menu_type' => 'top',
-            'show'  => 1,
-            '_child' => [],
-        ],
-        'content' => [
-            'name' => 'content',
-            'title' => '内容',
-            'menu_type' => 'top',
-            'show'  => 1,
-            '_child' => [],
-        ],
-        'order' => [
-            'name' => 'order',
-            'title' => '订单',
-            'menu_type' => 'top',
-            'show'  => 1,
-            '_child' => [],
-        ],
-        'marketing' => [
-            'name' => 'marketing',
-            'title' => '营销',
-            'menu_type' => 'top',
-            'show'  => 1,
-            '_child' => [],
+            'level' => '1', //导航层级最多3级
+            '_child' => [
+                '/core/auth_role/lists' => [
+                    'title' => '权限管理',
+                    'level' => '2',
+                ],
+                '/core/user/lists' => [
+                    'title' => '用户列表',
+                    'level' => '2',
+                ]
+            ]
         ]
     ],
 
@@ -59,7 +45,7 @@ return [
         'v1' => [
             // 规则路由
             'rule' => [
-                'menu/lists' => ['Menu/lists'],
+                'admin/menu/lists' => ['admin.Menu/lists'],
                 'user/login' => ['User/login']
             ]
         ]
@@ -109,51 +95,5 @@ return [
                 ]
             ]
         ]
-    ],
-
-    // 后台左侧导航菜单列表
-    'admin_menu'     => [
-        'core' => [
-            'name' => 'core',
-            'title' => '系统',
-            'menu_type' => 'cate', //导航类型有cate/page两种
-            '_child' => [
-                '/core/auth_role/list' => [
-                    'title' => '权限管理',
-                    'menu_type' => 'page',
-                    '_child' => [
-                        '/core/auth_role/add' => [
-                            'title' => '添加用户组',
-                        ],
-                        '/core/auth_role/edit' => [
-                            'title' => '修改用户组',
-                        ],
-                        '/core/auth_role/delete' => [
-                            'title' => '删除用户组',
-                        ]
-                    ]
-                ],
-            ]
-        ],
-        '/core/user/list' => [
-            'name' => '/core/user/list',
-            'title' => '用户列表',
-            'menu_type' => 'page',
-            'route'   => '/core/user/list',
-            '_child' => [
-                '/core/user/add' => [
-                    'title' => '添加用户',
-                    'route'   => '/core/user/add',
-                ],
-                '/core/user/edit' => [
-                    'title' => '修改用户信息',
-                    'route'   => '/core/user/edit',
-                ],
-                '/core/user/delete' => [
-                    'title' => '删除用户',
-                    'route'   => '/core/user/delete',
-                ]
-            ]
-        ],
     ]
 ];
