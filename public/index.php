@@ -12,6 +12,16 @@
 // [ 应用入口文件 ]
 namespace think;
 
+//准许跨域请求
+header("Access-Control-Allow-Origin: * ");
+header("Access-Control-Allow-Methods: POST, GET, OPTIONS, PUT, DELETE");
+/**
+ * 在检测到option请求的时候就停止继续执行
+ */
+if($_SERVER['REQUEST_METHOD'] == 'OPTIONS'){
+    exit;
+}
+
 // 加载基础文件
 require __DIR__ . '/../thinkphp/base.php';
 
