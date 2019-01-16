@@ -8,26 +8,11 @@
 // +----------------------------------------------------------------------
 // | Author: jry <598821125@qq.com>
 // +----------------------------------------------------------------------
+namespace tpvue\core\controller\admin;
 
-// [ 应用入口文件 ]
-namespace think;
+use think\Request;
+use tpvue\core\controller\Tpvue;
 
-//准许跨域请求
-header("Access-Control-Allow-Origin: * ");
-header("Access-Control-Allow-Methods: POST, GET, OPTIONS, PUT, DELETE");
-header("Access-Control-Allow-Headers: Content-Type,Authorization");
-
-/**
- * 在检测到option请求的时候就停止继续执行
- */
-if($_SERVER['REQUEST_METHOD'] == 'OPTIONS'){
-    exit;
+class Admin extends Tpvue
+{
 }
-
-// 加载基础文件
-require __DIR__ . '/../thinkphp/base.php';
-
-// 支持事先使用静态方法设置Request对象和Config对象
-
-// 执行应用并响应
-Container::get('app')->run()->send();
