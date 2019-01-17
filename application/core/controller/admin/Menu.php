@@ -11,10 +11,10 @@
 
 namespace tpvue\core\controller\admin;
 
-use think\Controller;
-use think\Request;
+use think\facade\Request;
+use tpvue\core\controller\admin\Admin;
 
-class Menu extends Controller
+class Menu extends Admin
 {
     /**
      * 后台左侧导航列表

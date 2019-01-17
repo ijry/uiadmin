@@ -45,7 +45,15 @@ return [
         'v1' => [
             // 规则路由
             'rule' => [
-                'admin/menu/lists' => ['admin.Menu/lists'],
+                'admin/menu/lists' => ['admin.Menu/lists', 'GET'],
+                'admin/auth_role/lists' => ['admin.AuthRole/lists', 'GET'],
+                'admin/auth_role/add' => ['admin.AuthRole/add', 'POST'],
+                'admin/auth_role/edit/:id' => ['admin.AuthRole/edit', 'PUT'],
+                'admin/auth_role/delete/:id' => ['admin.AuthRole/delete', 'DELETE'],
+                'admin/user/lists' => ['admin.User/lists', 'GET'],
+                'admin/user/add' => ['admin.User/add', 'POST'],
+                'admin/user/edit' => ['admin.User/edit', 'PUT'],
+                'admin/user/delete/:id' => ['admin.User/delete', 'DELETE'],
                 'user/login' => ['User/login']
             ]
         ]
