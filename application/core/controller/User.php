@@ -37,7 +37,22 @@ class User extends Home
     public function is_login()
     {
         $ret = $this->is_login();
-        json($ret);
+        return json($ret);
+    }
+
+    /**
+    * 获取用户信息
+    *
+    * @return \think\Response
+    */
+    public function info()
+    {
+        $ret = $this->is_login();
+        if($ret['code'] != 200){
+            return json($ret);
+        }
+        $user_info = db('core_user')->find($ret['data']['uid']);
+        dump($user_info);
     }
 
     /**
@@ -83,7 +98,7 @@ class User extends Home
             'aud' => 'tpvue.com',//面向的用户
             'iat' => time(),//签发时间
             'nbf' => time(),//在什么时候jwt开始生效
-            'exp' => time()+7200,//token 过期时间
+            'exp' => time()+60,//token 过期时间
             'data'=>[
                 'uid' => $user_identity_info['uid']//可以用户ID，可以自定义
             ]

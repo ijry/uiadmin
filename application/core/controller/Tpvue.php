@@ -12,7 +12,7 @@
 namespace tpvue\core\controller;
 
 use think\Controller;
-use think\Request;
+use think\facade\Request;
 use \Firebase\JWT\JWT; //导入JWT
 
 class Tpvue extends Controller
@@ -26,20 +26,24 @@ class Tpvue extends Controller
   protected function is_login()
   {
       $key = env('auth_key'); //key要和签发的时候一样
-      $jwt = Request::header('Authorization'); //签发的Token
+      $token = Request::header('Authorization');
+      if (!$token) {
+        return ['code' => 0, 'msg' => '缺少AuthorizationToken'];
+      }
+      $jwt = explode(' ', $token)[1]; //签发的Token
       try {
           JWT::$leeway = 60;//当前时间减去60，把时间留点余地
           $decoded = JWT::decode($jwt, $key, ['HS256']); //HS256方式，这里要和签发的时候对应
           $arr = (array)$decoded;
           return ['code' => 200, 'data' => $arr];
       } catch(\Firebase\JWT\SignatureInvalidException $e) {  //签名不正确
-          return ['code' => 0, 'msg' => $e->getMessage()];
+          return ['code' => 0, 'msg' => $e->getMessage(), 'data' => ['need_login' => 1]];
       }catch(\Firebase\JWT\BeforeValidException $e) {  // 签名在某个时间点之后才能用
-          return ['code' => 0, 'msg' => $e->getMessage()];
+          return ['code' => 0, 'msg' => $e->getMessage(), 'data' => ['need_login' => 1]];
       }catch(\Firebase\JWT\ExpiredException $e) {  // token过期
-          return ['code' => 0, 'msg' => $e->getMessage()];
+          return ['code' => 0, 'msg' => $e->getMessage(), 'data' => ['need_login' => 1]];
       }catch(Exception $e) {  //其他错误
-          return ['code' => 0, 'msg' => $e->getMessage()];
+          return ['code' => 0, 'msg' => $e->getMessage(), 'data' => ['need_login' => 1]];
       }
   }
 }

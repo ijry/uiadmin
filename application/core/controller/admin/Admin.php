@@ -15,4 +15,12 @@ use tpvue\core\controller\Tpvue;
 
 class Admin extends Tpvue
 {
+    protected function initialize()
+    {
+        $ret = $this->is_login();
+        if($ret['code'] != 200){
+            // echo json_encode($ret);
+            // exit();
+        }
+    }
 }
