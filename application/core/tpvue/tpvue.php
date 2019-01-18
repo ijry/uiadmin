@@ -47,8 +47,8 @@ return [
             'rule' => [
                 'admin/menu/lists' => ['admin.Menu/lists', 'GET'],
                 'admin/auth_role/lists' => ['admin.AuthRole/lists', 'GET'],
-                'admin/auth_role/add' => ['admin.AuthRole/add', 'POST'],
-                'admin/auth_role/edit/:id' => ['admin.AuthRole/edit', 'PUT'],
+                'admin/auth_role/add' => ['admin.AuthRole/add', 'GET|POST'],
+                'admin/auth_role/edit/:id' => ['admin.AuthRole/edit', 'GET|PUT'],
                 'admin/auth_role/delete/:id' => ['admin.AuthRole/delete', 'DELETE'],
                 'admin/user/lists' => ['admin.User/lists', 'GET'],
                 'admin/user/add' => ['admin.User/add', 'POST'],
@@ -63,8 +63,7 @@ return [
     'route_api'     => [
         'v1' => [
             'user/login' => [
-                '0' => [
-                    'method' => 'POST', // 请求方法
+                'POST' => [
                     'title' => '用户登录', // 接口名称
                     'description' => '使用账号密码登录系统', // 接口功能描述
                     'params' => [
