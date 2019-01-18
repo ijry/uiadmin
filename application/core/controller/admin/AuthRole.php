@@ -45,6 +45,76 @@ class AuthRole extends Admin
     }
 
     /**
+     * 添加
+     *
+     * @return \think\Response
+     */
+    public function add()
+    {
+        if(request()->isPost()){
+            return json(
+                [
+                    'code' => 200,
+                    'msg' => '成功',
+                    'data' => [
+                    ]
+                ]
+            );
+        } else {
+            return json(
+                [
+                    'code' => 200,
+                    'msg' => '成功',
+                    'data' => [
+                        'form_data' => [
+                            'form_item' => [
+                                [
+                                    'name' => 'pid',
+                                    'title' => '上级',
+                                    'type' => 'select',
+                                    'value' => '',
+                                    'options' =>  [
+                                        [
+                                            'title' => '测试',
+                                            'value' => ''
+                                        ]
+                                    ],
+                                    'placeholder' => '请选择上级',
+                                    'tip' => '选择上级后会限制权限范围不大于上级'
+                                ],
+                                [
+                                    'name' => 'name',
+                                    'title' => '英文名',
+                                    'type' => 'text',
+                                    'value' => '',
+                                    'placeholder' => '请输入英文名',
+                                    'tip' => '英文名其实可以理解为一个系统代号'
+                                ],
+                                [
+                                    'name' => 'title',
+                                    'title' => '角色名称',
+                                    'type' => 'text',
+                                    'value' => '',
+                                    'placeholder' => '请输入角色名称',
+                                    'tip' => '角色名称也可以理解为部门名称'
+                                ]
+                            ],
+                            'form_rules' => [
+                                'name' =>  [
+                                    ['required' => true, 'message' => '请填写角色英文名称', 'trigger' => 'change']
+                                ],
+                                'title' =>  [
+                                    ['required' => true, 'message' => '请填写角色名称', 'trigger' => 'change']
+                                ]
+                            ]
+                        ]
+                    ]
+                ]
+            );
+        } 
+    }
+
+    /**
      * 删除
      * 
      * @return \think\Response
