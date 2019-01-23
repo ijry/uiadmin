@@ -14,7 +14,6 @@ INSERT INTO `tpvue_core_user_info` (`id`, `nickname`, `avatar`, `age`, `country`
 VALUES
   (1, '超级管理员', '1', 8, '86', '江苏,南京,鼓楼区', 0, 1);
 
-
 CREATE TABLE `tpvue_core_user_identity` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID',
   `uid` int(11) NOT NULL DEFAULT '0' COMMENT 'UID',
@@ -27,12 +26,29 @@ CREATE TABLE `tpvue_core_user_identity` (
   `status` tinyint(3) NOT NULL DEFAULT '0' COMMENT '状态:1正常0禁用',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户登陆凭证信息表';
-
 INSERT INTO `tpvue_core_user_identity` (`id`, `uid`, `verified`, `identity_type`, `identifier`, `credential`, `is_oauth2`, `create_time`, `status`)
 VALUES
-  (1, 1, 1, '1', 'admin', 'admin', 0, 0, 1);
+	(1, 1, 1, 1, 'admin', 'b8ecdf8657f70604168fe88a6b50ddb4', 0, 0, 1);
 
-  CREATE TABLE `tpvue_core_user_log` (
+
+CREATE TABLE `tpvue_core_auth_role` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  `pid` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '上级',
+  `name` varchar(255) NOT NULL COMMENT '角色名称',
+  `title` varchar(255) NOT NULL DEFAULT '' COMMENT '角色标题',
+  `sortnum` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '排序',
+  `permissions` longtext COMMENT '权限列表',
+  `delete_time` int(11) NOT NULL DEFAULT '0' COMMENT '删除时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户角色表';
+INSERT INTO `tpvue_core_auth_role` (`id`, `pid`, `name`, `title`, `sortnum`, `permissions`, `delete_time`)
+VALUES
+	(1, 0, 'super_admin', '超级管理员', 0, '', 0),
+	(2, 1, 'admin', '管理员', 0, '', 0),
+	(3, 2, 'operation', '运营部', 0, '', 0);
+
+
+CREATE TABLE `tpvue_core_user_log` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT 'id',
   `uid` int(11) unsigned NOT NULL DEFAULT '0' COMMENT 'UID',
   `event_type` int(2) unsigned NOT NULL DEFAULT '0' COMMENT '事件类型：1注册2登陆3修改密码4修改头像5修改昵称',
