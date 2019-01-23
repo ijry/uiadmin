@@ -24,18 +24,29 @@ return [
 
     // 后台左侧导航菜单列表
     'admin_menu'     => [
-        'core_0' => [
+        [
+            'path' => '/core_0',
             'title' => '系统',
             'level' => '1', //导航层级最多3级
             '_child' => [
-                '/core/auth_role/lists' => [
+                // [
+                //     'path' => '/core/auth_role/lists',
+                //     'title' => '权限管理',
+                //     'level' => '2',
+                // ],
+                [
+                    'is_vadypage' => '1',
+                    'api' => 'v1/core/admin/auth_role/lists',
                     'title' => '权限管理',
                     'level' => '2',
                 ],
-                '/core/user/lists' => [
+                [
+                    'is_vadypage' => '1',
+                    'api' => 'v1/core/admin/user/lists',
                     'title' => '用户列表',
                     'level' => '2',
-                ]
+                ],
+                
             ]
         ]
     ],
