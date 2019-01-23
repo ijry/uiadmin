@@ -39,10 +39,68 @@ class AuthRole extends Admin
                 'msg' => '成功',
                 'data' => [
                     'data_list' => $data_list,
-                    'form_api' => [
-                        'add' => 'v1/core/admin/auth_role/add',
-                        'edit' => 'v1/core/admin/auth_role/edit',
-                        'delete' => 'v1/core/admin/auth_role/delete'
+                    'dynamic_data' => [
+                        'top_button_list' => [
+                            'add' => [
+                                'api' => 'v1/core/admin/auth_role/add',
+                                'title' => '添加角色',
+                                'modalTitle' => '添加角色',
+                                'width' => '600',
+                                'type' => 'default',
+                                'size' => '',
+                                'shape' => '',
+                                'icon' => ''
+                            ]
+                        ],
+                        'right_button_list' => [
+                            'edit' => [
+                                'api' => 'v1/core/admin/auth_role/edit',
+                                'title' => '修改',
+                                'modalTitle' => '修改角色',
+                                'width' => '600',
+                                'type' => 'default',
+                                'size' => '',
+                                'shape' => '',
+                                'icon' => ''
+                            ],
+                            'delete' => [
+                                'api' => 'v1/core/admin/auth_role/delete',
+                                'title' => '删除',
+                                'modalType' => 'confirm',
+                                'modalTitle' => '确认要删除该角色吗？',
+                                'okText' => '确认删除',
+                                'cancelText' => '取消操作',
+                                'content' => '<p><p>如果该角色下有子角色需要先删除或者移动</p><p>如果该角色下有成员需要先移除才可以删除</p><p>删除该角色将会删除对应的权限数据</p></p>',
+                                'width' => '600',
+                                'type' => 'default',
+                                'size' => '',
+                                'shape' => '',
+                                'icon' => ''
+                            ]
+                        ],
+                        'columns' => [
+                            [
+                            'title' => 'ID',
+                            'key' => 'id',
+                            'width' => '40px'
+                            ],
+                            [
+                                'title' => '部门',
+                                'key' => 'title',
+                                'minWidth' => '50px'
+                            ],
+                            [
+                                'title' => '排序',
+                                'key' => 'sortnum'
+                            ],
+                            [
+                                'title' => '操作',
+                                'key' => 'right_button_list',
+                                'minWidth' => '50px',
+                                'type' => 'template',
+                                'template' => 'right_button_list'
+                            ]
+                        ]
                     ]
                 ]
             ]
