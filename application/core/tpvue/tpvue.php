@@ -29,22 +29,19 @@ return [
             'title' => '系统',
             'level' => '1', //导航层级最多3级
             '_child' => [
-                // [
-                //     'path' => '/core/auth_role/lists',
-                //     'title' => '权限管理',
-                //     'level' => '2',
-                // ],
                 [
-                    'is_vadypage' => '1',
-                    'api' => 'v1/core/admin/auth_role/lists',
+                    'path' => '/core/auth_role/lists',
                     'title' => '权限管理',
                     'level' => '2',
+                    'is_vadypage' => '1',
+                    'api' => 'v1/core/admin/auth_role/lists',
                 ],
                 [
-                    'is_vadypage' => '1',
-                    'api' => 'v1/core/admin/user/lists',
+                    'path' => '/core/user/lists',
                     'title' => '用户列表',
                     'level' => '2',
+                    'is_vadypage' => '1',
+                    'api' => 'v1/core/admin/user/lists',
                 ],
                 
             ]
@@ -62,8 +59,8 @@ return [
                 'admin/auth_role/edit/:id' => ['admin.AuthRole/edit', 'GET|PUT'],
                 'admin/auth_role/delete/:id' => ['admin.AuthRole/delete', 'DELETE'],
                 'admin/user/lists' => ['admin.User/lists', 'GET'],
-                'admin/user/add' => ['admin.User/add', 'POST'],
-                'admin/user/edit' => ['admin.User/edit', 'PUT'],
+                'admin/user/add' => ['admin.User/add', 'GET|POST'],
+                'admin/user/edit/:id' => ['admin.User/edit', 'GET|PUT'],
                 'admin/user/delete/:id' => ['admin.User/delete', 'DELETE'],
                 'user/login' => ['User/login']
             ]
