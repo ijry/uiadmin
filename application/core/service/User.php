@@ -9,10 +9,15 @@
 // | Author: jry <598821125@qq.com>
 // +----------------------------------------------------------------------
 
-namespace tpvue\core\model;
+namespace tpvue\core\service;
 
-use think\Model;
-
-class UserInfo extends Model
+class User
 {
+    public function getList($con = [], $pageNumber = 1, $pageSize = 10) {
+
+    }
+
+    public function getById($id) {
+
+    }
 }

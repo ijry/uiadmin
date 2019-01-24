@@ -10,6 +10,7 @@
 // +----------------------------------------------------------------------
 namespace tpvue\core\controller;
 
+use think\Db;
 use think\Request;
 use tpvue\core\controller\Home;
 
@@ -24,8 +25,10 @@ class User extends Home
      */
     public function lists()
     {
-        //
-        $user_list = db('core_user_info')->select();
+        // 用户列表
+        $user_list = Db::name('core_user')
+            ->where(['delete_time' => 0, 'status' => 1])
+            ->select();
         dump($user_list);
     }
 
@@ -51,7 +54,7 @@ class User extends Home
         if($ret['code'] != 200){
             return json($ret);
         }
-        $user_info = db('core_user')->find($ret['data']['uid']);
+        $user_info = Db::name('core_user')->find($ret['data']['uid']);
         dump($user_info);
     }
 
@@ -63,35 +66,46 @@ class User extends Home
      */
     public function login(Request $request)
     {
-        // 获取提交的账号密码
-        $identity_type = input('post.identity_type')?:1;
+        //获取提交的账号密码
+        $identity_type = input('post.identity_type')?:0;
         $identifier = input('post.identifier');
         $credential = input('post.credential');
 
-        // 账号密码验证
+        //数据验证
 
-        // 登录验证
-        $map = [];
-        $map['identity_type'] = $identity_type;
-        $map['identifier'] = $identifier;
-        $user_identity_info = db('core_user_identity')->where($map)->find();
-        if (!$user_identity_info) {
-            return json(['code' => 0, 'msg' => '账号不存在']);
-        }
-        if ($user_identity_info['status'] !== 1) {
-            return json(['code' => 0, 'msg' => '账号状态异常']);
-        }
-        if ($user_identity_info['verified'] !== 1) {
-            return json(['code' => 0, 'msg' => '账号未通过验证']);
-        }
-        $credential_hash = user_md5($credential);
-        if (!$credential_hash) {
-            return json(['code' => 0, 'msg' => '凭证错误']);
-        }
-        if ($user_identity_info['credential'] !== $credential_hash) {
-            return json(['code' => 0, 'msg' => '密码错误']);
+        //登录验证
+        switch ($identity_type) {
+            case 1: //手机号
+                $map = [];
+                $map['identity_type'] = $identity_type;
+                $map['identifier'] = $identifier;
+                $user_identity_info = Db::name('core_user_identity')->where($map)->find();
+                if (!$user_identity_info) {
+                    return json(['code' => 0, 'msg' => '账号不存在']);
+                }
+                if ($user_identity_info['verified'] !== 1) {
+                    return json(['code' => 0, 'msg' => '账号未通过验证']);
+                }
+                break;
+            case 2: //邮箱
+                break;
+            default: //用户名
+                $map = [];
+                $map['username'] = $identifier;
+                $user_info = Db::name('core_user')->where($map)->find();
+                if (!$user_info) {
+                    return json(['code' => 0, 'msg' => '用户名不存在']);
+                }
+                if ($user_info['status'] !== 1) {
+                    return json(['code' => 0, 'msg' => '账号状态异常']);
+                }
+                if ($user_info['credential'] !== user_md5($credential)) {
+                    return json(['code' => 0, 'msg' => '密码错误']);
+                }
+                break;
         }
     
+        //颁发登录凭证token
         $key = env('auth_key'); //秘钥加密关键 Signature
         $token = [
             'iss' => 'tpvue.com',//签发者
