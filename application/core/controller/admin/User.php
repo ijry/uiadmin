@@ -12,6 +12,7 @@
 namespace tpvue\core\controller\admin;
 
 use think\Db;
+use think\Validate;
 use think\facade\Request;
 use tpvue\core\controller\admin\Admin;
 use tpvue\core\util\Tree;
@@ -33,8 +34,7 @@ class User extends Admin
             ->select();
         $tree      = new Tree();
         $data_list = $tree->list2tree($data_list);
-        return json(
-            [
+        return json([
                 'code' => 200,
                 'msg' => '成功',
                 'data' => [
@@ -42,10 +42,14 @@ class User extends Admin
                     'dynamic_data' => [
                         'top_button_list' => [
                             'add' => [
-                                'api' => 'v1/core/admin/user/add',
+                                'page_type' => 'modal',
+                                'modal_data' => [
+                                    'title' => '添加用户',
+                                    'api' => 'v1/core/admin/user/add',
+                                    'width' => '600',
+                                ],
+                                'route' => '',
                                 'title' => '添加用户',
-                                'modalTitle' => '添加用户',
-                                'width' => '600',
                                 'type' => 'default',
                                 'size' => '',
                                 'shape' => '',
@@ -54,24 +58,32 @@ class User extends Admin
                         ],
                         'right_button_list' => [
                             'edit' => [
-                                'api' => 'v1/core/admin/user/edit',
+                                'page_type' => 'modal',
+                                'modal_data' => [
+                                    'title' => '修改用户信息',
+                                    'api' => 'v1/core/admin/user/edit',
+                                    'width' => '600',
+                                ],
+                                'route' => '',
                                 'title' => '修改',
-                                'modalTitle' => '修改用户信息',
-                                'width' => '600',
                                 'type' => 'default',
                                 'size' => '',
                                 'shape' => '',
                                 'icon' => ''
                             ],
                             'delete' => [
-                                'api' => 'v1/core/admin/auth_role/delete',
+                                'page_type' => 'modal',
+                                'modal_data' => [
+                                    'type' => 'confirm',
+                                    'title' => '确认要删除该用户吗？',
+                                    'api' => 'v1/core/admin/user/delete',
+                                    'width' => '600',
+                                    'okText' => '确认删除',
+                                    'cancelText' => '取消操作',
+                                    'content' => '<p><p>删除后将清空绑定的所有登录验证记录</p></p>',
+                                ],
+                                'route' => '',
                                 'title' => '删除',
-                                'modalType' => 'confirm',
-                                'modalTitle' => '确认要删除该用户吗？',
-                                'okText' => '确认删除',
-                                'cancelText' => '取消操作',
-                                'content' => '<p><p>删除后将清空绑定的所有登录验证记录</p></p>',
-                                'width' => '600',
                                 'type' => 'default',
                                 'size' => '',
                                 'shape' => '',
@@ -109,8 +121,7 @@ class User extends Admin
                         ]
                     ]
                 ]
-            ]
-        );
+            ]);
     }
 
     /**
@@ -122,109 +133,99 @@ class User extends Admin
     {
         if (request()->isPost()) {
             // 数据验证
-            $post = input('post.');
+            $validate = Validate::make(
+                [
+                    'nickname'  => 'require',
+                    'username' => 'require',
+                    'password' => 'require'
+                ],
+                [
+                    'nickname.require' => '昵称必须',
+                    'username.require' => '用户名必须',
+                    'password.require' => '密码必须'
+                ]
+            );
+            $data = input('post.');
+            if (!$validate->check($data)) {
+                return json(['code' => 200, 'msg' => $validate->getError(), 'data' => []]);
+            }
             
             // 数据构造
-            $data = [
-                'nickname' => $post['nickname'],
-                'username' => $post['username'],
-                'password' => user_md5($post['password']), // 密码不能明文，需要加密存储。
-                'avatar'   => isset($post['avatar']) ? $post['avatar'] : '',
-                'status'   => 1,
-                'register_time'   => time(),
-            ];
+            $data_db = [];
+            $data_db['nickname'] = $data['nickname'];
+            $data_db['username'] = $data['username'];
+            $data_db['password'] = user_md5($data['password']); // 密码不能明文需要加密存储
+            $data_db['avatar']   = isset($data['avatar']) ? $data['avatar'] : '';
+            $data_db['status']   = 1;
+            $data_db['register_time']   = time();
 
             // 存储数据
-            $ret = Db::name('core_user')->insert($data);
+            $ret = Db::name('core_user')->insert($data_db);
             if ($ret) {
-                return json(
-                    [
-                        'code' => 200,
-                        'msg' => '添加用户成功',
-                        'data' => [
-                        ]
-                    ]
-                );
+                return json(['code' => 200, 'msg' => '添加用户成功', 'data' => []]);
             } else {
-                return json(
-                    [
-                        'code' => 0,
-                        'msg' => '添加用户失败',
-                        'data' => [
-                        ]
-                    ]
-                );
+                return json(['code' => 0, 'msg' => '添加用户失败', 'data' => []]);
             }
         } else {
-            return json(
-                [
-                    'code' => 200,
-                    'msg' => '成功',
-                    'data' => [
-                        'form_data' => [
-                            'form_items' => [
-                                [
-                                    'name' => 'nickname',
-                                    'title' => '昵称',
-                                    'type' => 'text',
-                                    'placeholder' => '请输入昵称',
-                                    'tip' => '昵称类似微信昵称可以重复不能用来登录系统'
-                                ],
-                                [
-                                    'name' => 'username',
-                                    'title' => '用户名',
-                                    'type' => 'text',
-                                    'placeholder' => '请输入用户名',
-                                    'tip' => '用户名唯一不重复，可以用来登录系统'
-                                ],
-                                [
-                                    'name' => 'password',
-                                    'title' => '密码',
-                                    'type' => 'text',
-                                    'placeholder' => '请输入用户密码',
-                                    'tip' => '密码必须要包含字母数字和符号中的两种'
-                                ],
-                                [
-                                    'name' => 'avatar',
-                                    'title' => '头像',
-                                    'type' => 'image',
-                                    'placeholder' => '请上传用户头像',
-                                    'tip' => '用户头像'
-                                ],
-                                
+            return json([
+                'code' => 200,
+                'msg' => '成功',
+                'data' => [
+                    'form_data' => [
+                        'form_items' => [
+                            [
+                                'name' => 'nickname',
+                                'title' => '昵称',
+                                'type' => 'text',
+                                'placeholder' => '请输入昵称',
+                                'tip' => '昵称类似微信昵称可以重复不能用来登录系统'
                             ],
-                            'form_values' => [
-                                'nickname' => '',
-                                'username' => '',
-                                'password' => '',
+                            [
+                                'name' => 'username',
+                                'title' => '用户名',
+                                'type' => 'text',
+                                'placeholder' => '请输入用户名',
+                                'tip' => '用户名唯一不重复，可以用来登录系统'
                             ],
-                            'form_rules' => [
-                                'nickname' =>  [
-                                    [
-                                        'required' => true,
-                                        'message' => '请填写昵称',
-                                        'trigger' => 'change'
-                                    ]
-                                ],
-                                'username' =>  [
-                                    [
-                                        'required' => true,
-                                        'message' => '请填写用户名',
-                                        'trigger' => 'change'
-                                    ]
-                                ],
-                                'password' =>  [
-                                    [
-                                        'required' => true,
-                                        'message' => '请填写密码',
-                                        'trigger' => 'change'
-                                    ]
+                            [
+                                'name' => 'password',
+                                'title' => '密码',
+                                'type' => 'text',
+                                'placeholder' => '请输入用户密码',
+                                'tip' => '密码必须要包含字母数字和符号中的两种'
+                            ]
+                        ],
+                        'form_values' => [
+                            'nickname' => '',
+                            'username' => '',
+                            'password' => '',
+                        ],
+                        'form_rules' => [
+                            'nickname' =>  [
+                                [
+                                    'required' => true,
+                                    'message' => '请填写昵称',
+                                    'trigger' => 'change'
+                                ]
+                            ],
+                            'username' =>  [
+                                [
+                                    'required' => true,
+                                    'message' => '请填写用户名',
+                                    'trigger' => 'change'
+                                ]
+                            ],
+                            'password' =>  [
+                                [
+                                    'required' => true,
+                                    'message' => '请填写密码',
+                                    'trigger' => 'change'
                                 ]
                             ]
                         ]
                     ]
                 ]
-            );
+            ]);
         } 
     }
 
@@ -236,75 +237,111 @@ class User extends Admin
     public function edit($id)
     {
         if (request()->isPost()) {
-            return json(
+            // 数据验证
+            $validate = Validate::make([
+                    'nickname'  => 'require',
+                    'username' => 'require',
+                ],
                 [
-                    'code' => 200,
-                    'msg' => '成功',
-                    'data' => [
-                    ]
-                ]
-            );
+                    'nickname.require' => '昵称必须',
+                    'username.require' => '用户名必须',
+                ]);
+            $data = input('post.');
+            if (!$validate->check($data)) {
+                return json(['code' => 200, 'msg' => $validate->getError(), 'data' => []]);
+            }
+
+            // 数据构造
+            $data_db = [];
+            if ($data['nickname']) {
+                $data_db['nickname'] = $data['nickname'];
+            }
+            if ($data['username']) {
+                $data_db['username'] = $data['username'];
+            }
+            if ($data['avatar']) {
+                $data_db['avatar'] = $data['avatar'];
+            }
+            if ($data['password']) {
+                $data_db['password'] = user_md5($data['password']); // 密码不能明文需要加密存储
+            }
+            if (count($data_db) <= 0 ) {
+                return json(['code' => 0, 'msg' => '无数据修改提交', 'data' => []]);
+            }
+
+            // 存储数据
+            $ret = Db::name('core_user')
+                ->where('id', $id)
+                ->update($data_db);
+            if ($ret) {
+                return json(['code' => 200, 'msg' => '添加用户成功', 'data' => []]);
+            } else {
+                return json(['code' => 0, 'msg' => '添加用户失败', 'data' => []]);
+            } 
         } else {
-            return json(
-                [
-                    'code' => 200,
-                    'msg' => '成功',
-                    'data' => [
-                        'form_data' => [
-                            'form_items' => [
+            $info = Db::name('core_user')
+                ->where('id', $id)
+                ->find();
+            return json([
+                'code' => 200,
+                'msg' => '成功',
+                'data' => [
+                    'form_data' => [
+                        'form_items' => [
+                            [
+                                'name' => 'nickname',
+                                'title' => '昵称',
+                                'type' => 'text',
+                                'placeholder' => '请输入昵称',
+                                'tip' => '昵称类似微信昵称可以重复不能用来登录系统'
+                            ],
+                            [
+                                'name' => 'username',
+                                'title' => '用户名',
+                                'type' => 'text',
+                                'placeholder' => '请输入用户名',
+                                'tip' => '用户名唯一不重复，可以用来登录系统'
+                            ],
+                            [
+                                'name' => 'password',
+                                'title' => '密码',
+                                'type' => 'text',
+                                'placeholder' => '不填则不修改密码',
+                                'tip' => '密码必须要包含字母数字和符号中的两种'
+                            ]
+                            
+                        ],
+                        'form_values' => [
+                            'nickname' => $info['nickname'],
+                            'username' => $info['username'],
+                            'password' => '',
+                        ],
+                        'form_rules' => [
+                            'nickname' =>  [
                                 [
-                                    'name' => 'pid',
-                                    'title' => '上级',
-                                    'type' => 'select',
-                                    'options' =>  [
-                                        [
-                                            'title' => '测试',
-                                            'value' => ''
-                                        ]
-                                    ],
-                                    'placeholder' => '请选择上级',
-                                    'tip' => '选择上级后会限制权限范围不大于上级'
-                                ],
-                                [
-                                    'name' => 'name',
-                                    'title' => '英文名',
-                                    'type' => 'text',
-                                    'placeholder' => '请输入英文名',
-                                    'tip' => '英文名其实可以理解为一个系统代号'
-                                ],
-                                [
-                                    'name' => 'title',
-                                    'title' => '角色名称',
-                                    'type' => 'text',
-                                    'placeholder' => '请输入角色名称',
-                                    'tip' => '角色名称也可以理解为部门名称'
+                                    'required' => true,
+                                    'message' => '请填写昵称',
+                                    'trigger' => 'change'
                                 ]
                             ],
-                            'form_values' => [
-                                'pid' => 0,
-                                'name' => '',
-                                'title' => '',
+                            'username' =>  [
+                                [
+                                    'required' => true,
+                                    'message' => '请填写用户名',
+                                    'trigger' => 'change'
+                                ]
                             ],
-                            'form_rules' => [
-                                'name' =>  [
-                                    [
-                                        'required' => true,
-                                        'message' => '请填写角色英文名称',
-                                        'trigger' => 'change'
-                                    ]
-                                ],
-                                'title' =>  [
-                                    [
-                                        'required' => true,
-                                        'message' => '请填写角色名称',
-                                        'trigger' => 'change'
-                                    ]
+                            'password' =>  [
+                                [
+                                    'required' => true,
+                                    'message' => '请填写密码',
+                                    'trigger' => 'change'
                                 ]
                             ]
                         ]
                     ]
                 ]
-            );
+            ]);
         } 
     }
 
@@ -320,21 +357,9 @@ class User extends Admin
             ->useSoftDelete('delete_time', time())
             ->delete();
         if ($ret) {
-            return json(
-                [
-                    'code' => 200,
-                    'msg' => '删除成功',
-                    'data' => []
-                ]
-            );
+            return json(['code' => 200, 'msg' => '删除成功', 'data' => []]);
         } else {
-            return json(
-                [
-                    'code' => 200,
-                    'msg' => '删除错误',
-                    'data' => []
-                ]
-            );
+            return json(['code' => 200, 'msg' => '删除错误', 'data' => []]);
         }
     }
 }
