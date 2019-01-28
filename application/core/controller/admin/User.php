@@ -22,14 +22,21 @@ use tpvue\core\util\Tree;
  */
 class User extends Admin
 {
+    private $core_user;
+
+    public function __construct()
+    {
+        $this->core_user = Db::name('core_user');
+    }
+
     /**
-     * 角色列表
+     * 用户列表
      *
      * @return \think\Response
      */
     public function lists()
     {
-        $data_list = Db::name('core_user')
+        $data_list = $this->core_user
             ->where(['delete_time' => 0])
             ->select();
         $tree      = new Tree();
@@ -133,18 +140,16 @@ class User extends Admin
     {
         if (request()->isPost()) {
             // 数据验证
-            $validate = Validate::make(
-                [
-                    'nickname'  => 'require',
-                    'username' => 'require',
-                    'password' => 'require'
-                ],
-                [
-                    'nickname.require' => '昵称必须',
-                    'username.require' => '用户名必须',
-                    'password.require' => '密码必须'
-                ]
-            );
+            $validate = Validate::make([
+                'nickname'  => 'require',
+                'username' => 'require',
+                'password' => 'require'
+            ],
+            [
+                'nickname.require' => '昵称必须',
+                'username.require' => '用户名必须',
+                'password.require' => '密码必须'
+            ]);
             $data = input('post.');
             if (!$validate->check($data)) {
                 return json(['code' => 200, 'msg' => $validate->getError(), 'data' => []]);
@@ -160,7 +165,7 @@ class User extends Admin
             $data_db['register_time']   = time();
 
             // 存储数据
-            $ret = Db::name('core_user')->insert($data_db);
+            $ret = $this->core_user->insert($data_db);
             if ($ret) {
                 return json(['code' => 200, 'msg' => '添加用户成功', 'data' => []]);
             } else {
@@ -252,34 +257,25 @@ class User extends Admin
             }
 
             // 数据构造
-            $data_db = [];
-            if ($data['nickname']) {
-                $data_db['nickname'] = $data['nickname'];
-            }
-            if ($data['username']) {
-                $data_db['username'] = $data['username'];
-            }
-            if ($data['avatar']) {
-                $data_db['avatar'] = $data['avatar'];
-            }
-            if ($data['password']) {
-                $data_db['password'] = user_md5($data['password']); // 密码不能明文需要加密存储
+            $data_db = $data;
+            if (isset($data_db['password'])) {
+                $data_db['password'] = user_md5($data_db['password']); // 密码不能明文需要加密存储
             }
             if (count($data_db) <= 0 ) {
                 return json(['code' => 0, 'msg' => '无数据修改提交', 'data' => []]);
             }
 
             // 存储数据
-            $ret = Db::name('core_user')
+            $ret = $this->core_user
                 ->where('id', $id)
                 ->update($data_db);
             if ($ret) {
-                return json(['code' => 200, 'msg' => '添加用户成功', 'data' => []]);
+                return json(['code' => 200, 'msg' => '修改用户信息成功', 'data' => []]);
             } else {
-                return json(['code' => 0, 'msg' => '添加用户失败', 'data' => []]);
-            } 
+                return json(['code' => 0, 'msg' => '修改用户信息失败', 'data' => []]);
+            }
         } else {
-            $info = Db::name('core_user')
+            $info = $this->core_user
                 ->where('id', $id)
                 ->find();
             return json([
@@ -328,13 +324,6 @@ class User extends Admin
                                 [
                                     'required' => true,
                                     'message' => '请填写用户名',
-                                    'trigger' => 'change'
-                                ]
-                            ],
-                            'password' =>  [
-                                [
-                                    'required' => true,
-                                    'message' => '请填写密码',
                                     'trigger' => 'change'
                                 ]
                             ]

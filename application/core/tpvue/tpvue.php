@@ -30,11 +30,11 @@ return [
             'level' => '1', //导航层级最多3级
             '_child' => [
                 [
-                    'path' => '/core/auth_role/lists',
+                    'path' => '/core/role/lists',
                     'title' => '权限管理',
                     'level' => '2',
                     'is_vadypage' => '1',
-                    'api' => 'v1/core/admin/auth_role/lists',
+                    'api' => 'v1/core/admin/role/lists',
                 ],
                 [
                     'path' => '/core/user/lists',
@@ -54,10 +54,10 @@ return [
             // 规则路由
             'rule' => [
                 'admin/menu/lists' => ['admin.Menu/lists', 'GET'],
-                'admin/auth_role/lists' => ['admin.AuthRole/lists', 'GET'],
-                'admin/auth_role/add' => ['admin.AuthRole/add', 'GET|POST'],
-                'admin/auth_role/edit/:id' => ['admin.AuthRole/edit', 'GET|PUT'],
-                'admin/auth_role/delete/:id' => ['admin.AuthRole/delete', 'DELETE'],
+                'admin/role/lists' => ['admin.Role/lists', 'GET'],
+                'admin/role/add' => ['admin.Role/add', 'GET|POST'],
+                'admin/role/edit/:id' => ['admin.Role/edit', 'GET|PUT'],
+                'admin/role/delete/:id' => ['admin.Role/delete', 'DELETE'],
                 'admin/user/lists' => ['admin.User/lists', 'GET'],
                 'admin/user/add' => ['admin.User/add', 'GET|POST'],
                 'admin/user/edit/:id' => ['admin.User/edit', 'GET|PUT'],
