@@ -18,6 +18,15 @@ use \Firebase\JWT\JWT; //导入JWT
 
 class User extends Home
 {
+    private $core_user;
+    private $core_identity;
+
+    public function __construct()
+    {
+        $this->core_user = Db::name('core_user');
+        $this->core_identity = Db::name('core_identity');
+    }
+
     /**
      * 用户列表
      *
@@ -26,7 +35,7 @@ class User extends Home
     public function lists()
     {
         // 用户列表
-        $user_list = Db::name('core_user')
+        $user_list = $this->core_user
             ->where(['delete_time' => 0, 'status' => 1])
             ->select();
         dump($user_list);
@@ -54,7 +63,7 @@ class User extends Home
         if($ret['code'] != 200){
             return json($ret);
         }
-        $user_info = Db::name('core_user')->find($ret['data']['uid']);
+        $user_info = $this->core_user->find($ret['data']['uid']);
         dump($user_info);
     }
 
@@ -79,14 +88,14 @@ class User extends Home
             $map = [];
             $map['identity_type'] = $identity_type;
             $map['identifier'] = $identifier;
-            $user_identity_info = Db::name('core_user_identity')->where($map)->find();
+            $user_identity_info = $this->core_identity->where($map)->find();
             if (!$user_identity_info) {
                 return json(['code' => 0, 'msg' => '手机号不存在']);
             }
             if ($user_identity_info['verified'] !== 1) {
                 return json(['code' => 0, 'msg' => '手机号未通过验证']);
             }
-            $user_info = Db::name('core_user')->where(['id' => $user_identity_info['uid']])->find();
+            $user_info = $this->core_user->where(['id' => $user_identity_info['uid']])->find();
             if (!$user_info) {
                 return json(['code' => 0, 'msg' => '用户不存在']);
             }
@@ -98,14 +107,14 @@ class User extends Home
             $map = [];
             $map['identity_type'] = $identity_type;
             $map['identifier'] = $identifier;
-            $user_identity_info = Db::name('core_user_identity')->where($map)->find();
+            $user_identity_info = $this->core_identity->where($map)->find();
             if (!$user_identity_info) {
                 return json(['code' => 0, 'msg' => '邮箱不存在']);
             }
             if ($user_identity_info['verified'] !== 1) {
                 return json(['code' => 0, 'msg' => '邮箱未通过验证']);
             }
-            $user_info = Db::name('core_user')->where(['id' => $user_identity_info['uid']])->find();
+            $user_info = $this->core_user->where(['id' => $user_identity_info['uid']])->find();
             if (!$user_info) {
                 return json(['code' => 0, 'msg' => '用户不存在']);
             }
@@ -116,7 +125,7 @@ class User extends Home
         default: //用户名
             $map = [];
             $map['username'] = $identifier;
-            $user_info = Db::name('core_user')->where($map)->find();
+            $user_info = $this->core_user->where($map)->find();
             if (!$user_info) {
                 return json(['code' => 0, 'msg' => '用户名不存在']);
             }

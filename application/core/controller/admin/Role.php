@@ -20,8 +20,15 @@ use tpvue\core\util\Tree;
 /**
  * 角色
  */
-class AuthRole extends Admin
+class Role extends Admin
 {
+    private $core_role;
+
+    public function __construct()
+    {
+        $this->core_role = Db::name('core_role');
+    }
+
     /**
      * 角色列表
      *
@@ -29,7 +36,7 @@ class AuthRole extends Admin
      */
     public function lists()
     {
-        $data_list = Db:name('core_auth_role')
+        $data_list = $this->core_role
             ->where(['delete_time' => 0])
             ->select();
         $tree      = new Tree();
@@ -47,7 +54,7 @@ class AuthRole extends Admin
                                 'page_type' => 'modal',
                                 'modal_data' => [
                                     'title' => '添加角色',
-                                    'api' => 'v1/core/admin/auth_role/add',
+                                    'api' => 'v1/core/admin/role/add',
                                     'width' => '600',
                                 ],
                                 'route' => '',
@@ -59,11 +66,25 @@ class AuthRole extends Admin
                             ]
                         ],
                         'right_button_list' => [
+                            'member' => [
+                                'page_type' => 'modal',
+                                'modal_data' => [
+                                    'title' => '角色成员',
+                                    'api' => 'v1/core/admin/role/member',
+                                    'width' => '600',
+                                ],
+                                'route' => '',
+                                'title' => '成员',
+                                'type' => 'primary',
+                                'size' => '',
+                                'shape' => '',
+                                'icon' => ''
+                            ],
                             'edit' => [
                                 'page_type' => 'modal',
                                 'modal_data' => [
                                     'title' => '修改角色',
-                                    'api' => 'v1/core/admin/auth_role/edit',
+                                    'api' => 'v1/core/admin/role/edit',
                                     'width' => '600',
                                 ],
                                 'route' => '',
@@ -78,7 +99,7 @@ class AuthRole extends Admin
                                 'modal_data' => [
                                     'type' => 'confirm',
                                     'title' => '确认要删除该角色吗？',
-                                    'api' => 'v1/core/admin/auth_role/delete',
+                                    'api' => 'v1/core/admin/role/delete',
                                     'width' => '600',
                                     'okText' => '确认删除',
                                     'cancelText' => '取消操作',
@@ -129,7 +150,39 @@ class AuthRole extends Admin
     public function add()
     {
         if(request()->isPost()){
-            return json(['code' => 200, 'msg' => '成功', 'data' => []]);
+            // 数据验证
+            $validate = Validate::make([
+                'pid'  => 'number',
+                'name' => 'require',
+                'title' => 'require'
+            ],
+            [
+                'pid.number' => 'pid必须数字',
+                'name.require' => '用户名必须',
+                'title.require' => '密码必须'
+            ]);
+            $data = input('post.');
+            if (!$validate->check($data)) {
+                return json(['code' => 200, 'msg' => $validate->getError(), 'data' => []]);
+            }
+            
+            // 数据构造
+            $data_db = [];
+            $data_db['pid'] = isset($data['pid']) ? $data['pid'] : '';
+            $data_db['name'] = $data['name'];
+            $data_db['title'] = $data['title'];
+            $data_db['sortnum'] = isset($data['sortnum']) ? $data['sortnum'] : 0;
+            $data_db['view_auth'] = isset($data['view_auth']) ? $data['view_auth'] : ''; //导航菜单/功能按钮/页面等视图权限
+            $data_db['api_auth'] = isset($data['api_auth']) ? $data['api_auth'] : ''; //接口权限
+            $data_db['status'] = 1;
+            
+            // 存储数据
+            $ret = $this->core_role->insert($data_db);
+            if ($ret) {
+                return json(['code' => 200, 'msg' => '添加角色成功', 'data' => []]);
+            } else {
+                return json(['code' => 0, 'msg' => '添加角色失败', 'data' => []]);
+            }
         } else {
             return json(
                 [
@@ -202,8 +255,47 @@ class AuthRole extends Admin
     public function edit($id)
     {
         if(request()->isPost()){
-            return json(['code' => 200,'msg' => '成功','data' => []]);
+            // 数据验证
+            $validate = Validate::make([
+                'pid'  => 'number',
+                'name' => 'require',
+                'title' => 'require'
+            ],
+            [
+                'pid.number' => 'pid必须数字',
+                'name.require' => '用户名必须',
+                'title.require' => '密码必须'
+            ]);
+            $data = input('post.');
+            if (!$validate->check($data)) {
+                return json(['code' => 200, 'msg' => $validate->getError(), 'data' => []]);
+            }
+
+            // 数据构造
+            $data_db = $data;
+            if (isset($data_db['view_auth'])) {
+                $data_db['view_auth'] = json_encode($data_db['view_auth']);
+            }
+            if (isset($data_db['api_auth'])) {
+                $data_db['api_auth'] = json_encode($data_db['api_auth']);
+            }
+            if (count($data_db) <= 0 ) {
+                return json(['code' => 0, 'msg' => '无数据修改提交', 'data' => []]);
+            }
+
+            // 存储数据
+            $ret = $this->core_role
+                ->where('id', $id)
+                ->update($data_db);
+            if ($ret) {
+                return json(['code' => 200, 'msg' => '修改角色成功', 'data' => []]);
+            } else {
+                return json(['code' => 0, 'msg' => '修改角色失败', 'data' => []]);
+            }
         } else {
+            $info = $this->core_role
+                ->where('id', $id)
+                ->find();
             return json([
                 'code' => 200,
                 'msg' => '成功',
@@ -239,9 +331,12 @@ class AuthRole extends Admin
                             ]
                         ],
                         'form_values' => [
-                            'pid' => 0,
-                            'name' => '',
-                            'title' => '',
+                            'pid' => $info['pid'],
+                            'name' => $info['name'],
+                            'title' => $info['title'],
+                            'view_auth' => $info['view_auth'],
+                            'api_auth' => $info['api_auth'],
+                            'sortnum' => $info['sortnum'],
                         ],
                         'form_rules' => [
                             'name' =>  [
@@ -272,7 +367,7 @@ class AuthRole extends Admin
      */
     public function delete($id)
     {
-        $ret = Db:name('core_auth_role')
+        $ret = $this->core_role
             ->where(['id' => $id])
             ->useSoftDelete('delete_time', time())
             ->delete();
