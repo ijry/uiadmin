@@ -8,19 +8,20 @@
 // +----------------------------------------------------------------------
 // | Author: jry <598821125@qq.com>
 // +----------------------------------------------------------------------
-namespace tpvue\core\controller\admin;
+namespace app\core\controller\common;
 
+use think\Controller;
 use think\Request;
-use tpvue\core\controller\Tpvue;
 
-class Admin extends Tpvue
+class Index extends Controller
 {
-    protected function initialize()
+    /**
+     * 首页
+     *
+     * @return \think\Response
+     */
+    public function index()
     {
-        $ret = $this->is_login();
-        if($ret['code'] != 200){
-            // echo json_encode($ret);
-            // exit();
-        }
+        return 'tpvue后台接口运行中...<br/>接口域名：' . request()->domain() . '<br/>';
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace tpvue\core\behavior;
+namespace app\core\behavior;
 
 class ModuleBehavior
 {

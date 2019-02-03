@@ -8,20 +8,11 @@
 // +----------------------------------------------------------------------
 // | Author: jry <598821125@qq.com>
 // +----------------------------------------------------------------------
-namespace tpvue\core\controller;
+namespace app\core\controller\common;
 
-use think\Controller;
 use think\Request;
+use app\core\controller\Common;
 
-class Index extends Controller
+class Home extends Tpvue
 {
-    /**
-     * 首页
-     *
-     * @return \think\Response
-     */
-    public function index()
-    {
-        return 'tpvue后台接口运行中...<br/>接口域名：' . request()->domain() . '<br/>';
-    }
 }

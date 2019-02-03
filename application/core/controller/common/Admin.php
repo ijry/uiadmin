@@ -8,11 +8,19 @@
 // +----------------------------------------------------------------------
 // | Author: jry <598821125@qq.com>
 // +----------------------------------------------------------------------
-namespace tpvue\core\controller;
+namespace app\core\controller\common;
 
 use think\Request;
-use tpvue\core\controller\Tpvue;
+use app\core\controller\Common;
 
-class Home extends Tpvue
+class Admin extends Common
 {
+    protected function initialize()
+    {
+        $ret = $this->is_login();
+        if($ret['code'] != 200){
+            // echo json_encode($ret);
+            // exit();
+        }
+    }
 }

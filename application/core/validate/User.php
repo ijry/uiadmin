@@ -9,7 +9,7 @@
 // | Author: jry <598821125@qq.com>
 // +----------------------------------------------------------------------
 
-namespace tpvue\core\validate;
+namespace app\core\validate;
 
 use think\Validate;
 
