@@ -9,10 +9,10 @@
 // | Author: jry <598821125@qq.com>
 // +----------------------------------------------------------------------
 
-namespace tpvue\core\controller\admin;
+namespace app\core\controller\admin;
 
 use think\facade\Request;
-use tpvue\core\controller\admin\Admin;
+use app\core\controller\common\Admin;
 
 class Menu extends Admin
 {

@@ -9,13 +9,13 @@
 // | Author: jry <598821125@qq.com>
 // +----------------------------------------------------------------------
 
-namespace tpvue\core\controller\admin;
+namespace app\core\controller\admin;
 
 use think\Db;
 use think\Validate;
 use think\facade\Request;
-use tpvue\core\controller\admin\Admin;
-use tpvue\core\util\Tree;
+use app\core\controller\common\Admin;
+use app\core\util\Tree;
 
 /**
  * 角色

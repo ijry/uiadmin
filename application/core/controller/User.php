@@ -8,11 +8,11 @@
 // +----------------------------------------------------------------------
 // | Author: jry <598821125@qq.com>
 // +----------------------------------------------------------------------
-namespace tpvue\core\controller;
+namespace app\core\controller;
 
 use think\Db;
 use think\Request;
-use tpvue\core\controller\Home;
+use app\core\controller\common\Home;
 
 use \Firebase\JWT\JWT; //导入JWT
 

@@ -9,13 +9,13 @@
 // | Author: jry <598821125@qq.com>
 // +----------------------------------------------------------------------
 
-namespace tpvue\core\controller;
+namespace app\core\controller\common;
 
 use think\Controller;
 use think\facade\Request;
 use \Firebase\JWT\JWT; //导入JWT
 
-class Tpvue extends Controller
+class Common extends Controller
 {
   /**
   * 判断用户是否登陆方法

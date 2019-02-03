@@ -10,7 +10,7 @@
 // +----------------------------------------------------------------------
 
 // 系统默认路由
-Route::rule('/', 'core/index/index'); // 首页访问路由
+Route::rule('/', 'core/common.Index/index'); // 首页访问路由
 
 // 合并各个模块的路由配置
 $_module_conf_list = [];
@@ -18,7 +18,7 @@ $module_list = [0 => ['name' => 'core']];
 $_api_pat = 'api/'; // API根路径
 $_api_pat = 'api/';
 foreach ($module_list as $key => $value) {
-    $conf = require_once Env::get('app_path') . $value['name'] . '/tpvue/tpvue.php';
+    $conf = require_once Env::get('app_path') . $value['name'] . '/install/install.php';
     $_module_conf_list[$value['name']] = $conf;
     foreach ($conf['route'] as $key0 => $value0) {
         if (isset($value0['rule']) && is_array($value0['rule'])) {
