@@ -13,7 +13,7 @@
 return [
     // 应用初始化
     'app_init'     => [
-        'tpvue\\core\\behavior\\ModuleBehavior'
+        'app\\core\\behavior\\ModuleBehavior'
     ],
     // 应用开始
     'app_begin'    => [],

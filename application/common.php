@@ -24,6 +24,3 @@ function user_md5($str, $auth_key = '')
     }
     return !$str ? false : md5(sha1($str) . $auth_key);
 }
-
-
-

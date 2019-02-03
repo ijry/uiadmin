@@ -11,7 +11,7 @@
 namespace app\core\controller\common;
 
 use think\Request;
-use app\core\controller\Common;
+use app\core\controller\common\Common;
 
 class Admin extends Common
 {
