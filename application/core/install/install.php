@@ -19,72 +19,36 @@ return [
     'info'       => [
         'name'         => 'core',
         'title'        => '核心',
-        'description'  => 'tpvue核心模块',
+        'description'  => 'InitAdmin/actionphp核心模块',
         'developer'    => 'jry',
-        'website'      => 'http://tpvue.com',
+        'website'      => 'http://initadmin.net',
         'version'      => '0.1.0',
-        'build'        => 'Alpha1_2019010500'
+        'build'        => 'Alpha1_201902132200'
     ],
 
-    // 后台左侧导航菜单列表
-    'admin_menu'     => [
-        [
-            'path' => '/core_0',
-            'title' => '系统',
-            'level' => '1', //导航层级最多3级
-            '_child' => [
-                [
-                    'path' => '/core/config/lists',
-                    'title' => '系统设置',
-                    'level' => '2',
-                    'is_vadypage' => '1',
-                    'api' => 'v1/core/admin/config/lists',
-                ],
-                [
-                    'path' => '/core/role/lists',
-                    'title' => '权限管理',
-                    'level' => '2',
-                    'is_vadypage' => '1',
-                    'api' => 'v1/core/admin/role/lists',
-                ],
-                [
-                    'path' => '/core/user/lists',
-                    'title' => '用户列表',
-                    'level' => '2',
-                    'is_vadypage' => '1',
-                    'api' => 'v1/core/admin/user/lists',
-                ],
-                
-            ]
-        ]
-    ],
-
-    // 模块路由
-    'route'     => [
+    // API接口
+    'api'     => [
         'v1' => [
             // 规则路由
             'rule' => [
-                'admin/menu/lists' => ['admin.Menu/lists', 'GET'],
-                'admin/role/lists' => ['admin.Role/lists', 'GET'],
-                'admin/role/add' => ['admin.Role/add', 'GET|POST'],
-                'admin/role/edit/:id' => ['admin.Role/edit', 'GET|PUT'],
-                'admin/role/delete/:id' => ['admin.Role/delete', 'DELETE'],
-                'admin/user/lists' => ['admin.User/lists', 'GET'],
-                'admin/user/add' => ['admin.User/add', 'GET|POST'],
-                'admin/user/edit/:id' => ['admin.User/edit', 'GET|PUT'],
-                'admin/user/delete/:id' => ['admin.User/delete', 'DELETE'],
-                'user/login' => ['User/login']
+                // 前台接口
+                'home' => [
+                    'user/login' => [
+                        'title' => '用户列表',
+                        'route' => 'User/login',
+                        'method' => 'POST'
+                    ]
+                ]
             ]
         ]
     ],
 
     // 路由API注释
-    'route_api'     => [
+    'api_doc'     => [
         'v1' => [
             'user/login' => [
                 'POST' => [
-                    'title' => '用户登录', // 接口名称
-                    'description' => '使用账号密码登录系统', // 接口功能描述
+                    'description' => '使用凭证登录系统', // 接口功能描述
                     'params' => [
                         'account' => [
                             'is_must' => 1, //该参数是否必须

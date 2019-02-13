@@ -1,54 +1,92 @@
-CREATE TABLE `tpvue_core_user_info` (
+CREATE TABLE `ia_core_menu` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  `module` varchar(255) NOT NULL COMMENT '模块名称',
+  `path` varchar(255) NOT NULL COMMENT '路由路径',
+  `pmenu` varchar(255) NOT NULL DEFAULT '' COMMENT '父菜单',
+  `title` varchar(255) NOT NULL DEFAULT '' COMMENT '菜单标题',
+  `menu_type` tinyint(3) NOT NULL DEFAULT '0' COMMENT '菜单类型1导航2按钮3仅接口',
+  `is_vadypage` int(1) NOT NULL DEFAULT '0' COMMENT '是否动态页面',
+  `api_prefix` varchar(255) NOT NULL DEFAULT '' COMMENT '接口前缀',
+  `api_suffix` varchar(255) NOT NULL DEFAULT '' COMMENT '接口后缀',
+  `api_method` varchar(255) NOT NULL DEFAULT '' COMMENT '接口请求方法',
+  `is_hide` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否隐藏',
+  `sortnum` int(11) NOT NULL DEFAULT '0' COMMENT '排序',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='后台菜单表';
+
+INSERT INTO `ia_core_menu` (`id`, `module`, `path`, `pmenu`, `title`, `menu_type`, `is_vadypage`, `api_prefix`, `api_suffix`, `api_method`, `is_hide`, `sortnum`)
+VALUES
+	(1, 'core', 'developer', '', '开发者', 0, 0, '', '', '', 0, 99),
+	(2, 'core', '/core/menu/lists', 'developer', '菜单列表', 3, 1, 'v1', '', 'GET', 0, 0),
+	(3, 'core', '/core/role/trees', 'system', '权限管理', 1, 1, 'v1', '', 'GET', 0, 0),
+	(4, 'core', '/core/user/lists', 'system', '用户列表', 1, 1, 'v1', '', 'GET', 0, 0),
+	(5, 'core', '/core/user/edit', '/core/user/lists', '修改用户', 2, 1, 'v1', '/:id', 'GET|PUT', 0, 0),
+	(6, 'core', '/core/user/delete', '/core/user/delete', '删除用户', 2, 1, 'v1', '/:id', 'DELETE', 0, 0),
+	(7, 'core', '/core/user/add', '/core/user/lists', '添加用户', 2, 1, 'v1', '', 'GET|POST', 0, 0),
+	(8, 'core', '/core/config/lists', 'system', '系统配置', 1, 1, 'v1', '', 'GET', 0, 0),
+	(9, 'core', 'system', '', '系统', 0, 0, '', '', '', 0, 1),
+	(10, 'core', '/core/menu/trees', 'developer', '菜单管理', 1, 1, 'v1', '', 'GET', 0, 0);
+
+
+CREATE TABLE `ia_core_user` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '用户UID',
-  `nickname` varchar(63) NOT NULL COMMENT '用户昵称',
-  `avatar` varchar(255) NOT NULL DEFAULT '' COMMENT '头像地址',
-  `age` int(5) unsigned NOT NULL DEFAULT '0' COMMENT '用户年龄',
-  `country` varchar(8) NOT NULL DEFAULT '' COMMENT '国家代码,如+86',
-  `city` varchar(255) NOT NULL COMMENT '常驻城市可用于判断异地登录',
+  `nickname` varchar(128) NOT NULL DEFAULT '' COMMENT '用户昵称',
+  `username` varchar(128) NOT NULL DEFAULT '' COMMENT '用户名',
+  `password` varchar(128) NOT NULL DEFAULT '' COMMENT '用户密码',
+  `avatar` varchar(256) NOT NULL COMMENT '头像地址',
+  `extend_info` text COMMENT '用户扩展信息',
+  `status` tinyint(3) NOT NULL DEFAULT '0' COMMENT '状态,1正常,0待审核,-1禁用',
+  `roles` varchar(256) NOT NULL DEFAULT '' COMMENT '用户拥有的角色',
   `register_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '用户注册时间',
-  `status` tinyint(3) NOT NULL DEFAULT '0' COMMENT '状态,1正常,0待审核,-1删除,-2禁用',
+  `delete_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '删除时间',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户帐号信息表';
 
-INSERT INTO `tpvue_core_user_info` (`id`, `nickname`, `avatar`, `age`, `country`, `city`, `register_time`, `status`)
+INSERT INTO `ia_core_user` (`id`, `nickname`, `username`, `password`, `avatar`, `extend_info`, `status`, `roles`, `register_time`, `delete_time`)
 VALUES
-  (1, '超级管理员', '1', 8, '86', '江苏,南京,鼓楼区', 0, 1);
-
-CREATE TABLE `tpvue_core_user_identity` (
-  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID',
-  `uid` int(11) NOT NULL DEFAULT '0' COMMENT 'UID',
-  `verified` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '是否已验证',
-  `identity_type` varchar(11) NOT NULL DEFAULT '' COMMENT '账号类型',
-  `identifier` varchar(127) NOT NULL COMMENT '帐号',
-  `credential` varchar(255) NOT NULL COMMENT '密码',
-  `is_oauth2` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '是否OAuth2登录',
-  `create_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '创建时间',
-  `status` tinyint(3) NOT NULL DEFAULT '0' COMMENT '状态:1正常0禁用',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户登陆凭证信息表';
-INSERT INTO `tpvue_core_user_identity` (`id`, `uid`, `verified`, `identity_type`, `identifier`, `credential`, `is_oauth2`, `create_time`, `status`)
-VALUES
-	(1, 1, 1, 1, 'admin', 'b8ecdf8657f70604168fe88a6b50ddb4', 0, 0, 1);
+	(1, '超级管理员', 'admin', '6efb207798cfc6c7819f99cbe03132b0', '1', NULL, 1, '', 0, 0);
 
 
-CREATE TABLE `tpvue_core_auth_role` (
+CREATE TABLE `ia_core_role` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT 'ID',
   `pid` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '上级',
   `name` varchar(255) NOT NULL COMMENT '角色名称',
   `title` varchar(255) NOT NULL DEFAULT '' COMMENT '角色标题',
+  `view_auth` longtext COMMENT '视图权限',
+  `api_auth` longtext COMMENT '接口权限',
   `sortnum` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '排序',
-  `permissions` longtext COMMENT '权限列表',
+  `status` tinyint(1) NOT NULL DEFAULT '0' COMMENT '状态',
   `delete_time` int(11) NOT NULL DEFAULT '0' COMMENT '删除时间',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户角色表';
-INSERT INTO `tpvue_core_auth_role` (`id`, `pid`, `name`, `title`, `sortnum`, `permissions`, `delete_time`)
+
+INSERT INTO `ia_core_role` (`id`, `pid`, `name`, `title`, `view_auth`, `api_auth`, `sortnum`, `status`, `delete_time`)
 VALUES
-	(1, 0, 'super_admin', '超级管理员', 0, '', 0),
-	(2, 1, 'admin', '管理员', 0, '', 0),
-	(3, 2, 'operation', '运营部', 0, '', 0);
+	(1, 0, 'super_admin', '超级管理员', '', NULL, 0, 0, 0),
+	(2, 1, 'admin', '管理员', '', NULL, 0, 0, 0),
+	(3, 2, 'operation', '运营部', '', NULL, 0, 0, 0);
 
 
-CREATE TABLE `tpvue_core_user_log` (
+CREATE TABLE `ia_core_identity` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  `uid` int(11) NOT NULL DEFAULT '0' COMMENT 'UID',
+  `identity_type` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '账号类型',
+  `identity_group` varchar(128) NOT NULL DEFAULT '' COMMENT '账号分组',
+  `identifier` varchar(128) NOT NULL DEFAULT '' COMMENT '帐号/openid',
+  `verified` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '是否已验证',
+  `is_oauth2` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '是否OAuth2登录',
+  `create_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '创建时间',
+  `delete_time` int(11) NOT NULL DEFAULT '0' COMMENT '删除时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户登陆凭证信息表';
+
+INSERT INTO `ia_core_identity` (`id`, `uid`, `identity_type`, `identity_group`, `identifier`, `verified`, `is_oauth2`, `create_time`, `delete_time`)
+VALUES
+	(1, 1, 1, '+86', '13282171975', 1, 0, 0, 0),
+	(2, 1, 2, '', 'ijry@qq.com', 1, 0, 0, 0);
+
+
+CREATE TABLE `ia_core_userlog` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT 'id',
   `uid` int(11) unsigned NOT NULL DEFAULT '0' COMMENT 'UID',
   `event_type` int(2) unsigned NOT NULL DEFAULT '0' COMMENT '事件类型：1注册2登陆3修改密码4修改头像5修改昵称',
@@ -68,4 +106,4 @@ CREATE TABLE `tpvue_core_user_log` (
   `reason` varchar(255) NOT NULL DEFAULT '' COMMENT '原因',
   `remark` varchar(255) NOT NULL DEFAULT '' COMMENT '备注',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户账户日志记录';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户安全记录';

@@ -35,27 +35,25 @@ class Role extends Admin
      *
      * @return \think\Response
      */
-    public function lists()
+    public function trees()
     {
         $data_list = $this->core_role
             ->where(['delete_time' => 0])
             ->select();
         $tree      = new Tree();
-        $data_list = $tree->list2tree($data_list);
-        //dump($data_list);
+        $data_tree = $tree->list2tree($data_list);
+        //dump($data_tree);
         return json(
             [
-                'code' => 200,
-                'msg' => '成功',
-                'data' => [
-                    'data_list' => $data_list,
+                'code' => 200, 'msg' => '成功', 'data' => [
+                    'data_list' => $data_tree,
                     'dynamic_data' => [
                         'top_button_list' => [
                             'add' => [
                                 'page_type' => 'modal',
                                 'modal_data' => [
                                     'title' => '添加角色',
-                                    'api' => 'v1/core/admin/role/add',
+                                    'api' => 'v1/admin/core/role/add',
                                     'width' => '600',
                                 ],
                                 'route' => '',
@@ -71,7 +69,7 @@ class Role extends Admin
                                 'page_type' => 'modal',
                                 'modal_data' => [
                                     'title' => '角色成员',
-                                    'api' => 'v1/core/admin/role/member',
+                                    'api' => 'v1/admin/core/role/member',
                                     'width' => '600',
                                 ],
                                 'route' => '',
@@ -85,7 +83,7 @@ class Role extends Admin
                                 'page_type' => 'modal',
                                 'modal_data' => [
                                     'title' => '修改角色',
-                                    'api' => 'v1/core/admin/role/edit',
+                                    'api' => 'v1/admin/core/role/edit',
                                     'width' => '600',
                                 ],
                                 'route' => '',
@@ -100,7 +98,7 @@ class Role extends Admin
                                 'modal_data' => [
                                     'type' => 'confirm',
                                     'title' => '确认要删除该角色吗？',
-                                    'api' => 'v1/core/admin/role/delete',
+                                    'api' => 'v1/admin/core/role/delete',
                                     'width' => '600',
                                     'okText' => '确认删除',
                                     'cancelText' => '取消操作',
@@ -116,9 +114,9 @@ class Role extends Admin
                         ],
                         'columns' => [
                             [
-                            'title' => 'ID',
-                            'key' => 'id',
-                            'width' => '40px'
+                                'title' => 'ID',
+                                'key' => 'id',
+                                'width' => '40px'
                             ],
                             [
                                 'title' => '部门',
