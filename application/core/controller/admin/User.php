@@ -44,9 +44,7 @@ class User extends Admin
         $tree      = new Tree();
         $data_list = $tree->list2tree($data_list);
         return json([
-                'code' => 200,
-                'msg' => '成功',
-                'data' => [
+                'code' => 200, 'msg' => '成功', 'data' => [
                     'data_list' => $data_list,
                     'dynamic_data' => [
                         'top_button_list' => [
@@ -54,7 +52,7 @@ class User extends Admin
                                 'page_type' => 'modal',
                                 'modal_data' => [
                                     'title' => '添加用户',
-                                    'api' => 'v1/core/admin/user/add',
+                                    'api' => 'v1/admin/core/user/add',
                                     'width' => '600',
                                 ],
                                 'route' => '',
@@ -70,7 +68,7 @@ class User extends Admin
                                 'page_type' => 'modal',
                                 'modal_data' => [
                                     'title' => '修改用户信息',
-                                    'api' => 'v1/core/admin/user/edit',
+                                    'api' => 'v1/admin/core/user/edit',
                                     'width' => '600',
                                 ],
                                 'route' => '',
@@ -85,7 +83,7 @@ class User extends Admin
                                 'modal_data' => [
                                     'type' => 'confirm',
                                     'title' => '确认要删除该用户吗？',
-                                    'api' => 'v1/core/admin/user/delete',
+                                    'api' => 'v1/admin/core/user/delete',
                                     'width' => '600',
                                     'okText' => '确认删除',
                                     'cancelText' => '取消操作',
@@ -101,9 +99,9 @@ class User extends Admin
                         ],
                         'columns' => [
                             [
-                            'title' => 'UID',
-                            'key' => 'id',
-                            'width' => '50px'
+                                'title' => 'UID',
+                                'key' => 'id',
+                                'width' => '50px'
                             ],
                             [
                                 'title' => '头像',
