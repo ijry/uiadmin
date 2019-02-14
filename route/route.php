@@ -20,13 +20,17 @@ $_api_pat = 'api/';
 foreach ($module_list as $key => $value) {
     $conf = require_once Env::get('app_path') . $value['name'] . '/install/install.php';
     $_module_conf_list[$value['name']] = $conf;
-    // foreach ($conf['route'] as $key0 => $value0) {
-    //     if (isset($value0['rule']) && is_array($value0['rule'])) {
-    //         foreach ($value0['rule'] as $key1 => $value1) {
-    //             Route::rule($_api_pat.$key0.'/'.$value['name'].'/'.$key1, $value['name'].'/'.$value1[0]);
-    //         }
-    //     }
-    // }
+    foreach ($conf['api'] as $key0 => $value0) {
+        if (isset($value0['rule']) && is_array($value0['rule'])) {
+            foreach ($value0['rule'] as $key1 => $value1) {
+                Route::rule(
+                    $_api_pat . $key0  . '/'. $value['name'] . '/' . $key1,
+                    $value['name'] . '/' . $value1['route'],
+                    $value1['method']
+                );
+            }
+        }
+    }
 }
 //dump(Route::getNames());
 // 缓存所有模块的配置

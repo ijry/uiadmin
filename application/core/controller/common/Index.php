@@ -26,6 +26,6 @@ class Index extends Controller
     public function index()
     {
         //dump(user_md5('admin123'));
-        return 'tpvue后台接口运行中...<br/>接口域名：' . request()->domain() . '<br/>';
+        return 'InitAdmin后台接口actionphp版本运行中...<br/>接口域名：' . request()->domain() . '<br/>';
     }
 }
