@@ -31,13 +31,10 @@ return [
         'v1' => [
             // 规则路由
             'rule' => [
-                // 前台接口
-                'home' => [
-                    'user/login' => [
-                        'title' => '用户列表',
-                        'route' => 'User/login',
-                        'method' => 'POST'
-                    ]
+                'user/login' => [
+                    'title' => '用户登陆',
+                    'route' => 'User/login',
+                    'method' => 'POST'
                 ]
             ]
         ]
