@@ -24,10 +24,12 @@ use app\core\util\Tree;
 class Role extends Admin
 {
     private $core_role;
+    private $core_menu;
 
     public function __construct()
     {
         $this->core_role = Db::name('core_role');
+        $this->core_menu = Db::name('core_menu');
     }
 
     /**
@@ -84,7 +86,7 @@ class Role extends Admin
                                 'modal_data' => [
                                     'title' => '修改角色',
                                     'api' => 'v1/admin/core/role/edit',
-                                    'width' => '600',
+                                    'width' => '800',
                                 ],
                                 'route' => '',
                                 'title' => '修改',
@@ -171,7 +173,7 @@ class Role extends Admin
             $data_db['name'] = $data['name'];
             $data_db['title'] = $data['title'];
             $data_db['sortnum'] = isset($data['sortnum']) ? $data['sortnum'] : 0;
-            $data_db['view_auth'] = isset($data['view_auth']) ? $data['view_auth'] : ''; //导航菜单/功能按钮/页面等视图权限
+            $data_db['admin_auth'] = isset($data['admin_auth']) ? $data['admin_auth'] : ''; //后台权限
             $data_db['api_auth'] = isset($data['api_auth']) ? $data['api_auth'] : ''; //接口权限
             $data_db['status'] = 1;
             
@@ -272,8 +274,8 @@ class Role extends Admin
 
             // 数据构造
             $data_db = $data;
-            if (isset($data_db['view_auth'])) {
-                $data_db['view_auth'] = json_encode($data_db['view_auth']);
+            if (isset($data_db['admin_auth'])) {
+                $data_db['admin_auth'] = json_encode($data_db['admin_auth']);
             }
             if (isset($data_db['api_auth'])) {
                 $data_db['api_auth'] = json_encode($data_db['api_auth']);
@@ -295,6 +297,13 @@ class Role extends Admin
             $info = $this->core_role
                 ->where('id', $id)
                 ->find();
+
+            $data_list = $this->core_menu
+                ->order('sortnum asc')
+                ->select();
+            $tree      = new Tree();
+            $menu_tree = $tree->list2tree($data_list, 'path', 'pmenu', 'children', 0, false);
+
             return json([
                 'code' => 200,
                 'msg' => '成功',
@@ -327,13 +336,41 @@ class Role extends Admin
                                 'type' => 'text',
                                 'placeholder' => '请输入角色名称',
                                 'tip' => '角色名称也可以理解为部门名称'
+                            ],
+                            [
+                                'name' => 'admin_menu',
+                                'title' => '后台权限',
+                                'type' => 'checkboxtree',
+                                'options' => [
+                                    'columns' => [
+                                        [
+                                            'title' => '菜单(接口)',
+                                            'key' => 'title',
+                                            'minWidth' => '150px'
+                                        ],
+                                        [
+                                            'title' => '说明',
+                                            'key' => 'tip'
+                                        ],
+                                        [
+                                            'title' => '菜单类型',
+                                            'key' => 'menu_type'
+                                        ]
+                                    ],
+                                    'data' => $menu_tree
+                                ],
+                                'extra' => [
+                                    'expand-key' => 'title'
+                                ],
+                                'placeholder' => '请勾选该角色的权限',
+                                'tip' => ''
                             ]
                         ],
                         'form_values' => [
                             'pid' => $info['pid'],
                             'name' => $info['name'],
                             'title' => $info['title'],
-                            'view_auth' => $info['view_auth'],
+                            'admin_auth' => $info['admin_auth'],
                             'api_auth' => $info['api_auth'],
                             'sortnum' => $info['sortnum'],
                         ],

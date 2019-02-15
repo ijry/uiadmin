@@ -20,6 +20,13 @@ use app\core\util\Tree;
 
 class Menu extends Admin
 {
+    private $core_menu;
+
+    public function __construct()
+    {
+        $this->core_role = Db::name('core_menu');
+    }
+
     /**
      * 后台左侧导航列表
      *
@@ -28,9 +35,8 @@ class Menu extends Admin
     public function trees()
     {
         // 计算路由
-        $data_list = Db::name('core_menu')
+        $data_list = $this->core_menu
             ->order('sortnum asc')
-            ->where('is_hide', '=', 0)
             ->select();
         $tree      = new Tree();
         $menu_tree = $tree->list2tree($data_list, 'path', 'pmenu', 'children', 0, false);
@@ -132,7 +138,7 @@ class Menu extends Admin
     public function lists()
     {
         // 计算路由
-        $data_list = Db::name('core_menu')
+        $data_list = $this->core_menu
             ->where('menu_type', '>', 0)
             ->select();
         foreach ($data_list as $key => &$val) {
