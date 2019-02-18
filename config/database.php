@@ -10,37 +10,13 @@
 // +----------------------------------------------------------------------
 
 // 数据库配置请在根目录下.env文件里修改，不要在这里修改，格式请参考官网文档。
-if (env('srv_env_type') == 'srv') {
-    // nginx/apache服务器模式
-    $_db_conf_env = [
-        'hostname' => env('srv.database.hostname'),
-        'database' => env('srv.database.database'),
-        'username' => env('srv.database.username'),
-        'password' => env('srv.database.password'),
-        'hostport' => env('srv.database.hostport'),
-    ];
-} else {
-    switch (env('env_active')) {
-        case 'dev': // 开发模式
-            $_db_conf_env = [
-                'hostname' => env('dev.database.hostname'),
-                'database' => env('dev.database.database'),
-                'username' => env('dev.database.username'),
-                'password' => env('dev.database.password'),
-                'hostport' => env('dev.database.hostport'),
-            ];
-            break;
-        case 'prod': // 生产模式
-            $_db_conf_env = [
-                'hostname' => env('prod.database.hostname'),
-                'database' => env('prod.database.database'),
-                'username' => env('prod.database.username'),
-                'password' => env('prod.database.password'),
-                'hostport' => env('prod.database.hostport'),
-            ];
-            break;
-    }
-}
+$_db_conf_env = [
+    'hostname' => env('database.hostname'),
+    'database' => env('database.database'),
+    'username' => env('database.username'),
+    'password' => env('database.password'),
+    'hostport' => env('database.hostport'),
+];
 
 $_db_config_base = [
     // 数据库类型
@@ -48,7 +24,7 @@ $_db_config_base = [
     // 服务器地址
     'hostname'        => '127.0.0.1',
     // 数据库名
-    'database'        => 'tpvue',
+    'database'        => 'initadmin',
     // 用户名
     'username'        => 'root',
     // 密码
