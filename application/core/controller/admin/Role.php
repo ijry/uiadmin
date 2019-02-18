@@ -85,7 +85,7 @@ class Role extends Admin
                                 'page_type' => 'modal',
                                 'modal_data' => [
                                     'title' => '修改角色',
-                                    'api' => 'v1/admin/core/role/edit',
+                                    'api' => '/v1/admin/core/role/edit',
                                     'width' => '800',
                                 ],
                                 'route' => '',
@@ -191,6 +191,7 @@ class Role extends Admin
                     'msg' => '成功',
                     'data' => [
                         'form_data' => [
+                            'form_method' => 'post',
                             'form_items' => [
                                 [
                                     'name' => 'pid',
@@ -255,7 +256,7 @@ class Role extends Admin
      */
     public function edit($id)
     {
-        if(request()->isPost()){
+        if(request()->isPut()){
             // 数据验证
             $validate = Validate::make([
                 'pid'  => 'number',
@@ -274,11 +275,11 @@ class Role extends Admin
 
             // 数据构造
             $data_db = $data;
-            if (isset($data_db['admin_auth'])) {
-                $data_db['admin_auth'] = json_encode($data_db['admin_auth']);
+            if (isset($data_db['admin_auth']) && is_array($data_db['admin_auth'])) {
+                $data_db['admin_auth'] = implode(',', $data_db['admin_auth']);
             }
-            if (isset($data_db['api_auth'])) {
-                $data_db['api_auth'] = json_encode($data_db['api_auth']);
+            if (isset($data_db['api_auth']) && is_array($data_db['api_auth'])) {
+                $data_db['api_auth'] = implode(',', $data_db['api_auth']);
             }
             if (count($data_db) <= 0 ) {
                 return json(['code' => 0, 'msg' => '无数据修改提交', 'data' => []]);
@@ -297,10 +298,19 @@ class Role extends Admin
             $info = $this->core_role
                 ->where('id', $id)
                 ->find();
+            $info['admin_auth'] = explode(',', $info['admin_auth']);
 
             $data_list = $this->core_menu
                 ->order('sortnum asc')
                 ->select();
+            foreach ($data_list as $key => &$val) {
+                if ($val['menu_type'] > 0) {
+                    $val['admin_auth'] = '/' . $val['api_prefix'] . '/admin' . $val['path'];
+                    if (in_array($val['admin_auth'], $info['admin_auth'])) {
+                        $val['_isChecked'] = true;
+                    }
+                }
+            }
             $tree      = new Tree();
             $menu_tree = $tree->list2tree($data_list, 'path', 'pmenu', 'children', 0, false);
 
@@ -309,6 +319,7 @@ class Role extends Admin
                 'msg' => '成功',
                 'data' => [
                     'form_data' => [
+                        'form_method' => 'put',
                         'form_items' => [
                             [
                                 'name' => 'pid',
@@ -338,7 +349,7 @@ class Role extends Admin
                                 'tip' => '角色名称也可以理解为部门名称'
                             ],
                             [
-                                'name' => 'admin_menu',
+                                'name' => 'admin_auth',
                                 'title' => '后台权限',
                                 'type' => 'checkboxtree',
                                 'options' => [
@@ -351,6 +362,10 @@ class Role extends Admin
                                         [
                                             'title' => '说明',
                                             'key' => 'tip'
+                                        ],
+                                        [
+                                            'title' => '接口',
+                                            'key' => 'admin_auth'
                                         ],
                                         [
                                             'title' => '菜单类型',
