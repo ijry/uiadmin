@@ -153,7 +153,6 @@ class User extends Home
                 'uid' => $user_info['id']//可以用户ID，可以自定义
             ]
         ]; //Payload
-        dump($key);
         $jwt = JWT::encode($token, $key); //此处行进加密算法生成jwt
         return json(['code' => 200, 'msg' => '登陆成功', 'data' => ['token' => $jwt]]);
     }

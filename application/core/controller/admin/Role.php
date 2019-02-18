@@ -25,12 +25,28 @@ class Role extends Admin
 {
     private $core_role;
     private $core_menu;
+    private $core_user;
 
     protected function initialize()
     {
         parent::initialize();
         $this->core_role = Db::name('core_role');
         $this->core_menu = Db::name('core_menu');
+        $this->core_user = Db::name('core_user');
+    }
+
+    /**
+     * 角色成员列表
+     *
+     * @return \think\Response
+     */
+    public function member($name)
+    {
+        $data_list = $this->core_user
+            ->where('delete_time', 0)
+            ->where('', 'EXP', Db::raw("FIND_IN_SET('$name', roles)"))
+            ->select();
+        dump($data_list);
     }
 
     /**
