@@ -22,8 +22,9 @@ class Menu extends Admin
 {
     private $core_menu;
 
-    public function __construct()
+    protected function initialize()
     {
+        parent::initialize();
         $this->core_role = Db::name('core_menu');
     }
 

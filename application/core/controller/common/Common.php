@@ -30,7 +30,7 @@ class Common extends Controller
       $key = env('auth_key'); //key要和签发的时候一样
       $token = Request::header('Authorization');
       if (!$token) {
-        return ['code' => 0, 'msg' => '缺少AuthorizationToken'];
+        return ['code' => 0, 'msg' => 'AuthorizationToken not found'];
       }
       $jwt = explode(' ', $token)[1]; //签发的Token
       try {

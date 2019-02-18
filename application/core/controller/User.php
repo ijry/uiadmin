@@ -144,15 +144,16 @@ class User extends Home
         //颁发登录凭证token
         $key = env('auth_key'); //秘钥加密关键 Signature
         $token = [
-            'iss' => 'tpvue.com',//签发者
-            'aud' => 'tpvue.com',//面向的用户
+            'iss' => 'initamin.net',//签发者
+            'aud' => 'initamin.net',//面向的用户
             'iat' => time(),//签发时间
             'nbf' => time(),//在什么时候jwt开始生效
-            'exp' => time()+60,//token 过期时间
+            'exp' => time() + 7200,//token 过期时间
             'data'=>[
                 'uid' => $user_info['id']//可以用户ID，可以自定义
             ]
         ]; //Payload
+        dump($key);
         $jwt = JWT::encode($token, $key); //此处行进加密算法生成jwt
         return json(['code' => 200, 'msg' => '登陆成功', 'data' => ['token' => $jwt]]);
     }
