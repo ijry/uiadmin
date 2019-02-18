@@ -177,6 +177,7 @@ class User extends Admin
                 'msg' => '成功',
                 'data' => [
                     'form_data' => [
+                        'form_method' => 'post',
                         'form_items' => [
                             [
                                 'name' => 'nickname',
@@ -241,7 +242,7 @@ class User extends Admin
      */
     public function edit($id)
     {
-        if (request()->isPost()) {
+        if (request()->isPut()) {
             // 数据验证
             $validate = Validate::make([
                     'nickname'  => 'require',
@@ -283,6 +284,7 @@ class User extends Admin
                 'msg' => '成功',
                 'data' => [
                     'form_data' => [
+                        'form_method' => 'put',
                         'form_items' => [
                             [
                                 'name' => 'nickname',
