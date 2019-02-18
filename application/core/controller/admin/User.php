@@ -26,8 +26,9 @@ class User extends Admin
 {
     private $core_user;
 
-    public function __construct()
+    protected function initialize()
     {
+        parent::initialize();
         $this->core_user = Db::name('core_user');
     }
 

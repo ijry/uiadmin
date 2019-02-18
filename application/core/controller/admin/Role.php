@@ -26,8 +26,9 @@ class Role extends Admin
     private $core_role;
     private $core_menu;
 
-    public function __construct()
+    protected function initialize()
     {
+        parent::initialize();
         $this->core_role = Db::name('core_role');
         $this->core_menu = Db::name('core_menu');
     }
@@ -56,7 +57,7 @@ class Role extends Admin
                                 'modal_data' => [
                                     'title' => '添加角色',
                                     'api' => 'v1/admin/core/role/add',
-                                    'width' => '600',
+                                    'width' => '800',
                                 ],
                                 'route' => '',
                                 'title' => '添加角色',
@@ -72,7 +73,7 @@ class Role extends Admin
                                 'modal_data' => [
                                     'title' => '角色成员',
                                     'api' => 'v1/admin/core/role/member',
-                                    'width' => '600',
+                                    'width' => '800',
                                 ],
                                 'route' => '',
                                 'title' => '成员',
@@ -173,8 +174,8 @@ class Role extends Admin
             $data_db['name'] = $data['name'];
             $data_db['title'] = $data['title'];
             $data_db['sortnum'] = isset($data['sortnum']) ? $data['sortnum'] : 0;
-            $data_db['admin_auth'] = isset($data['admin_auth']) ? $data['admin_auth'] : ''; //后台权限
-            $data_db['api_auth'] = isset($data['api_auth']) ? $data['api_auth'] : ''; //接口权限
+            $data_db['admin_auth'] = isset($data['admin_auth']) ? implode(',', $data['admin_auth']) : ''; //后台权限
+            $data_db['api_auth'] = isset($data['api_auth']) ? implode(',', $data['api_auth']) : ''; //接口权限
             $data_db['status'] = 1;
             
             // 存储数据
@@ -185,6 +186,17 @@ class Role extends Admin
                 return json(['code' => 0, 'msg' => '添加角色失败', 'data' => []]);
             }
         } else {
+            //获取后台权限接口
+            $data_list = $this->core_menu
+                ->order('sortnum asc')
+                ->select();
+            foreach ($data_list as $key => &$val) {
+                if ($val['menu_type'] > 0) {
+                    $val['admin_auth'] = '/' . $val['api_prefix'] . '/admin' . $val['path'];
+                }
+            }
+            $tree      = new Tree();
+            $menu_tree = $tree->list2tree($data_list, 'path', 'pmenu', 'children', 0, false);
             return json(
                 [
                     'code' => 200,
@@ -219,12 +231,46 @@ class Role extends Admin
                                     'type' => 'text',
                                     'placeholder' => '请输入角色名称',
                                     'tip' => '角色名称也可以理解为部门名称'
+                                ],
+                                [
+                                    'name' => 'admin_auth',
+                                    'title' => '后台权限',
+                                    'type' => 'checkboxtree',
+                                    'options' => [
+                                        'columns' => [
+                                            [
+                                                'title' => '菜单(接口)',
+                                                'key' => 'title',
+                                                'minWidth' => '150px'
+                                            ],
+                                            [
+                                                'title' => '说明',
+                                                'key' => 'tip'
+                                            ],
+                                            [
+                                                'title' => '接口',
+                                                'key' => 'admin_auth'
+                                            ],
+                                            [
+                                                'title' => '菜单类型',
+                                                'key' => 'menu_type'
+                                            ]
+                                        ],
+                                        'data' => $menu_tree
+                                    ],
+                                    'extra' => [
+                                        'expand-key' => 'title'
+                                    ],
+                                    'placeholder' => '请勾选该角色的权限',
+                                    'tip' => ''
                                 ]
                             ],
                             'form_values' => [
                                 'pid' => 0,
                                 'name' => '',
                                 'title' => '',
+                                'admin_auth' => [],
+                                'api_auth' => []
                             ],
                             'form_rules' => [
                                 'name' =>  [
@@ -257,6 +303,10 @@ class Role extends Admin
     public function edit($id)
     {
         if(request()->isPut()){
+            if ($id == 1) {
+                return json(['code' => 0,'msg' => '超级管理员角色不允许修改','data' => []]);
+            }
+
             // 数据验证
             $validate = Validate::make([
                 'pid'  => 'number',
@@ -295,18 +345,21 @@ class Role extends Admin
                 return json(['code' => 0, 'msg' => '修改角色失败', 'data' => []]);
             }
         } else {
+            //获取角色信息
             $info = $this->core_role
                 ->where('id', $id)
                 ->find();
             $info['admin_auth'] = explode(',', $info['admin_auth']);
 
+            //获取后台权限接口
             $data_list = $this->core_menu
                 ->order('sortnum asc')
                 ->select();
             foreach ($data_list as $key => &$val) {
                 if ($val['menu_type'] > 0) {
                     $val['admin_auth'] = '/' . $val['api_prefix'] . '/admin' . $val['path'];
-                    if (in_array($val['admin_auth'], $info['admin_auth'])) {
+                    //超级管理员拥有所有权限
+                    if (in_array($val['admin_auth'], $info['admin_auth']) || $id == 1) {
                         $val['_isChecked'] = true;
                     }
                 }
@@ -418,6 +471,9 @@ class Role extends Admin
      */
     public function delete($id)
     {
+        if ($id == 1) {
+            return json(['code' => 0,'msg' => '超级管理员角色不允许删除','data' => []]);
+        }
         $ret = $this->core_role
             ->where(['id' => $id])
             ->useSoftDelete('delete_time', time())

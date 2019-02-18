@@ -4,6 +4,7 @@ CREATE TABLE `ia_core_menu` (
   `path` varchar(255) NOT NULL COMMENT '路由路径',
   `pmenu` varchar(255) NOT NULL DEFAULT '' COMMENT '父菜单',
   `title` varchar(255) NOT NULL DEFAULT '' COMMENT '菜单标题',
+  `tip` varchar(255) NOT NULL DEFAULT '' COMMENT '提示',
   `menu_type` tinyint(3) NOT NULL DEFAULT '0' COMMENT '菜单类型1导航2按钮3仅接口',
   `is_vadypage` int(1) NOT NULL DEFAULT '0' COMMENT '是否动态页面',
   `api_prefix` varchar(255) NOT NULL DEFAULT '' COMMENT '接口前缀',
@@ -11,21 +12,25 @@ CREATE TABLE `ia_core_menu` (
   `api_method` varchar(255) NOT NULL DEFAULT '' COMMENT '接口请求方法',
   `is_hide` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否隐藏',
   `sortnum` int(11) NOT NULL DEFAULT '0' COMMENT '排序',
+  `delete_time` int(11) NOT NULL DEFAULT '0' COMMENT '删除时间',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='后台菜单表';
 
-INSERT INTO `ia_core_menu` (`id`, `module`, `path`, `pmenu`, `title`, `menu_type`, `is_vadypage`, `api_prefix`, `api_suffix`, `api_method`, `is_hide`, `sortnum`)
+INSERT INTO `ia_core_menu` (`id`, `module`, `path`, `pmenu`, `title`, `tip`, `menu_type`, `is_vadypage`, `api_prefix`, `api_suffix`, `api_method`, `is_hide`, `sortnum`, `delete_time`)
 VALUES
-	(1, 'core', 'developer', '', '开发者', 0, 0, '', '', '', 0, 99),
-	(2, 'core', '/core/menu/lists', 'developer', '菜单列表', 3, 1, 'v1', '', 'GET', 0, 0),
-	(3, 'core', '/core/role/trees', 'system', '权限管理', 1, 1, 'v1', '', 'GET', 0, 0),
-	(4, 'core', '/core/user/lists', 'system', '用户列表', 1, 1, 'v1', '', 'GET', 0, 0),
-	(5, 'core', '/core/user/edit', '/core/user/lists', '修改用户', 2, 1, 'v1', '/:id', 'GET|PUT', 0, 0),
-	(6, 'core', '/core/user/delete', '/core/user/delete', '删除用户', 2, 1, 'v1', '/:id', 'DELETE', 0, 0),
-	(7, 'core', '/core/user/add', '/core/user/lists', '添加用户', 2, 1, 'v1', '', 'GET|POST', 0, 0),
-	(8, 'core', '/core/config/lists', 'system', '系统配置', 1, 1, 'v1', '', 'GET', 0, 0),
-	(9, 'core', 'system', '', '系统', 0, 0, '', '', '', 0, 1),
-	(10, 'core', '/core/menu/trees', 'developer', '菜单管理', 1, 1, 'v1', '', 'GET', 0, 0);
+	(1, 'core', '/developer', '', '开发者', '', 0, 0, '', '', '', 0, 99, 0),
+	(2, 'core', '/core/menu/lists', '/developer', '菜单列表', '', 3, 1, 'v1', '', 'GET', 0, 0, 0),
+	(3, 'core', '/core/role/trees', '/system', '权限管理', '', 1, 1, 'v1', '', 'GET', 0, 0, 0),
+	(4, 'core', '/core/user/lists', '/system', '用户列表', '', 1, 1, 'v1', '', 'GET', 0, 0, 0),
+	(5, 'core', '/core/user/edit', '/core/user/lists', '修改用户', '', 2, 1, 'v1', '/:id', 'GET|PUT', 0, 0, 0),
+	(6, 'core', '/core/user/delete', '/core/user/lists', '删除用户', '', 2, 1, 'v1', '/:id', 'DELETE', 0, 0, 0),
+	(7, 'core', '/core/user/add', '/core/user/lists', '添加用户', '', 2, 1, 'v1', '', 'GET|POST', 0, 0, 0),
+	(8, 'core', '/core/config/lists', '/system', '系统配置', '', 1, 1, 'v1', '', 'GET', 0, 0, 0),
+	(9, 'core', '/system', '', '系统', '', 0, 0, '', '', '', 0, 1, 0),
+	(10, 'core', '/core/menu/trees', '/developer', '菜单管理', '管理系统后台左侧菜单', 1, 1, 'v1', '', 'GET', 0, 0, 0),
+	(11, 'core', '/core/role/edit', '/core/role/trees', '修改角色', '', 2, 1, 'v1', '/:id', 'GET|PUT', 0, 0, 0),
+	(12, 'core', '/core/role/delete', '/core/role/trees', '删除角色', '', 2, 1, 'v1', '/:id', 'DELETE', 0, 0, 0),
+	(13, 'core', '/core/role/add', '/core/role/trees', '添加角色', '', 2, 1, 'v1', '', 'GET|POST', 0, 0, 0);
 
 
 CREATE TABLE `ia_core_user` (
@@ -44,7 +49,7 @@ CREATE TABLE `ia_core_user` (
 
 INSERT INTO `ia_core_user` (`id`, `nickname`, `username`, `password`, `avatar`, `extend_info`, `status`, `roles`, `register_time`, `delete_time`)
 VALUES
-	(1, '超级管理员', 'admin', '6efb207798cfc6c7819f99cbe03132b0', '1', NULL, 1, '', 0, 0);
+	(1, '超级管理员', 'admin', '6efb207798cfc6c7819f99cbe03132b0', '1', NULL, 1, 'super_admin,admin', 0, 0);
 
 
 CREATE TABLE `ia_core_role` (
@@ -60,11 +65,11 @@ CREATE TABLE `ia_core_role` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户角色表';
 
-INSERT INTO `ia_core_role` (`id`, `pid`, `name`, `title`, `view_auth`, `api_auth`, `sortnum`, `status`, `delete_time`)
+INSERT INTO `ia_core_role` (`id`, `pid`, `name`, `title`, `admin_auth`, `api_auth`, `sortnum`, `status`, `delete_time`)
 VALUES
-	(1, 0, 'super_admin', '超级管理员', '', NULL, 0, 0, 0),
-	(2, 1, 'admin', '管理员', '', NULL, 0, 0, 0),
-	(3, 2, 'operation', '运营部', '', NULL, 0, 0, 0);
+	(1, 0, 'super_admin', '超级管理员', '', '', 0, 1, 0),
+	(2, 1, 'admin', '管理员', '/v1/admin/core/role/trees,/v1/admin/core/role/edit,/v1/admin/core/role/delete,/v1/admin/core/role/add,/v1/admin/core/user/lists,/v1/admin/core/user/edit,/v1/admin/core/user/delete,/v1/admin/core/user/add,/v1/admin/core/config/lists', '', 0, 1, 0),
+	(3, 2, 'operation', '运营部', '', NULL, 0, 1, 0);
 
 
 CREATE TABLE `ia_core_identity` (
