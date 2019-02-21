@@ -1,0 +1,259 @@
+<?php
+/**
+ * +----------------------------------------------------------------------
+ * | InitAdmin/actionphp [ InitAdmin渐进式模块化通用后台 ]
+ * +----------------------------------------------------------------------
+ * | Copyright (c) 2018-2019 http://initadmin.net All rights reserved.
+ * +----------------------------------------------------------------------
+ * | Licensed ( http://www.apache.org/licenses/LICENSE-2.0 )
+ * +----------------------------------------------------------------------
+ * | Author: jry <ijry@qq.com>
+ * +----------------------------------------------------------------------
+*/
+namespace app\core\controller\admin;
+
+use think\Db;
+use think\Validate;
+use think\facade\Request;
+use app\core\controller\common\Admin;
+use app\core\util\Tree;
+
+/**
+ * 用户角色
+ */
+class UserRole extends Admin
+{
+    private $core_role;
+    private $core_user;
+
+    protected function initialize()
+    {
+        parent::initialize();
+        $this->core_role = Db::name('core_role');
+        $this->core_user = Db::name('core_user');
+    }
+
+    /**
+     * 角色成员列表
+     *
+     * @return \think\Response
+     */
+    public function lists($name)
+    {
+        $data_list = $this->core_user
+            ->where('delete_time', 0)
+            ->where('', 'EXP', Db::raw("FIND_IN_SET('$name', roles)"))
+            ->select();
+        foreach ($data_list as $key => &$val) {
+            $val['role_name'] = $name;
+        }
+
+        return json(
+            [
+                'code' => 200, 'msg' => '成功', 'data' => [
+                    'data_list' => $data_list,
+                    'dynamic_data' => [
+                        'top_button_list' => [
+                            'add' => [
+                                'page_type' => 'modal',
+                                'modal_data' => [
+                                    'show' => false,
+                                    'type' => 'form',
+                                    'title' => '添加成员',
+                                    'api' => 'v1/admin/core/user_role/add/' . $name,
+                                    'api_blank' => '',
+                                    'width' => '600',
+                                ],
+                                'route' => '',
+                                'title' => '添加成员',
+                                'type' => 'default',
+                                'size' => '',
+                                'shape' => '',
+                                'icon' => ''
+                            ]
+                        ],
+                        'right_button_list' => [
+                            'delete' => [
+                                'page_type' => 'modal',
+                                'modal_data' => [
+                                    'show' => false,
+                                    'type' => 'confirm',
+                                    'title' => '确认要删除该角色吗？',
+                                    'api' => 'v1/admin/core/user_role/delete',
+                                    'api_suffix' => ['id', 'role_name'],
+                                    'width' => '600',
+                                    'okText' => '确认删除',
+                                    'cancelText' => '取消操作',
+                                    'content' => '<p>删除后该用户将无法操作系统后台</p>',
+                                ],
+                                'route' => '',
+                                'title' => '删除',
+                                'type' => 'default',
+                                'size' => '',
+                                'shape' => '',
+                                'icon' => ''
+                            ]
+                        ],
+                        'columns' => [
+                            [
+                                'title' => 'UID',
+                                'key' => 'id',
+                                'width' => '80px'
+                            ],
+                            [
+                                'title' => '角色',
+                                'key' => 'role_name',
+                                'width' => '100px'
+                            ],
+                            [
+                                'title' => '昵称',
+                                'key' => 'nickname',
+                                'minWidth' => '150px'
+                            ],
+                            [
+                                'title' => '用户名',
+                                'key' => 'username',
+                                'minWidth' => '150px'
+                            ],
+                            [
+                                'title' => '手机号',
+                                'key' => 'mobile',
+                                'minWidth' => '150px'
+                            ],
+                            [
+                                'title' => '邮箱',
+                                'key' => 'email',
+                                'minWidth' => '150px'
+                            ],
+                            [
+                                'title' => '操作',
+                                'key' => 'right_button_list',
+                                'minWidth' => '50px',
+                                'type' => 'template',
+                                'template' => 'right_button_list'
+                            ]
+                        ]
+                    ]
+                ]
+            ]
+        );
+    }
+
+    /**
+     * 添加
+     *
+     * @return \think\Response
+     */
+    public function add($name)
+    {
+        if(request()->isPost()){
+            // 数据验证
+            $validate = Validate::make([
+                'uid'  => 'number',
+                'role_name' => 'require'
+            ],
+            [
+                'uid.number' => 'pid必须数字',
+                'role_name.require' => '角色名称必须',
+            ]);
+            $data = input('post.');
+            if (!$validate->check($data)) {
+                return json(['code' => 200, 'msg' => $validate->getError(), 'data' => []]);
+            }
+
+            // 数据构造
+            $user_info  = $this->core_user->where('id', $data['uid'])->find();
+            if ($user_info['roles']) {
+                $user_info['roles'] = explode(',', $user_info['roles']);
+                $user_info['roles'] = array_unique(array_merge($user_info['roles'], [$data['role_name']]));
+            } else {
+                $user_info['roles'] = [$data['role_name']];
+            }
+            
+            // 存储数据
+            $ret = $this->core_user
+                ->data(['id' => $data['uid'],'roles' => implode(',', $user_info['roles'])])
+                ->update();
+            if ($ret) {
+                return json(['code' => 200, 'msg' => '添加角色成员成功', 'data' => []]);
+            } else {
+                return json(['code' => 0, 'msg' => '添加角色成员失败', 'data' => []]);
+            }
+        } else {
+            return json(
+                [
+                    'code' => 200,
+                    'msg' => '成功',
+                    'data' => [
+                        'form_data' => [
+                            'form_method' => 'post',
+                            'form_items' => [
+                                [
+                                    'name' => 'role_name',
+                                    'title' => '角色名称',
+                                    'type' => 'text',
+                                    'placeholder' => '请输入角色名称',
+                                    'extra' => [
+                                        'readonly' => true
+                                    ],
+                                    'tip' => '角色名称'
+                                ],
+                                [
+                                    'name' => 'uid',
+                                    'title' => 'UID',
+                                    'type' => 'text',
+                                    'extra' => [
+                                        'readonly' => false
+                                    ],
+                                    'placeholder' => '请输入uid',
+                                    'tip' => 'uid是用户唯一标识可以在用户列表查到'
+                                ]
+                            ],
+                            'form_values' => [
+                                'uid' => '',
+                                'role_name' => $name,
+                            ],
+                            'form_rules' => [
+                                'uid' =>  [
+                                    [
+                                        'required' => true,
+                                        'message' => '请填写uid',
+                                        'trigger' => 'change'
+                                    ]
+                                ]
+                            ]
+                        ]
+                    ]
+                ]
+            );
+        } 
+    }
+
+    /**
+     * 删除
+     * 
+     * @return \think\Response
+     */
+    public function delete($uid, $name)
+    {
+        if ($uid == 1) {
+            return json(['code' => 0,'msg' => '超级管理员不允许删除','data' => []]);
+        }
+        $user_info  = $this->core_user->where('id', $uid)->find();
+        if ($user_info['roles']) {
+            $user_info['roles'] = explode(',', $user_info['roles']);
+            foreach ($user_info['roles'] as $key => $val) {
+                if ($val == $name) {
+                    unset($user_info['roles'][$key]);
+                }
+            }
+        }
+        $ret = $this->core_user
+            ->update(['id' => $uid, 'roles' => implode(',', $user_info['roles'])]);
+        if ($ret) {
+            return json(['code' => 200,'msg' => '删除成功','data' => []]);
+        } else {
+            return json(['code' => 200,'msg' => '删除错误','data' => []]);
+        }
+    }
+}

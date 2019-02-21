@@ -52,8 +52,11 @@ class User extends Admin
                             'add' => [
                                 'page_type' => 'modal',
                                 'modal_data' => [
+                                    'show' => false,
+                                    'type' => 'form',
                                     'title' => '添加用户',
                                     'api' => 'v1/admin/core/user/add',
+                                    'api_blank' => '',
                                     'width' => '600',
                                 ],
                                 'route' => '',
@@ -68,8 +71,11 @@ class User extends Admin
                             'edit' => [
                                 'page_type' => 'modal',
                                 'modal_data' => [
+                                    'show' => false,
+                                    'type' => 'form',
                                     'title' => '修改用户信息',
                                     'api' => 'v1/admin/core/user/edit',
+                                    'api_blank' => '',
                                     'width' => '600',
                                 ],
                                 'route' => '',
@@ -82,6 +88,7 @@ class User extends Admin
                             'delete' => [
                                 'page_type' => 'modal',
                                 'modal_data' => [
+                                    'show' => false,
                                     'type' => 'confirm',
                                     'title' => '确认要删除该用户吗？',
                                     'api' => 'v1/admin/core/user/delete',
