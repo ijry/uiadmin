@@ -36,20 +36,6 @@ class Role extends Admin
     }
 
     /**
-     * 角色成员列表
-     *
-     * @return \think\Response
-     */
-    public function member($name)
-    {
-        $data_list = $this->core_user
-            ->where('delete_time', 0)
-            ->where('', 'EXP', Db::raw("FIND_IN_SET('$name', roles)"))
-            ->select();
-        dump($data_list);
-    }
-
-    /**
      * 角色列表
      *
      * @return \think\Response
@@ -71,8 +57,10 @@ class Role extends Admin
                             'add' => [
                                 'page_type' => 'modal',
                                 'modal_data' => [
+                                    'show' => false,
                                     'title' => '添加角色',
                                     'api' => 'v1/admin/core/role/add',
+                                    'api_blank' => '',
                                     'width' => '800',
                                 ],
                                 'route' => '',
@@ -87,9 +75,14 @@ class Role extends Admin
                             'member' => [
                                 'page_type' => 'modal',
                                 'modal_data' => [
+                                    'show' => false,
+                                    'type' => 'list',
                                     'title' => '角色成员',
-                                    'api' => 'v1/admin/core/role/member',
-                                    'width' => '800',
+                                    'route' => '/core/user_role/lists',
+                                    'api' => 'v1/admin/core/user_role/lists',
+                                    'api_blank' => '',
+                                    'api_suffix' => ['name'],
+                                    'width' => '1000',
                                 ],
                                 'route' => '',
                                 'title' => '成员',
@@ -101,8 +94,11 @@ class Role extends Admin
                             'edit' => [
                                 'page_type' => 'modal',
                                 'modal_data' => [
+                                    'show' => false,
+                                    'type' => 'form',
                                     'title' => '修改角色',
                                     'api' => '/v1/admin/core/role/edit',
+                                    'api_blank' => '',
                                     'width' => '800',
                                 ],
                                 'route' => '',
@@ -269,7 +265,8 @@ class Role extends Admin
                                             ],
                                             [
                                                 'title' => '菜单类型',
-                                                'key' => 'menu_type'
+                                                'key' => 'menu_type',
+                                                'width' => '40px'
                                             ]
                                         ],
                                         'data' => $menu_tree
@@ -438,7 +435,8 @@ class Role extends Admin
                                         ],
                                         [
                                             'title' => '菜单类型',
-                                            'key' => 'menu_type'
+                                            'key' => 'menu_type',
+                                            'width' => '40px'
                                         ]
                                     ],
                                     'data' => $menu_tree
