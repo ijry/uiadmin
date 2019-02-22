@@ -6,7 +6,7 @@ CREATE TABLE `ia_core_menu` (
   `title` varchar(255) NOT NULL DEFAULT '' COMMENT '菜单标题',
   `tip` varchar(255) NOT NULL DEFAULT '' COMMENT '提示',
   `menu_type` tinyint(3) NOT NULL DEFAULT '0' COMMENT '菜单类型1导航2按钮3仅接口',
-  `is_vadypage` int(1) NOT NULL DEFAULT '0' COMMENT '是否动态页面',
+  `is_iadypage` int(1) NOT NULL DEFAULT '0' COMMENT '是否动态页面',
   `api_prefix` varchar(255) NOT NULL DEFAULT '' COMMENT '接口前缀',
   `api_suffix` varchar(255) NOT NULL DEFAULT '' COMMENT '接口后缀',
   `api_method` varchar(255) NOT NULL DEFAULT '' COMMENT '接口请求方法',
@@ -16,7 +16,7 @@ CREATE TABLE `ia_core_menu` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='后台菜单表';
 
-INSERT INTO `ia_core_menu` (`id`, `module`, `path`, `pmenu`, `title`, `tip`, `menu_type`, `is_vadypage`, `api_prefix`, `api_suffix`, `api_method`, `is_hide`, `sortnum`, `delete_time`)
+INSERT INTO `ia_core_menu` (`id`, `module`, `path`, `pmenu`, `title`, `tip`, `menu_type`, `is_iadypage`, `api_prefix`, `api_suffix`, `api_method`, `is_hide`, `sortnum`, `delete_time`)
 VALUES
 	(1, 'core', '/developer', '', '开发者', '', 0, 0, '', '', '', 0, 99, 0),
 	(2, 'core', '/core/menu/lists', '/developer', '菜单列表', '', 3, 1, 'v1', '', 'GET', 0, 0, 0),

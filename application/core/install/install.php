@@ -23,7 +23,7 @@ return [
         'developer'    => 'jry',
         'website'      => 'http://initadmin.net',
         'version'      => '0.1.0',
-        'build'        => 'Alpha1_201902132200'
+        'build'        => 'beta1_201902221237'
     ],
 
     // API接口
@@ -40,7 +40,7 @@ return [
         ]
     ],
 
-    // 路由API注释
+    // API接口文档
     'api_doc'     => [
         'v1' => [
             'user/login' => [

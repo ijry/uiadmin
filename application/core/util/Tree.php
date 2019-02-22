@@ -33,7 +33,7 @@ class Tree
     private function _array2tree($list, $level = 0, $title = 'title')
     {
         foreach ($list as $key => $val) {
-            $title_prefix = str_repeat("&nbsp;", $level * 4);
+            $title_prefix = str_repeat("-", $level * 4);
             $title_prefix .= "┝ ";
             $val['level']        = $level;
             $val['title_prefix'] = $level == 0 ? '' : $title_prefix;
