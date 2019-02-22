@@ -59,7 +59,7 @@ class Role extends Admin
                                 'modal_data' => [
                                     'show' => false,
                                     'title' => '添加角色',
-                                    'api' => 'v1/admin/core/role/add',
+                                    'api' => '/v1/admin/core/role/add',
                                     'api_blank' => '',
                                     'width' => '800',
                                 ],
@@ -78,8 +78,7 @@ class Role extends Admin
                                     'show' => false,
                                     'type' => 'list',
                                     'title' => '角色成员',
-                                    'route' => '/core/user_role/lists',
-                                    'api' => 'v1/admin/core/user_role/lists',
+                                    'api' => '/v1/admin/core/user_role/lists',
                                     'api_blank' => '',
                                     'api_suffix' => ['name'],
                                     'width' => '1000',
@@ -113,7 +112,7 @@ class Role extends Admin
                                 'modal_data' => [
                                     'type' => 'confirm',
                                     'title' => '确认要删除该角色吗？',
-                                    'api' => 'v1/admin/core/role/delete',
+                                    'api' => '/v1/admin/core/role/delete',
                                     'width' => '600',
                                     'okText' => '确认删除',
                                     'cancelText' => '取消操作',
@@ -264,7 +263,7 @@ class Role extends Admin
                                                 'key' => 'admin_auth'
                                             ],
                                             [
-                                                'title' => '菜单类型',
+                                                'title' => '类型',
                                                 'key' => 'menu_type',
                                                 'width' => '40px'
                                             ]
@@ -434,7 +433,7 @@ class Role extends Admin
                                             'key' => 'admin_auth'
                                         ],
                                         [
-                                            'title' => '菜单类型',
+                                            'title' => '类型',
                                             'key' => 'menu_type',
                                             'width' => '40px'
                                         ]

@@ -39,6 +39,11 @@ class Menu extends Admin
         $data_list = $this->core_menu
             ->order('sortnum asc')
             ->select();
+        foreach ($data_list as $key => &$val) {
+            if ($val['menu_type'] > 0) {
+                $val['admin_api'] = '/' . $val['api_prefix'] . '/admin' . $val['path'] . $val['api_suffix'];
+            }
+        }
         $tree      = new Tree();
         $menu_tree = $tree->list2tree($data_list, 'path', 'pmenu', 'children', 0, false);
         return json(['code' => 200, 'msg' => '成功', 'data' => [
@@ -49,7 +54,7 @@ class Menu extends Admin
                         'page_type' => 'modal',
                         'modal_data' => [
                             'title' => '添加菜单',
-                            'api' => 'v1/admin/core/menu/add',
+                            'api' => '/v1/admin/core/menu/add',
                             'width' => '600',
                         ],
                         'route' => '',
@@ -65,7 +70,7 @@ class Menu extends Admin
                         'page_type' => 'modal',
                         'modal_data' => [
                             'title' => '修改菜单',
-                            'api' => 'v1/admin/core/menu/edit',
+                            'api' => '/v1/admin/core/menu/edit',
                             'width' => '600',
                         ],
                         'route' => '',
@@ -80,7 +85,7 @@ class Menu extends Admin
                         'modal_data' => [
                             'type' => 'confirm',
                             'title' => '确认要删除该菜单吗？',
-                            'api' => 'v1/admin/core/menu/delete',
+                            'api' => '/v1/admin/core/menu/delete',
                             'width' => '600',
                             'okText' => '确认删除',
                             'cancelText' => '取消操作',
@@ -108,16 +113,27 @@ class Menu extends Admin
                     [
                         'title' => '菜单标题',
                         'key' => 'title',
-                        'minWidth' => '50px'
+                        'minWidth' => '150px'
                     ],
                     [
-                        'title' => '菜单类型',
+                        'title' => '类型',
                         'key' => 'menu_type',
-                        'width' => '80px'
+                        'width' => '50px'
+                    ],
+                    [
+                        'title' => '请求方法',
+                        'key' => 'api_method',
+                        'width' => '100px'
+                    ],
+                    [
+                        'title' => '后台接口',
+                        'key' => 'admin_api',
+                        'minWidth' => '150px'
                     ],
                     [
                         'title' => '排序',
-                        'key' => 'sortnum'
+                        'key' => 'sortnum',
+                        'width' => '50px'
                     ],
                     [
                         'title' => '操作',
