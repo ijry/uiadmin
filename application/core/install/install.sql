@@ -1,3 +1,24 @@
+CREATE TABLE `ia_core_module` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  `name` varchar(255) NOT NULL COMMENT '模块名称',
+  `title` varchar(255) NOT NULL COMMENT '模块标题',
+  `description` varchar(255) NOT NULL DEFAULT '' COMMENT '模块描述',
+  `developer` varchar(255) NOT NULL DEFAULT '' COMMENT '开发者',
+  `website` varchar(255) NOT NULL DEFAULT '' COMMENT '开发者网站',
+  `version` varchar(255) NOT NULL DEFAULT '' COMMENT '版本号',
+  `build` varchar(255) NOT NULL DEFAULT '' COMMENT 'build版本',
+  `api` longtext COMMENT 'api数据',
+  `api_dov` longtext COMMENT 'api接口文档',
+  `status` tinyint(1) NOT NULL DEFAULT '0' COMMENT '状态',
+  `sortnum` int(11) NOT NULL DEFAULT '0' COMMENT '排序',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='后台模块表';
+
+INSERT INTO `ia_core_module` (`id`, `name`, `title`, `description`, `developer`, `website`, `version`, `build`, `api`, `api_dov`, `status`, `sortnum`)
+VALUES
+	(1, 'core', '核心', 'InitAdmin/actionphp核心模块', 'jry', 'https://initadmin.net', '0.1.0', 'beta1_201902221237', NULL, NULL, 1, 1);
+
+
 CREATE TABLE `ia_core_menu` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT 'ID',
   `module` varchar(255) NOT NULL COMMENT '模块名称',
@@ -18,19 +39,34 @@ CREATE TABLE `ia_core_menu` (
 
 INSERT INTO `ia_core_menu` (`id`, `module`, `path`, `pmenu`, `title`, `tip`, `menu_type`, `is_iadypage`, `api_prefix`, `api_suffix`, `api_method`, `is_hide`, `sortnum`, `delete_time`)
 VALUES
-	(1, 'core', '/developer', '', '开发者', '', 0, 0, '', '', '', 0, 99, 0),
-	(2, 'core', '/core/menu/lists', '/developer', '菜单列表', '', 3, 1, 'v1', '', 'GET', 0, 0, 0),
-	(3, 'core', '/core/role/trees', '/system', '权限管理', '', 1, 1, 'v1', '', 'GET', 0, 0, 0),
-	(4, 'core', '/core/user/lists', '/system', '用户列表', '', 1, 1, 'v1', '', 'GET', 0, 0, 0),
-	(5, 'core', '/core/user/edit', '/core/user/lists', '修改用户', '', 2, 1, 'v1', '/:id', 'GET|PUT', 0, 0, 0),
-	(6, 'core', '/core/user/delete', '/core/user/lists', '删除用户', '', 2, 1, 'v1', '/:id', 'DELETE', 0, 0, 0),
-	(7, 'core', '/core/user/add', '/core/user/lists', '添加用户', '', 2, 1, 'v1', '', 'GET|POST', 0, 0, 0),
-	(8, 'core', '/core/config/lists', '/system', '系统配置', '', 1, 1, 'v1', '', 'GET', 0, 0, 0),
-	(9, 'core', '/system', '', '系统', '', 0, 0, '', '', '', 0, 1, 0),
+	(26, 'core', '/core/config/add', '/core/config/lists', '增加配置', '增加系统配置', 2, 1, 'v1', '', 'GET|POST', 0, 0, 0),
+	(27, 'core', '/core/config/edit', '/core/config/lists', '修改配置', '修改系统配置', 2, 1, 'v1', '', 'GET|PUT', 0, 0, 0),
+	(28, 'core', '/core/config/groupSave', '/core/config/lists', '批量设置', '批量修改系统配置的值', 1, 1, 'v1', '', 'GET|PUT', 0, 0, 0),
+	(8, 'core', '/core/config/lists', '/system', '系统配置', '系统常用设置', 1, 1, 'v1', '', 'GET', 0, 0, 0),
+	(18, 'core', '/core/menu/add', '/core/menu/trees', '添加菜单', '添加后台菜单(接口)', 2, 1, 'v1', '', 'GET|POST', 0, 0, 0),
+	(20, 'core', '/core/menu/delete', '/core/menu/trees', '删除菜单', '删除后台菜单(接口)', 2, 1, 'v1', '/:id', 'DELETE', 0, 0, 0),
+	(19, 'core', '/core/menu/edit', '/core/menu/trees', '修改菜单', '修改后台菜单(接口)', 2, 1, 'v1', '/:id', 'GET|PUT', 0, 0, 0),
+	(2, 'core', '/core/menu/lists', '/developer', '菜单列表', '管理后台左侧的菜单导航', 3, 1, 'v1', '', 'GET', 0, 0, 0),
 	(10, 'core', '/core/menu/trees', '/developer', '菜单管理', '管理系统后台左侧菜单', 1, 1, 'v1', '', 'GET', 0, 0, 0),
-	(11, 'core', '/core/role/edit', '/core/role/trees', '修改角色', '', 2, 1, 'v1', '/:id', 'GET|PUT', 0, 0, 0),
-	(12, 'core', '/core/role/delete', '/core/role/trees', '删除角色', '', 2, 1, 'v1', '/:id', 'DELETE', 0, 0, 0),
-	(13, 'core', '/core/role/add', '/core/role/trees', '添加角色', '', 2, 1, 'v1', '', 'GET|POST', 0, 0, 0);
+	(23, 'core', '/core/module/add', '/core/module/lists', '创建模块', '创建一个新模块', 2, 1, 'v1', '', 'GET|POST', 0, 0, 0),
+	(24, 'core', '/core/module/edit', '/core/module/lists', '修改模块', '修改模块信息', 2, 1, 'v1', '', 'GET|PUT', 0, 0, 0),
+	(25, 'core', '/core/module/export', '/core/module/lists', '导出模块', '导出模块信息便于分享模块', 2, 1, 'v1', '', 'GET', 0, 0, 0),
+	(22, 'core', '/core/module/lists', '/developer', '模块管理', '管理系统安装的功能模块', 1, 1, 'v1', '', 'GET', 0, 0, 0),
+	(13, 'core', '/core/role/add', '/core/role/trees', '添加角色', '添加角色', 2, 1, 'v1', '', 'GET|POST', 0, 0, 0),
+	(12, 'core', '/core/role/delete', '/core/role/trees', '删除角色', '删除角色', 2, 1, 'v1', '/:id', 'DELETE', 0, 0, 0),
+	(11, 'core', '/core/role/edit', '/core/role/trees', '修改角色', '修改角色信息及权限', 2, 1, 'v1', '/:id', 'GET|PUT', 0, 0, 0),
+	(3, 'core', '/core/role/trees', '/system', '权限管理', '管理系统角色及权限', 1, 1, 'v1', '', 'GET', 0, 0, 0),
+	(21, 'core', '/core/system/checkUpdate', '/system', '检查更新', '检查InitAdmin新版本', 3, 1, 'v1', '', 'DELETE', 0, 0, 0),
+	(17, 'core', '/core/system/cleanRuntime', '/system', '清空缓存', '清空服务器端缓存', 3, 1, 'v1', '', 'DELETE', 0, 0, 0),
+	(7, 'core', '/core/user/add', '/core/user/lists', '添加用户', '添加用户', 2, 1, 'v1', '', 'GET|POST', 0, 0, 0),
+	(6, 'core', '/core/user/delete', '/core/user/lists', '删除用户', '软删除用户', 2, 1, 'v1', '/:id', 'DELETE', 0, 0, 0),
+	(5, 'core', '/core/user/edit', '/core/user/lists', '修改用户', '修改用户信息', 2, 1, 'v1', '/:id', 'GET|PUT', 0, 0, 0),
+	(4, 'core', '/core/user/lists', '/system', '用户列表', '系统注册用户列表', 1, 1, 'v1', '', 'GET', 0, 0, 0),
+	(15, 'core', '/core/user_role/add', '/core/user_role/lists', '添加角色成员', '添加一个新角色成员', 2, 1, 'v1', '/:name', 'GET|POST', 0, 0, 0),
+	(16, 'core', '/core/user_role/delete', '/core/user_role/lists', '删除角色成员', '删除一个角色成员', 2, 1, 'v1', '/:uid/:name', 'DELETE', 0, 0, 0),
+	(14, 'core', '/core/user_role/lists', '/core/role/trees', '角色成员', '管理角色成员', 2, 1, 'v1', '/:name', 'GET', 0, 0, 0),
+	(1, 'core', '/developer', '', '开发者', '一般是开发者采用得到的工具', 0, 0, '', '', '', 0, 99, 0),
+	(9, 'core', '/system', '', '系统', '核心系统相关功能', 0, 0, '', '', '', 0, 1, 0);
 
 
 CREATE TABLE `ia_core_user` (
@@ -57,7 +93,7 @@ CREATE TABLE `ia_core_role` (
   `pid` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '上级',
   `name` varchar(255) NOT NULL COMMENT '角色名称',
   `title` varchar(255) NOT NULL DEFAULT '' COMMENT '角色标题',
-  `view_auth` longtext COMMENT '视图权限',
+  `admin_auth` longtext COMMENT '后台权限',
   `api_auth` longtext COMMENT '接口权限',
   `sortnum` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '排序',
   `status` tinyint(1) NOT NULL DEFAULT '0' COMMENT '状态',

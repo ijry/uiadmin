@@ -48,108 +48,40 @@ class Menu extends Admin
         }
         $tree      = new Tree();
         $menu_tree = $tree->list2tree($data_list, 'path', 'pmenu', 'children', 0, false);
+
+        //构造动态页面数据
+        $ia_dylist      = new \app\core\util\iadypage\IaDylist();
+        $dynamic_data = $ia_dylist->init()
+            ->addTopButton('add', '添加菜单', ['api' => '/v1/admin/core/menu/add'])
+            ->addRightButton('edit', '修改', ['api' => '/v1/admin/core/menu/edit', 'title' => '修改菜单'])
+            ->addRightButton('delete', '删除', [
+                'api' => '/v1/admin/core/menu/delete',
+                'title' => '确认要删除该菜单吗？',
+                'modal_type' => 'confirm',
+                'width' => '600',
+                'okText' => '确认删除',
+                'cancelText' => '取消操作',
+                'content' => '<p>删除菜单不可恢复</p>',
+            ])
+            ->addColumn('id' , 'ID', ['width' => '5px'])
+            ->addColumn('module', '所属模块', ['width' => '80px'])
+            ->addColumn('title', '菜单标题', ['width' => '150px'])
+            ->addColumn('menu_type', '类型', ['width' => '50px'])
+            ->addColumn('api_method', '请求方法', ['width' => '100px'])
+            ->addColumn('admin_api', '后台接口', ['minWidth' => '150px'])
+            ->addColumn('sortnum', '排序', ['width' => '50px'])
+            ->addColumn('admin_api', '后台接口', ['minWidth' => '150px'])
+            ->addColumn('right_button_list', '操作', [
+                'minWidth' => '50px',
+                'type' => 'template',
+                'template' => 'right_button_list'
+            ])
+            ->getData();
+
+        //返回数据
         return json(['code' => 200, 'msg' => '成功', 'data' => [
             'data_list' => $menu_tree,
-            'dynamic_data' => [
-                'top_button_list' => [
-                    'add' => [
-                        'page_type' => 'modal',
-                        'modal_data' => [
-                            'show' => false,
-                            'title' => '添加菜单',
-                            'api' => '/v1/admin/core/menu/add',
-                            'api_blank' => '',
-                            'width' => '800',
-                        ],
-                        'route' => '',
-                        'title' => '添加菜单',
-                        'type' => 'default',
-                        'size' => '',
-                        'shape' => '',
-                        'icon' => ''
-                    ]
-                ],
-                'right_button_list' => [
-                    'edit' => [
-                        'page_type' => 'modal',
-                        'modal_data' => [
-                            'show' => false,
-                            'title' => '修改菜单',
-                            'api' => '/v1/admin/core/menu/edit',
-                            'api_blank' => '',
-                            'width' => '800',
-                        ],
-                        'route' => '',
-                        'title' => '修改',
-                        'type' => 'default',
-                        'size' => '',
-                        'shape' => '',
-                        'icon' => ''
-                    ],
-                    'delete' => [
-                        'page_type' => 'modal',
-                        'modal_data' => [
-                            'type' => 'confirm',
-                            'title' => '确认要删除该菜单吗？',
-                            'api' => '/v1/admin/core/menu/delete',
-                            'width' => '600',
-                            'okText' => '确认删除',
-                            'cancelText' => '取消操作',
-                            'content' => '<p>删除菜单不可恢复</p></p>',
-                        ],
-                        'route' => '',
-                        'title' => '删除',
-                        'type' => 'default',
-                        'size' => '',
-                        'shape' => '',
-                        'icon' => ''
-                    ]
-                ],
-                'columns' => [
-                    [
-                        'title' => 'ID',
-                        'key' => 'id',
-                        'width' => '40px'
-                    ],
-                    [
-                        'title' => '所属模块',
-                        'key' => 'module',
-                        'width' => '80px'
-                    ],
-                    [
-                        'title' => '菜单标题',
-                        'key' => 'title',
-                        'minWidth' => '150px'
-                    ],
-                    [
-                        'title' => '类型',
-                        'key' => 'menu_type',
-                        'width' => '50px'
-                    ],
-                    [
-                        'title' => '请求方法',
-                        'key' => 'api_method',
-                        'width' => '100px'
-                    ],
-                    [
-                        'title' => '后台接口',
-                        'key' => 'admin_api',
-                        'minWidth' => '150px'
-                    ],
-                    [
-                        'title' => '排序',
-                        'key' => 'sortnum',
-                        'width' => '50px'
-                    ],
-                    [
-                        'title' => '操作',
-                        'key' => 'right_button_list',
-                        'minWidth' => '50px',
-                        'type' => 'template',
-                        'template' => 'right_button_list'
-                    ]
-                ]
-            ]
+            'dynamic_data' => $dynamic_data
         ]]);
     }
 
@@ -161,7 +93,7 @@ class Menu extends Admin
     public function add()
     {
         if(request()->isPost()){
-            // 数据验证
+            //数据验证
             $validate = Validate::make([
                 'pid'  => 'number',
                 'name' => 'require',
@@ -177,7 +109,7 @@ class Menu extends Admin
                 return json(['code' => 200, 'msg' => $validate->getError(), 'data' => []]);
             }
             
-            // 数据构造
+            //数据构造
             $data_db = [];
             $data_db['pid'] = isset($data['pid']) ? $data['pid'] : '';
             $data_db['name'] = $data['name'];
@@ -187,7 +119,7 @@ class Menu extends Admin
             $data_db['api_auth'] = isset($data['api_auth']) ? implode(',', $data['api_auth']) : ''; //接口权限
             $data_db['status'] = 1;
             
-            // 存储数据
+            //存储数据
             $ret = $this->core_role->insert($data_db);
             if ($ret) {
                 return json(['code' => 200, 'msg' => '添加角色成功', 'data' => []]);
@@ -206,7 +138,7 @@ class Menu extends Admin
                 $module_list_select[$key]['value'] = $val['name'];
             }
 
-            // 获取菜单基于标题的树状列表
+            //获取菜单基于标题的树状列表
             $menu_list = $this->core_menu
                 ->order('sortnum asc')
                 ->select();

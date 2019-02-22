@@ -42,114 +42,50 @@ class Role extends Admin
      */
     public function trees()
     {
+        //角色列表
         $data_list = $this->core_role
             ->where(['delete_time' => 0])
             ->select();
         $tree      = new Tree();
         $data_tree = $tree->list2tree($data_list);
-        //dump($data_tree);
+
+        //构造动态页面数据
+        $ia_dylist      = new \app\core\util\iadypage\IaDylist();
+        $dynamic_data = $ia_dylist->init()
+            ->addTopButton('add', '添加角色', ['api' => '/v1/admin/core/role/add'])
+            ->addRightButton('member', '成员', [
+                'modal_type' => 'list',
+                'api' => '/v1/admin/core/user_role/lists',
+                'api_suffix' => ['name'],
+                'width' => '900',
+                'title' => '角色成员'
+            ])
+            ->addRightButton('edit', '修改', ['api' => '/v1/admin/core/role/edit', 'title' => '修改角色'])
+            ->addRightButton('delete', '删除', [
+                'api' => '/v1/admin/core/role/delete',
+                'title' => '确认要删除该角色吗？',
+                'modal_type' => 'confirm',
+                'width' => '600',
+                'okText' => '确认删除',
+                'cancelText' => '取消操作',
+                'content' => '<p><p>如果该角色下有子角色需要先删除或者移动</p><p>如果该角色下有成员需要先移除才可以删除</p><p>删除该角色将会删除对应的权限数据</p></p>',
+            ])
+            ->addColumn('id' , 'ID', ['width' => '50px'])
+            ->addColumn('title', '部门', ['minWidth' => '100px'])
+            ->addColumn('sortnum', '排序', ['width' => '50px'])
+            ->addColumn('right_button_list', '操作', [
+                'minWidth' => '50px',
+                'type' => 'template',
+                'template' => 'right_button_list'
+            ])
+            ->getData();
+        
+        //返回数据
         return json(
             [
                 'code' => 200, 'msg' => '成功', 'data' => [
                     'data_list' => $data_tree,
-                    'dynamic_data' => [
-                        'top_button_list' => [
-                            'add' => [
-                                'page_type' => 'modal',
-                                'modal_data' => [
-                                    'show' => false,
-                                    'title' => '添加角色',
-                                    'api' => '/v1/admin/core/role/add',
-                                    'api_blank' => '',
-                                    'width' => '800',
-                                ],
-                                'route' => '',
-                                'title' => '添加角色',
-                                'type' => 'default',
-                                'size' => '',
-                                'shape' => '',
-                                'icon' => ''
-                            ]
-                        ],
-                        'right_button_list' => [
-                            'member' => [
-                                'page_type' => 'modal',
-                                'modal_data' => [
-                                    'show' => false,
-                                    'type' => 'list',
-                                    'title' => '角色成员',
-                                    'api' => '/v1/admin/core/user_role/lists',
-                                    'api_blank' => '',
-                                    'api_suffix' => ['name'],
-                                    'width' => '1000',
-                                ],
-                                'route' => '',
-                                'title' => '成员',
-                                'type' => 'primary',
-                                'size' => '',
-                                'shape' => '',
-                                'icon' => ''
-                            ],
-                            'edit' => [
-                                'page_type' => 'modal',
-                                'modal_data' => [
-                                    'show' => false,
-                                    'type' => 'form',
-                                    'title' => '修改角色',
-                                    'api' => '/v1/admin/core/role/edit',
-                                    'api_blank' => '',
-                                    'width' => '800',
-                                ],
-                                'route' => '',
-                                'title' => '修改',
-                                'type' => 'default',
-                                'size' => '',
-                                'shape' => '',
-                                'icon' => ''
-                            ],
-                            'delete' => [
-                                'page_type' => 'modal',
-                                'modal_data' => [
-                                    'type' => 'confirm',
-                                    'title' => '确认要删除该角色吗？',
-                                    'api' => '/v1/admin/core/role/delete',
-                                    'width' => '600',
-                                    'okText' => '确认删除',
-                                    'cancelText' => '取消操作',
-                                    'content' => '<p><p>如果该角色下有子角色需要先删除或者移动</p><p>如果该角色下有成员需要先移除才可以删除</p><p>删除该角色将会删除对应的权限数据</p></p>',
-                                ],
-                                'route' => '',
-                                'title' => '删除',
-                                'type' => 'default',
-                                'size' => '',
-                                'shape' => '',
-                                'icon' => ''
-                            ]
-                        ],
-                        'columns' => [
-                            [
-                                'title' => 'ID',
-                                'key' => 'id',
-                                'width' => '40px'
-                            ],
-                            [
-                                'title' => '部门',
-                                'key' => 'title',
-                                'minWidth' => '50px'
-                            ],
-                            [
-                                'title' => '排序',
-                                'key' => 'sortnum'
-                            ],
-                            [
-                                'title' => '操作',
-                                'key' => 'right_button_list',
-                                'minWidth' => '50px',
-                                'type' => 'template',
-                                'template' => 'right_button_list'
-                            ]
-                        ]
-                    ]
+                    'dynamic_data' => $dynamic_data
                 ]
             ]
         );
@@ -208,6 +144,7 @@ class Role extends Admin
             }
             $tree      = new Tree();
             $menu_tree = $tree->list2tree($data_list, 'path', 'pmenu', 'children', 0, false);
+
             return json(
                 [
                     'code' => 200,

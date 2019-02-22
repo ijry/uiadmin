@@ -40,6 +40,7 @@ class UserRole extends Admin
      */
     public function lists($name)
     {
+        //成员列表
         $data_list = $this->core_user
             ->where('delete_time', 0)
             ->where('', 'EXP', Db::raw("FIND_IN_SET('$name', roles)"))
@@ -48,92 +49,40 @@ class UserRole extends Admin
             $val['role_name'] = $name;
         }
 
+        //构造动态页面数据
+        $ia_dylist      = new \app\core\util\iadypage\IaDylist();
+        $dynamic_data = $ia_dylist->init()
+            ->addTopButton('add', '添加成员', ['api' => '/v1/admin/core/user_role/add/' . $name])
+            ->addRightButton('delete', '删除', [
+                'api' => '/v1/admin/core/user_role/delete',
+                'api_suffix' => ['id', 'role_name'],
+                'title' => '确认要删除该成员吗？',
+                'modal_type' => 'confirm',
+                'width' => '600',
+                'okText' => '确认删除',
+                'cancelText' => '取消操作',
+                'content' => '<p>删除后该用户将无法操作系统后台</p>',
+            ])
+            ->addColumn('id' , 'ID', ['width' => '50px'])
+            ->addColumn('role_name', '角色', ['width' => '100px'])
+            ->addColumn('nickname', '昵称', ['width' => '120px'])
+            ->addColumn('username', '用户名', ['width' => '120px'])
+            ->addColumn('mobile', '手机号', ['width' => '120px'])
+            ->addColumn('email', '邮箱', ['width' => '120px'])
+            ->addColumn('sortnum', '排序', ['width' => '50px'])
+            ->addColumn('right_button_list', '操作', [
+                'minWidth' => '50px',
+                'type' => 'template',
+                'template' => 'right_button_list'
+            ])
+            ->getData();
+        
+        //返回数据
         return json(
             [
                 'code' => 200, 'msg' => '成功', 'data' => [
                     'data_list' => $data_list,
-                    'dynamic_data' => [
-                        'top_button_list' => [
-                            'add' => [
-                                'page_type' => 'modal',
-                                'modal_data' => [
-                                    'show' => false,
-                                    'type' => 'form',
-                                    'title' => '添加成员',
-                                    'api' => '/v1/admin/core/user_role/add/' . $name,
-                                    'api_blank' => '',
-                                    'width' => '600',
-                                ],
-                                'route' => '',
-                                'title' => '添加成员',
-                                'type' => 'default',
-                                'size' => '',
-                                'shape' => '',
-                                'icon' => ''
-                            ]
-                        ],
-                        'right_button_list' => [
-                            'delete' => [
-                                'page_type' => 'modal',
-                                'modal_data' => [
-                                    'show' => false,
-                                    'type' => 'confirm',
-                                    'title' => '确认要删除该角色吗？',
-                                    'api' => '/v1/admin/core/user_role/delete',
-                                    'api_suffix' => ['id', 'role_name'],
-                                    'width' => '600',
-                                    'okText' => '确认删除',
-                                    'cancelText' => '取消操作',
-                                    'content' => '<p>删除后该用户将无法操作系统后台</p>',
-                                ],
-                                'route' => '',
-                                'title' => '删除',
-                                'type' => 'default',
-                                'size' => '',
-                                'shape' => '',
-                                'icon' => ''
-                            ]
-                        ],
-                        'columns' => [
-                            [
-                                'title' => 'UID',
-                                'key' => 'id',
-                                'width' => '80px'
-                            ],
-                            [
-                                'title' => '角色',
-                                'key' => 'role_name',
-                                'width' => '100px'
-                            ],
-                            [
-                                'title' => '昵称',
-                                'key' => 'nickname',
-                                'minWidth' => '150px'
-                            ],
-                            [
-                                'title' => '用户名',
-                                'key' => 'username',
-                                'minWidth' => '150px'
-                            ],
-                            [
-                                'title' => '手机号',
-                                'key' => 'mobile',
-                                'minWidth' => '150px'
-                            ],
-                            [
-                                'title' => '邮箱',
-                                'key' => 'email',
-                                'minWidth' => '150px'
-                            ],
-                            [
-                                'title' => '操作',
-                                'key' => 'right_button_list',
-                                'minWidth' => '50px',
-                                'type' => 'template',
-                                'template' => 'right_button_list'
-                            ]
-                        ]
-                    ]
+                    'dynamic_data' => $dynamic_data
                 ]
             ]
         );
