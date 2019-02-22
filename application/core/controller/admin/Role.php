@@ -135,6 +135,8 @@ class Role extends Admin
         } else {
             //获取后台权限接口
             $data_list = $this->core_menu
+                ->removeOption('where')
+                ->where(['delete_time' => 0])
                 ->order('sortnum asc')
                 ->select();
             foreach ($data_list as $key => &$val) {
@@ -154,9 +156,9 @@ class Role extends Admin
             $tree      = new Tree();
             $role_tree = $tree->array2tree($role_list, 'title', 'id', 'pid', 0, false);
             $role_tree_select = [];
-            foreach ($role_tree as $key => $val) {
-                $role_tree_select[$key]['title'] = $val['title_show'];
-                $role_tree_select[$key]['value'] = $val['id'];
+            foreach ($role_tree as $key1 => $val1) {
+                $role_tree_select[$key1]['title'] = $val1['title_show'];
+                $role_tree_select[$key1]['value'] = $val1['id'];
             }
 
             //构造动态页面数据
@@ -240,6 +242,7 @@ class Role extends Admin
 
             // 存储数据
             $ret = $this->core_role
+                ->removeOption('where')
                 ->where('id', $id)
                 ->update($data_db);
             if ($ret) {
@@ -250,6 +253,7 @@ class Role extends Admin
         } else {
             //获取角色信息
             $info = $this->core_role
+                ->removeOption('where')
                 ->where('id', $id)
                 ->find();
             $info['admin_auth'] = explode(',', $info['admin_auth']);
@@ -279,9 +283,9 @@ class Role extends Admin
             $tree      = new Tree();
             $role_tree = $tree->array2tree($role_list, 'title', 'id', 'pid', 0, false);
             $role_tree_select = [];
-            foreach ($role_tree as $key => $val) {
-                $role_tree_select[$key]['title'] = $val['title_show'];
-                $role_tree_select[$key]['value'] = $val['id'];
+            foreach ($role_tree as $key1 => $val1) {
+                $role_tree_select[$key1]['title'] = $val1['title_show'];
+                $role_tree_select[$key1]['value'] = $val1['id'];
             }
 
             //构造动态页面数据
