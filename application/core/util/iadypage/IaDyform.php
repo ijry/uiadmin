@@ -93,7 +93,7 @@ class IaDyform {
                     $tmp['value'] = $key;
                     $options[] = $tmp;
                 } else {
-                    $options = $val;
+                    $options[] = $val;
                 }
             }
             $extra['options'] = $options;
