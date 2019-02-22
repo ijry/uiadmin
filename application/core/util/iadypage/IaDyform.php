@@ -21,6 +21,27 @@ class IaDyform {
 
     // 数据
     private $data;
+    public $form_type = [
+        'text' => '单行文本',
+        'textarea' => '多行文本',
+        'array' => '自定义数组',
+        'select' => '下拉框',
+        'radio' => '单选框',
+        'checkbox' => '多选框',
+        'switch' => '开关',
+        'slider' => '滑块',
+        'datepicker' => '日期',
+        'timepicker' => '时刻',
+        'datetimepicker' => '时间',
+        'rate' => '星级评分',
+        'cascader' => '级联选择',
+        'colorpicker' => '颜色选择器',
+        'image' => '单图上传',
+        'images' => '多图上传',
+        'file' => '单文件上传',
+        'files' => '多文件上传',
+        'checkboxtree' => '树桩表格复选',
+    ];
 
     /**
      * 初始化
@@ -64,6 +85,19 @@ class IaDyform {
         $item['value'] = $value;
         $item['placeholder'] = $placeholder;
         $item['tip'] = $tip;
+        if (isset($extra['options'])) {
+            $options = [];
+            foreach ($extra['options'] as $key => $val) {
+                if (!is_array($val)) {
+                    $tmp['title'] = $val;
+                    $tmp['value'] = $key;
+                    $options[] = $tmp;
+                } else {
+                    $options = $val;
+                }
+            }
+            $extra['options'] = $options;
+        }
         $item['extra'] = $extra;
         $this->data['form_items'][] = $item;
         return $this;
