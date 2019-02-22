@@ -40,6 +40,7 @@ class Menu extends Admin
     {
         // 计算路由
         $data_list = $this->core_menu
+            ->where(['delete_time' => 0])
             ->order('sortnum asc')
             ->select();
         foreach ($data_list as $key => &$val) {
@@ -145,6 +146,7 @@ class Menu extends Admin
 
             //获取菜单基于标题的树状列表
             $menu_list = $this->core_menu
+                ->where(['delete_time' => 0])
                 ->order('sortnum asc')
                 ->select();
             $tree      = new Tree();
@@ -300,6 +302,7 @@ class Menu extends Admin
             //获取菜单基于标题的树状列表
             $menu_list = $this->core_menu
                 ->removeOption('where')
+                ->where(['delete_time' => 0])
                 ->order('sortnum asc')
                 ->select();
             $tree      = new Tree();
@@ -393,11 +396,44 @@ class Menu extends Admin
     {
         // 计算路由
         $data_list = $this->core_menu
+            ->where(['delete_time' => 0])
             ->where('menu_type', '>', 0)
             ->select();
         foreach ($data_list as $key => &$val) {
             $val['api'] = $val['api_prefix'] . '/admin' . $val['path'];
         }
         return json(['code' => 200, 'msg' => '成功', 'data' => ['data_list' => $data_list]]);
+    }
+
+    /**
+     * 删除
+     * 
+     * @return \think\Response
+     */
+    public function delete($id)
+    {
+        // 子菜单检测
+        $info = $this->core_menu
+            ->removeOption('where')
+            ->where(['id' => $id])
+            ->find();
+        $exist = $this->core_menu
+            ->removeOption('where')
+            ->where(['pmenu' => $info['path']])
+            ->count();
+        if ($exist > 0) {
+            return json(['code' => 0, 'msg' => '存在子菜单无法删除', 'data' => []]);
+        }
+    
+        $ret = $this->core_menu
+            ->removeOption('where')
+            ->where(['id' => $id])
+            ->useSoftDelete('delete_time', time())
+            ->delete();
+        if ($ret) {
+            return json(['code' => 200, 'msg' => '删除成功', 'data' => []]);
+        } else {
+            return json(['code' => 0, 'msg' => '删除错误', 'data' => []]);
+        }
     }
 }

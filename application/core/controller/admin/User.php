@@ -233,7 +233,7 @@ class User extends Admin
      */
     public function delete($id)
     {
-        $ret = Db::name('core_user')
+        $ret = $this->core_user
             ->where(['id' => $id])
             ->useSoftDelete('delete_time', time())
             ->delete();
