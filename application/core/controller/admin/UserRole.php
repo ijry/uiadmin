@@ -181,7 +181,7 @@ class UserRole extends Admin
         if ($ret) {
             return json(['code' => 200,'msg' => '删除成功','data' => []]);
         } else {
-            return json(['code' => 200,'msg' => '删除错误','data' => []]);
+            return json(['code' => 0,'msg' => '删除错误','data' => []]);
         }
     }
 }

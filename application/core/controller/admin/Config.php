@@ -77,6 +77,72 @@ class Config extends Admin
     }
 
     /**
+     * 批量修改
+     *
+     * @return \think\Response
+     */
+    public function saveBatch()
+    {
+        if (request()->isPost()) {
+            $data = input('post.');
+
+            // 数据构造
+            $data_db = $data;
+            if (count($data_db) <= 0 ) {
+                return json(['code' => 0, 'msg' => '无数据提交', 'data' => []]);
+            }
+
+            // 存储数据
+            $ret = $this->core_config->update($data_db);
+            if ($ret) {
+                return json(['code' => 200, 'msg' => '添加成功', 'data' => []]);
+            } else {
+                return json(['code' => 0, 'msg' => '添加失败', 'data' => []]);
+            }
+        } else {
+            //获取分组信息
+            $info = $this->core_config
+                ->removeOption('where')
+                ->where('name', 'config_cate')
+                ->find();
+
+            //获取所有配置
+            $config_list = $this->core_config
+                ->removeOption('where')
+                ->order('sortnum asc')
+                ->where('status', 1)
+                ->select();
+
+            //构造动态页面数据
+            $ia_dyform      = new \app\core\util\iadypage\IaDyform();
+            $ia_dyform->init()
+                ->setFormMethod('put');
+                foreach ($config_list as $key => $val) {
+                    $ia_dyform->addFormItem(
+                        $val['name'],
+                        $val['title'],
+                        $val['config_type'],
+                        $val['value'],
+                        $val['placeholder'],
+                        $val['tip'],
+                        ['options' => parse_attr($val['options'])
+                    ]);
+                }
+            $ia_dyform->setFormValues();
+            $form_data = $ia_dyform->getData();
+            
+            //返回数据
+            return json([
+                'code' => 200,
+                'msg' => '成功',
+                'data' => [
+                    'form_data' => $form_data
+                ]
+            ]);
+        } 
+    }
+
+    /**
      * 添加
      *
      * @return \think\Response
@@ -273,13 +339,22 @@ class Config extends Admin
      */
     public function delete($id)
     {
+        $info = $this->core_config
+            ->removeOption('where')
+            ->where(['id' => $id])
+            ->find();
+        if ($info['is_system']) {
+            return json(['code' => 0, 'msg' => '系统级别不允许删除', 'data' => []]);
+        }
+
         $ret = $this->core_config
+            ->removeOption('where')
             ->where(['id' => $id])
             ->delete();
         if ($ret) {
             return json(['code' => 200, 'msg' => '删除成功', 'data' => []]);
         } else {
-            return json(['code' => 200, 'msg' => '删除错误', 'data' => []]);
+            return json(['code' => 0, 'msg' => '删除错误', 'data' => []]);
         }
     }
 }
