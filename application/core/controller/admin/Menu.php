@@ -51,7 +51,7 @@ class Menu extends Admin
 
         //构造动态页面数据
         $ia_dylist      = new \app\core\util\iadypage\IaDylist();
-        $dynamic_data = $ia_dylist->init()
+        $list_data = $ia_dylist->init()
             ->addTopButton('add', '添加菜单', ['api' => '/v1/admin/core/menu/add'])
             ->addRightButton('edit', '修改', ['api' => '/v1/admin/core/menu/edit', 'title' => '修改菜单'])
             ->addRightButton('delete', '删除', [
@@ -81,7 +81,7 @@ class Menu extends Admin
         //返回数据
         return json(['code' => 200, 'msg' => '成功', 'data' => [
             'data_list' => $menu_tree,
-            'dynamic_data' => $dynamic_data
+            'list_data' => $list_data
         ]]);
     }
 

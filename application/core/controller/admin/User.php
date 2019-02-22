@@ -48,7 +48,7 @@ class User extends Admin
 
         //构造动态页面数据
         $ia_dylist      = new \app\core\util\iadypage\IaDylist();
-        $dynamic_data = $ia_dylist->init()
+        $list_data = $ia_dylist->init()
             ->addTopButton('add', '添加用户', ['api' => '/v1/admin/core/user/add'])
             ->addRightButton('edit', '修改', ['api' => '/v1/admin/core/user/edit', 'title' => '修改用户信息'])
             ->addRightButton('delete', '删除', [
@@ -77,7 +77,7 @@ class User extends Admin
         return json([
                 'code' => 200, 'msg' => '成功', 'data' => [
                     'data_list' => $data_list,
-                    'dynamic_data' => $dynamic_data
+                    'list_data' => $list_data
                 ]
             ]);
     }
@@ -123,64 +123,31 @@ class User extends Admin
                 return json(['code' => 0, 'msg' => '添加用户失败', 'data' => []]);
             }
         } else {
+            //构造动态页面数据
+            $ia_dyform      = new \app\core\util\iadypage\IaDyform();
+            $form_data = $ia_dyform->init()
+                ->setFormMethod('post')
+                ->addFormItem('nickname', '昵称', 'text', '', '请输入昵称', '昵称类似微信昵称可以重复不能用来登录系统')
+                ->addFormItem('username', '用户名', 'text', '', '请输入用户名', '用户名唯一不重复，可以用来登录系统')
+                ->addFormItem('password', '密码', 'text', '', '请输入用户密码', '密码必须要包含字母数字和符号中的两种')
+                ->addFormRule('nickname', [
+                    ['required' => true, 'message' => '请填写昵称', 'trigger' => 'change'],
+                ])
+                ->addFormRule('username', [
+                    ['required' => true, 'message' => '请填写用户名', 'trigger' => 'change'],
+                ])
+                ->addFormRule('password', [
+                    ['required' => true, 'message' => '请填写密码', 'trigger' => 'change'],
+                ])
+                ->setFormValues()
+                ->getData();
+            
+            //返回数据
             return json([
                 'code' => 200,
                 'msg' => '成功',
                 'data' => [
-                    'form_data' => [
-                        'form_method' => 'post',
-                        'form_items' => [
-                            [
-                                'name' => 'nickname',
-                                'title' => '昵称',
-                                'type' => 'text',
-                                'placeholder' => '请输入昵称',
-                                'tip' => '昵称类似微信昵称可以重复不能用来登录系统'
-                            ],
-                            [
-                                'name' => 'username',
-                                'title' => '用户名',
-                                'type' => 'text',
-                                'placeholder' => '请输入用户名',
-                                'tip' => '用户名唯一不重复，可以用来登录系统'
-                            ],
-                            [
-                                'name' => 'password',
-                                'title' => '密码',
-                                'type' => 'text',
-                                'placeholder' => '请输入用户密码',
-                                'tip' => '密码必须要包含字母数字和符号中的两种'
-                            ]
-                        ],
-                        'form_values' => [
-                            'nickname' => '',
-                            'username' => '',
-                            'password' => '',
-                        ],
-                        'form_rules' => [
-                            'nickname' =>  [
-                                [
-                                    'required' => true,
-                                    'message' => '请填写昵称',
-                                    'trigger' => 'change'
-                                ]
-                            ],
-                            'username' =>  [
-                                [
-                                    'required' => true,
-                                    'message' => '请填写用户名',
-                                    'trigger' => 'change'
-                                ]
-                            ],
-                            'password' =>  [
-                                [
-                                    'required' => true,
-                                    'message' => '请填写密码',
-                                    'trigger' => 'change'
-                                ]
-                            ]
-                        ]
-                    ]
+                    'form_data' => $form_data
                 ]
             ]);
         } 
@@ -227,61 +194,33 @@ class User extends Admin
                 return json(['code' => 0, 'msg' => '修改用户信息失败', 'data' => []]);
             }
         } else {
+            //用户信息
             $info = $this->core_user
                 ->where('id', $id)
                 ->find();
+
+            //构造动态页面数据
+            $ia_dyform      = new \app\core\util\iadypage\IaDyform();
+            $form_data = $ia_dyform->init()
+                ->setFormMethod('put')
+                ->addFormItem('nickname', '昵称', 'text', $info['nickname'], '请输入昵称', '昵称类似微信昵称可以重复不能用来登录系统')
+                ->addFormItem('username', '用户名', 'text', $info['username'], '请输入用户名', '用户名唯一不重复，可以用来登录系统')
+                ->addFormItem('password', '密码', 'text', '', '不填则不修改密码', '密码必须要包含字母数字和符号中的两种')
+                ->addFormRule('nickname', [
+                    ['required' => true, 'message' => '请填写昵称', 'trigger' => 'change'],
+                ])
+                ->addFormRule('username', [
+                    ['required' => true, 'message' => '请填写用户名', 'trigger' => 'change'],
+                ])
+                ->setFormValues()
+                ->getData();
+            
+            //返回数据
             return json([
                 'code' => 200,
                 'msg' => '成功',
                 'data' => [
-                    'form_data' => [
-                        'form_method' => 'put',
-                        'form_items' => [
-                            [
-                                'name' => 'nickname',
-                                'title' => '昵称',
-                                'type' => 'text',
-                                'placeholder' => '请输入昵称',
-                                'tip' => '昵称类似微信昵称可以重复不能用来登录系统'
-                            ],
-                            [
-                                'name' => 'username',
-                                'title' => '用户名',
-                                'type' => 'text',
-                                'placeholder' => '请输入用户名',
-                                'tip' => '用户名唯一不重复，可以用来登录系统'
-                            ],
-                            [
-                                'name' => 'password',
-                                'title' => '密码',
-                                'type' => 'text',
-                                'placeholder' => '不填则不修改密码',
-                                'tip' => '密码必须要包含字母数字和符号中的两种'
-                            ]
-                            
-                        ],
-                        'form_values' => [
-                            'nickname' => $info['nickname'],
-                            'username' => $info['username'],
-                            'password' => '',
-                        ],
-                        'form_rules' => [
-                            'nickname' =>  [
-                                [
-                                    'required' => true,
-                                    'message' => '请填写昵称',
-                                    'trigger' => 'change'
-                                ]
-                            ],
-                            'username' =>  [
-                                [
-                                    'required' => true,
-                                    'message' => '请填写用户名',
-                                    'trigger' => 'change'
-                                ]
-                            ]
-                        ]
-                    ]
+                    'form_data' => $form_data
                 ]
             ]);
         } 

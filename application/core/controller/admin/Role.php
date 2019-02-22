@@ -51,7 +51,7 @@ class Role extends Admin
 
         //构造动态页面数据
         $ia_dylist      = new \app\core\util\iadypage\IaDylist();
-        $dynamic_data = $ia_dylist->init()
+        $list_data = $ia_dylist->init()
             ->addTopButton('add', '添加角色', ['api' => '/v1/admin/core/role/add'])
             ->addRightButton('member', '成员', [
                 'modal_type' => 'list',
@@ -85,7 +85,7 @@ class Role extends Admin
             [
                 'code' => 200, 'msg' => '成功', 'data' => [
                     'data_list' => $data_tree,
-                    'dynamic_data' => $dynamic_data
+                    'list_data' => $list_data
                 ]
             ]
         );
@@ -145,99 +145,39 @@ class Role extends Admin
             $tree      = new Tree();
             $menu_tree = $tree->list2tree($data_list, 'path', 'pmenu', 'children', 0, false);
 
+            //构造动态页面数据
+            $ia_dyform      = new \app\core\util\iadypage\IaDyform();
+            $form_data = $ia_dyform->init()
+                ->setFormMethod('post')
+                ->addFormItem('pid', '上级', 'select', 0, '请选择上级', '选择上级后会限制权限范围不大于上级', ['options' => []])
+                ->addFormItem('name', '英文名', 'text', '', '请输入英文名', '英文名其实可以理解为一个系统代号')
+                ->addFormItem('title', '角色名称', 'text', '', '请输入角色名称', '角色名称也可以理解为部门名称')
+                ->addFormItem('admin_auth', '后台权限', 'checkboxtree', '', '请勾选该角色的权限', '',[
+                    'columns' => [
+                        ['title' => '菜单(接口)', 'key' => 'title', 'minWidth' => '150px'],
+                        ['title' => '说明', 'key' => 'tip'],
+                        ['title' => '接口', 'key' => 'admin_auth'],
+                        ['title' => '类型', 'key' => 'menu_type', 'width' => '40px']
+                    ],
+                    'data' => $menu_tree,
+                    'expand-key' => 'title'
+                ])
+                ->addFormRule('name', [
+                    ['required' => true, 'message' => '请填写角色英文名称', 'trigger' => 'change'],
+                ])
+                ->addFormRule('title', [
+                    ['required' => true, 'message' => '请填写角色名称', 'trigger' => 'change'],
+                ])
+                ->setFormValues()
+                ->getData();
+            
+            //返回数据
             return json(
                 [
                     'code' => 200,
                     'msg' => '成功',
                     'data' => [
-                        'form_data' => [
-                            'form_method' => 'post',
-                            'form_items' => [
-                                [
-                                    'name' => 'pid',
-                                    'title' => '上级',
-                                    'type' => 'select',
-                                    'options' =>  [
-                                        [
-                                            'title' => '测试',
-                                            'value' => ''
-                                        ]
-                                    ],
-                                    'placeholder' => '请选择上级',
-                                    'tip' => '选择上级后会限制权限范围不大于上级'
-                                ],
-                                [
-                                    'name' => 'name',
-                                    'title' => '英文名',
-                                    'type' => 'text',
-                                    'placeholder' => '请输入英文名',
-                                    'tip' => '英文名其实可以理解为一个系统代号'
-                                ],
-                                [
-                                    'name' => 'title',
-                                    'title' => '角色名称',
-                                    'type' => 'text',
-                                    'placeholder' => '请输入角色名称',
-                                    'tip' => '角色名称也可以理解为部门名称'
-                                ],
-                                [
-                                    'name' => 'admin_auth',
-                                    'title' => '后台权限',
-                                    'type' => 'checkboxtree',
-                                    'options' => [
-                                        'columns' => [
-                                            [
-                                                'title' => '菜单(接口)',
-                                                'key' => 'title',
-                                                'minWidth' => '150px'
-                                            ],
-                                            [
-                                                'title' => '说明',
-                                                'key' => 'tip'
-                                            ],
-                                            [
-                                                'title' => '接口',
-                                                'key' => 'admin_auth'
-                                            ],
-                                            [
-                                                'title' => '类型',
-                                                'key' => 'menu_type',
-                                                'width' => '40px'
-                                            ]
-                                        ],
-                                        'data' => $menu_tree
-                                    ],
-                                    'extra' => [
-                                        'expand-key' => 'title'
-                                    ],
-                                    'placeholder' => '请勾选该角色的权限',
-                                    'tip' => ''
-                                ]
-                            ],
-                            'form_values' => [
-                                'pid' => 0,
-                                'name' => '',
-                                'title' => '',
-                                'admin_auth' => [],
-                                'api_auth' => []
-                            ],
-                            'form_rules' => [
-                                'name' =>  [
-                                    [
-                                        'required' => true,
-                                        'message' => '请填写角色英文名称',
-                                        'trigger' => 'change'
-                                    ]
-                                ],
-                                'title' =>  [
-                                    [
-                                        'required' => true,
-                                        'message' => '请填写角色名称',
-                                        'trigger' => 'change'
-                                    ]
-                                ]
-                            ]
-                        ]
+                        'form_data' => $form_data
                     ]
                 ]
             );
@@ -316,99 +256,39 @@ class Role extends Admin
             $tree      = new Tree();
             $menu_tree = $tree->list2tree($data_list, 'path', 'pmenu', 'children', 0, false);
 
+            //构造动态页面数据
+            $ia_dyform      = new \app\core\util\iadypage\IaDyform();
+            $form_data = $ia_dyform->init()
+                ->setFormMethod('put')
+                ->addFormItem('pid', '上级', 'select', $info['pid'], '请选择上级', '选择上级后会限制权限范围不大于上级', ['options' => []])
+                ->addFormItem('name', '英文名', 'text', $info['name'], '请输入英文名', '英文名其实可以理解为一个系统代号')
+                ->addFormItem('title', '角色名称', 'text', $info['title'], '请输入角色名称', '角色名称也可以理解为部门名称')
+                ->addFormItem('admin_auth', '后台权限', 'checkboxtree', $info['admin_auth'], '请勾选该角色的权限', '',[
+                    'columns' => [
+                        ['title' => '菜单(接口)', 'key' => 'title', 'minWidth' => '150px'],
+                        ['title' => '说明', 'key' => 'tip'],
+                        ['title' => '接口', 'key' => 'admin_auth'],
+                        ['title' => '类型', 'key' => 'menu_type', 'width' => '40px']
+                    ],
+                    'data' => $menu_tree,
+                    'expand-key' => 'title'
+                ])
+                ->addFormItem('sortnum', '排序', 'text', $info['sortnum'], '排序', '排序')
+                ->addFormRule('name', [
+                    ['required' => true, 'message' => '请填写角色英文名称', 'trigger' => 'change'],
+                ])
+                ->addFormRule('title', [
+                    ['required' => true, 'message' => '请填写角色名称', 'trigger' => 'change'],
+                ])
+                ->setFormValues()
+                ->getData();
+            
+            //返回数据
             return json([
                 'code' => 200,
                 'msg' => '成功',
                 'data' => [
-                    'form_data' => [
-                        'form_method' => 'put',
-                        'form_items' => [
-                            [
-                                'name' => 'pid',
-                                'title' => '上级',
-                                'type' => 'select',
-                                'options' =>  [
-                                    [
-                                        'title' => '测试',
-                                        'value' => ''
-                                    ]
-                                ],
-                                'placeholder' => '请选择上级',
-                                'tip' => '选择上级后会限制权限范围不大于上级'
-                            ],
-                            [
-                                'name' => 'name',
-                                'title' => '英文名',
-                                'type' => 'text',
-                                'placeholder' => '请输入英文名',
-                                'tip' => '英文名其实可以理解为一个系统代号'
-                            ],
-                            [
-                                'name' => 'title',
-                                'title' => '角色名称',
-                                'type' => 'text',
-                                'placeholder' => '请输入角色名称',
-                                'tip' => '角色名称也可以理解为部门名称'
-                            ],
-                            [
-                                'name' => 'admin_auth',
-                                'title' => '后台权限',
-                                'type' => 'checkboxtree',
-                                'options' => [
-                                    'columns' => [
-                                        [
-                                            'title' => '菜单(接口)',
-                                            'key' => 'title',
-                                            'minWidth' => '150px'
-                                        ],
-                                        [
-                                            'title' => '说明',
-                                            'key' => 'tip'
-                                        ],
-                                        [
-                                            'title' => '接口',
-                                            'key' => 'admin_auth'
-                                        ],
-                                        [
-                                            'title' => '类型',
-                                            'key' => 'menu_type',
-                                            'width' => '40px'
-                                        ]
-                                    ],
-                                    'data' => $menu_tree
-                                ],
-                                'extra' => [
-                                    'expand-key' => 'title'
-                                ],
-                                'placeholder' => '请勾选该角色的权限',
-                                'tip' => ''
-                            ]
-                        ],
-                        'form_values' => [
-                            'pid' => $info['pid'],
-                            'name' => $info['name'],
-                            'title' => $info['title'],
-                            'admin_auth' => $info['admin_auth'],
-                            'api_auth' => $info['api_auth'],
-                            'sortnum' => $info['sortnum'],
-                        ],
-                        'form_rules' => [
-                            'name' =>  [
-                                [
-                                    'required' => true,
-                                    'message' => '请填写角色英文名称',
-                                    'trigger' => 'change'
-                                ]
-                            ],
-                            'title' =>  [
-                                [
-                                    'required' => true,
-                                    'message' => '请填写角色名称',
-                                    'trigger' => 'change'
-                                ]
-                            ]
-                        ]
-                    ]
+                    'form_data' => $form_data
                 ]
             ]);
         } 
