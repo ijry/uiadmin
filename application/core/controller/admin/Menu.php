@@ -14,6 +14,7 @@
 namespace app\core\controller\admin;
 
 use think\Db;
+use think\Validate;
 use think\facade\Request;
 use app\core\controller\common\Admin;
 use app\core\util\Tree;
@@ -101,9 +102,6 @@ class Menu extends Admin
                 'path' => 'require',
                 'api_prefix' => 'require',
                 'api_method' => 'require',
-                'menu_type' => 'require',
-                'menu_type' => 'require',
-                'menu_type' => 'require','menu_type' => 'require',
             ],
             [
                 'module.require' => '请选择模块',
@@ -112,8 +110,6 @@ class Menu extends Admin
                 'path.require' => '接口路径必须',
                 'api_prefix.require' => '接口前缀必须',
                 'api_method.require' => '请求方法必须',
-                'menu_type.require' => '菜单类型必须',
-                'menu_type.require' => '菜单类型必须',
             ]);
             $data = input('post.');
             if (!$validate->check($data)) {
@@ -129,11 +125,11 @@ class Menu extends Admin
             $data_db['sortnum'] = 0;
             
             //存储数据
-            $ret = $this->core_role->insert($data_db);
+            $ret = $this->core_menu->insert($data_db);
             if ($ret) {
-                return json(['code' => 200, 'msg' => '添加角色成功', 'data' => []]);
+                return json(['code' => 200, 'msg' => '添加成功', 'data' => []]);
             } else {
-                return json(['code' => 0, 'msg' => '添加角色失败', 'data' => []]);
+                return json(['code' => 0, 'msg' => '添加失败', 'data' => []]);
             }
         } else {
             //获取模块列表
@@ -202,16 +198,16 @@ class Menu extends Admin
                     ['required' => true, 'message' => '请选择所属模块', 'trigger' => 'change'],
                 ])
                 ->addFormRule('title', [
-                    ['required' => true, 'message' => '请填写菜单标题', 'trigger' => 'change'],
+                    ['required' => true, 'message' => '请填写菜单标题', 'trigger' => 'blur'],
                 ])
                 ->addFormRule('menu_type', [
-                    ['required' => true, 'message' => '请选择菜单类型', 'trigger' => 'change'],
+                    ['required' => true, 'type' => 'number', 'message' => '请选择菜单类型', 'trigger' => 'change'],
                 ])
                 ->addFormRule('path', [
-                    ['required' => true, 'message' => '请输入接口路径', 'trigger' => 'change'],
+                    ['required' => true, 'message' => '请输入接口路径', 'trigger' => 'blur'],
                 ])
                 ->addFormRule('api_method', [
-                    ['required' => true, 'message' => '请勾选请求方法', 'trigger' => 'change'],
+                    ['required' => true, 'type' => 'array', 'min' =>  1, 'message' => '请勾选请求方法', 'trigger' => 'change'],
                 ])
                 ->setFormValues()
                 ->getData();
@@ -245,9 +241,6 @@ class Menu extends Admin
                 'path' => 'require',
                 'api_prefix' => 'require',
                 'api_method' => 'require',
-                'menu_type' => 'require',
-                'menu_type' => 'require',
-                'menu_type' => 'require','menu_type' => 'require',
             ],
             [
                 'module.require' => '请选择模块',
@@ -256,8 +249,6 @@ class Menu extends Admin
                 'path.require' => '接口路径必须',
                 'api_prefix.require' => '接口前缀必须',
                 'api_method.require' => '请求方法必须',
-                'menu_type.require' => '菜单类型必须',
-                'menu_type.require' => '菜单类型必须',
             ]);
             $data = input('post.');
             if (!$validate->check($data)) {
@@ -274,9 +265,13 @@ class Menu extends Admin
             }
 
             // 存储数据
-            $ret = $this->core_menu
-                ->where('id', $id)
-                ->update($data_db);
+            try{
+                $ret = $this->core_menu
+                    ->where('id', $id)
+                    ->update($data_db);
+            }catch(\Exception $e){
+                return json(['code' => 0, 'msg' => '修改失败' . json_encode($e), 'data' => []]);
+            }
             if ($ret) {
                 return json(['code' => 200, 'msg' => '修改成功', 'data' => []]);
             } else {
@@ -358,22 +353,22 @@ class Menu extends Admin
                     ['required' => true, 'message' => '请选择所属模块', 'trigger' => 'change'],
                 ])
                 ->addFormRule('title', [
-                    ['required' => true, 'message' => '请填写菜单标题', 'trigger' => 'change'],
+                    ['required' => true, 'message' => '请填写菜单标题', 'trigger' => 'blur'],
                 ])
                 ->addFormRule('menu_type', [
-                    ['required' => true, 'message' => '请选择菜单类型', 'trigger' => 'change'],
+                    ['required' => true, 'type' => 'number', 'message' => '请选择菜单类型', 'trigger' => 'change'],
                 ])
                 ->addFormRule('path', [
-                    ['required' => true, 'message' => '请输入接口路径', 'trigger' => 'change'],
+                    ['required' => true, 'message' => '请输入接口路径', 'trigger' => 'blur'],
                 ])
                 ->addFormRule('api_method', [
-                    ['required' => true, 'message' => '请勾选请求方法', 'trigger' => 'change'],
+                    ['required' => true, 'type' => 'array', 'min' =>  1, 'message' => '请勾选请求方法', 'trigger' => 'change'],
                 ])
                 ->addFormRule('is_iadypage', [
-                    ['required' => true, 'message' => '请选择是否自动生成页面', 'trigger' => 'change'],
+                    ['required' => true, 'type' => 'number', 'message' => '请选择是否自动生成页面', 'trigger' => 'change'],
                 ])
                 ->addFormRule('is_hide', [
-                    ['required' => true, 'message' => '请选择是否隐藏', 'trigger' => 'change'],
+                    ['required' => true, 'type' => 'number', 'message' => '请选择是否隐藏', 'trigger' => 'change'],
                 ])
                 ->setFormValues($info)
                 ->getData();
