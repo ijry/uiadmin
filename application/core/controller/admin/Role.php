@@ -145,11 +145,25 @@ class Role extends Admin
             $tree      = new Tree();
             $menu_tree = $tree->list2tree($data_list, 'path', 'pmenu', 'children', 0, false);
 
+            //获取角色基于标题的树状列表
+            $role_list = $this->core_role
+                ->removeOption('where')
+                ->where(['delete_time' => 0])
+                ->order('sortnum asc')
+                ->select();
+            $tree      = new Tree();
+            $role_tree = $tree->array2tree($role_list, 'title', 'id', 'pid', 0, false);
+            $role_tree_select = [];
+            foreach ($role_tree as $key => $val) {
+                $role_tree_select[$key]['title'] = $val['title_show'];
+                $role_tree_select[$key]['value'] = $val['id'];
+            }
+
             //构造动态页面数据
             $ia_dyform      = new \app\core\util\iadypage\IaDyform();
             $form_data = $ia_dyform->init()
                 ->setFormMethod('post')
-                ->addFormItem('pid', '上级', 'select', 0, '请选择上级', '选择上级后会限制权限范围不大于上级', ['options' => []])
+                ->addFormItem('pid', '上级', 'select', 0, '请选择上级', '选择上级后会限制权限范围不大于上级', ['options' => $role_tree_select])
                 ->addFormItem('name', '英文名', 'text', '', '请输入英文名', '英文名其实可以理解为一个系统代号')
                 ->addFormItem('title', '角色名称', 'text', '', '请输入角色名称', '角色名称也可以理解为部门名称')
                 ->addFormItem('admin_auth', '后台权限', 'checkboxtree', '', '请勾选该角色的权限', '',[
@@ -256,11 +270,25 @@ class Role extends Admin
             $tree      = new Tree();
             $menu_tree = $tree->list2tree($data_list, 'path', 'pmenu', 'children', 0, false);
 
+            //获取角色基于标题的树状列表
+            $role_list = $this->core_role
+                ->removeOption('where')
+                ->where(['delete_time' => 0])
+                ->order('sortnum asc')
+                ->select();
+            $tree      = new Tree();
+            $role_tree = $tree->array2tree($role_list, 'title', 'id', 'pid', 0, false);
+            $role_tree_select = [];
+            foreach ($role_tree as $key => $val) {
+                $role_tree_select[$key]['title'] = $val['title_show'];
+                $role_tree_select[$key]['value'] = $val['id'];
+            }
+
             //构造动态页面数据
             $ia_dyform      = new \app\core\util\iadypage\IaDyform();
             $form_data = $ia_dyform->init()
                 ->setFormMethod('put')
-                ->addFormItem('pid', '上级', 'select', $info['pid'], '请选择上级', '选择上级后会限制权限范围不大于上级', ['options' => []])
+                ->addFormItem('pid', '上级', 'select', $info['pid'], '请选择上级', '选择上级后会限制权限范围不大于上级', ['options' => $role_tree_select])
                 ->addFormItem('name', '英文名', 'text', $info['name'], '请输入英文名', '英文名其实可以理解为一个系统代号')
                 ->addFormItem('title', '角色名称', 'text', $info['title'], '请输入角色名称', '角色名称也可以理解为部门名称')
                 ->addFormItem('admin_auth', '后台权限', 'checkboxtree', $info['admin_auth'], '请勾选该角色的权限', '',[
