@@ -187,10 +187,11 @@ class Menu extends Admin
                         ['title' => 'DELETE', 'value' => 'DELETE',]
                     ]
                 ])
-                ->addFormItem('is_iadypage', '动态页面', 'radio', 1, '请选择是否自动生成页面', '系统内容了动态页面技术，可以自动生成后台前端页面', [
+                ->addFormItem('route_type', '动态页面', 'radio', 1, '请选择是否自动生成页面', '系统内容了动态页面技术，可以自动生成后台前端页面', [
                     'options' => [
-                        ['title' => '是', 'value' => 1,],
-                        ['title' => '否', 'value' => 0,]
+                        ['title' => 'Vue路由', 'value' => 'route',],
+                        ['title' => 'IA动态列表', 'value' => 'list',],
+                        ['title' => 'IA动态表单', 'value' => 'form',]
                     ]
                 ])
                 ->addFormItem('is_hide', '是否隐藏', 'radio', 0, '请选择是否隐藏', '有时候一些功能不需要可以隐藏', [
@@ -213,6 +214,12 @@ class Menu extends Admin
                 ])
                 ->addFormRule('api_method', [
                     ['required' => true, 'type' => 'array', 'min' =>  1, 'message' => '请勾选请求方法', 'trigger' => 'change'],
+                ])
+                ->addFormRule('route_type', [
+                    ['required' => true, 'type' => 'string', 'message' => '请选择是页面路由方式', 'trigger' => 'change'],
+                ])
+                ->addFormRule('is_hide', [
+                    ['required' => true, 'type' => 'number', 'message' => '请选择是否隐藏', 'trigger' => 'change'],
                 ])
                 ->setFormValues()
                 ->getData();
@@ -343,10 +350,11 @@ class Menu extends Admin
                         ['title' => 'DELETE', 'value' => 'DELETE',]
                     ]
                 ])
-                ->addFormItem('is_iadypage', '动态页面', 'radio', 1, '请选择是否自动生成页面', '系统内容了动态页面技术，可以自动生成后台前端页面', [
+                ->addFormItem('route_type', '动态页面', 'radio', 1, '请选择是否自动生成页面', '系统内容了动态页面技术，可以自动生成后台前端页面', [
                     'options' => [
-                        ['title' => '是', 'value' => 1,],
-                        ['title' => '否', 'value' => 0,]
+                        ['title' => 'Vue路由', 'value' => 'route',],
+                        ['title' => 'IA动态列表', 'value' => 'list',],
+                        ['title' => 'IA动态表单', 'value' => 'form',]
                     ]
                 ])
                 ->addFormItem('is_hide', '是否隐藏', 'radio', 0, '请选择是否隐藏', '有时候一些功能不需要可以隐藏', [
@@ -370,8 +378,8 @@ class Menu extends Admin
                 ->addFormRule('api_method', [
                     ['required' => true, 'type' => 'array', 'min' =>  1, 'message' => '请勾选请求方法', 'trigger' => 'change'],
                 ])
-                ->addFormRule('is_iadypage', [
-                    ['required' => true, 'type' => 'number', 'message' => '请选择是否自动生成页面', 'trigger' => 'change'],
+                ->addFormRule('route_type', [
+                    ['required' => true, 'type' => 'string', 'message' => '请选择是页面路由方式', 'trigger' => 'change'],
                 ])
                 ->addFormRule('is_hide', [
                     ['required' => true, 'type' => 'number', 'message' => '请选择是否隐藏', 'trigger' => 'change'],

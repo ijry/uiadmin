@@ -118,6 +118,7 @@ class IaDyform {
      */
     public function setFormValues($data = []) {
         foreach ($this->data['form_items'] as $key => &$val) {
+            $this->data['form_values'][$val['name']] = '';
             if (isset($data[$val['name']])) {
                 $val['value'] = $data[$val['name']];
             }
