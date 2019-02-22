@@ -105,13 +105,13 @@ class User extends Admin
             if (!$validate->check($data)) {
                 return json(['code' => 200, 'msg' => $validate->getError(), 'data' => []]);
             }
-            
+
             // 数据构造
-            $data_db = [];
-            $data_db['nickname'] = $data['nickname'];
-            $data_db['username'] = $data['username'];
-            $data_db['password'] = user_md5($data['password']); // 密码不能明文需要加密存储
-            $data_db['avatar']   = isset($data['avatar']) ? $data['avatar'] : '';
+            $data_db = $data;
+            if (count($data_db) <= 0 ) {
+                return json(['code' => 0, 'msg' => '无数据提交', 'data' => []]);
+            }
+            $data_db['password'] = user_md5($data_db['password']); // 密码不能明文需要加密存储
             $data_db['status']   = 1;
             $data_db['register_time']   = time();
 
@@ -177,11 +177,11 @@ class User extends Admin
 
             // 数据构造
             $data_db = $data;
+            if (count($data_db) <= 0 ) {
+                return json(['code' => 0, 'msg' => '无数据提交', 'data' => []]);
+            }
             if (isset($data_db['password'])) {
                 $data_db['password'] = user_md5($data_db['password']); // 密码不能明文需要加密存储
-            }
-            if (count($data_db) <= 0 ) {
-                return json(['code' => 0, 'msg' => '无数据修改提交', 'data' => []]);
             }
 
             // 存储数据

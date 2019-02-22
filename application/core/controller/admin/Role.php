@@ -115,15 +115,15 @@ class Role extends Admin
                 return json(['code' => 200, 'msg' => $validate->getError(), 'data' => []]);
             }
             
-            // 数据构造
-            $data_db = [];
-            $data_db['pid'] = isset($data['pid']) ? $data['pid'] : '';
-            $data_db['name'] = $data['name'];
-            $data_db['title'] = $data['title'];
-            $data_db['sortnum'] = isset($data['sortnum']) ? $data['sortnum'] : 0;
-            $data_db['admin_auth'] = isset($data['admin_auth']) ? implode(',', $data['admin_auth']) : ''; //后台权限
-            $data_db['api_auth'] = isset($data['api_auth']) ? implode(',', $data['api_auth']) : ''; //接口权限
+            //数据构造
+            $data_db = $data;
+            if (count($data_db) <= 0 ) {
+                return json(['code' => 0, 'msg' => '无数据提交', 'data' => []]);
+            }
             $data_db['status'] = 1;
+            $data_db['sortnum'] = isset($data_db['sortnum']) ? $data_db['sortnum'] : 0;
+            $data_db['admin_auth'] = isset($data_db['admin_auth']) ? implode(',', $data_db['admin_auth']) : ''; //后台权限
+            $data_db['api_auth'] = isset($data_db['api_auth']) ? implode(',', $data_db['api_auth']) : ''; //接口权限
             
             // 存储数据
             $ret = $this->core_role->insert($data_db);
@@ -214,14 +214,14 @@ class Role extends Admin
 
             // 数据构造
             $data_db = $data;
+            if (count($data_db) <= 0 ) {
+                return json(['code' => 0, 'msg' => '无数据提交', 'data' => []]);
+            }
             if (isset($data_db['admin_auth']) && is_array($data_db['admin_auth'])) {
                 $data_db['admin_auth'] = implode(',', $data_db['admin_auth']);
             }
             if (isset($data_db['api_auth']) && is_array($data_db['api_auth'])) {
                 $data_db['api_auth'] = implode(',', $data_db['api_auth']);
-            }
-            if (count($data_db) <= 0 ) {
-                return json(['code' => 0, 'msg' => '无数据修改提交', 'data' => []]);
             }
 
             // 存储数据
