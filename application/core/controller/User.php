@@ -148,7 +148,7 @@ class User extends Home
             'aud' => 'initamin.net',//面向的用户
             'iat' => time(),//签发时间
             'nbf' => time(),//在什么时候jwt开始生效
-            'exp' => time() + 7200,//token 过期时间
+            'exp' => time() + 720000,//token 过期时间
             'data'=>[
                 'uid' => $user_info['id']//可以用户ID，可以自定义
             ]
