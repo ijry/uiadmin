@@ -40,6 +40,7 @@ class Menu extends Admin
     {
         // 计算路由
         $data_list = $this->core_menu
+            ->removeOption('where')
             ->where(['delete_time' => 0])
             ->order('sortnum asc')
             ->select();
@@ -135,6 +136,7 @@ class Menu extends Admin
         } else {
             //获取模块列表
             $module_list = $this->core_module
+                ->removeOption('where')
                 ->where('status', 1)
                 ->order('sortnum asc')
                 ->select();
@@ -146,6 +148,7 @@ class Menu extends Admin
 
             //获取菜单基于标题的树状列表
             $menu_list = $this->core_menu
+                ->removeOption('where')
                 ->where(['delete_time' => 0])
                 ->order('sortnum asc')
                 ->select();
@@ -396,6 +399,7 @@ class Menu extends Admin
     {
         // 计算路由
         $data_list = $this->core_menu
+            ->removeOption('where')
             ->where(['delete_time' => 0])
             ->where('menu_type', '>', 0)
             ->select();
