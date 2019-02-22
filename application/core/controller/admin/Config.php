@@ -20,16 +20,16 @@ use app\core\controller\common\Admin;
 use app\core\util\Tree;
 
 /**
- * 模块
+ * 配置
  */
-class Module extends Admin
+class Config extends Admin
 {
     private $core_module;
 
     protected function initialize()
     {
         parent::initialize();
-        $this->core_module = Db::name('core_module');
+        $this->core_config = Db::name('core_config');
     }
 
     /**
@@ -40,25 +40,23 @@ class Module extends Admin
     public function lists()
     {
         //用户列表
-        $data_list = $this->core_module
+        $data_list = $this->core_config
             ->select();
-        $tree      = new Tree();
-        $data_list = $tree->list2tree($data_list);
 
         //构造动态页面数据
         $ia_dylist      = new \app\core\util\iadypage\IaDylist();
         $list_data = $ia_dylist->init()
-            ->addTopButton('add', '创建新模块', ['api' => '/v1/admin/core/module/add'])
-            ->addRightButton('config', '设置', ['api' => '/v1/admin/core/module/config', 'title' => '配置'])
-            ->addRightButton('export', '导出', ['api' => '/v1/admin/core/module/export', 'title' => '导出模块信息'])
-            ->addRightButton('edit', '修改', ['api' => '/v1/admin/core/module/edit', 'title' => '修改模块信息'])
+            ->addTopButton('add', '添加', ['api' => '/v1/admin/core/config/add'])
+            ->addRightButton('edit', '修改', ['api' => '/v1/admin/core/config/edit', 'title' => '修改配置信息'])
             ->addColumn('id' , 'ID', ['width' => '50px'])
-            ->addColumn('name', '名称', ['width' => '120px'])
-            ->addColumn('title', '标题', ['width' => '120px'])
-            ->addColumn('description', '描述', ['width' => '240px'])
-            ->addColumn('developer', '开发者', ['width' => '100px'])
-            ->addColumn('version', '版本', ['width' => '80px'])
-            ->addColumn('build', 'Build', ['width' => '150px'])
+            ->addColumn('name', '名称', ['width' => '100px'])
+            ->addColumn('title', '标题', ['width' => '100px'])
+            ->addColumn('config_cate', '分组', ['width' => '80px'])
+            ->addColumn('config_type', '配置类型', ['width' => '80px'])
+            ->addColumn('placeholder', 'placeholder', ['width' => '150px'])
+            ->addColumn('tip', '说明', ['width' => '200px'])
+            ->addColumn('is_system', '系统', ['width' => '50px'])
+            ->addColumn('is_dev', '开发者', ['width' => '80px'])
             ->addColumn('sortnum', '排序', ['width' => '50px'])
             ->addColumn('status', '状态', ['width' => '50px'])
             ->addColumn('right_button_list', '操作', [
