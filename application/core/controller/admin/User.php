@@ -39,102 +39,45 @@ class User extends Admin
      */
     public function lists()
     {
+        //用户列表
         $data_list = $this->core_user
             ->where(['delete_time' => 0])
             ->select();
         $tree      = new Tree();
         $data_list = $tree->list2tree($data_list);
+
+        //构造动态页面数据
+        $ia_dylist      = new \app\core\util\iadypage\IaDylist();
+        $dynamic_data = $ia_dylist->init()
+            ->addTopButton('add', '添加用户', ['api' => '/v1/admin/core/user/add'])
+            ->addRightButton('edit', '修改', ['api' => '/v1/admin/core/user/edit', 'title' => '修改用户信息'])
+            ->addRightButton('delete', '删除', [
+                'api' => '/v1/admin/core/user/delete',
+                'title' => '确认要删除该用户吗？',
+                'modal_type' => 'confirm',
+                'width' => '600',
+                'okText' => '确认删除',
+                'cancelText' => '取消操作',
+                'content' => '<p>删除后将清空绑定的所有登录验证记录</p>',
+            ])
+            ->addColumn('id' , 'ID', ['width' => '50px'])
+            ->addColumn('nickname', '昵称', ['width' => '120px'])
+            ->addColumn('username', '用户名', ['width' => '120px'])
+            ->addColumn('mobile', '手机号', ['width' => '120px'])
+            ->addColumn('email', '邮箱', ['width' => '120px'])
+            ->addColumn('sortnum', '排序', ['width' => '50px'])
+            ->addColumn('right_button_list', '操作', [
+                'minWidth' => '50px',
+                'type' => 'template',
+                'template' => 'right_button_list'
+            ])
+            ->getData();
+        
+        //返回数据
         return json([
                 'code' => 200, 'msg' => '成功', 'data' => [
                     'data_list' => $data_list,
-                    'dynamic_data' => [
-                        'top_button_list' => [
-                            'add' => [
-                                'page_type' => 'modal',
-                                'modal_data' => [
-                                    'show' => false,
-                                    'type' => 'form',
-                                    'title' => '添加用户',
-                                    'api' => '/v1/admin/core/user/add',
-                                    'api_blank' => '',
-                                    'width' => '600',
-                                ],
-                                'route' => '',
-                                'title' => '添加用户',
-                                'type' => 'default',
-                                'size' => '',
-                                'shape' => '',
-                                'icon' => ''
-                            ]
-                        ],
-                        'right_button_list' => [
-                            'edit' => [
-                                'page_type' => 'modal',
-                                'modal_data' => [
-                                    'show' => false,
-                                    'type' => 'form',
-                                    'title' => '修改用户信息',
-                                    'api' => '/v1/admin/core/user/edit',
-                                    'api_blank' => '',
-                                    'width' => '600',
-                                ],
-                                'route' => '',
-                                'title' => '修改',
-                                'type' => 'default',
-                                'size' => '',
-                                'shape' => '',
-                                'icon' => ''
-                            ],
-                            'delete' => [
-                                'page_type' => 'modal',
-                                'modal_data' => [
-                                    'show' => false,
-                                    'type' => 'confirm',
-                                    'title' => '确认要删除该用户吗？',
-                                    'api' => '/v1/admin/core/user/delete',
-                                    'width' => '600',
-                                    'okText' => '确认删除',
-                                    'cancelText' => '取消操作',
-                                    'content' => '<p><p>删除后将清空绑定的所有登录验证记录</p></p>',
-                                ],
-                                'route' => '',
-                                'title' => '删除',
-                                'type' => 'default',
-                                'size' => '',
-                                'shape' => '',
-                                'icon' => ''
-                            ]
-                        ],
-                        'columns' => [
-                            [
-                                'title' => 'UID',
-                                'key' => 'id',
-                                'width' => '50px'
-                            ],
-                            [
-                                'title' => '头像',
-                                'key' => 'avatar',
-                                'width' => '80px'
-                            ],
-                            [
-                                'title' => '昵称',
-                                'key' => 'nickname',
-                                'width' => '150px'
-                            ],
-                            [
-                                'title' => '用户名',
-                                'key' => 'username',
-                                '2idth' => '150px'
-                            ],
-                            [
-                                'title' => '操作',
-                                'key' => 'right_button_list',
-                                'minWidth' => '50px',
-                                'type' => 'template',
-                                'template' => 'right_button_list'
-                            ]
-                        ]
-                    ]
+                    'dynamic_data' => $dynamic_data
                 ]
             ]);
     }
