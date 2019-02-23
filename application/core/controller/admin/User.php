@@ -25,11 +25,14 @@ use app\core\util\Tree;
 class User extends Admin
 {
     private $core_user;
+    private $core_login;
+
 
     protected function initialize()
     {
         parent::initialize();
         $this->core_user = Db::name('core_user');
+        $this->core_login = Db::name('core_login');
     }
 
     /**
@@ -233,6 +236,12 @@ class User extends Admin
      */
     public function delete($id)
     {
+        //注销登录信息
+        $ret = $this->core_login
+                ->where('uid', $id)
+                ->delete();
+
+        //删除用户
         $ret = $this->core_user
             ->where(['id' => $id])
             ->useSoftDelete('delete_time', time())

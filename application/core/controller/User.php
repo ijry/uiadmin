@@ -23,11 +23,13 @@ class User extends Home
 {
     private $core_user;
     private $core_identity;
+    private $core_login;
 
     public function __construct()
     {
         $this->core_user = Db::name('core_user');
         $this->core_identity = Db::name('core_identity');
+        $this->core_login = Db::name('core_login');
     }
 
     /**
@@ -143,17 +145,33 @@ class User extends Home
     
         //颁发登录凭证token
         $key = env('auth_key'); //秘钥加密关键 Signature
+        $login_time = time();
+        $expire_time = $login_time + 8640000; //100天有效期
         $token = [
             'iss' => 'initamin.net',//签发者
             'aud' => 'initamin.net',//面向的用户
-            'iat' => time(),//签发时间
-            'nbf' => time(),//在什么时候jwt开始生效
-            'exp' => time() + 720000,//token 过期时间
+            'iat' => $login_time,//签发时间
+            'nbf' => $login_time,//在什么时候jwt开始生效
+            'exp' => $expire_time,//token 过期时间
             'data'=>[
                 'uid' => $user_info['id']//可以用户ID，可以自定义
             ]
         ]; //Payload
         $jwt = JWT::encode($token, $key); //此处行进加密算法生成jwt
-        return json(['code' => 200, 'msg' => '登陆成功', 'data' => ['token' => $jwt]]);
+
+        //存进数据库
+        $data = [];
+        $data['uid'] = $user_info['id'];
+        $data['token'] = $jwt;
+        $data['login_time'] = $login_time;
+        $data['expire_time'] = $expire_time;
+        $data['client_type'] = input('post.client_type') ? : 0;
+        $data['client_name'] = input('post.client_type') ? : '';
+        $ret = $this->core_login->insert($data);
+        if ($ret) {
+            return json(['code' => 200, 'msg' => '登陆成功', 'data' => ['token' => $jwt]]);
+        } else {
+            return json(['code' => 0, 'msg' => '添加失败', 'data' => []]);
+        }
     }
 }

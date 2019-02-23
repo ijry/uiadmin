@@ -29,7 +29,6 @@ class Admin extends Common
         }
 
         //权限验证
-        //dump($ret);exit;
         $uid = $ret['data']['data']->uid;
         if (!$uid) {
             echo json_encode(['code' => 0, 'msg' => '缺少UID', 'data' => []]);
