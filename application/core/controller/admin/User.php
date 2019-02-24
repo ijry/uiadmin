@@ -130,9 +130,18 @@ class User extends Admin
             $ia_dyform      = new \app\core\util\iadypage\IaDyform();
             $form_data = $ia_dyform->init()
                 ->setFormMethod('post')
-                ->addFormItem('nickname', '昵称', 'text', '', '请输入昵称', '昵称类似微信昵称可以重复不能用来登录系统')
-                ->addFormItem('username', '用户名', 'text', '', '请输入用户名', '用户名唯一不重复，可以用来登录系统')
-                ->addFormItem('password', '密码', 'text', '', '请输入用户密码', '密码必须要包含字母数字和符号中的两种')
+                ->addFormItem('nickname', '昵称', 'text', '', [
+                    'placeholder' => '请输入昵称',
+                    'tip' => '昵称类似微信昵称可以重复不能用来登录系统'
+                ])
+                ->addFormItem('username', '用户名', 'text', '', [
+                    'placeholder' => '请输入用户名',
+                    'tip' => '用户名唯一不重复，可以用来登录系统'
+                ])
+                ->addFormItem('password', '密码', 'text', '', [
+                    'placeholder' => '请输入用户密码',
+                    'tip' => '密码必须要包含字母数字和符号中的两种'
+                ])
                 ->addFormRule('nickname', [
                     ['required' => true, 'message' => '请填写昵称', 'trigger' => 'change'],
                 ])
@@ -206,9 +215,18 @@ class User extends Admin
             $ia_dyform      = new \app\core\util\iadypage\IaDyform();
             $form_data = $ia_dyform->init()
                 ->setFormMethod('put')
-                ->addFormItem('nickname', '昵称', 'text', $info['nickname'], '请输入昵称', '昵称类似微信昵称可以重复不能用来登录系统')
-                ->addFormItem('username', '用户名', 'text', $info['username'], '请输入用户名', '用户名唯一不重复，可以用来登录系统')
-                ->addFormItem('password', '密码', 'text', '', '不填则不修改密码', '密码必须要包含字母数字和符号中的两种')
+                ->addFormItem('nickname', '昵称', 'text', $info['nickname'], [
+                    'placeholder' => '请输入昵称',
+                    'tip' => '昵称类似微信昵称可以重复不能用来登录系统'
+                ])
+                ->addFormItem('username', '用户名', 'text', $info['username'], [
+                    'placeholder' => '请输入用户名',
+                    'tip' => '用户名唯一不重复，可以用来登录系统'
+                ])
+                ->addFormItem('password', '密码', 'text', '', [
+                    'placeholder' => '请输入用户密码',
+                    'tip' => '密码必须要包含字母数字和符号中的两种'
+                ])
                 ->addFormRule('nickname', [
                     ['required' => true, 'message' => '请填写昵称', 'trigger' => 'change'],
                 ])

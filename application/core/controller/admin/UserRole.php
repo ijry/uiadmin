@@ -133,8 +133,15 @@ class UserRole extends Admin
             $ia_dyform      = new \app\core\util\iadypage\IaDyform();
             $form_data = $ia_dyform->init()
                 ->setFormMethod('put')
-                ->addFormItem('role_name', '角色名称', 'text', $name, '请输入角色名称', '角色名称', ['readonly' => true])
-                ->addFormItem('uid', 'UID', 'text', '', '请输入uid', 'uid是用户唯一标识可以在用户列表查到')
+                ->addFormItem('role_name', '角色名称', 'text', $name, [
+                    'placeholder' => '请输入角色名称',
+                    'tip' => '角色名称',
+                    'readonly' => true
+                ])
+                ->addFormItem('uid', 'UID', 'text', '', [
+                    'placeholder' => '请输入uid',
+                    'tip' => 'uid是用户唯一标识可以在用户列表查到'
+                ])
                 ->addFormRule('role_name', [
                     ['required' => true, 'message' => '请输入角色名称', 'trigger' => 'change'],
                 ])
