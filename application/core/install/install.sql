@@ -71,6 +71,7 @@ VALUES
 
 CREATE TABLE `ia_core_user` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '用户UID',
+  `key` varchar(256) NOT NULL DEFAULT '' COMMENT '密钥',
   `nickname` varchar(128) NOT NULL DEFAULT '' COMMENT '用户昵称',
   `username` varchar(128) NOT NULL DEFAULT '' COMMENT '用户名',
   `password` varchar(128) NOT NULL DEFAULT '' COMMENT '用户密码',
@@ -83,9 +84,9 @@ CREATE TABLE `ia_core_user` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户帐号信息表';
 
-INSERT INTO `ia_core_user` (`id`, `nickname`, `username`, `password`, `avatar`, `extend_info`, `status`, `roles`, `register_time`, `delete_time`)
+INSERT INTO `ia_core_user` (`id`, `key`, `nickname`, `username`, `password`, `avatar`, `extend_info`, `status`, `roles`, `register_time`, `delete_time`)
 VALUES
-	(1, '超级管理员', 'admin', '6efb207798cfc6c7819f99cbe03132b0', '1', NULL, 1, 'super_admin,admin', 0, 0);
+  (1, 'initadmin-auth-key', '超级管理员', 'admin', '6efb207798cfc6c7819f99cbe03132b0', '1', NULL, 1, 'super_admin,admin', 0, 0);
 
 
 CREATE TABLE `ia_core_role` (
@@ -157,6 +158,7 @@ VALUES
 
 CREATE TABLE `ia_core_login` (
   `uid` int(11) NOT NULL DEFAULT '0' COMMENT 'UID',
+  `key` varchar(256) NOT NULL DEFAULT '' COMMENT '加密key',
   `token` text NOT NULL COMMENT '登录token',
   `login_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '登录时间',
   `expire_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '过期时间',

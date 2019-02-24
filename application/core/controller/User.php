@@ -41,6 +41,7 @@ class User extends Home
     {
         // 用户列表
         $user_list = $this->core_user
+            ->field('id,nickname,username,email,avatar')
             ->where(['delete_time' => 0, 'status' => 1])
             ->select();
     }
@@ -67,7 +68,9 @@ class User extends Home
         if($ret['code'] != 200){
             return json($ret);
         }
-        $user_info = $this->core_user->find($ret['data']['uid']);
+        $user_info = $this->core_user
+            ->field('id,nickname,username,email,avatar')
+            ->find($ret['data']['uid']);
     }
 
     /**
@@ -135,7 +138,7 @@ class User extends Home
             if ($user_info['status'] !== 1) {
                 return json(['code' => 0, 'msg' => '账号状态异常']);
             }
-            if ($user_info['password'] !== user_md5($credential)) {
+            if ($user_info['password'] !== user_md5($credential, $user_info['key'])) {
                 return json(['code' => 0, 'msg' => '密码错误']);
             }
             break;

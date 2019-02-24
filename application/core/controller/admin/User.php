@@ -114,7 +114,8 @@ class User extends Admin
             if (count($data_db) <= 0 ) {
                 return json(['code' => 0, 'msg' => '无数据提交', 'data' => []]);
             }
-            $data_db['password'] = user_md5($data_db['password']); // 密码不能明文需要加密存储
+            $data_db['key'] = \think\helper\Str::random(64); //秘钥
+            $data_db['password'] = user_md5($data_db['password'], $data_db['key']); // 密码不能明文需要加密存储
             $data_db['status']   = 1;
             $data_db['register_time']   = time();
 
@@ -193,7 +194,8 @@ class User extends Admin
                 return json(['code' => 0, 'msg' => '无数据提交', 'data' => []]);
             }
             if (isset($data_db['password'])) {
-                $data_db['password'] = user_md5($data_db['password']); // 密码不能明文需要加密存储
+                $data_db['key'] = \think\helper\Str::random(64); //秘钥
+                $data_db['password'] = user_md5($data_db['password'], $data_db['key']); // 密码不能明文需要加密存储
             }
 
             //存储数据
