@@ -133,10 +133,12 @@ class Config extends Admin
                         $val['title'],
                         $val['config_type'],
                         $val['value'],
-                        $val['placeholder'],
-                        $val['tip'],
-                        ['options' => parse_attr($val['options'])
-                    ]);
+                        [
+                            'tip' => $val['tip'],
+                            'placeholder' => $val['placeholder'],
+                            'options' => parse_attr($val['options'])
+                        ]
+                    );
                 }
             $ia_dyform->setFormValues();
             $form_data = $ia_dyform->getData();
@@ -183,6 +185,7 @@ class Config extends Admin
             if (count($data_db) <= 0 ) {
                 return json(['code' => 0, 'msg' => '无数据提交', 'data' => []]);
             }
+            $data_db['is_system'] = 0;
             $data_db['status']   = 1;
 
             // 存储数据
@@ -203,21 +206,52 @@ class Config extends Admin
             $ia_dyform      = new \app\core\util\iadypage\IaDyform();
             $form_data = $ia_dyform->init()
                 ->setFormMethod('post')
-                ->addFormItem('config_cate', '配置分组', 'radio', '', '请选择分组', '请选择分组', ['options' => parse_attr($info['value'])])
-                ->addFormItem('name', '配置名称', 'text', '', '请输入英文', '配置名称一般类似project_name')
-                ->addFormItem('title', '配置标题', 'text', '', '请输入配置标题', '配置标题')
-                ->addFormItem('config_type', '配置类型', 'select', '', '请选择表单类型', '表单类型', ['options' => $ia_dyform->form_type])
-                ->addFormItem('value', '默认值', 'textarea', '', '请输入配置默认值', '默认值')
-                ->addFormItem('placeholder', 'placeholder', 'text', '', '请输入配置placeholder', '请输入配置placeholder')
-                ->addFormItem('tip', '说明', 'text', '', '请输入配置说明', '请输入配置说明')
-                ->addFormItem('extra', '额外项目', 'textarea', '', '请输入配置额外项目', '请输入配置额外项目')
-                ->addFormItem('is_system', '是否系统', 'radio', 1, '请选择是否系统配置', '系统配置一般不允许删除等风险操作', [
+                ->addFormItem('config_cate', '配置分组', 'radio', '', [
+                    'options' => parse_attr($info['value'])
+                ])
+                ->addFormItem('name', '配置名称', 'text', '', [
+                    'placeholder' => '请输入英文',
+                    'tip' => '配置名称一般类似project_name'
+                ])
+                ->addFormItem('title', '配置标题', 'text', '', [
+                    'placeholder' => '请输入配置标题',
+                    'tip' => '配置标题'
+                ])
+                ->addFormItem('config_type', '配置类型', 'select', '', [
+                    'placeholder' => '请选择表单类型',
+                    'tip' => '表单类型',
+                    'options' => $ia_dyform->form_type
+                ])
+                ->addFormItem('value', '默认值', 'textarea', '', [
+                    'placeholder' => '请输入配置默认值',
+                    'tip' => '默认值'
+                ])
+                ->addFormItem('placeholder', 'placeholder', 'text', '', [
+                    'placeholder' => '请输入配置placeholder',
+                    'tip' => '请输入配置placeholder'
+                ])
+                ->addFormItem('tip', '说明', 'text', '', [
+                    'placeholder' => '请输入配置说明',
+                    'tip' => '请输入配置说明'
+                ])
+                ->addFormItem('extra', '额外项目', 'textarea', '', [
+                    'placeholder' => '请输入配置额外项目',
+                    'tip' => '请输入配置额外项目'
+                ])
+                // ->addFormItem('is_system', '是否系统', 'radio', 1, [
+                //     'placeholder' => '请选择是否系统配置',
+                //     'tip' => '系统配置一般不允许删除等风险操作',
+                //     'options' => ['1' => '是', '0' => '否']
+                // ])
+                ->addFormItem('is_dev', '是否开发者', 'radio', 1, [
+                    'placeholder' => '请选择是否开发者配置',
+                    'tip' => '开发者意味着主要是给开发者编辑的配置',
                     'options' => ['1' => '是', '0' => '否']
                 ])
-                ->addFormItem('is_dev', '是否开发者', 'radio', 1, '请选择是否开发者配置', '开发者意味着主要是给开发者编辑的配置', [
-                    'options' => ['1' => '是', '0' => '否']
+                ->addFormItem('sortnum', '排序', 'text', '', [
+                    'placeholder' => '请输入排序',
+                    'tip' => '请输入排序'
                 ])
-                ->addFormItem('sortnum', '排序', 'text', '', '请输入排序', '请输入排序')
                 ->addFormRule('config_cate', [
                     ['required' => true, 'type' => 'number', 'message' => '请选择分组', 'trigger' => 'change'],
                 ])
@@ -301,21 +335,52 @@ class Config extends Admin
             $ia_dyform      = new \app\core\util\iadypage\IaDyform();
             $form_data = $ia_dyform->init()
                 ->setFormMethod('put')
-                ->addFormItem('config_cate', '配置分组', 'radio', '', '请选择分组', '请选择分组', ['options' => parse_attr($info['value'])])
-                ->addFormItem('name', '配置名称', 'text', '', '请输入英文', '配置名称一般类似project_name')
-                ->addFormItem('title', '配置标题', 'text', '', '请输入配置标题', '配置标题')
-                ->addFormItem('config_type', '配置类型', 'select', '', '请选择表单类型', '表单类型', ['options' => $ia_dyform->form_type])
-                ->addFormItem('value', '默认值', 'textarea', '', '请输入配置默认值', '默认值')
-                ->addFormItem('placeholder', 'placeholder', 'text', '', '请输入配置placeholder', '请输入配置placeholder')
-                ->addFormItem('tip', '说明', 'text', '', '请输入配置说明', '请输入配置说明')
-                ->addFormItem('extra', '额外项目', 'textarea', '', '请输入配置额外项目', '请输入配置额外项目')
-                ->addFormItem('is_system', '是否系统', 'radio', 1, '请选择是否系统配置', '系统配置一般不允许删除等风险操作', [
+                ->addFormItem('config_cate', '配置分组', 'radio', '', [
+                    'options' => parse_attr($info['value'])
+                ])
+                ->addFormItem('name', '配置名称', 'text', '', [
+                    'placeholder' => '请输入英文',
+                    'tip' => '配置名称一般类似project_name'
+                ])
+                ->addFormItem('title', '配置标题', 'text', '', [
+                    'placeholder' => '请输入配置标题',
+                    'tip' => '配置标题'
+                ])
+                ->addFormItem('config_type', '配置类型', 'select', '', [
+                    'placeholder' => '请选择表单类型',
+                    'tip' => '表单类型',
+                    'options' => $ia_dyform->form_type
+                ])
+                ->addFormItem('value', '默认值', 'textarea', '', [
+                    'placeholder' => '请输入配置默认值',
+                    'tip' => '默认值'
+                ])
+                ->addFormItem('placeholder', 'placeholder', 'text', '', [
+                    'placeholder' => '请输入配置placeholder',
+                    'tip' => '请输入配置placeholder'
+                ])
+                ->addFormItem('tip', '说明', 'text', '', [
+                    'placeholder' => '请输入配置说明',
+                    'tip' => '请输入配置说明'
+                ])
+                ->addFormItem('extra', '额外项目', 'textarea', '', [
+                    'placeholder' => '请输入配置额外项目',
+                    'tip' => '请输入配置额外项目'
+                ])
+                // ->addFormItem('is_system', '是否系统', 'radio', 1, [
+                //     'placeholder' => '请选择是否系统配置',
+                //     'tip' => '系统配置一般不允许删除等风险操作',
+                //     'options' => ['1' => '是', '0' => '否']
+                // ])
+                ->addFormItem('is_dev', '是否开发者', 'radio', 1, [
+                    'placeholder' => '请选择是否开发者配置',
+                    'tip' => '开发者意味着主要是给开发者编辑的配置',
                     'options' => ['1' => '是', '0' => '否']
                 ])
-                ->addFormItem('is_dev', '是否开发者', 'radio', 1, '请选择是否开发者配置', '开发者意味着主要是给开发者编辑的配置', [
-                    'options' => ['1' => '是', '0' => '否']
+                ->addFormItem('sortnum', '排序', 'text', '', [
+                    'placeholder' => '请输入排序',
+                    'tip' => '请输入排序'
                 ])
-                ->addFormItem('sortnum', '排序', 'text', '', '请输入排序', '请输入排序')
                 ->addFormRule('config_cate', [
                     ['required' => true, 'type' => 'number', 'message' => '请选择分组', 'trigger' => 'change'],
                 ])

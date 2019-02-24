@@ -165,10 +165,21 @@ class Role extends Admin
             $ia_dyform      = new \app\core\util\iadypage\IaDyform();
             $form_data = $ia_dyform->init()
                 ->setFormMethod('post')
-                ->addFormItem('pid', '上级', 'select', 0, '请选择上级', '选择上级后会限制权限范围不大于上级', ['options' => $role_tree_select])
-                ->addFormItem('name', '英文名', 'text', '', '请输入英文名', '英文名其实可以理解为一个系统代号')
-                ->addFormItem('title', '角色名称', 'text', '', '请输入角色名称', '角色名称也可以理解为部门名称')
-                ->addFormItem('admin_auth', '后台权限', 'checkboxtree', '', '请勾选该角色的权限', '',[
+                ->addFormItem('pid', '上级', 'select', 0, [
+                    'tip' => '选择上级后会限制权限范围不大于上级',
+                    'options' => $role_tree_select
+                ])
+                ->addFormItem('name', '英文名', 'text', '', [
+                    'placeholder' => '请输入英文名',
+                    'tip' => '英文名其实可以理解为一个系统代号'
+                ])
+                ->addFormItem('title', '角色名称', 'text', '', [
+                    'placeholder' => '请输入角色名称',
+                    'tip' => '角色名称也可以理解为部门名称'
+                ])
+                ->addFormItem('admin_auth', '后台权限', 'checkboxtree', '', 
+                     [
+                    'tip' => '勾选角色权限',
                     'columns' => [
                         ['title' => '菜单(接口)', 'key' => 'title', 'minWidth' => '150px'],
                         ['title' => '说明', 'key' => 'tip'],
@@ -292,10 +303,21 @@ class Role extends Admin
             $ia_dyform      = new \app\core\util\iadypage\IaDyform();
             $form_data = $ia_dyform->init()
                 ->setFormMethod('put')
-                ->addFormItem('pid', '上级', 'select', $info['pid'], '请选择上级', '选择上级后会限制权限范围不大于上级', ['options' => $role_tree_select])
-                ->addFormItem('name', '英文名', 'text', $info['name'], '请输入英文名', '英文名其实可以理解为一个系统代号')
-                ->addFormItem('title', '角色名称', 'text', $info['title'], '请输入角色名称', '角色名称也可以理解为部门名称')
-                ->addFormItem('admin_auth', '后台权限', 'checkboxtree', $info['admin_auth'], '请勾选该角色的权限', '',[
+               ->addFormItem('pid', '上级', 'select', 0, [
+                    'tip' => '选择上级后会限制权限范围不大于上级',
+                    'options' => $role_tree_select
+                ])
+                ->addFormItem('name', '英文名', 'text', '', [
+                    'placeholder' => '请输入英文名',
+                    'tip' => '英文名其实可以理解为一个系统代号'
+                ])
+                ->addFormItem('title', '角色名称', 'text', '', [
+                    'placeholder' => '请输入角色名称',
+                    'tip' => '角色名称也可以理解为部门名称'
+                ])
+                ->addFormItem('admin_auth', '后台权限', 'checkboxtree', '', 
+                     [
+                    'tip' => '勾选角色权限',
                     'columns' => [
                         ['title' => '菜单(接口)', 'key' => 'title', 'minWidth' => '150px'],
                         ['title' => '说明', 'key' => 'tip'],
@@ -305,14 +327,14 @@ class Role extends Admin
                     'data' => $menu_tree,
                     'expand-key' => 'title'
                 ])
-                ->addFormItem('sortnum', '排序', 'text', $info['sortnum'], '排序', '排序')
+                ->addFormItem('sortnum', '排序', 'text', '')
                 ->addFormRule('name', [
                     ['required' => true, 'message' => '请填写角色英文名称', 'trigger' => 'change'],
                 ])
                 ->addFormRule('title', [
                     ['required' => true, 'message' => '请填写角色名称', 'trigger' => 'change'],
                 ])
-                ->setFormValues()
+                ->setFormValues($info)
                 ->getData();
             
             //返回数据

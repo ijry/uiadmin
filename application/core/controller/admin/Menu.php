@@ -164,22 +164,49 @@ class Menu extends Admin
             $ia_dyform      = new \app\core\util\iadypage\IaDyform();
             $form_data = $ia_dyform->init()
                 ->setFormMethod('post')
-                ->addFormItem('module', '模块', 'select', '', '请选择模块', '模块是一个可分享使用的最小功能包', ['options' => $module_list_select])
-                ->addFormItem('pmenu', '上级菜单', 'select', '', '请选择上级菜单', '请选择上级菜单', ['options' => $menu_tree_select])
-                ->addFormItem('title', '菜单标题', 'text', '', '请输入菜单标题', '菜单标题是显示在左侧列表中的')
-                ->addFormItem('tip', '菜单说明', 'text', '', '请输入菜单说明', '好的说明有助于用户理解')
-                ->addFormItem('menu_type', '菜单类型', 'radio', '', '请选择菜单类型', '请选择菜单类型', [
+                ->addFormItem('module', '模块', 'select', '', [
+                    'placeholder' => '请选择模块',
+                    'tip' => '模块是一个可分享使用的最小功能包',
+                    'options' => $module_list_select
+                ])
+                ->addFormItem('pmenu', '上级菜单', 'select', '', [
+                    'placeholder' => '请选择上级菜单',
+                    'tip' => '请选择上级菜单',
+                    'options' => $menu_tree_select
+                ])
+                ->addFormItem('title', '菜单标题', 'text', '', [
+                    'placeholder' => '请输入菜单标题',
+                    'tip' => '菜单标题是显示在左侧列表中的'
+                ])
+                ->addFormItem('tip', '菜单说明', 'text', '', [
+                    'placeholder' => '请输入菜单说明',
+                    'tip' => '好的说明有助于用户理解'
+                ])
+                ->addFormItem('menu_type', '菜单类型', 'radio', '', [
+                    'placeholder' => '请选择菜单类型',
+                    'tip' => '请选择菜单类型',
                     'options' => [
-                        ['title' => '分组','value' => 0,],
-                        ['title' => '功能页面+接口','value' => 1,],
-                        ['title' => '功能按钮+接口','value' => 2,],
-                        ['title' => '纯接口','value' => 3,]
+                        ['title' => '分组', 'value' => 0],
+                        ['title' => '功能页面+接口', 'value' => 1],
+                        ['title' => '功能按钮+接口', 'value' => 2],
+                        ['title' => '纯接口', 'value' => 3]
                     ]
                 ])
-                ->addFormItem('path', '接口路径', 'text', '', '请输入接口路径', '接口路径举例：/core/user/lists')
-                ->addFormItem('api_prefix', '接口前缀', 'text', 'v1', '接口前缀', '一般默认v1')
-                ->addFormItem('api_suffix', '接口参数', 'text', '', '请输入接口参数', '接口参数举例：/:id/:name')
-                ->addFormItem('api_method', '请求方法', 'checkbox', '', '请勾选请求方法', '尽量符合Restful风格', [
+                ->addFormItem('path', '接口路径', 'text', '', [
+                    'placeholder' => '请输入接口路径',
+                    'tip' => '接口路径举例：/core/user/lists'
+                ])
+                ->addFormItem('api_prefix', '接口前缀', 'text', 'v1', [
+                    'placeholder' => '接口前缀',
+                    'tip' => '一般默认v1'
+                ])
+                ->addFormItem('api_suffix', '接口参数', 'text', '', [
+                    'placeholder' => '请输入接口参数',
+                    'tip' => '接口参数举例：/:id/:name'
+                ])
+                ->addFormItem('api_method', '请求方法', 'checkbox', '', [
+                    'placeholder' => '请勾选请求方法',
+                    'tip' => '尽量符合Restful风格',
                     'options' => [
                         ['title' => 'GET', 'value' => 'GET',],
                         ['title' => 'POST', 'value' => 'POST',],
@@ -187,14 +214,18 @@ class Menu extends Admin
                         ['title' => 'DELETE', 'value' => 'DELETE',]
                     ]
                 ])
-                ->addFormItem('route_type', '动态页面', 'radio', 1, '请选择是否自动生成页面', '系统内容了动态页面技术，可以自动生成后台前端页面', [
+                ->addFormItem('route_type', '动态页面', 'radio', 1, [
+                    'placeholder' => '请选择是否自动生成页面',
+                    'tip' => '系统内容了动态页面技术，可以自动生成后台前端页面',
                     'options' => [
                         ['title' => 'Vue路由', 'value' => 'route',],
                         ['title' => 'IA动态列表', 'value' => 'list',],
                         ['title' => 'IA动态表单', 'value' => 'form',]
                     ]
                 ])
-                ->addFormItem('is_hide', '是否隐藏', 'radio', 0, '请选择是否隐藏', '有时候一些功能不需要可以隐藏', [
+                ->addFormItem('is_hide', '是否隐藏', 'radio', 0, [
+                    'placeholder' => '请选择是否隐藏',
+                    'tip' => '有时候一些功能不需要可以隐藏',
                     'options' => [
                         ['title' => '是', 'value' => 1,],
                         ['title' => '否', 'value' => 0,]
@@ -327,22 +358,49 @@ class Menu extends Admin
             $ia_dyform      = new \app\core\util\iadypage\IaDyform();
             $form_data = $ia_dyform->init()
                 ->setFormMethod('put')
-                ->addFormItem('module', '模块', 'select', '', '请选择模块', '模块是一个可分享使用的最小功能包', ['options' => $module_list_select])
-                ->addFormItem('pmenu', '上级菜单', 'select', '', '请选择上级菜单', '请选择上级菜单', ['options' => $menu_tree_select])
-                ->addFormItem('title', '菜单标题', 'text', '', '请输入菜单标题', '菜单标题是显示在左侧列表中的')
-                ->addFormItem('tip', '菜单说明', 'text', '', '请输入菜单说明', '好的说明有助于用户理解')
-                ->addFormItem('menu_type', '菜单类型', 'radio', '', '请选择菜单类型', '请选择菜单类型', [
+                ->addFormItem('module', '模块', 'select', '', [
+                    'placeholder' => '请选择模块',
+                    'tip' => '模块是一个可分享使用的最小功能包',
+                    'options' => $module_list_select
+                ])
+                ->addFormItem('pmenu', '上级菜单', 'select', '', [
+                    'placeholder' => '请选择上级菜单',
+                    'tip' => '请选择上级菜单',
+                    'options' => $menu_tree_select
+                ])
+                ->addFormItem('title', '菜单标题', 'text', '', [
+                    'placeholder' => '请输入菜单标题',
+                    'tip' => '菜单标题是显示在左侧列表中的'
+                ])
+                ->addFormItem('tip', '菜单说明', 'text', '', [
+                    'placeholder' => '请输入菜单说明',
+                    'tip' => '好的说明有助于用户理解'
+                ])
+                ->addFormItem('menu_type', '菜单类型', 'radio', '', [
+                    'placeholder' => '请选择菜单类型',
+                    'tip' => '请选择菜单类型',
                     'options' => [
-                        ['title' => '分组','value' => 0,],
-                        ['title' => '功能页面+接口','value' => 1,],
-                        ['title' => '功能按钮+接口','value' => 2,],
-                        ['title' => '纯接口','value' => 3,]
+                        ['title' => '分组', 'value' => 0],
+                        ['title' => '功能页面+接口', 'value' => 1],
+                        ['title' => '功能按钮+接口', 'value' => 2],
+                        ['title' => '纯接口', 'value' => 3]
                     ]
                 ])
-                ->addFormItem('path', '接口路径', 'text', '', '请输入接口路径', '接口路径举例：/core/user/lists')
-                ->addFormItem('api_prefix', '接口前缀', 'text', 'v1', '接口前缀', '一般默认v1')
-                ->addFormItem('api_suffix', '接口参数', 'text', '', '请输入接口参数', '接口参数举例：/:id/:name')
-                ->addFormItem('api_method', '请求方法', 'checkbox', '', '请勾选请求方法', '尽量符合Restful风格', [
+                ->addFormItem('path', '接口路径', 'text', '', [
+                    'placeholder' => '请输入接口路径',
+                    'tip' => '接口路径举例：/core/user/lists'
+                ])
+                ->addFormItem('api_prefix', '接口前缀', 'text', 'v1', [
+                    'placeholder' => '接口前缀',
+                    'tip' => '一般默认v1'
+                ])
+                ->addFormItem('api_suffix', '接口参数', 'text', '', [
+                    'placeholder' => '请输入接口参数',
+                    'tip' => '接口参数举例：/:id/:name'
+                ])
+                ->addFormItem('api_method', '请求方法', 'checkbox', '', [
+                    'placeholder' => '请勾选请求方法',
+                    'tip' => '尽量符合Restful风格',
                     'options' => [
                         ['title' => 'GET', 'value' => 'GET',],
                         ['title' => 'POST', 'value' => 'POST',],
@@ -350,14 +408,18 @@ class Menu extends Admin
                         ['title' => 'DELETE', 'value' => 'DELETE',]
                     ]
                 ])
-                ->addFormItem('route_type', '动态页面', 'radio', 1, '请选择是否自动生成页面', '系统内容了动态页面技术，可以自动生成后台前端页面', [
+                ->addFormItem('route_type', '动态页面', 'radio', 1, [
+                    'placeholder' => '请选择是否自动生成页面',
+                    'tip' => '系统内容了动态页面技术，可以自动生成后台前端页面',
                     'options' => [
                         ['title' => 'Vue路由', 'value' => 'route',],
                         ['title' => 'IA动态列表', 'value' => 'list',],
                         ['title' => 'IA动态表单', 'value' => 'form',]
                     ]
                 ])
-                ->addFormItem('is_hide', '是否隐藏', 'radio', 0, '请选择是否隐藏', '有时候一些功能不需要可以隐藏', [
+                ->addFormItem('is_hide', '是否隐藏', 'radio', 0, [
+                    'placeholder' => '请选择是否隐藏',
+                    'tip' => '有时候一些功能不需要可以隐藏',
                     'options' => [
                         ['title' => '是', 'value' => 1,],
                         ['title' => '否', 'value' => 0,]

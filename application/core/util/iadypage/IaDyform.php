@@ -75,16 +75,18 @@ class IaDyform {
         $title,
         $type = 'text',
         $value = '' ,
-        $placeholder = '',
-        $tip = '',
         $extra = []
     ) {
         $item['name'] = $name;
         $item['title'] = $title;
         $item['type'] = $type;
         $item['value'] = $value;
-        $item['placeholder'] = $placeholder;
-        $item['tip'] = $tip;
+        if (isset($extra['placeholder'])) {
+            $extra['placeholder'] = $extra['placeholder'];
+        }
+        if (isset($extra['tip'])) {
+            $extra['tip'] = $extra['tip'];
+        }
         if (isset($extra['options'])) {
             $options = [];
             foreach ($extra['options'] as $key => $val) {
