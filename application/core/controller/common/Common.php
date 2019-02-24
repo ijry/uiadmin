@@ -37,10 +37,6 @@ class Common extends Controller
 
         //jwt验证
         try {
-            JWT::$leeway = 60;//当前时间减去60，把时间留点余地
-            $decoded = JWT::decode($jwt, $key, ['HS256']); //HS256方式，这里要和签发的时候对应
-            $arr = (array)$decoded;
-
             //数据库验证
             $info = Db::name('core_login')
                 ->where('token', $jwt)
@@ -54,6 +50,11 @@ class Common extends Controller
             if ($arr['data']->uid != $info['uid']) {
                 return ['code' => 0, 'msg' => '数据异常请联系管理员', 'data' => ['need_login' => 1]];
             }
+
+            //解密
+            JWT::$leeway = 60;//当前时间减去60，把时间留点余地
+            $decoded = JWT::decode($jwt, $info['key'], ['HS256']); //HS256方式，这里要和签发的时候对应
+            $arr = (array)$decoded;
             return ['code' => 200, 'data' => $arr];
         } catch(\Firebase\JWT\SignatureInvalidException $e) {  //签名不正确
             return ['code' => 0, 'msg' => $e->getMessage(), 'data' => ['need_login' => 1]];
