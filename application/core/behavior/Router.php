@@ -11,13 +11,27 @@
  * +----------------------------------------------------------------------
 */
 
-namespace app\index\controller;
+namespace app\core\behavior;
 
-class Index
+use think\Db;
+use think\facade\Route;
+
+class Router
 {
-    public function index()
+    // 行为逻辑
+    public function run($params)
     {
-        return 'InitAdmin后台接口运行中...';
+        // 计算路由
+        $data_list = Db::name('core_menu')
+            ->where('menu_type', '>' , 0)
+            ->select();
+        foreach ($data_list as $key => $val) {
+            $path = explode('/', $val['path']);
+            Route::rule(
+                'api/' . $val['api_prefix'] . '/admin' . $val['path'] . $val['api_suffix'],
+                $path[1] . '/admin.' . $path[2] . '/' . $path[3],
+                $val['api_method']
+            );
+        }
     }
-
 }

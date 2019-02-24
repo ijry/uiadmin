@@ -93,7 +93,7 @@ class User extends Admin
     public function add()
     {
         if (request()->isPost()) {
-            // 数据验证
+            //数据验证
             $validate = Validate::make([
                 'nickname'  => 'require',
                 'username' => 'require',
@@ -109,7 +109,7 @@ class User extends Admin
                 return json(['code' => 200, 'msg' => $validate->getError(), 'data' => []]);
             }
 
-            // 数据构造
+            //数据构造
             $data_db = $data;
             if (count($data_db) <= 0 ) {
                 return json(['code' => 0, 'msg' => '无数据提交', 'data' => []]);
@@ -118,7 +118,7 @@ class User extends Admin
             $data_db['status']   = 1;
             $data_db['register_time']   = time();
 
-            // 存储数据
+            //存储数据
             $ret = $this->core_user->insert($data_db);
             if ($ret) {
                 return json(['code' => 200, 'msg' => '添加用户成功', 'data' => []]);
@@ -173,7 +173,7 @@ class User extends Admin
     public function edit($id)
     {
         if (request()->isPut()) {
-            // 数据验证
+            //数据验证
             $validate = Validate::make([
                     'nickname'  => 'require',
                     'username' => 'require',
@@ -187,7 +187,7 @@ class User extends Admin
                 return json(['code' => 200, 'msg' => $validate->getError(), 'data' => []]);
             }
 
-            // 数据构造
+            //数据构造
             $data_db = $data;
             if (count($data_db) <= 0 ) {
                 return json(['code' => 0, 'msg' => '无数据提交', 'data' => []]);
@@ -196,7 +196,7 @@ class User extends Admin
                 $data_db['password'] = user_md5($data_db['password']); // 密码不能明文需要加密存储
             }
 
-            // 存储数据
+            //存储数据
             $ret = $this->core_user
                 ->where('id', $id)
                 ->update($data_db);
