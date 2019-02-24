@@ -43,7 +43,6 @@ class User extends Home
         $user_list = $this->core_user
             ->where(['delete_time' => 0, 'status' => 1])
             ->select();
-        dump($user_list);
     }
 
     /**
@@ -69,7 +68,6 @@ class User extends Home
             return json($ret);
         }
         $user_info = $this->core_user->find($ret['data']['uid']);
-        dump($user_info);
     }
 
     /**
@@ -144,7 +142,7 @@ class User extends Home
         }
     
         //颁发登录凭证token
-        $key = env('auth_key'); //秘钥加密关键 Signature
+        $key = \think\helper\Str::random(64); //秘钥
         $login_time = time();
         $expire_time = $login_time + 8640000; //100天有效期
         $token = [
@@ -162,6 +160,7 @@ class User extends Home
         //存进数据库
         $data = [];
         $data['uid'] = $user_info['id'];
+        $data['key'] = $key;
         $data['token'] = $jwt;
         $data['login_time'] = $login_time;
         $data['expire_time'] = $expire_time;
