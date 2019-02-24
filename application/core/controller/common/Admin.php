@@ -21,6 +21,9 @@ class Admin extends Common
 {
     protected function initialize()
     {
+        // 开发调试时跳过权限验证方便直接查看接口返回数据
+        //return true;
+
         //登录验证
         $ret = $this->is_login();
         if ($ret['code'] != 200) {
