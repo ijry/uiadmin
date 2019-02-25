@@ -18,18 +18,22 @@ use think\Controller;
 use think\facade\Request;
 use \Firebase\JWT\JWT; //导入JWT
 
+/**
+ * 公共继承控制器
+ *
+ * @author jry <ijry@qq.com>
+ */
 class Common extends Controller
 {
     /**
     * 判断用户是否登陆方法
     * @param  string $token
     * @return array
-    * @author jry <598821125@qq.com>
+    * @author jry <ijry@qq.com>
     */
     protected function is_login()
     {
         //获取token
-        $key = env('auth_key'); //key要和签发的时候一样
         $token = Request::header('Authorization');
         if (!$token) {
             return ['code' => 0, 'msg' => 'AuthorizationToken not found'];
@@ -56,6 +60,7 @@ class Common extends Controller
             if ($arr['data']->uid != $info['uid']) {
                 return ['code' => 0, 'msg' => '数据异常请联系管理员', 'data' => ['need_login' => 1]];
             }
+            $arr['data']->token = $jwt;
             return ['code' => 200, 'data' => $arr];
         } catch(\Firebase\JWT\SignatureInvalidException $e) {  //签名不正确
             return ['code' => 0, 'msg' => $e->getMessage(), 'data' => ['need_login' => 1]];

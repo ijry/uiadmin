@@ -20,11 +20,11 @@ use app\core\controller\common\Admin;
 use app\core\util\Tree;
 
 /**
- * 菜单管理
+ * API管理
  *
  * @author jry <ijry@qq.com>
  */
-class Menu extends Admin
+class Api extends Admin
 {
     private $core_menu;
     private $core_module;
@@ -48,13 +48,11 @@ class Menu extends Admin
         $data_list = $this->core_menu
             ->removeOption('where')
             ->where('delete_time', 0)
-            ->where('menu_type', '<', 4)
+            ->where('menu_type', '=', 5)
             ->order('sortnum asc')
             ->select();
         foreach ($data_list as $key => &$val) {
-            if ($val['menu_type'] > 0 && $val['menu_type'] < 4) {
-                $val['admin_api'] = '/' . $val['api_prefix'] . '/admin' . $val['path'] . $val['api_suffix'];
-            }
+            $val['api'] = '/' . $val['api_prefix'] . '/' . $val['path'] . $val['api_suffix'];
         }
         $tree      = new Tree();
         $menu_tree = $tree->list2tree($data_list, 'path', 'pmenu', 'children', 0, false);
@@ -62,11 +60,11 @@ class Menu extends Admin
         //构造动态页面数据
         $ia_dylist      = new \app\core\util\iadypage\IaDylist();
         $list_data = $ia_dylist->init()
-            ->addTopButton('add', '添加菜单', ['api' => '/v1/admin/core/menu/add'])
-            ->addRightButton('edit', '修改', ['api' => '/v1/admin/core/menu/edit', 'title' => '修改菜单'])
+            ->addTopButton('add', '添加', ['api' => '/v1/admin/core/api/add'])
+            ->addRightButton('edit', '修改', ['api' => '/v1/admin/core/api/edit', 'title' => '修改API'])
             ->addRightButton('delete', '删除', [
-                'api' => '/v1/admin/core/menu/delete',
-                'title' => '确认要删除该菜单吗？',
+                'api' => '/v1/admin/core/api/delete',
+                'title' => '确认要删除该API吗？',
                 'modal_type' => 'confirm',
                 'width' => '600',
                 'okText' => '确认删除',
@@ -75,11 +73,9 @@ class Menu extends Admin
             ])
             ->addColumn('id' , 'ID', ['width' => '50px'])
             ->addColumn('module', '所属模块', ['width' => '80px'])
-            ->addColumn('title', '菜单标题', ['width' => '230px'])
-            ->addColumn('menu_type', '类型', ['width' => '50px'])
+            ->addColumn('title', '菜单标题', ['width' => '200px'])
             ->addColumn('api_method', '请求方法', ['width' => '100px'])
-            ->addColumn('admin_api', '后台接口', ['minWidth' => '150px'])
-            ->addColumn('is_hide', '隐藏', ['width' => '50px'])
+            ->addColumn('api', '前台接口', ['minWidth' => '150px'])
             ->addColumn('sortnum', '排序', ['width' => '50px'])
             ->addColumn('right_button_list', '操作', [
                 'minWidth' => '50px',
@@ -108,15 +104,13 @@ class Menu extends Admin
             $validate = Validate::make([
                 'module'  => 'require',
                 'title' => 'require',
-                'menu_type' => 'require',
                 'path' => 'require',
                 'api_prefix' => 'require',
                 'api_method' => 'require',
             ],
             [
                 'module.require' => '请选择模块',
-                'title.require' => '菜单名称必须',
-                'menu_type.require' => '菜单类型必须',
+                'title.require' => '接口名称必须',
                 'path.require' => '接口路径必须',
                 'api_prefix.require' => '接口前缀必须',
                 'api_method.require' => '请求方法必须',
@@ -131,6 +125,7 @@ class Menu extends Admin
             if (count($data_db) <= 0 ) {
                 return json(['code' => 0, 'msg' => '无数据提交', 'data' => []]);
             }
+            $data_db['menu_type'] = 5;
             $data_db['api_method'] = implode('|', $data_db['api_method']);
             $data_db['sortnum'] = 0;
             
@@ -158,6 +153,7 @@ class Menu extends Admin
             $menu_list = $this->core_menu
                 ->removeOption('where')
                 ->where(['delete_time' => 0])
+                ->where('menu_type', '=', 5)
                 ->order('sortnum asc')
                 ->select();
             $tree      = new Tree();
@@ -190,16 +186,6 @@ class Menu extends Admin
                     'placeholder' => '请输入菜单说明',
                     'tip' => '好的说明有助于用户理解'
                 ])
-                ->addFormItem('menu_type', '菜单类型', 'radio', '', [
-                    'placeholder' => '请选择菜单类型',
-                    'tip' => '请选择菜单类型',
-                    'options' => [
-                        ['title' => '分组', 'value' => 0],
-                        ['title' => '功能页面+接口', 'value' => 1],
-                        ['title' => '功能按钮+接口', 'value' => 2],
-                        ['title' => '纯接口', 'value' => 3]
-                    ]
-                ])
                 ->addFormItem('path', '接口路径', 'text', '', [
                     'placeholder' => '请输入接口路径',
                     'tip' => '接口路径举例：/core/user/lists'
@@ -212,7 +198,7 @@ class Menu extends Admin
                     'placeholder' => '请输入接口参数',
                     'tip' => '接口参数举例：/:id/:name'
                 ])
-                ->addFormItem('api_method', '请求方法', 'checkbox', '', [
+                ->addFormItem('api_method', '请求方法', 'checkbox', ['GET'], [
                     'placeholder' => '请勾选请求方法',
                     'tip' => '尽量符合Restful风格',
                     'options' => [
@@ -231,14 +217,6 @@ class Menu extends Admin
                         ['title' => 'IA动态表单', 'value' => 'form',]
                     ]
                 ])
-                ->addFormItem('is_hide', '是否隐藏', 'radio', 0, [
-                    'placeholder' => '请选择是否隐藏',
-                    'tip' => '有时候一些功能不需要可以隐藏',
-                    'options' => [
-                        ['title' => '是', 'value' => 1,],
-                        ['title' => '否', 'value' => 0,]
-                    ]
-                ])
                 ->addFormItem('sortnum', '排序', 'text', '', [
                     'placeholder' => '请输入排序',
                     'tip' => '请输入排序'
@@ -249,9 +227,6 @@ class Menu extends Admin
                 ->addFormRule('title', [
                     ['required' => true, 'message' => '请填写菜单标题', 'trigger' => 'blur'],
                 ])
-                ->addFormRule('menu_type', [
-                    ['required' => true, 'type' => 'number', 'message' => '请选择菜单类型', 'trigger' => 'change'],
-                ])
                 ->addFormRule('path', [
                     ['required' => true, 'message' => '请输入接口路径', 'trigger' => 'blur'],
                 ])
@@ -260,9 +235,6 @@ class Menu extends Admin
                 ])
                 ->addFormRule('route_type', [
                     ['required' => true, 'type' => 'string', 'message' => '请选择是页面路由方式', 'trigger' => 'change'],
-                ])
-                ->addFormRule('is_hide', [
-                    ['required' => true, 'type' => 'number', 'message' => '请选择是否隐藏', 'trigger' => 'change'],
                 ])
                 ->setFormValues()
                 ->getData();
@@ -293,7 +265,6 @@ class Menu extends Admin
             $validate = Validate::make([
                 'module'  => 'require',
                 'title' => 'require',
-                'menu_type' => 'require',
                 'path' => 'require',
                 'api_prefix' => 'require',
                 'api_method' => 'require',
@@ -301,7 +272,6 @@ class Menu extends Admin
             [
                 'module.require' => '请选择模块',
                 'title.require' => '菜单名称必须',
-                'menu_type.require' => '菜单类型必须',
                 'path.require' => '接口路径必须',
                 'api_prefix.require' => '接口前缀必须',
                 'api_method.require' => '请求方法必须',
@@ -357,6 +327,8 @@ class Menu extends Admin
             $menu_list = $this->core_menu
                 ->removeOption('where')
                 ->where(['delete_time' => 0])
+                ->where('menu_type', '=', 5)
+                ->where('id', '<>', $id)
                 ->order('sortnum asc')
                 ->select();
             $tree      = new Tree();
@@ -389,16 +361,6 @@ class Menu extends Admin
                     'placeholder' => '请输入菜单说明',
                     'tip' => '好的说明有助于用户理解'
                 ])
-                ->addFormItem('menu_type', '菜单类型', 'radio', '', [
-                    'placeholder' => '请选择菜单类型',
-                    'tip' => '请选择菜单类型',
-                    'options' => [
-                        ['title' => '分组', 'value' => 0],
-                        ['title' => '功能页面+接口', 'value' => 1],
-                        ['title' => '功能按钮+接口', 'value' => 2],
-                        ['title' => '纯接口', 'value' => 3]
-                    ]
-                ])
                 ->addFormItem('path', '接口路径', 'text', '', [
                     'placeholder' => '请输入接口路径',
                     'tip' => '接口路径举例：/core/user/lists'
@@ -430,14 +392,6 @@ class Menu extends Admin
                         ['title' => 'IA动态表单', 'value' => 'form',]
                     ]
                 ])
-                ->addFormItem('is_hide', '是否隐藏', 'radio', 0, [
-                    'placeholder' => '请选择是否隐藏',
-                    'tip' => '有时候一些功能不需要可以隐藏',
-                    'options' => [
-                        ['title' => '是', 'value' => 1,],
-                        ['title' => '否', 'value' => 0,]
-                    ]
-                ])
                 ->addFormItem('sortnum', '排序', 'text', '', [
                     'placeholder' => '请输入排序',
                     'tip' => '请输入排序'
@@ -448,9 +402,6 @@ class Menu extends Admin
                 ->addFormRule('title', [
                     ['required' => true, 'message' => '请填写菜单标题', 'trigger' => 'blur'],
                 ])
-                ->addFormRule('menu_type', [
-                    ['required' => true, 'type' => 'number', 'message' => '请选择菜单类型', 'trigger' => 'change'],
-                ])
                 ->addFormRule('path', [
                     ['required' => true, 'message' => '请输入接口路径', 'trigger' => 'blur'],
                 ])
@@ -459,9 +410,6 @@ class Menu extends Admin
                 ])
                 ->addFormRule('route_type', [
                     ['required' => true, 'type' => 'string', 'message' => '请选择是页面路由方式', 'trigger' => 'change'],
-                ])
-                ->addFormRule('is_hide', [
-                    ['required' => true, 'type' => 'number', 'message' => '请选择是否隐藏', 'trigger' => 'change'],
                 ])
                 ->setFormValues($info)
                 ->getData();
@@ -478,26 +426,6 @@ class Menu extends Admin
     }
 
     /**
-     * 后台左侧导航列表路由规则
-     *
-     * @return \think\Response
-     * @author jry <ijry@qq.com>
-     */
-    public function lists()
-    {
-        // 计算路由
-        $data_list = $this->core_menu
-            ->removeOption('where')
-            ->where(['delete_time' => 0])
-            ->where('menu_type', 'in', '1,2,3')
-            ->select();
-        foreach ($data_list as $key => &$val) {
-            $val['api'] = $val['api_prefix'] . '/admin' . $val['path'];
-        }
-        return json(['code' => 200, 'msg' => '成功', 'data' => ['data_list' => $data_list]]);
-    }
-
-    /**
      * 删除
      * 
      * @return \think\Response
@@ -508,19 +436,22 @@ class Menu extends Admin
         // 子菜单检测
         $info = $this->core_menu
             ->removeOption('where')
-            ->where(['id' => $id])
+            ->where('menu_type', 5)
+            ->where('id', $id)
             ->find();
         $exist = $this->core_menu
             ->removeOption('where')
-            ->where(['pmenu' => $info['path']])
+            ->where('menu_type', 5)
+            ->where('pmenu', $info['path'])
             ->count();
         if ($exist > 0) {
-            return json(['code' => 0, 'msg' => '存在子菜单无法删除', 'data' => []]);
+            return json(['code' => 0, 'msg' => '存在子项目无法删除', 'data' => []]);
         }
     
         $ret = $this->core_menu
             ->removeOption('where')
-            ->where(['id' => $id])
+            ->where('menu_type', 5)
+            ->where('id', $id)
             ->useSoftDelete('delete_time', time())
             ->delete();
         if ($ret) {

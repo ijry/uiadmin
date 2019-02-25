@@ -21,6 +21,8 @@ use app\core\util\Tree;
 
 /**
  * 配置
+ *
+ * @author jry <ijry@qq.com>
  */
 class Config extends Admin
 {
@@ -36,6 +38,7 @@ class Config extends Admin
      * 模块列表
      *
      * @return \think\Response
+     * @author jry <ijry@qq.com>
      */
     public function lists()
     {
@@ -80,6 +83,7 @@ class Config extends Admin
      * 批量修改
      *
      * @return \think\Response
+     * @author jry <ijry@qq.com>
      */
     public function saveBatch()
     {
@@ -158,6 +162,7 @@ class Config extends Admin
      * 添加
      *
      * @return \think\Response
+     * @author jry <ijry@qq.com>
      */
     public function add()
     {
@@ -282,6 +287,7 @@ class Config extends Admin
      * 修改
      *
      * @return \think\Response
+     * @author jry <ijry@qq.com>
      */
     public function edit($id)
     {
@@ -411,6 +417,7 @@ class Config extends Admin
      * 删除
      * 
      * @return \think\Response
+     * @author jry <ijry@qq.com>
      */
     public function delete($id)
     {

@@ -18,6 +18,8 @@ use app\core\controller\common\Admin;
 
 /**
  * 系统功能控制器
+ *
+ * @author jry <ijry@qq.com>
  */
 class System extends Admin
 {
@@ -30,6 +32,7 @@ class System extends Admin
      * 删除缓存
      * 
      * @return \think\Response
+     * @author jry <ijry@qq.com>
      */
     public function cleanRuntime()
     {

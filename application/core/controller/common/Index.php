@@ -16,12 +16,18 @@ namespace app\core\controller\common;
 use think\Controller;
 use think\Request;
 
+/**
+ * 默认控制器
+ *
+ * @author jry <ijry@qq.com>
+ */
 class Index extends Controller
 {
     /**
      * 首页
      *
      * @return \think\Response
+     * @author jry <ijry@qq.com>
      */
     public function index()
     {
