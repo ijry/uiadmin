@@ -20,7 +20,9 @@ use app\core\controller\common\Admin;
 use app\core\util\Tree;
 
 /**
- * 用户
+ * 用户管理
+ *
+ * @author jry <ijry@qq.com>
  */
 class User extends Admin
 {
@@ -39,6 +41,7 @@ class User extends Admin
      * 用户列表
      *
      * @return \think\Response
+     * @author jry <ijry@qq.com>
      */
     public function lists()
     {
@@ -89,6 +92,7 @@ class User extends Admin
      * 添加
      *
      * @return \think\Response
+     * @author jry <ijry@qq.com>
      */
     public function add()
     {
@@ -170,6 +174,7 @@ class User extends Admin
      * 修改
      *
      * @return \think\Response
+     * @author jry <ijry@qq.com>
      */
     public function edit($id)
     {
@@ -253,6 +258,7 @@ class User extends Admin
      * 删除
      * 
      * @return \think\Response
+     * @author jry <ijry@qq.com>
      */
     public function delete($id)
     {

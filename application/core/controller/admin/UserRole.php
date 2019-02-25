@@ -20,6 +20,8 @@ use app\core\util\Tree;
 
 /**
  * 用户角色
+ *
+ * @author jry <ijry@qq.com>
  */
 class UserRole extends Admin
 {
@@ -37,6 +39,7 @@ class UserRole extends Admin
      * 角色成员列表
      *
      * @return \think\Response
+     * @author jry <ijry@qq.com>
      */
     public function lists($name)
     {
@@ -92,6 +95,7 @@ class UserRole extends Admin
      * 添加
      *
      * @return \think\Response
+     * @author jry <ijry@qq.com>
      */
     public function add($name)
     {
@@ -168,6 +172,7 @@ class UserRole extends Admin
      * 删除
      * 
      * @return \think\Response
+     * @author jry <ijry@qq.com>
      */
     public function delete($uid, $name)
     {
@@ -186,9 +191,9 @@ class UserRole extends Admin
         $ret = $this->core_user
             ->update(['id' => $uid, 'roles' => implode(',', $user_info['roles'])]);
         if ($ret) {
-            return json(['code' => 200,'msg' => '删除成功','data' => []]);
+            return json(['code' => 200, 'msg' => '删除成功', 'data' => []]);
         } else {
-            return json(['code' => 0,'msg' => '删除错误','data' => []]);
+            return json(['code' => 0, 'msg' => '删除错误', 'data' => []]);
         }
     }
 }

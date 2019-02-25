@@ -19,6 +19,11 @@ use app\core\controller\common\Home;
 
 use \Firebase\JWT\JWT; //导入JWT
 
+/**
+ * 用户控制器
+ *
+ * @author jry <ijry@qq.com>
+ */
 class User extends Home
 {
     private $core_user;
@@ -33,25 +38,12 @@ class User extends Home
     }
 
     /**
-     * 用户列表
-     *
-     * @return \think\Response
-     */
-    public function lists()
-    {
-        // 用户列表
-        $user_list = $this->core_user
-            ->field('id,nickname,username,email,avatar')
-            ->where(['delete_time' => 0, 'status' => 1])
-            ->select();
-    }
-
-    /**
     * 是否登陆
     *
     * @return \think\Response
+    * @author jry <ijry@qq.com>
     */
-    public function is_login()
+    public function isLogin()
     {
         $ret = $this->is_login();
         return json($ret);
@@ -61,6 +53,7 @@ class User extends Home
     * 获取用户信息
     *
     * @return \think\Response
+    * @author jry <ijry@qq.com>
     */
     public function info()
     {
@@ -69,8 +62,10 @@ class User extends Home
             return json($ret);
         }
         $user_info = $this->core_user
+            ->removeOption('where')
             ->field('id,nickname,username,email,avatar')
             ->find($ret['data']['uid']);
+        return json(['code' => 200, 'msg' => '用户信息', 'data' => ['user_info' => $user_info]]);
     }
 
     /**
@@ -78,6 +73,7 @@ class User extends Home
      *
      * @param  \think\Request  $request
      * @return \think\Response
+     * @author jry <ijry@qq.com>
      */
     public function login(Request $request)
     {
@@ -94,7 +90,10 @@ class User extends Home
             $map = [];
             $map['identity_type'] = $identity_type;
             $map['identifier'] = $identifier;
-            $user_identity_info = $this->core_identity->where($map)->find();
+            $user_identity_info = $this->core_identity
+                ->removeOption('where')
+                ->where($map)
+                ->find();
             if (!$user_identity_info) {
                 return json(['code' => 0, 'msg' => '手机号不存在']);
             }
@@ -113,14 +112,20 @@ class User extends Home
             $map = [];
             $map['identity_type'] = $identity_type;
             $map['identifier'] = $identifier;
-            $user_identity_info = $this->core_identity->where($map)->find();
+            $user_identity_info = $this->core_identity
+                ->removeOption('where')
+                ->where($map)
+                ->find();
             if (!$user_identity_info) {
                 return json(['code' => 0, 'msg' => '邮箱不存在']);
             }
             if ($user_identity_info['verified'] !== 1) {
                 return json(['code' => 0, 'msg' => '邮箱未通过验证']);
             }
-            $user_info = $this->core_user->where(['id' => $user_identity_info['uid']])->find();
+            $user_info = $this->core_user
+                ->removeOption('where')
+                ->where(['id' => $user_identity_info['uid']])
+                ->find();
             if (!$user_info) {
                 return json(['code' => 0, 'msg' => '用户不存在']);
             }
@@ -131,7 +136,10 @@ class User extends Home
         default: //用户名
             $map = [];
             $map['username'] = $identifier;
-            $user_info = $this->core_user->where($map)->find();
+            $user_info = $this->core_user
+                ->removeOption('where')
+                ->where($map)
+                ->find();
             if (!$user_info) {
                 return json(['code' => 0, 'msg' => '用户名不存在']);
             }
@@ -169,11 +177,37 @@ class User extends Home
         $data['expire_time'] = $expire_time;
         $data['client_type'] = input('post.client_type') ? : 0;
         $data['client_name'] = input('post.client_type') ? : '';
-        $ret = $this->core_login->insert($data);
+        $ret = $this->core_login
+            ->removeOption('where')
+            ->insert($data);
         if ($ret) {
             return json(['code' => 200, 'msg' => '登陆成功', 'data' => ['token' => $jwt]]);
         } else {
             return json(['code' => 0, 'msg' => '添加失败', 'data' => []]);
+        }
+    }
+
+    /**
+    * 注销登录
+    *
+    * @return \think\Response
+    * @author jry <ijry@qq.com>
+    */
+    public function logout()
+    {
+        $ret = $this->is_login();
+        if ($ret['code'] == 200) {
+            $ret = $this->core_login
+                ->removeOption('where')
+                ->where('token', $ret['data']['data']->token)
+                ->delete();
+            if ($ret) {
+                return json(['code' => 200, 'msg' => '注销成功', 'data' => []]);
+            } else {
+                return json(['code' => 0, 'msg' => '注销失败', 'data' => []]);
+            }
+        } else {
+            return json($ret);
         }
     }
 }

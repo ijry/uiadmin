@@ -26,20 +26,6 @@ return [
         'build'        => 'beta1_201902221237'
     ],
 
-    // API接口
-    'api'     => [
-        'v1' => [
-            // 规则路由
-            'rule' => [
-                'user/login' => [
-                    'title' => '用户登陆',
-                    'route' => 'User/login',
-                    'method' => 'POST'
-                ]
-            ]
-        ]
-    ],
-
     // API接口文档
     'api_doc'     => [
         'v1' => [

@@ -19,7 +19,9 @@ use app\core\controller\common\Admin;
 use app\core\util\Tree;
 
 /**
- * 角色
+ * 角色管理
+ *
+ * @author jry <ijry@qq.com>
  */
 class Role extends Admin
 {
@@ -39,6 +41,7 @@ class Role extends Admin
      * 角色列表
      *
      * @return \think\Response
+     * @author jry <ijry@qq.com>
      */
     public function trees()
     {
@@ -95,6 +98,7 @@ class Role extends Admin
      * 添加
      *
      * @return \think\Response
+     * @author jry <ijry@qq.com>
      */
     public function add()
     {
@@ -215,6 +219,7 @@ class Role extends Admin
      * 修改
      *
      * @return \think\Response
+     * @author jry <ijry@qq.com>
      */
     public function edit($id)
     {
@@ -352,6 +357,7 @@ class Role extends Admin
      * 删除
      * 
      * @return \think\Response
+     * @author jry <ijry@qq.com>
      */
     public function delete($id)
     {
@@ -363,9 +369,9 @@ class Role extends Admin
             ->useSoftDelete('delete_time', time())
             ->delete();
         if ($ret) {
-            return json(['code' => 200,'msg' => '删除成功','data' => []]);
+            return json(['code' => 200, 'msg' => '删除成功', 'data' => []]);
         } else {
-            return json(['code' => 0,'msg' => '删除错误','data' => []]);
+            return json(['code' => 0, 'msg' => '删除错误', 'data' => []]);
         }
     }
 }

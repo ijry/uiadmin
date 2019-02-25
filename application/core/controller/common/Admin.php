@@ -17,6 +17,11 @@ use think\facade\Request;
 use think\Db;
 use app\core\controller\common\Common;
 
+/**
+ * 后台公共继承控制器
+ *
+ * @author jry <ijry@qq.com>
+ */
 class Admin extends Common
 {
     protected function initialize()

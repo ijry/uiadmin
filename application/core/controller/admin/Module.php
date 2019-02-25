@@ -20,7 +20,9 @@ use app\core\controller\common\Admin;
 use app\core\util\Tree;
 
 /**
- * 模块
+ * 模块管理
+ *
+ * @author jry <ijry@qq.com>
  */
 class Module extends Admin
 {
@@ -50,13 +52,13 @@ class Module extends Admin
         $list_data = $ia_dylist->init()
             ->addTopButton('add', '创建新模块', ['api' => '/v1/admin/core/module/add'])
             ->addRightButton('config', '设置', ['api' => '/v1/admin/core/module/config', 'title' => '配置'])
-            ->addRightButton('export', '导出', ['api' => '/v1/admin/core/module/export', 'title' => '导出模块'])
             ->addRightButton('edit', '修改', ['api' => '/v1/admin/core/module/edit', 'title' => '修改模块信息'])
+            ->addRightButton('export', '导出', ['api' => '/v1/admin/core/module/export', 'title' => '导出模块'])
             ->addColumn('id' , 'ID', ['width' => '50px'])
             ->addColumn('name', '名称', ['width' => '120px'])
             ->addColumn('title', '标题', ['width' => '120px'])
             ->addColumn('description', '描述', ['width' => '240px'])
-            ->addColumn('developer', '开发者', ['width' => '100px'])
+            ->addColumn('developer', '开发者', ['width' => '80px'])
             ->addColumn('version', '版本', ['width' => '80px'])
             ->addColumn('build', 'Build', ['width' => '150px'])
             ->addColumn('sortnum', '排序', ['width' => '50px'])

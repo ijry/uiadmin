@@ -16,6 +16,11 @@ namespace app\core\controller\common;
 use think\Request;
 use app\core\controller\common\Common;
 
+/**
+ * 前台公共继承控制器
+ *
+ * @author jry <ijry@qq.com>
+ */
 class Home extends Common
 {
 }
