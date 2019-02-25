@@ -44,6 +44,7 @@ class Common extends Controller
         try {
             //数据库验证
             $info = Db::name('core_login')
+                ->removeOption('where')
                 ->where('token', $jwt)
                 ->find();
             if (!$info) {

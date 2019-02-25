@@ -63,6 +63,7 @@ class Menu extends Admin
         $ia_dylist      = new \app\core\util\iadypage\IaDylist();
         $list_data = $ia_dylist->init()
             ->addTopButton('add', '添加菜单', ['api' => '/v1/admin/core/menu/add'])
+            ->addRightButton('doc', '文档', ['api' => '/v1/admin/core/api/doc', 'width' => '1000', 'title' => 'API文档编辑', 'api_suffix' =>['id']])
             ->addRightButton('edit', '修改', ['api' => '/v1/admin/core/menu/edit', 'title' => '修改菜单'])
             ->addRightButton('delete', '删除', [
                 'api' => '/v1/admin/core/menu/delete',

@@ -45,14 +45,15 @@ class Api extends Admin
     public function doc($id)
     {
         if(request()->isPut()){
-            
+            //获取数据
             $data = input('post.');
 
-            // 存储数据
+            //存储数据
             try{
                 $ret = $this->core_menu
+                    ->removeOption('where')
                     ->where('id', $id)
-                    ->update('doc', json_encode($data));
+                    ->update(['doc' => json_encode($data)]);
             }catch(\Exception $e){
                 return json(['code' => 0, 'msg' => '修改失败' . json_encode($e), 'data' => []]);
             }
@@ -71,16 +72,21 @@ class Api extends Admin
             $info['api_method'] = explode('|', $info['api_method']);
             $doc_info = [];
             foreach ($info['api_method'] as $key => $value) {
-                if (isset($info[$value])) {
-                    $doc_info[$value] = $info[$value];
+                if (isset($info['doc'][$value])) {
+                    $doc_info[$value] = $info['doc'][$value];
                 } else {
                     $doc_info[$value] = [
                         'description' => '',
                         'params' => [
-                            0 =>[]
+                            0 => ['description' => '']
                         ]
                     ];
                 }
+            }
+            if ($info['menu_type'] == 5) {
+                $entry = '';
+            } else {
+                $entry = '/admin';
             }
 
             //构造动态页面数据
@@ -88,8 +94,9 @@ class Api extends Admin
             $ia_dyform->init()
                 ->setFormMethod('put');
             foreach ($doc_info as $key => $value) {
-                $ia_dyform->addFormItem($key . '[description]', '说明', 'text', $doc_info[$key]['description'])
-                    ->addFormItem($key . '[params]', '参数', 'formlist', $doc_info[$key]['params'], [
+                $ia_dyform->addFormItem($key . '[method]', '请求地址', 'static', $key . '：/' . $info['api_prefix'] . $entry .$info['path'] . $info['api_suffix'])
+                    ->addFormItem($key . '[description]', '接口说明', 'text', $doc_info[$key]['description'])
+                    ->addFormItem($key . '[params]', '请求参数', 'formlist', $doc_info[$key]['params'], [
                         'options' => [
                             ['title' => '是否必须', 'value' => 'require', 'span' => 2],
                             ['title' => '参数名', 'value' => 'name', 'span' => 4],
@@ -97,7 +104,8 @@ class Api extends Admin
                             ['title' => '说明', 'value' => 'description', 'span' => 8],
                             ['title' => '示例', 'value' => 'example', 'span' => 4]
                         ]
-                    ]);
+                    ])
+                    ->addFormItem($key . '[divider]', '', 'divider', '');
             }
             $form_data = $ia_dyform->setFormValues()
                 ->getData();
@@ -138,7 +146,7 @@ class Api extends Admin
         $ia_dylist      = new \app\core\util\iadypage\IaDylist();
         $list_data = $ia_dylist->init()
             ->addTopButton('add', '添加', ['api' => '/v1/admin/core/api/add'])
-            ->addRightButton('doc', '文档', ['api' => '/v1/admin/core/api/doc', 'title' => 'API文档', 'api_suffix' =>['id']])
+            ->addRightButton('doc', '文档', ['api' => '/v1/admin/core/api/doc', 'width' => '1000', 'title' => 'API文档编辑', 'api_suffix' =>['id']])
             ->addRightButton('edit', '修改', ['api' => '/v1/admin/core/api/edit', 'title' => '修改API'])
             ->addRightButton('delete', '删除', [
                 'api' => '/v1/admin/core/api/delete',
@@ -208,7 +216,9 @@ class Api extends Admin
             $data_db['sortnum'] = 0;
             
             //存储数据
-            $ret = $this->core_menu->insert($data_db);
+            $ret = $this->core_menu
+                ->removeOption('where')
+                ->insert($data_db);
             if ($ret) {
                 return json(['code' => 200, 'msg' => '添加成功', 'data' => []]);
             } else {
@@ -371,6 +381,7 @@ class Api extends Admin
             // 存储数据
             try{
                 $ret = $this->core_menu
+                    ->removeOption('where')
                     ->where('id', $id)
                     ->update($data_db);
             }catch(\Exception $e){
