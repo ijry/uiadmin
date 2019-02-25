@@ -56,8 +56,8 @@ class IaDylist {
         ];
         $btn['style'] = [
             'type' => isset($style['type']) ? $style['type'] : 'default',
-            'size' => isset($style['size']) ? $style['size'] : '',
-            'shape' => isset($style['shape']) ? $style['shape'] : '',
+            'size' => isset($style['size']) ? $style['size'] : 'default',
+            'shape' => isset($style['shape']) ? $style['shape'] : 'square',
             'icon' => isset($style['icon']) ? $style['icon'] : '',
         ];
         $this->data['top_button_list'][$name] = $btn;
@@ -85,8 +85,8 @@ class IaDylist {
         ];
         $btn['style'] = [
             'type' => isset($style['type']) ? $style['type'] : 'default',
-            'size' => isset($style['size']) ? $style['size'] : '',
-            'shape' => isset($style['shape']) ? $style['shape'] : '',
+            'size' => isset($style['size']) ? $style['size'] : 'default',
+            'shape' => isset($style['shape']) ? $style['shape'] : 'square',
             'icon' => isset($style['icon']) ? $style['icon'] : '',
         ];
         $this->data['right_button_list'][$name] = $btn;
