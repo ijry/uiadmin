@@ -51,7 +51,11 @@ class Module extends Admin
         $ia_dylist      = new \app\core\util\iadypage\IaDylist();
         $list_data = $ia_dylist->init()
             ->addTopButton('add', '创建新模块', ['api' => '/v1/admin/core/module/add'])
-            ->addRightButton('config', '设置', ['api' => '/v1/admin/core/module/config', 'title' => '配置'])
+            ->addRightButton('config', '设置', [
+                'api' => '/v1/admin/core/config/saveBatch/',
+                'title' => '配置',
+                'api_suffix' => ['name']
+            ])
             ->addRightButton('edit', '修改', ['api' => '/v1/admin/core/module/edit', 'title' => '修改模块信息'])
             ->addRightButton('export', '导出', ['api' => '/v1/admin/core/module/export', 'title' => '导出模块'])
             ->addColumn('id' , 'ID', ['width' => '50px'])
