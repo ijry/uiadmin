@@ -37,7 +37,84 @@ class Api extends Admin
     }
 
     /**
-     * 后台左侧导航列表
+     * 修改API文档
+     *
+     * @return \think\Response
+     * @author jry <ijry@qq.com>
+     */
+    public function doc($id)
+    {
+        if(request()->isPut()){
+            
+            $data = input('post.');
+
+            // 存储数据
+            try{
+                $ret = $this->core_menu
+                    ->where('id', $id)
+                    ->update('doc', json_encode($data));
+            }catch(\Exception $e){
+                return json(['code' => 0, 'msg' => '修改失败' . json_encode($e), 'data' => []]);
+            }
+            if ($ret) {
+                return json(['code' => 200, 'msg' => '修改成功', 'data' => []]);
+            } else {
+                return json(['code' => 0, 'msg' => '修改失败', 'data' => []]);
+            }
+        } else {
+            //获取菜单信息
+            $info = $this->core_menu
+                ->removeOption('where')
+                ->where('id', $id)
+                ->find();
+            $info['doc'] = json_decode($info['doc'], true);
+            $info['api_method'] = explode('|', $info['api_method']);
+            $doc_info = [];
+            foreach ($info['api_method'] as $key => $value) {
+                if (isset($info[$value])) {
+                    $doc_info[$value] = $info[$value];
+                } else {
+                    $doc_info[$value] = [
+                        'description' => '',
+                        'params' => [
+                            0 =>[]
+                        ]
+                    ];
+                }
+            }
+
+            //构造动态页面数据
+            $ia_dyform      = new \app\core\util\iadypage\IaDyform();
+            $ia_dyform->init()
+                ->setFormMethod('put');
+            foreach ($doc_info as $key => $value) {
+                $ia_dyform->addFormItem($key . '[description]', '说明', 'text', $doc_info[$key]['description'])
+                    ->addFormItem($key . '[params]', '参数', 'formlist', $doc_info[$key]['params'], [
+                        'options' => [
+                            ['title' => '是否必须', 'value' => 'require', 'span' => 2],
+                            ['title' => '参数名', 'value' => 'name', 'span' => 4],
+                            ['title' => '参数标题', 'value' => 'title', 'span' => 4],
+                            ['title' => '说明', 'value' => 'description', 'span' => 8],
+                            ['title' => '示例', 'value' => 'example', 'span' => 4]
+                        ]
+                    ]);
+            }
+            $form_data = $ia_dyform->setFormValues()
+                ->getData();
+            
+            //返回数据
+            return json([
+                'code' => 200,
+                'msg' => '成功',
+                'data' => [
+                    'form_data' => $form_data
+                ]
+            ]);
+        } 
+    }
+
+    /**
+     * API树
      *
      * @return \think\Response
      * @author jry <ijry@qq.com>
@@ -61,6 +138,7 @@ class Api extends Admin
         $ia_dylist      = new \app\core\util\iadypage\IaDylist();
         $list_data = $ia_dylist->init()
             ->addTopButton('add', '添加', ['api' => '/v1/admin/core/api/add'])
+            ->addRightButton('doc', '文档', ['api' => '/v1/admin/core/api/doc', 'title' => 'API文档', 'api_suffix' =>['id']])
             ->addRightButton('edit', '修改', ['api' => '/v1/admin/core/api/edit', 'title' => '修改API'])
             ->addRightButton('delete', '删除', [
                 'api' => '/v1/admin/core/api/delete',
@@ -305,8 +383,8 @@ class Api extends Admin
             }
         } else {
             //获取菜单信息
-            //用户信息
             $info = $this->core_menu
+                ->removeOption('where')
                 ->where('id', $id)
                 ->find();
             $info['api_method'] = explode('|', $info['api_method']);

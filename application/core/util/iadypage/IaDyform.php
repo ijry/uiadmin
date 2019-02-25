@@ -53,7 +53,7 @@ class IaDyform {
             'form_method' => 'post',
             'form_items' => [],
             'form_values' => [],
-            'form_rules' =>[]
+            'form_rules' => []
         ];
         return $this;
     }
