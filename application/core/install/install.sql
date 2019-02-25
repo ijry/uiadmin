@@ -163,7 +163,7 @@ CREATE TABLE `ia_core_login` (
   `login_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '登录时间',
   `expire_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '过期时间',
   `client_type` int(3) NOT NULL DEFAULT '0' COMMENT '客户端类型1pc2wap3app',
-  `device_name` varchar(128) NOT NULL DEFAULT '' COMMENT '设备名称'
+  `client_name` varchar(128) NOT NULL DEFAULT '' COMMENT '设备名称'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户登录信息表';
 
 

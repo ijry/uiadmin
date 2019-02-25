@@ -13,6 +13,7 @@
 
 namespace app\core\controller\common;
 
+use think\Db;
 use think\Controller;
 use think\facade\Request;
 use \Firebase\JWT\JWT; //导入JWT
@@ -47,14 +48,14 @@ class Common extends Controller
             if ($info['expire_time'] <= time()) {
                 return ['code' => 0, 'msg' => '登录过期请重新登录', 'data' => ['need_login' => 1]];
             }
-            if ($arr['data']->uid != $info['uid']) {
-                return ['code' => 0, 'msg' => '数据异常请联系管理员', 'data' => ['need_login' => 1]];
-            }
-
+            
             //解密
             JWT::$leeway = 60;//当前时间减去60，把时间留点余地
             $decoded = JWT::decode($jwt, $info['key'], ['HS256']); //HS256方式，这里要和签发的时候对应
             $arr = (array)$decoded;
+            if ($arr['data']->uid != $info['uid']) {
+                return ['code' => 0, 'msg' => '数据异常请联系管理员', 'data' => ['need_login' => 1]];
+            }
             return ['code' => 200, 'data' => $arr];
         } catch(\Firebase\JWT\SignatureInvalidException $e) {  //签名不正确
             return ['code' => 0, 'msg' => $e->getMessage(), 'data' => ['need_login' => 1]];
