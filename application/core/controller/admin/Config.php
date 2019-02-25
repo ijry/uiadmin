@@ -45,6 +45,7 @@ class Config extends Admin
         //用户列表
         $data_list = $this->core_config
             ->removeOption('where')
+            ->order('module asc')
             ->select();
 
         //构造动态页面数据
@@ -85,7 +86,7 @@ class Config extends Admin
      * @return \think\Response
      * @author jry <ijry@qq.com>
      */
-    public function saveBatch()
+    public function saveBatch($module)
     {
         if (request()->isPut()) {
             $data = input('post.');
@@ -124,6 +125,7 @@ class Config extends Admin
             $config_list = $this->core_config
                 ->removeOption('where')
                 ->order('sortnum asc')
+                ->where('module', $module)
                 ->where('status', 1)
                 ->select();
 
@@ -201,6 +203,18 @@ class Config extends Admin
                 return json(['code' => 0, 'msg' => '添加失败', 'data' => []]);
             }
         } else {
+            //获取模块列表
+            $module_list = $this->core_module
+                ->removeOption('where')
+                ->where('status', 1)
+                ->order('sortnum asc')
+                ->select();
+            $module_list_select = [];
+            foreach ($module_list as $key => $val) {
+                $module_list_select[$key]['title'] = $val['title'];
+                $module_list_select[$key]['value'] = $val['name'];
+            }
+
             //获取分组信息
             $info = $this->core_config
                 ->removeOption('where')
@@ -211,6 +225,11 @@ class Config extends Admin
             $ia_dyform      = new \app\core\util\iadypage\IaDyform();
             $form_data = $ia_dyform->init()
                 ->setFormMethod('post')
+                ->addFormItem('module', '模块', 'select', '', [
+                    'placeholder' => '请选择模块',
+                    'tip' => '模块是一个可分享使用的最小功能包',
+                    'options' => $module_list_select
+                ])
                 ->addFormItem('config_cate', '配置分组', 'radio', '', [
                     'options' => parse_attr($info['value'])
                 ])
@@ -330,6 +349,18 @@ class Config extends Admin
                 ->removeOption('where')
                 ->where('id', $id)
                 ->find();
+
+            //获取模块列表
+            $module_list = $this->core_module
+                ->removeOption('where')
+                ->where('status', 1)
+                ->order('sortnum asc')
+                ->select();
+            $module_list_select = [];
+            foreach ($module_list as $key => $val) {
+                $module_list_select[$key]['title'] = $val['title'];
+                $module_list_select[$key]['value'] = $val['name'];
+            }
             
             //获取分组信息
             $info = $this->core_config
@@ -341,6 +372,11 @@ class Config extends Admin
             $ia_dyform      = new \app\core\util\iadypage\IaDyform();
             $form_data = $ia_dyform->init()
                 ->setFormMethod('put')
+                ->addFormItem('module', '模块', 'select', '', [
+                    'placeholder' => '请选择模块',
+                    'tip' => '模块是一个可分享使用的最小功能包',
+                    'options' => $module_list_select
+                ])
                 ->addFormItem('config_cate', '配置分组', 'radio', '', [
                     'options' => parse_attr($info['value'])
                 ])
