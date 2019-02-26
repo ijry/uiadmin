@@ -99,7 +99,7 @@ CREATE TABLE `ia_core_user` (
 
 INSERT INTO `ia_core_user` (`id`, `key`, `nickname`, `username`, `password`, `avatar`, `extend_info`, `status`, `roles`, `register_time`, `delete_time`)
 VALUES
-  (1, 'initadmin-auth-key', '超级管理员', 'admin', '6efb207798cfc6c7819f99cbe03132b0', '1', NULL, 1, 'super_admin,admin', 0, 0);
+	(1, 'initadmin-auth-key', '超级管理员', 'initadmin', '59628980c728862eeb861783c9499c14', '1', NULL, 1, 'super_admin,admin', 0, 0);
 
 
 CREATE TABLE `ia_core_role` (
