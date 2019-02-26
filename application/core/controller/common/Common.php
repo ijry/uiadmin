@@ -36,9 +36,12 @@ class Common extends Controller
         //获取token
         $token = Request::header('Authorization');
         if (!$token) {
-            return ['code' => 0, 'msg' => 'AuthorizationToken not found'];
+            return ['code' => 0, 'msg' => 'AuthorizationToken未提交'];
         }
         $jwt = explode(' ', $token)[1]; //签发的Token
+        if (!$jwt) {
+            return ['code' => 0, 'msg' => '未提交用户Token'];
+        }
 
         //jwt验证
         try {
