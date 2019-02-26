@@ -18,6 +18,17 @@ $_db_conf_env = [
     'hostport' => env('database.hostport'),
 ];
 
+// 兼容Coding的一键部署
+if ($_ENV['MYSQL_HOST']) {
+    $_db_conf_env = [
+        'hostname' => $_ENV['MYSQL_HOST'],
+        'database' => $_ENV['MYSQL_DBNAME'],
+        'username' => $_ENV['MYSQL_USERNAME'],
+        'password' => $_ENV['MYSQL_PASSWORD'],
+        'hostport' => $_ENV['MYSQL_PORT'],
+    ];
+}
+
 $_db_config_base = [
     // 数据库类型
     'type'            => 'mysql',
