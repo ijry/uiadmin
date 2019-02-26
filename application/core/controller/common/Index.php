@@ -31,7 +31,7 @@ class Index extends Controller
      */
     public function index()
     {
-        //dump(user_md5('admin123'));
+        //dump(user_md5('initadmin.net', 'initadmin-auth-key'));
         return 'InitAdmin后台接口actionphp版本运行中...<br/>接口域名：' . request()->domain() . '<br/>';
     }
 }
