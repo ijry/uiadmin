@@ -138,6 +138,7 @@ class Role extends Admin
         } else {
             //获取后台权限接口
             $data_list = $this->core_menu
+            ->where('menu_type', 'in', '0,1,2,3')
                 ->order('sortnum asc')
                 ->select()->toArray();
             foreach ($data_list as $key => &$val) {
@@ -267,6 +268,7 @@ class Role extends Admin
 
             //获取后台权限接口
             $data_list = $this->core_menu
+                ->where('menu_type', 'in', '0,1,2,3')
                 ->order('sortnum asc')
                 ->select()->toArray();
             foreach ($data_list as $key => &$val) {
