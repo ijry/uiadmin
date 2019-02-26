@@ -133,7 +133,7 @@ class Role extends Admin
             if ($ret) {
                 return json(['code' => 200, 'msg' => '添加角色成功', 'data' => []]);
             } else {
-                return json(['code' => 0, 'msg' => '添加角色失败' . $this->core_role->getError(), 'data' => []]);
+                return json(['code' => 0, 'msg' => '添加角色失败:' . $this->core_role->getError(), 'data' => []]);
             }
         } else {
             //获取后台权限接口
@@ -257,7 +257,7 @@ class Role extends Admin
             if ($ret) {
                 return json(['code' => 200, 'msg' => '修改角色成功', 'data' => []]);
             } else {
-                return json(['code' => 0, 'msg' => '修改角色失败', 'data' => []]);
+                return json(['code' => 0, 'msg' => '修改角色失败:' . $this->core_role->getError(), 'data' => []]);
             }
         } else {
             //获取角色信息
@@ -361,7 +361,7 @@ class Role extends Admin
         if ($ret) {
             return json(['code' => 200, 'msg' => '删除成功', 'data' => []]);
         } else {
-            return json(['code' => 0, 'msg' => '删除错误', 'data' => []]);
+            return json(['code' => 0, 'msg' => '删除错误:' . $this->core_role->getError(), 'data' => []]);
         }
     }
 }

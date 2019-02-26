@@ -126,7 +126,7 @@ class User extends Admin
             if ($ret) {
                 return json(['code' => 200, 'msg' => '添加用户成功', 'data' => []]);
             } else {
-                return json(['code' => 0, 'msg' => '添加用户失败', 'data' => []]);
+                return json(['code' => 0, 'msg' => '添加用户失败:' . $this->core_user->getError(), 'data' => []]);
             }
         } else {
             //构造动态页面数据
@@ -206,7 +206,7 @@ class User extends Admin
             if ($ret) {
                 return json(['code' => 200, 'msg' => '修改用户信息成功', 'data' => []]);
             } else {
-                return json(['code' => 0, 'msg' => '修改用户信息失败', 'data' => []]);
+                return json(['code' => 0, 'msg' => '修改用户信息失败:' . $this->core_user->getError(), 'data' => []]);
             }
         } else {
             //用户信息
@@ -270,7 +270,7 @@ class User extends Admin
         if ($ret) {
             return json(['code' => 200, 'msg' => '删除成功', 'data' => []]);
         } else {
-            return json(['code' => 0, 'msg' => '删除错误', 'data' => []]);
+            return json(['code' => 0, 'msg' => '删除错误:' . $this->core_user->getError(), 'data' => []]);
         }
     }
 }

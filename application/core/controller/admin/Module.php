@@ -164,7 +164,7 @@ class Module extends Admin
                     Db::commit();
                     return json(['code' => 200, 'msg' => '添加模块成功', 'data' => []]);
                 } else {
-                    return json(['code' => 0, 'msg' => '添加模块失败', 'data' => []]);
+                    return json(['code' => 0, 'msg' => '添加模块失败:' . $this->core_module->getError(), 'data' => []]);
                 }
             } catch (\Exception $e) {
                 // 回滚事务
@@ -282,7 +282,7 @@ class Module extends Admin
             if ($ret) {
                 return json(['code' => 200, 'msg' => '修改模块信息成功', 'data' => []]);
             } else {
-                return json(['code' => 0, 'msg' => '修改模块信息失败', 'data' => []]);
+                return json(['code' => 0, 'msg' => '修改模块信息失败:' . $this->core_module->getError(), 'data' => []]);
             }
         } else {
             //模块信息
