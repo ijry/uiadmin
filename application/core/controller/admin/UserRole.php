@@ -31,8 +31,8 @@ class UserRole extends Admin
     protected function initialize()
     {
         parent::initialize();
-        $this->core_role = Db::name('core_role');
-        $this->core_user = Db::name('core_user');
+        $this->core_role = new \app\core\model\Role();
+        $this->core_user = new \app\core\model\User();
     }
 
     /**
@@ -45,9 +45,8 @@ class UserRole extends Admin
     {
         //成员列表
         $data_list = $this->core_user
-            ->where('delete_time', 0)
             ->where('', 'EXP', Db::raw("FIND_IN_SET('$name', roles)"))
-            ->select();
+            ->select()->toArray();
         foreach ($data_list as $key => &$val) {
             $val['role_name'] = $name;
         }
@@ -124,9 +123,10 @@ class UserRole extends Admin
             }
             
             // 存储数据
-            $ret = $this->core_user
-                ->data(['id' => $data['uid'],'roles' => implode(',', $user_info['roles'])])
-                ->update();
+            $ret = $this->core_user->save(
+                ['roles' => implode(',', $user_info['roles'])],
+                ['id' => $data['uid']]
+            );
             if ($ret) {
                 return json(['code' => 200, 'msg' => '添加角色成员成功', 'data' => []]);
             } else {
@@ -188,8 +188,10 @@ class UserRole extends Admin
                 }
             }
         }
-        $ret = $this->core_user
-            ->update(['id' => $uid, 'roles' => implode(',', $user_info['roles'])]);
+        $ret = $this->core_user->save(
+            ['roles' => implode(',', $user_info['roles'])],
+            ['id' => $uid]
+        );
         if ($ret) {
             return json(['code' => 200, 'msg' => '删除成功', 'data' => []]);
         } else {

@@ -32,9 +32,10 @@ class Role extends Admin
     protected function initialize()
     {
         parent::initialize();
-        $this->core_role = Db::name('core_role');
-        $this->core_menu = Db::name('core_menu');
-        $this->core_user = Db::name('core_user');
+        
+        $this->core_role = new \app\core\model\Role();
+        $this->core_menu = new \app\core\model\Menu();
+        $this->core_user = new \app\core\model\User();
     }
 
     /**
@@ -46,9 +47,7 @@ class Role extends Admin
     public function trees()
     {
         //角色列表
-        $data_list = $this->core_role
-            ->where(['delete_time' => 0])
-            ->select();
+        $data_list = $this->core_role->select()->toArray();
         $tree      = new Tree();
         $data_tree = $tree->list2tree($data_list);
 
@@ -130,19 +129,17 @@ class Role extends Admin
             $data_db['api_auth'] = isset($data_db['api_auth']) ? implode(',', $data_db['api_auth']) : ''; //接口权限
             
             // 存储数据
-            $ret = $this->core_role->insert($data_db);
+            $ret = $this->core_role->save($data_db);
             if ($ret) {
                 return json(['code' => 200, 'msg' => '添加角色成功', 'data' => []]);
             } else {
-                return json(['code' => 0, 'msg' => '添加角色失败', 'data' => []]);
+                return json(['code' => 0, 'msg' => '添加角色失败' . $this->core_role->getError(), 'data' => []]);
             }
         } else {
             //获取后台权限接口
             $data_list = $this->core_menu
-                ->removeOption('where')
-                ->where(['delete_time' => 0])
                 ->order('sortnum asc')
-                ->select();
+                ->select()->toArray();
             foreach ($data_list as $key => &$val) {
                 if ($val['menu_type'] > 0) {
                     $val['admin_auth'] = '/' . $val['api_prefix'] . '/admin' . $val['path'];
@@ -153,10 +150,8 @@ class Role extends Admin
 
             //获取角色基于标题的树状列表
             $role_list = $this->core_role
-                ->removeOption('where')
-                ->where(['delete_time' => 0])
                 ->order('sortnum asc')
-                ->select();
+                ->select()->toArray();
             $tree      = new Tree();
             $role_tree = $tree->array2tree($role_list, 'title', 'id', 'pid', 0, false);
             $role_tree_select = [];
@@ -257,10 +252,7 @@ class Role extends Admin
             }
 
             // 存储数据
-            $ret = $this->core_role
-                ->removeOption('where')
-                ->where('id', $id)
-                ->update($data_db);
+            $ret = $this->core_role->update($data_db, ['id' => $id]);
             if ($ret) {
                 return json(['code' => 200, 'msg' => '修改角色成功', 'data' => []]);
             } else {
@@ -269,7 +261,6 @@ class Role extends Admin
         } else {
             //获取角色信息
             $info = $this->core_role
-                ->removeOption('where')
                 ->where('id', $id)
                 ->find();
             $info['admin_auth'] = explode(',', $info['admin_auth']);
@@ -277,7 +268,7 @@ class Role extends Admin
             //获取后台权限接口
             $data_list = $this->core_menu
                 ->order('sortnum asc')
-                ->select();
+                ->select()->toArray();
             foreach ($data_list as $key => &$val) {
                 if ($val['menu_type'] > 0) {
                     $val['admin_auth'] = '/' . $val['api_prefix'] . '/admin' . $val['path'];
@@ -292,10 +283,8 @@ class Role extends Admin
 
             //获取角色基于标题的树状列表
             $role_list = $this->core_role
-                ->removeOption('where')
-                ->where(['delete_time' => 0])
                 ->order('sortnum asc')
-                ->select();
+                ->select()->toArray();
             $tree      = new Tree();
             $role_tree = $tree->array2tree($role_list, 'title', 'id', 'pid', 0, false);
             $role_tree_select = [];
@@ -365,8 +354,7 @@ class Role extends Admin
             return json(['code' => 0,'msg' => '超级管理员角色不允许删除','data' => []]);
         }
         $ret = $this->core_role
-            ->where(['id' => $id])
-            ->useSoftDelete('delete_time', time())
+            ->where('id', '=', $id)
             ->delete();
         if ($ret) {
             return json(['code' => 200, 'msg' => '删除成功', 'data' => []]);

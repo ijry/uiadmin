@@ -32,8 +32,8 @@ class Menu extends Admin
     protected function initialize()
     {
         parent::initialize();
-        $this->core_menu = Db::name('core_menu');
-        $this->core_module = Db::name('core_module');
+        $this->core_menu = new \app\core\model\Menu();
+        $this->core_module = new \app\core\model\Module();
     }
 
     /**
@@ -46,11 +46,10 @@ class Menu extends Admin
     {
         // 计算路由
         $data_list = $this->core_menu
-            ->removeOption('where')
             ->where('delete_time', 0)
             ->where('menu_type', '<', 4)
             ->order('sortnum asc')
-            ->select();
+            ->select()->toArray();
         foreach ($data_list as $key => &$val) {
             if ($val['menu_type'] > 0 && $val['menu_type'] < 4) {
                 $val['admin_api'] = '/' . $val['api_prefix'] . '/admin' . $val['path'] . $val['api_suffix'];
@@ -136,7 +135,7 @@ class Menu extends Admin
             $data_db['sortnum'] = 0;
             
             //存储数据
-            $ret = $this->core_menu->insert($data_db);
+            $ret = $this->core_menu->save($data_db);
             if ($ret) {
                 return json(['code' => 200, 'msg' => '添加成功', 'data' => []]);
             } else {
@@ -145,10 +144,9 @@ class Menu extends Admin
         } else {
             //获取模块列表
             $module_list = $this->core_module
-                ->removeOption('where')
                 ->where('status', 1)
                 ->order('sortnum asc')
-                ->select();
+                ->select()->toArray();
             $module_list_select = [];
             foreach ($module_list as $key => $val) {
                 $module_list_select[$key]['title'] = $val['title'];
@@ -157,10 +155,8 @@ class Menu extends Admin
 
             //获取菜单基于标题的树状列表
             $menu_list = $this->core_menu
-                ->removeOption('where')
-                ->where(['delete_time' => 0])
                 ->order('sortnum asc')
-                ->select();
+                ->select()->toArray();
             $tree      = new Tree();
             $menu_tree = $tree->array2tree($menu_list, 'title', 'path', 'pmenu', 0, false);
             $menu_tree_select = [];
@@ -323,9 +319,7 @@ class Menu extends Admin
 
             // 存储数据
             try{
-                $ret = $this->core_menu
-                    ->where('id', $id)
-                    ->update($data_db);
+                $ret = $this->core_menu->save($data_db, ['id' => $id]);
             }catch(\Exception $e){
                 return json(['code' => 0, 'msg' => '修改失败' . json_encode($e), 'data' => []]);
             }
@@ -344,10 +338,9 @@ class Menu extends Admin
 
             //获取模块列表
             $module_list = $this->core_module
-                ->removeOption('where')
                 ->where('status', 1)
                 ->order('sortnum asc')
-                ->select();
+                ->select()->toArray();
             $module_list_select = [];
             foreach ($module_list as $key => $val) {
                 $module_list_select[$key]['title'] = $val['title'];
@@ -356,10 +349,9 @@ class Menu extends Admin
 
             //获取菜单基于标题的树状列表
             $menu_list = $this->core_menu
-                ->removeOption('where')
                 ->where(['delete_time' => 0])
                 ->order('sortnum asc')
-                ->select();
+                ->select()->toArray();
             $tree      = new Tree();
             $menu_tree = $tree->array2tree($menu_list, 'title', 'path', 'pmenu', 0, false);
             $menu_tree_select = [];
@@ -488,8 +480,6 @@ class Menu extends Admin
     {
         // 计算路由
         $data_list = $this->core_menu
-            ->removeOption('where')
-            ->where(['delete_time' => 0])
             ->where('menu_type', 'in', '1,2,3')
             ->select();
         foreach ($data_list as $key => &$val) {
@@ -508,11 +498,9 @@ class Menu extends Admin
     {
         // 子菜单检测
         $info = $this->core_menu
-            ->removeOption('where')
             ->where(['id' => $id])
             ->find();
         $exist = $this->core_menu
-            ->removeOption('where')
             ->where(['pmenu' => $info['path']])
             ->count();
         if ($exist > 0) {
@@ -520,9 +508,7 @@ class Menu extends Admin
         }
     
         $ret = $this->core_menu
-            ->removeOption('where')
             ->where(['id' => $id])
-            ->useSoftDelete('delete_time', time())
             ->delete();
         if ($ret) {
             return json(['code' => 200, 'msg' => '删除成功', 'data' => []]);

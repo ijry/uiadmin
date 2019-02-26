@@ -11,12 +11,14 @@ CREATE TABLE `ia_core_module` (
   `api_dov` longtext COMMENT 'api接口文档',
   `status` tinyint(1) NOT NULL DEFAULT '0' COMMENT '状态',
   `sortnum` int(11) NOT NULL DEFAULT '0' COMMENT '排序',
-  PRIMARY KEY (`id`)
+  `delete_time` int(11) NOT NULL DEFAULT '0' COMMENT '删除时间',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `name` (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='后台模块表';
 
-INSERT INTO `ia_core_module` (`id`, `name`, `title`, `description`, `developer`, `website`, `version`, `build`, `api`, `api_dov`, `status`, `sortnum`)
+INSERT INTO `ia_core_module` (`id`, `name`, `title`, `description`, `developer`, `website`, `version`, `build`, `api`, `api_dov`, `status`, `sortnum`, `delete_time`)
 VALUES
-	(1, 'core', '核心', 'InitAdmin/actionphp核心模块', 'jry', 'https://initadmin.net', '0.1.0', 'beta1_201902221237', NULL, NULL, 1, 1);
+	(1, 'core', '核心', 'InitAdmin/actionphp核心模块', 'jry', 'https://initadmin.net', '0.1.0', 'beta1_201902221237', NULL, NULL, 1, 1, 0);
 
 
 CREATE TABLE `ia_core_menu` (
@@ -154,18 +156,19 @@ CREATE TABLE `ia_core_config` (
   `is_dev` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '是否开发模式才显示',
   `sortnum` tinyint(4) unsigned NOT NULL DEFAULT '0' COMMENT '排序',
   `status` tinyint(4) NOT NULL DEFAULT '0' COMMENT '状态',
+  `delete_time` int(11) NOT NULL DEFAULT '0' COMMENT '删除时间',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='系统配置表';
 
-INSERT INTO `ia_core_config` (`id`, `config_cate`, `name`, `title`, `config_type`, `value`, `placeholder`, `tip`, `options`, `is_system`, `is_dev`, `sortnum`, `status`)
+INSERT INTO `ia_core_config` (`id`, `module`, `config_cate`, `name`, `title`, `config_type`, `value`, `placeholder`, `tip`, `options`, `is_system`, `is_dev`, `sortnum`, `status`, `delete_time`)
 VALUES
-	(1, 99, 'config_cate', '配置分组', 'array', '1:系统\n3:SEO\n99:其它', '请输入配置分组信息', '请输入配置分组信息', '', 1, 0, 7, 1),
-	(2, 1, 'project_title', '项目名称', 'text', 'InitAdmin后台', '请输入项目名称', '请输入项目名称', '', 1, 0, 1, 1),
-	(3, 1, 'logo', '项目logo', 'image', '', '请上传系统logo', '请上传系统logo', '', 1, 0, 3, 1),
-	(4, 1, 'logo_favicon', 'ICO图标', 'image', '', '请上传ICO图标', '请上传ICO图标', '', 1, 0, 4, 1),
-	(5, 1, 'project_slogan', '项目口号', 'text', '渐进式模块化后台', '请输入您的项目口号', '请输入您的项目口号', '', 1, 0, 2, 1),
-	(6, 1, 'copyright', '版权信息', 'text', 'Copyright © initadmin.net  All rights reserved.', '请输入您的版权信息', '请输入您的版权信息', '', 1, 0, 5, 1),
-	(7, 1, 'icp', '备案号', 'text', '苏ICP备15020094号', '请输入您的域名备案号', '请输入您的域名备案号', '', 1, 0, 6, 1);
+	(1, 'core', 99, 'config_cate', '配置分组', 'array', '1:系统\n3:SEO\n99:其它', '请输入配置分组信息', '请输入配置分组信息', '', 1, 0, 7, 1, 0),
+	(2, 'core', 1, 'project_title', '项目名称', 'text', 'InitAdmin后台', '请输入项目名称', '请输入项目名称', '', 1, 0, 1, 1, 0),
+	(3, 'core', 1, 'logo', '项目logo', 'image', '', '请上传系统logo', '请上传系统logo', '', 1, 0, 3, 1, 0),
+	(4, 'core', 1, 'logo_favicon', 'ICO图标', 'image', '', '请上传ICO图标', '请上传ICO图标', '', 1, 0, 4, 1, 0),
+	(5, 'core', 1, 'project_slogan', '项目口号', 'text', '渐进式模块化后台', '请输入您的项目口号', '请输入您的项目口号', '', 1, 0, 2, 1, 0),
+	(6, 'core', 1, 'copyright', '版权信息', 'text', 'Copyright © initadmin.net  All rights reserved.', '请输入您的版权信息', '请输入您的版权信息', '', 1, 0, 5, 1, 0),
+	(7, 'core', 1, 'icp', '备案号', 'text', '苏ICP备15020094号', '请输入您的域名备案号', '请输入您的域名备案号', '', 1, 0, 6, 1, 0);
 
 
 CREATE TABLE `ia_core_login` (
