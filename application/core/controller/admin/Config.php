@@ -101,14 +101,14 @@ class Config extends Admin
             // 存储数据
             if ($data_db && is_array($data_db)) {
                 foreach ($data_db as $name => $value) {
-                    $map = array('name' => $name);
                     // 如果值是数组则转换成字符串，适用于复选框等类型
                     if (is_array($value)) {
                         $value = implode(',', $value);
                     }
-                    $this->core_config
-                        ->where($map)
-                        ->setField('value', $value);
+                    if (env('read_only') == true) {
+                        return json(['code' => 0, 'msg' => '无写入权限', 'data' => []]);
+                    }
+                    $this->core_config->save(['value' => $value], ['name' => $name]);
                 }
                 return json(['code' => 200, 'msg' => '保存成功', 'data' => []]);
             } else {
