@@ -521,7 +521,8 @@ class Api extends Admin
         $ret = $this->core_menu
             ->where('menu_type', '=', 5)
             ->where('id', '=', $id)
-            ->delete(true);
+            ->find()
+            ->delete();
         if ($ret) {
             return json(['code' => 200, 'msg' => '删除成功', 'data' => []]);
         } else {
