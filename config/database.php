@@ -19,7 +19,7 @@ $_db_conf_env = [
 ];
 
 // 兼容Coding的一键部署
-if ($_ENV['MYSQL_HOST']) {
+if (isset($_ENV['MYSQL_HOST'])) {
     $_db_conf_env = [
         'hostname' => $_ENV['MYSQL_HOST'],
         'database' => $_ENV['MYSQL_DBNAME'],

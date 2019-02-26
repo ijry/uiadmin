@@ -132,7 +132,7 @@ class Api extends Admin
             ->order('sortnum asc')
             ->select()->toArray();
         foreach ($data_list as $key => &$val) {
-            $val['api'] = '/' . $val['api_prefix'] . '/' . $val['path'] . $val['api_suffix'];
+            $val['api'] = '/' . $val['api_prefix'] . $val['path'] . $val['api_suffix'];
         }
         $tree      = new Tree();
         $menu_tree = $tree->list2tree($data_list, 'path', 'pmenu', 'children', 0, false);
