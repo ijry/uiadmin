@@ -356,7 +356,8 @@ class Role extends Admin
             return json(['code' => 0,'msg' => '超级管理员角色不允许删除','data' => []]);
         }
         $ret = $this->core_role
-            ->where('id', '=', $id)
+            ->where('id', $id)
+            ->find()
             ->delete();
         if ($ret) {
             return json(['code' => 200, 'msg' => '删除成功', 'data' => []]);

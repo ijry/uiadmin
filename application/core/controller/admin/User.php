@@ -266,6 +266,7 @@ class User extends Admin
         //删除用户
         $ret = $this->core_user
             ->where(['id' => $id])
+            ->find()
             ->delete();
         if ($ret) {
             return json(['code' => 200, 'msg' => '删除成功', 'data' => []]);
