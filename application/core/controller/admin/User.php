@@ -33,8 +33,8 @@ class User extends Admin
     protected function initialize()
     {
         parent::initialize();
-        $this->core_user = Db::name('core_user');
-        $this->core_login = Db::name('core_login');
+        $this->core_user = new \app\core\model\User();
+        $this->core_login = new \app\core\model\Login();
     }
 
     /**
@@ -46,9 +46,7 @@ class User extends Admin
     public function lists()
     {
         //用户列表
-        $data_list = $this->core_user
-            ->where(['delete_time' => 0])
-            ->select();
+        $data_list = $this->core_user->select()->toArray();
         $tree      = new Tree();
         $data_list = $tree->list2tree($data_list);
 
@@ -124,7 +122,7 @@ class User extends Admin
             $data_db['register_time']   = time();
 
             //存储数据
-            $ret = $this->core_user->insert($data_db);
+            $ret = $this->core_user->save($data_db);
             if ($ret) {
                 return json(['code' => 200, 'msg' => '添加用户成功', 'data' => []]);
             } else {
@@ -204,9 +202,7 @@ class User extends Admin
             }
 
             //存储数据
-            $ret = $this->core_user
-                ->where('id', $id)
-                ->update($data_db);
+            $ret = $this->core_user->update($data_db, ['id' => $id]);
             if ($ret) {
                 return json(['code' => 200, 'msg' => '修改用户信息成功', 'data' => []]);
             } else {
@@ -270,7 +266,6 @@ class User extends Admin
         //删除用户
         $ret = $this->core_user
             ->where(['id' => $id])
-            ->useSoftDelete('delete_time', time())
             ->delete();
         if ($ret) {
             return json(['code' => 200, 'msg' => '删除成功', 'data' => []]);

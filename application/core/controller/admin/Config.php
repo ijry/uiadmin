@@ -27,11 +27,13 @@ use app\core\util\Tree;
 class Config extends Admin
 {
     private $core_module;
+    private $core_config;
 
     protected function initialize()
     {
         parent::initialize();
-        $this->core_config = Db::name('core_config');
+        $this->core_config = new \app\core\model\Config();
+        $this->core_module = new \app\core\model\Module();
     }
 
     /**
@@ -44,9 +46,8 @@ class Config extends Admin
     {
         //用户列表
         $data_list = $this->core_config
-            ->removeOption('where')
             ->order('module asc')
-            ->select();
+            ->select()->toArray();
 
         //构造动态页面数据
         $ia_dylist      = new \app\core\util\iadypage\IaDylist();
@@ -106,7 +107,6 @@ class Config extends Admin
                         $value = implode(',', $value);
                     }
                     $this->core_config
-                        ->removeOption('where')
                         ->where($map)
                         ->setField('value', $value);
                 }
@@ -117,17 +117,15 @@ class Config extends Admin
         } else {
             //获取分组信息
             $info = $this->core_config
-                ->removeOption('where')
-                ->where('name', 'config_cate')
+                ->where('name', '=', 'config_cate')
                 ->find();
 
             //获取所有配置
             $config_list = $this->core_config
-                ->removeOption('where')
                 ->order('sortnum asc')
-                ->where('module', $module)
-                ->where('status', 1)
-                ->select();
+                ->where('module', '=', $module)
+                ->where('status', '=', 1)
+                ->select()->toArray();
 
             //构造动态页面数据
             $ia_dyform      = new \app\core\util\iadypage\IaDyform();
@@ -196,7 +194,7 @@ class Config extends Admin
             $data_db['status']   = 1;
 
             // 存储数据
-            $ret = $this->core_config->insert($data_db);
+            $ret = $this->core_config->save($data_db);
             if ($ret) {
                 return json(['code' => 200, 'msg' => '添加成功', 'data' => []]);
             } else {
@@ -205,10 +203,9 @@ class Config extends Admin
         } else {
             //获取模块列表
             $module_list = $this->core_module
-                ->removeOption('where')
                 ->where('status', 1)
                 ->order('sortnum asc')
-                ->select();
+                ->select()->toArray();
             $module_list_select = [];
             foreach ($module_list as $key => $val) {
                 $module_list_select[$key]['title'] = $val['title'];
@@ -217,7 +214,6 @@ class Config extends Admin
 
             //获取分组信息
             $info = $this->core_config
-                ->removeOption('where')
                 ->where('name', 'config_cate')
                 ->find();
 
@@ -335,9 +331,7 @@ class Config extends Admin
             }
 
             // 存储数据
-            $ret = $this->core_config
-                ->where('id', $id)
-                ->update($data_db);
+            $ret = $this->core_config->update($data_db, ['id' => $id]);
             if ($ret) {
                 return json(['code' => 200, 'msg' => '修改成功', 'data' => []]);
             } else {
@@ -346,16 +340,14 @@ class Config extends Admin
         } else {
             //用户信息
             $info = $this->core_config
-                ->removeOption('where')
                 ->where('id', $id)
                 ->find();
 
             //获取模块列表
             $module_list = $this->core_module
-                ->removeOption('where')
                 ->where('status', 1)
                 ->order('sortnum asc')
-                ->select();
+                ->select()->toArray();
             $module_list_select = [];
             foreach ($module_list as $key => $val) {
                 $module_list_select[$key]['title'] = $val['title'];
@@ -364,7 +356,6 @@ class Config extends Admin
             
             //获取分组信息
             $info = $this->core_config
-                ->removeOption('where')
                 ->where('name', 'config_cate')
                 ->find();
 
@@ -458,7 +449,6 @@ class Config extends Admin
     public function delete($id)
     {
         $info = $this->core_config
-            ->removeOption('where')
             ->where(['id' => $id])
             ->find();
         if ($info['is_system']) {
@@ -466,9 +456,8 @@ class Config extends Admin
         }
 
         $ret = $this->core_config
-            ->removeOption('where')
             ->where(['id' => $id])
-            ->delete();
+            ->delete(true);
         if ($ret) {
             return json(['code' => 200, 'msg' => '删除成功', 'data' => []]);
         } else {

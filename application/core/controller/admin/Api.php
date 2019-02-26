@@ -32,8 +32,8 @@ class Api extends Admin
     protected function initialize()
     {
         parent::initialize();
-        $this->core_menu = Db::name('core_menu');
-        $this->core_module = Db::name('core_module');
+        $this->core_menu = new \app\core\model\Menu();
+        $this->core_module = new \app\core\model\Module();
     }
 
     /**
@@ -50,10 +50,7 @@ class Api extends Admin
 
             //存储数据
             try{
-                $ret = $this->core_menu
-                    ->removeOption('where')
-                    ->where('id', $id)
-                    ->update(['doc' => json_encode($data)]);
+                $ret = $this->core_menu->save(['doc' => json_encode($data)], ['id' => $id]);
             }catch(\Exception $e){
                 return json(['code' => 0, 'msg' => '修改失败' . json_encode($e), 'data' => []]);
             }
@@ -65,7 +62,6 @@ class Api extends Admin
         } else {
             //获取菜单信息
             $info = $this->core_menu
-                ->removeOption('where')
                 ->where('id', $id)
                 ->find();
             $info['doc'] = json_decode($info['doc'], true);
@@ -131,11 +127,10 @@ class Api extends Admin
     {
         // 计算路由
         $data_list = $this->core_menu
-            ->removeOption('where')
-            ->where('delete_time', 0)
+            ->where('delete_time', '=' ,0)
             ->where('menu_type', '=', 5)
             ->order('sortnum asc')
-            ->select();
+            ->select()->toArray();
         foreach ($data_list as $key => &$val) {
             $val['api'] = '/' . $val['api_prefix'] . '/' . $val['path'] . $val['api_suffix'];
         }
@@ -216,9 +211,7 @@ class Api extends Admin
             $data_db['sortnum'] = 0;
             
             //存储数据
-            $ret = $this->core_menu
-                ->removeOption('where')
-                ->insert($data_db);
+            $ret = $this->core_menu->save($data_db);
             if ($ret) {
                 return json(['code' => 200, 'msg' => '添加成功', 'data' => []]);
             } else {
@@ -227,10 +220,9 @@ class Api extends Admin
         } else {
             //获取模块列表
             $module_list = $this->core_module
-                ->removeOption('where')
                 ->where('status', 1)
                 ->order('sortnum asc')
-                ->select();
+                ->select()->toArray();
             $module_list_select = [];
             foreach ($module_list as $key => $val) {
                 $module_list_select[$key]['title'] = $val['title'];
@@ -239,11 +231,9 @@ class Api extends Admin
 
             //获取菜单基于标题的树状列表
             $menu_list = $this->core_menu
-                ->removeOption('where')
-                ->where(['delete_time' => 0])
                 ->where('menu_type', '=', 5)
                 ->order('sortnum asc')
-                ->select();
+                ->select()->toArray();
             $tree      = new Tree();
             $menu_tree = $tree->array2tree($menu_list, 'title', 'path', 'pmenu', 0, false);
             $menu_tree_select = [];
@@ -380,10 +370,7 @@ class Api extends Admin
 
             // 存储数据
             try{
-                $ret = $this->core_menu
-                    ->removeOption('where')
-                    ->where('id', $id)
-                    ->update($data_db);
+                $ret = $this->core_menu->save($data_db, ['id' => $id]);
             }catch(\Exception $e){
                 return json(['code' => 0, 'msg' => '修改失败' . json_encode($e), 'data' => []]);
             }
@@ -395,17 +382,15 @@ class Api extends Admin
         } else {
             //获取菜单信息
             $info = $this->core_menu
-                ->removeOption('where')
-                ->where('id', $id)
+                ->where('id', '=', $id)
                 ->find();
             $info['api_method'] = explode('|', $info['api_method']);
 
             //获取模块列表
             $module_list = $this->core_module
-                ->removeOption('where')
-                ->where('status', 1)
+                ->where('status', '=', 1)
                 ->order('sortnum asc')
-                ->select();
+                ->select()->toArray();
             $module_list_select = [];
             foreach ($module_list as $key => $val) {
                 $module_list_select[$key]['title'] = $val['title'];
@@ -414,12 +399,10 @@ class Api extends Admin
 
             //获取菜单基于标题的树状列表
             $menu_list = $this->core_menu
-                ->removeOption('where')
-                ->where(['delete_time' => 0])
                 ->where('menu_type', '=', 5)
                 ->where('id', '<>', $id)
                 ->order('sortnum asc')
-                ->select();
+                ->select()->toArray();
             $tree      = new Tree();
             $menu_tree = $tree->array2tree($menu_list, 'title', 'path', 'pmenu', 0, false);
             $menu_tree_select = [];
@@ -524,25 +507,21 @@ class Api extends Admin
     {
         // 子菜单检测
         $info = $this->core_menu
-            ->removeOption('where')
-            ->where('menu_type', 5)
-            ->where('id', $id)
+            ->where('menu_type', '=', 5)
+            ->where('id', '=', $id)
             ->find();
         $exist = $this->core_menu
-            ->removeOption('where')
-            ->where('menu_type', 5)
-            ->where('pmenu', $info['path'])
+            ->where('menu_type', '=', 5)
+            ->where('pmenu', '=', $info['path'])
             ->count();
         if ($exist > 0) {
             return json(['code' => 0, 'msg' => '存在子项目无法删除', 'data' => []]);
         }
     
         $ret = $this->core_menu
-            ->removeOption('where')
-            ->where('menu_type', 5)
-            ->where('id', $id)
-            ->useSoftDelete('delete_time', time())
-            ->delete();
+            ->where('menu_type', '=', 5)
+            ->where('id', '=', $id)
+            ->delete(true);
         if ($ret) {
             return json(['code' => 200, 'msg' => '删除成功', 'data' => []]);
         } else {

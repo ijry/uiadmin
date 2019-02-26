@@ -31,7 +31,7 @@ class Module extends Admin
     protected function initialize()
     {
         parent::initialize();
-        $this->core_module = Db::name('core_module');
+        $this->core_module = new \app\core\model\Module();
     }
 
     /**
@@ -42,8 +42,7 @@ class Module extends Admin
     public function lists()
     {
         //用户列表
-        $data_list = $this->core_module
-            ->select();
+        $data_list = $this->core_module->select()->toArray();
         $tree      = new Tree();
         $data_list = $tree->list2tree($data_list);
 
@@ -125,7 +124,6 @@ class Module extends Admin
 
             //是否存在模块名称
             $exist = $this->core_module
-                ->removeOption('where')
                 ->where('name', $data_db['name'])
                 ->count();
             if ($exist > 0) {
@@ -160,7 +158,7 @@ class Module extends Admin
                 \think\facade\Build::run($path);
 
                 //存储数据
-                $ret = $this->core_module->removeOption('where')->insert($data_db);
+                $ret = $this->core_module->save($data_db);
                 if ($ret) {
                     // 提交事务
                     Db::commit();
@@ -280,10 +278,7 @@ class Module extends Admin
             }
 
             // 存储数据
-            $ret = $this->core_module
-                ->removeOption('where')
-                ->where('id', $id)
-                ->update($data_db);
+            $ret = $this->core_module->update($data_db, ['id' => $id]);
             if ($ret) {
                 return json(['code' => 200, 'msg' => '修改模块信息成功', 'data' => []]);
             } else {

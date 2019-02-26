@@ -32,9 +32,9 @@ class User extends Home
 
     public function __construct()
     {
-        $this->core_user = Db::name('core_user');
-        $this->core_identity = Db::name('core_identity');
-        $this->core_login = Db::name('core_login');
+        $this->core_user = new \app\core\model\User();
+        $this->core_identity = new \app\core\model\Identity();
+        $this->core_login = new \app\core\model\Login();
     }
 
     /**
@@ -62,7 +62,6 @@ class User extends Home
             return json($ret);
         }
         $user_info = $this->core_user
-            ->removeOption('where')
             ->field('id,nickname,username,email,avatar')
             ->find($ret['data']['uid']);
         return json(['code' => 200, 'msg' => '用户信息', 'data' => ['user_info' => $user_info]]);
@@ -91,7 +90,6 @@ class User extends Home
             $map['identity_type'] = $identity_type;
             $map['identifier'] = $identifier;
             $user_identity_info = $this->core_identity
-                ->removeOption('where')
                 ->where($map)
                 ->find();
             if (!$user_identity_info) {
@@ -113,7 +111,6 @@ class User extends Home
             $map['identity_type'] = $identity_type;
             $map['identifier'] = $identifier;
             $user_identity_info = $this->core_identity
-                ->removeOption('where')
                 ->where($map)
                 ->find();
             if (!$user_identity_info) {
@@ -123,7 +120,6 @@ class User extends Home
                 return json(['code' => 0, 'msg' => '邮箱未通过验证']);
             }
             $user_info = $this->core_user
-                ->removeOption('where')
                 ->where(['id' => $user_identity_info['uid']])
                 ->find();
             if (!$user_info) {
@@ -137,7 +133,6 @@ class User extends Home
             $map = [];
             $map['username'] = $identifier;
             $user_info = $this->core_user
-                ->removeOption('where')
                 ->where($map)
                 ->find();
             if (!$user_info) {
@@ -177,9 +172,7 @@ class User extends Home
         $data['expire_time'] = $expire_time;
         $data['client_type'] = input('post.client_type') ? : 0;
         $data['client_name'] = input('post.client_type') ? : '';
-        $ret = $this->core_login
-            ->removeOption('where')
-            ->insert($data);
+        $ret = $this->core_login->insert($data);
         if ($ret) {
             return json(['code' => 200, 'msg' => '登陆成功', 'data' => ['token' => $jwt]]);
         } else {
@@ -198,9 +191,8 @@ class User extends Home
         $ret = $this->is_login();
         if ($ret['code'] == 200) {
             $ret = $this->core_login
-                ->removeOption('where')
                 ->where('token', $ret['data']['data']->token)
-                ->delete();
+                ->delete(true);
             if ($ret) {
                 return json(['code' => 200, 'msg' => '注销成功', 'data' => []]);
             } else {
