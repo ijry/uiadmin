@@ -139,7 +139,7 @@ class Menu extends Admin
             if ($ret) {
                 return json(['code' => 200, 'msg' => '添加成功', 'data' => []]);
             } else {
-                return json(['code' => 0, 'msg' => '添加失败', 'data' => []]);
+                return json(['code' => 0, 'msg' => '添加失败' . $this->core_menu->getError(), 'data' => []]);
             }
         } else {
             //获取模块列表
@@ -326,7 +326,7 @@ class Menu extends Admin
             if ($ret) {
                 return json(['code' => 200, 'msg' => '修改成功', 'data' => []]);
             } else {
-                return json(['code' => 0, 'msg' => '修改失败', 'data' => []]);
+                return json(['code' => 0, 'msg' => '修改失败' . $this->core_menu->getError(), 'data' => []]);
             }
         } else {
             //获取菜单信息
@@ -513,7 +513,7 @@ class Menu extends Admin
         if ($ret) {
             return json(['code' => 200, 'msg' => '删除成功', 'data' => []]);
         } else {
-            return json(['code' => 0, 'msg' => '删除错误', 'data' => []]);
+            return json(['code' => 0, 'msg' => '删除错误' . $this->core_menu->getError(), 'data' => []]);
         }
     }
 }

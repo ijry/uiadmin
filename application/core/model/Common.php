@@ -23,21 +23,25 @@ class Common extends Model
     {
         self::event('before_insert', function ($model) {
             if (env('read_only') == true) {
+                $model->error = '数据库无写入权限';
                 return false;
             }
         });
         self::event('before_update', function ($model) {
             if (env('read_only') == true) {
+                $model->$error = '数据库无写入权限';
                 return false;
             }
         });
         self::event('before_write', function ($model) {
             if (env('read_only') == true) {
+                $model->error = '数据库无写入权限';
                 return false;
             }
         });
         self::event('before_delete', function ($model) {
             if (env('read_only') == true) {
+                $model->error = '数据库无写入权限';
                 return false;
             }
         });

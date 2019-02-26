@@ -130,7 +130,7 @@ class UserRole extends Admin
             if ($ret) {
                 return json(['code' => 200, 'msg' => '添加角色成员成功', 'data' => []]);
             } else {
-                return json(['code' => 0, 'msg' => '添加角色成员失败', 'data' => []]);
+                return json(['code' => 0, 'msg' => '添加角色成员失败:' . $this->core_user->getError(), 'data' => []]);
             }
         } else {
             //构造动态页面数据
@@ -195,7 +195,7 @@ class UserRole extends Admin
         if ($ret) {
             return json(['code' => 200, 'msg' => '删除成功', 'data' => []]);
         } else {
-            return json(['code' => 0, 'msg' => '删除错误', 'data' => []]);
+            return json(['code' => 0, 'msg' => '删除错误:' . $this->core_user->getError(), 'data' => []]);
         }
     }
 }
