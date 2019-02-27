@@ -176,7 +176,7 @@ CREATE TABLE `ia_core_login` (
   `uid` int(11) NOT NULL DEFAULT '0' COMMENT 'UID',
   `key` varchar(256) NOT NULL DEFAULT '' COMMENT '加密key',
   `token` text NOT NULL COMMENT '登录token',
-  `refresh_token` text NOT NULL COMMENT '刷新token',
+  `refresh_token` text COMMENT '刷新token',
   `login_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '登录时间',
   `expire_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '过期时间',
   `client_type` int(3) NOT NULL DEFAULT '0' COMMENT '客户端类型1pc2wap3app',
