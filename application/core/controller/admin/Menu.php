@@ -179,6 +179,10 @@ class Menu extends Admin
                     'tip' => '请选择上级菜单',
                     'options' => $menu_tree_select
                 ])
+                ->addFormItem('icon', '菜单图标', 'text', '', [
+                    'placeholder' => '请输入菜单图标',
+                    'tip' => '菜单图标是显示在后台左侧菜单中的'
+                ])
                 ->addFormItem('title', '菜单标题', 'text', '', [
                     'placeholder' => '请输入菜单标题',
                     'tip' => '菜单标题是显示在左侧列表中的'
@@ -373,6 +377,10 @@ class Menu extends Admin
                     'placeholder' => '请选择上级菜单',
                     'tip' => '请选择上级菜单',
                     'options' => $menu_tree_select
+                ])
+                ->addFormItem('icon', '菜单图标', 'text', '', [
+                    'placeholder' => '请输入菜单图标',
+                    'tip' => '菜单图标是显示在后台左侧菜单中的'
                 ])
                 ->addFormItem('title', '菜单标题', 'text', '', [
                     'placeholder' => '请输入菜单标题',
