@@ -72,7 +72,7 @@ class Module extends Admin
                 'template' => 'right_button_list'
             ])
             ->getData();
-        
+
         //返回数据
         return json([
             'code' => 200, 'msg' => '成功', 'data' => [
@@ -130,7 +130,7 @@ class Module extends Admin
                 return json(['code' => 0, 'msg' => '模块名称已经存在请换一个', 'data' => []]);
             }
 
-            
+
             // 启动事务
             try {
                 //创建目录
@@ -170,8 +170,6 @@ class Module extends Admin
                 // 回滚事务
                 Db::rollback();
             }
-            
-            
         } else {
             //构造动态页面数据
             $ia_dyform      = new \app\core\util\iadypage\IaDyform();
@@ -227,7 +225,7 @@ class Module extends Admin
                 ])
                 ->setFormValues()
                 ->getData();
-            
+
             //返回数据
             return json([
                 'code' => 200,
@@ -236,7 +234,7 @@ class Module extends Admin
                     'form_data' => $form_data
                 ]
             ]);
-        } 
+        }
     }
 
     /**
@@ -344,7 +342,7 @@ class Module extends Admin
                 ])
                 ->setFormValues($info)
                 ->getData();
-            
+
             //返回数据
             return json([
                 'code' => 200,
@@ -353,6 +351,6 @@ class Module extends Admin
                     'form_data' => $form_data
                 ]
             ]);
-        } 
+        }
     }
 }

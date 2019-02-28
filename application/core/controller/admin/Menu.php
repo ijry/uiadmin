@@ -125,7 +125,7 @@ class Menu extends Admin
             if (!$validate->check($data)) {
                 return json(['code' => 200, 'msg' => $validate->getError(), 'data' => []]);
             }
-            
+
             //数据构造
             $data_db = $data;
             if (count($data_db) <= 0 ) {
@@ -133,7 +133,7 @@ class Menu extends Admin
             }
             $data_db['api_method'] = implode('|', $data_db['api_method']);
             $data_db['sortnum'] = 0;
-            
+
             //存储数据
             $ret = $this->core_menu->save($data_db);
             if ($ret) {
@@ -267,7 +267,7 @@ class Menu extends Admin
                 ])
                 ->setFormValues()
                 ->getData();
-            
+
             //返回数据
             return json(
                 [
@@ -278,7 +278,7 @@ class Menu extends Admin
                     ]
                 ]
             );
-        } 
+        }
     }
 
     /**
@@ -311,7 +311,7 @@ class Menu extends Admin
             if (!$validate->check($data)) {
                 return json(['code' => 200, 'msg' => $validate->getError(), 'data' => []]);
             }
-            
+
             //数据构造
             $data_db = $data;
             if (count($data_db) <= 0 ) {
@@ -466,7 +466,7 @@ class Menu extends Admin
                 ])
                 ->setFormValues($info)
                 ->getData();
-            
+
             //返回数据
             return json([
                 'code' => 200,
@@ -475,7 +475,7 @@ class Menu extends Admin
                     'form_data' => $form_data
                 ]
             ]);
-        } 
+        }
     }
 
     /**
@@ -498,7 +498,7 @@ class Menu extends Admin
 
     /**
      * 删除
-     * 
+     *
      * @return \think\Response
      * @author jry <ijry@qq.com>
      */
@@ -514,7 +514,7 @@ class Menu extends Admin
         if ($exist > 0) {
             return json(['code' => 0, 'msg' => '存在子菜单无法删除', 'data' => []]);
         }
-    
+
         $ret = $this->core_menu
             ->where(['id' => $id])
             ->find()

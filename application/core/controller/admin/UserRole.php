@@ -78,7 +78,7 @@ class UserRole extends Admin
                 'template' => 'right_button_list'
             ])
             ->getData();
-        
+
         //返回数据
         return json(
             [
@@ -121,7 +121,7 @@ class UserRole extends Admin
             } else {
                 $user_info['roles'] = [$data['role_name']];
             }
-            
+
             // 存储数据
             $ret = $this->core_user->save(
                 ['roles' => implode(',', $user_info['roles'])],
@@ -154,7 +154,7 @@ class UserRole extends Admin
                 ])
                 ->setFormValues()
                 ->getData();
-            
+
             //返回数据
             return json(
                 [
@@ -165,12 +165,12 @@ class UserRole extends Admin
                     ]
                 ]
             );
-        } 
+        }
     }
 
     /**
      * 删除
-     * 
+     *
      * @return \think\Response
      * @author jry <ijry@qq.com>
      */
