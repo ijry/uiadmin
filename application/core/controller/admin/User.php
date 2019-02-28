@@ -76,7 +76,7 @@ class User extends Admin
                 'template' => 'right_button_list'
             ])
             ->getData();
-        
+
         //返回数据
         return json([
                 'code' => 200, 'msg' => '成功', 'data' => [
@@ -157,7 +157,7 @@ class User extends Admin
                 ])
                 ->setFormValues()
                 ->getData();
-            
+
             //返回数据
             return json([
                 'code' => 200,
@@ -166,7 +166,7 @@ class User extends Admin
                     'form_data' => $form_data
                 ]
             ]);
-        } 
+        }
     }
 
     /**
@@ -239,7 +239,7 @@ class User extends Admin
                 ])
                 ->setFormValues()
                 ->getData();
-            
+
             //返回数据
             return json([
                 'code' => 200,
@@ -248,12 +248,12 @@ class User extends Admin
                     'form_data' => $form_data
                 ]
             ]);
-        } 
+        }
     }
 
     /**
      * 删除
-     * 
+     *
      * @return \think\Response
      * @author jry <ijry@qq.com>
      */

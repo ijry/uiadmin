@@ -32,7 +32,7 @@ class Role extends Admin
     protected function initialize()
     {
         parent::initialize();
-        
+
         $this->core_role = new \app\core\model\Role();
         $this->core_menu = new \app\core\model\Menu();
         $this->core_user = new \app\core\model\User();
@@ -81,7 +81,7 @@ class Role extends Admin
                 'template' => 'right_button_list'
             ])
             ->getData();
-        
+
         //返回数据
         return json(
             [
@@ -117,7 +117,7 @@ class Role extends Admin
             if (!$validate->check($data)) {
                 return json(['code' => 200, 'msg' => $validate->getError(), 'data' => []]);
             }
-            
+
             //数据构造
             $data_db = $data;
             if (count($data_db) <= 0 ) {
@@ -127,7 +127,7 @@ class Role extends Admin
             $data_db['sortnum'] = isset($data_db['sortnum']) ? $data_db['sortnum'] : 0;
             $data_db['admin_auth'] = isset($data_db['admin_auth']) ? implode(',', $data_db['admin_auth']) : ''; //后台权限
             $data_db['api_auth'] = isset($data_db['api_auth']) ? implode(',', $data_db['api_auth']) : ''; //接口权限
-            
+
             // 存储数据
             $ret = $this->core_role->save($data_db);
             if ($ret) {
@@ -177,7 +177,7 @@ class Role extends Admin
                     'placeholder' => '请输入角色名称',
                     'tip' => '角色名称也可以理解为部门名称'
                 ])
-                ->addFormItem('admin_auth', '后台权限', 'checkboxtree', '', 
+                ->addFormItem('admin_auth', '后台权限', 'checkboxtree', '',
                      [
                     'tip' => '勾选角色权限',
                     'columns' => [
@@ -197,7 +197,7 @@ class Role extends Admin
                 ])
                 ->setFormValues()
                 ->getData();
-            
+
             //返回数据
             return json(
                 [
@@ -208,7 +208,7 @@ class Role extends Admin
                     ]
                 ]
             );
-        } 
+        }
     }
 
     /**
@@ -311,7 +311,7 @@ class Role extends Admin
                     'placeholder' => '请输入角色名称',
                     'tip' => '角色名称也可以理解为部门名称'
                 ])
-                ->addFormItem('admin_auth', '后台权限', 'checkboxtree', '', 
+                ->addFormItem('admin_auth', '后台权限', 'checkboxtree', '',
                      [
                     'tip' => '勾选角色权限',
                     'columns' => [
@@ -332,7 +332,7 @@ class Role extends Admin
                 ])
                 ->setFormValues($info)
                 ->getData();
-            
+
             //返回数据
             return json([
                 'code' => 200,
@@ -341,12 +341,12 @@ class Role extends Admin
                     'form_data' => $form_data
                 ]
             ]);
-        } 
+        }
     }
 
     /**
      * 删除
-     * 
+     *
      * @return \think\Response
      * @author jry <ijry@qq.com>
      */

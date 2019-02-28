@@ -71,7 +71,7 @@ class Config extends Admin
                 'template' => 'right_button_list'
             ])
             ->getData();
-        
+
         //返回数据
         return json([
                 'code' => 200, 'msg' => '成功', 'data' => [
@@ -146,7 +146,7 @@ class Config extends Admin
                 }
             $ia_dyform->setFormValues();
             $form_data = $ia_dyform->getData();
-            
+
             //返回数据
             return json([
                 'code' => 200,
@@ -155,7 +155,7 @@ class Config extends Admin
                     'form_data' => $form_data
                 ]
             ]);
-        } 
+        }
     }
 
     /**
@@ -286,7 +286,7 @@ class Config extends Admin
                 ])
                 ->setFormValues()
                 ->getData();
-            
+
             //返回数据
             return json([
                 'code' => 200,
@@ -295,7 +295,7 @@ class Config extends Admin
                     'form_data' => $form_data
                 ]
             ]);
-        } 
+        }
     }
 
     /**
@@ -353,7 +353,7 @@ class Config extends Admin
                 $module_list_select[$key]['title'] = $val['title'];
                 $module_list_select[$key]['value'] = $val['name'];
             }
-            
+
             //获取分组信息
             $info = $this->core_config
                 ->where('name', 'config_cate')
@@ -428,7 +428,7 @@ class Config extends Admin
                 ])
                 ->setFormValues($info)
                 ->getData();
-            
+
             //返回数据
             return json([
                 'code' => 200,
@@ -437,12 +437,12 @@ class Config extends Admin
                     'form_data' => $form_data
                 ]
             ]);
-        } 
+        }
     }
 
     /**
      * 删除
-     * 
+     *
      * @return \think\Response
      * @author jry <ijry@qq.com>
      */
