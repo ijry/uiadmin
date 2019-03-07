@@ -187,7 +187,7 @@ class Role extends Admin
                         ['title' => '类型', 'key' => 'menu_type', 'width' => '40px']
                     ],
                     'data' => $menu_tree,
-                    'expand-key' => 'title'
+                    'expand_key' => 'title'
                 ])
                 ->addFormRule('name', [
                     ['required' => true, 'message' => '请填写角色英文名称', 'trigger' => 'change'],
