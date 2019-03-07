@@ -54,6 +54,8 @@ class IaDylist {
             'cancelText' => isset($page_data['cancelText']) ? $page_data['cancelText'] : '',
             'width' => isset($page_data['width']) ? $page_data['width'] : '800',
             'loading' => false,
+            'draggable' => false,
+            'scrollable' => true,
         ];
         $btn['style'] = [
             'type' => isset($style['type']) ? $style['type'] : 'default',
@@ -84,6 +86,8 @@ class IaDylist {
             'cancelText' => isset($page_data['cancelText']) ? $page_data['cancelText'] : '',
             'width' => isset($page_data['width']) ? $page_data['width'] : '800',
             'loading' => false,
+            'draggable' => false,
+            'scrollable' => true,
         ];
         $btn['style'] = [
             'type' => isset($style['type']) ? $style['type'] : 'default',
