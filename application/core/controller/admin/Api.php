@@ -276,7 +276,7 @@ class Api extends Admin
                     'placeholder' => '请输入接口参数',
                     'tip' => '接口参数举例：/:id/:name'
                 ])
-                ->addFormItem('api_method', '请求方法', 'checkbox', ['GET'], [
+                ->addFormItem('api_method', '请求方法', 'checkbox', [[]], [
                     'placeholder' => '请勾选请求方法',
                     'tip' => '尽量符合Restful风格',
                     'options' => [

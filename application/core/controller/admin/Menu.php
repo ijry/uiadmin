@@ -196,8 +196,8 @@ class Menu extends Admin
                     'tip' => '请选择菜单类型',
                     'options' => [
                         ['title' => '分组', 'value' => 0],
-                        ['title' => '功能页面+接口', 'value' => 1],
-                        ['title' => '功能按钮+接口', 'value' => 2],
+                        ['title' => '左侧导航', 'value' => 1],
+                        ['title' => '页面按钮', 'value' => 2],
                         ['title' => '纯接口', 'value' => 3]
                     ]
                 ])
@@ -213,7 +213,7 @@ class Menu extends Admin
                     'placeholder' => '请输入接口参数',
                     'tip' => '接口参数举例：/:id/:name'
                 ])
-                ->addFormItem('api_method', '请求方法', 'checkbox', '', [
+                ->addFormItem('api_method', '请求方法', 'checkbox', [[]], [
                     'placeholder' => '请勾选请求方法',
                     'tip' => '尽量符合Restful风格',
                     'options' => [
@@ -257,7 +257,7 @@ class Menu extends Admin
                     ['required' => true, 'message' => '请输入接口路径', 'trigger' => 'blur'],
                 ])
                 ->addFormRule('api_method', [
-                    ['required' => true, 'type' => 'array', 'min' =>  1, 'message' => '请勾选请求方法', 'trigger' => 'change'],
+                    ['required' => true, 'type' => 'array', 'min' =>  2, 'message' => '请勾选请求方法', 'trigger' => 'change'],
                 ])
                 ->addFormRule('route_type', [
                     ['required' => true, 'type' => 'string', 'message' => '请选择是页面路由方式', 'trigger' => 'change'],
@@ -395,8 +395,8 @@ class Menu extends Admin
                     'tip' => '请选择菜单类型',
                     'options' => [
                         ['title' => '分组', 'value' => 0],
-                        ['title' => '功能页面+接口', 'value' => 1],
-                        ['title' => '功能按钮+接口', 'value' => 2],
+                        ['title' => '左侧导航', 'value' => 1],
+                        ['title' => '页面按钮', 'value' => 2],
                         ['title' => '纯接口', 'value' => 3]
                     ]
                 ])
