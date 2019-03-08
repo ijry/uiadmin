@@ -41,12 +41,12 @@ class Module extends Admin
      */
     public function lists()
     {
-        //用户列表
+        // 用户列表
         $data_list = $this->core_module->select()->toArray();
         $tree      = new Tree();
         $data_list = $tree->list2tree($data_list);
 
-        //构造动态页面数据
+        // 构造动态页面数据
         $ia_dylist      = new \app\core\util\iadypage\IaDylist();
         $list_data = $ia_dylist->init()
             ->addTopButton('add', '创建新模块', ['api' => '/v1/admin/core/module/add'])
@@ -73,7 +73,7 @@ class Module extends Admin
             ])
             ->getData();
 
-        //返回数据
+        // 返回数据
         return json([
             'code' => 200, 'msg' => '成功', 'data' => [
                 'data_list' => $data_list,
@@ -114,7 +114,7 @@ class Module extends Admin
                 return json(['code' => 200, 'msg' => $validate->getError(), 'data' => []]);
             }
 
-            //数据构造
+            // 数据构造
             $data_db = $data;
             if (count($data_db) <= 0 ) {
                 return json(['code' => 0, 'msg' => '无数据提交', 'data' => []]);
@@ -122,7 +122,7 @@ class Module extends Admin
             $data_db['status']   = 1;
 
 
-            //是否存在模块名称
+            // 是否存在模块名称
             $exist = $this->core_module
                 ->where('name', $data_db['name'])
                 ->count();
@@ -132,6 +132,7 @@ class Module extends Admin
 
 
             // 启动事务
+            Db::startTrans();
             try {
                 //创建目录
                 $module_name = $data_db['name'];
@@ -283,12 +284,12 @@ class Module extends Admin
                 return json(['code' => 0, 'msg' => '修改模块信息失败:' . $this->core_module->getError(), 'data' => []]);
             }
         } else {
-            //模块信息
+            // 模块信息
             $info = $this->core_module
                 ->where('id', $id)
                 ->find();
 
-            //构造动态页面数据
+            // 构造动态页面数据
             $ia_dyform      = new \app\core\util\iadypage\IaDyform();
             $form_data = $ia_dyform->init()
                 ->setFormMethod('put')
@@ -343,7 +344,7 @@ class Module extends Admin
                 ->setFormValues($info)
                 ->getData();
 
-            //返回数据
+            // 返回数据
             return json([
                 'code' => 200,
                 'msg' => '成功',
