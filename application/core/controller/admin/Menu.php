@@ -132,7 +132,6 @@ class Menu extends Admin
                 return json(['code' => 0, 'msg' => '无数据提交', 'data' => []]);
             }
             $data_db['api_method'] = implode('|', $data_db['api_method']);
-            $data_db['sortnum'] = 0;
 
             //存储数据
             $ret = $this->core_menu->save($data_db);

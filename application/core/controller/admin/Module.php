@@ -27,11 +27,13 @@ use app\core\util\Tree;
 class Module extends Admin
 {
     private $core_module;
+    private $core_menu;
 
     protected function initialize()
     {
         parent::initialize();
         $this->core_module = new \app\core\model\Module();
+        $this->core_menu = new \app\core\model\Menu();
     }
 
     /**
@@ -158,21 +160,35 @@ class Module extends Admin
                 ];
                 \think\facade\Build::run($path);
 
-                //存储数据
+                // 存储数据
                 $ret = $this->core_module->save($data_db);
-                if ($ret) {
+                if (!$ret) {
+                    return json(['code' => 0, 'msg' => '添加模块失败:' . $this->core_module->getError(), 'data' => []]);
+                }
+
+                // 创建模块后台API分组
+                $data_api = [];
+                $data_api['module'] = $data_db['name'];
+                $data_api['menu_type'] = 0;
+                $ret_api = true;
+                if (!$this->core_menu->where($data_api)->find()) {
+                    $data_api['title'] = $data_db['title'];
+                    $data_api['path'] = '/' . $module_name;
+                    $ret_api = $this->core_menu->save($data_api);
+                }
+                if ($ret_api) {
                     // 提交事务
                     Db::commit();
                     return json(['code' => 200, 'msg' => '添加模块成功', 'data' => []]);
                 } else {
-                    return json(['code' => 0, 'msg' => '添加模块失败:' . $this->core_module->getError(), 'data' => []]);
+                    return json(['code' => 0, 'msg' => '添加模块失败:' . $this->core_menu->getError(), 'data' => []]);
                 }
             } catch (\Exception $e) {
                 // 回滚事务
                 Db::rollback();
             }
         } else {
-            //构造动态页面数据
+            // 构造动态页面数据
             $ia_dyform      = new \app\core\util\iadypage\IaDyform();
             $form_data = $ia_dyform->init()
                 ->setFormMethod('post')
