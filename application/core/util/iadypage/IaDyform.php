@@ -128,7 +128,7 @@ class IaDyform {
                 continue;
             }
             $this->data['form_values'][$val['name']] = '';
-            if ($val['value']) {
+            if (isset($val['value'])) {
                 $this->data['form_values'][$val['name']] = $val['value'];
             }
         }
