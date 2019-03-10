@@ -30,7 +30,7 @@ axios.defaults.transformRequest = data => {
 };
 
 let config = {
-  baseURL: process.env.NODE_ENV === 'production' ? 'https://initadmin.net/index.php/api/' : 'http://127.0.0.1/InitAdmin/actionphp/public/index.php/api/',
+  baseURL: process.env.VUE_APP_BASE_URL,
   timeout: 60 * 1000, // Timeout
   withCredentials: false, // Check cross-site Access-Control
 };

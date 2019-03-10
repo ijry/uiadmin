@@ -43,7 +43,7 @@ import util from '@/libs/util'
 export default {
     data() {
         return {
-            isDemo: false,
+            isDemo: process.env.VUE_APP_IS_DEMO,
             loading: false,
             formLogin: {
                 account: '',
