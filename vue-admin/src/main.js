@@ -24,6 +24,11 @@ Vue.use(TreeTable)
 
 Vue.config.productionTip = false
 
+// 配置
+let settings = new Object()
+settings.vue_app_is_demo = process.env.VUE_APP_IS_DEMO
+Vue.prototype.settings = settings
+
 new Vue({
   router,
   store,

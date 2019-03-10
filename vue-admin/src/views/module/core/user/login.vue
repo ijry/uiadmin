@@ -43,7 +43,7 @@ import util from '@/libs/util'
 export default {
     data() {
         return {
-            isDemo: process.env.VUE_APP_IS_DEMO,
+            isDemo: this.settings.vue_app_is_demo,
             loading: false,
             formLogin: {
                 account: '',
@@ -61,7 +61,7 @@ export default {
         }
     },
     created() {
-        if (this.isDemo == true) {
+        if (this.isDemo == 'true') {
             this.formLogin.account = 'initadmin'
             this.formLogin.password = 'initadmin.net'
         }
