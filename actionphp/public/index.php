@@ -26,6 +26,12 @@ if($_SERVER['REQUEST_METHOD'] == 'OPTIONS'){
     exit;
 }
 
+// 判断thinkphp存在
+if (!is_dir('../thinkphp')) {
+    echo '请先执行composer install安装依赖！';
+    exit;
+}
+
 // 加载基础文件
 require __DIR__ . '/../thinkphp/base.php';
 
