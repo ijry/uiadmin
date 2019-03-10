@@ -32,6 +32,12 @@ if (!is_dir('../thinkphp')) {
     exit;
 }
 
+// 判断.env存在
+if (!is_file('../.env')) {
+    echo '请先按照文档在根目录配置.env文件！';
+    exit;
+}
+
 // 加载基础文件
 require __DIR__ . '/../thinkphp/base.php';
 
