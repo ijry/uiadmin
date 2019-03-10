@@ -25,12 +25,12 @@
                     <div>
                         <div>后台名称：InitAdmin后台</div>
                         <div>官方网站：<a target="_blank" href="https://initadmin.net">https://initadmin.net</a></div>
-                        <div>开发文档：<a target="_blank" href="https://initadmin.net/#/docs">https://initadmin.net/#/docs</a></div>
+                        <div>开发文档：<a target="_blank" href="https://initadmin.net/#/docs">http://doc.initadmin.net/</a></div>
                         <div>客户端框架：vue-admin v0.1.0</div>
                         <div>服务端框架：actionphp v0.1.0</div>
                         <div>
                             <span>Github：</span>
-                            <a target="_blank" href="https://github.com/initadmin">https://github.com/initadmin</a>
+                            <a target="_blank" href="https://github.com/initadmin">https://github.com/ijry/initadmin</a>
                         </div>
                         <Divider/>
                         <div>PHP版本：7.0</div>
