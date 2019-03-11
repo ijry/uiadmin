@@ -10,7 +10,7 @@ export default {
 }
 </script>
 
-<style>
+<style lang="less">
 @import './plugins/iview-variables.less';
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
