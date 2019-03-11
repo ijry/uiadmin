@@ -24,7 +24,7 @@ var routers = [
 ];
 
 // 导入核心模块路由
-import core from '@/views/module/core/route.js'
+import core from '@/views/core/route.js'
 routers = routers.concat(core);
 
 // 导入其它模块路由

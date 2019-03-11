@@ -190,8 +190,8 @@
     </div>
 </template>
 <script>
-import IaHead from '@/views/components/ia_head'
-import IaFoot from '@/views/components/ia_foot'
+import IaHead from '@/components/layout/ia_head'
+import IaFoot from '@/components/layout/ia_foot'
 export default {
     components: {
         IaHead,

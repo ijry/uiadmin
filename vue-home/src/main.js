@@ -7,8 +7,8 @@ import './plugins/axios'
 import './plugins/iview.js'
 import util from './libs/util';
 
-import VueParticles from 'vue-particles'  
-Vue.use(VueParticles)  
+import VueParticles from 'vue-particles'
+Vue.use(VueParticles)
 
 Vue.config.productionTip = false
 
