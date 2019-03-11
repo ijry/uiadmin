@@ -19,10 +19,10 @@
             <Form @submit.native.prevent :ref="ref" :model="data.form_values" :label-position="label_position" :label-width="label_width" :rules="data.form_rules">
                 <template v-for="(item,key,index) in data.form_items">
                     <template v-if="data.form_rules[item.name] != ''">
-                        <VaDyformItem :ref="'dyformitem_' + item.name" :key="index" :item="item" :form_values="data.form_values" :prop="item.name"></VaDyformItem>
+                        <IaDyformItem :ref="'dyformitem_' + item.name" :key="index" :item="item" :form_values="data.form_values" :prop="item.name"></IaDyformItem>
                     </template>
                     <template v-else-if="data.form_rules[item.name] == ''">
-                        <VaDyformItem :ref="'dyformitem_' + item.name" :key="index" :item="item" :form_values="data.form_values"></VaDyformItem>
+                        <IaDyformItem :ref="'dyformitem_' + item.name" :key="index" :item="item" :form_values="data.form_values"></IaDyformItem>
                     </template>
                 </template>
                 <!-- 按钮 -->
@@ -48,11 +48,11 @@
     </div>
 </template>
 <script>
-import VaDyformItem from '@/views/components/va_dypage/va_dyform_item'
+import IaDyformItem from '@/components/ia_dypage/ia_dyform_item'
 export default {
     name: 'DynamicForm',
     components: {
-        VaDyformItem
+        IaDyformItem
     },
     props: {
         api: '',

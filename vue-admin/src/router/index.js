@@ -16,7 +16,7 @@ import routes from './routers';
 import store from '@/store'
 import iView from 'iview';
 import util from '@/libs/util';
-import util1 from '@/views/layout/store/util';
+import util1 from '@/components/layout/store/util';
 
 Vue.use(Router);
 

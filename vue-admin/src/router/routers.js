@@ -12,8 +12,8 @@
 
 // 此文件用于汇总每个模块下的路由
 
-import Layout from '@/views/layout';
-import util1 from '@/views/layout/store/util';
+import Layout from '@/components/layout';
+import util1 from '@/components/layout/store/util';
 import store from '@/store'
 
 var routers = [
@@ -52,7 +52,7 @@ if (typeof menu_data === 'object') {
                         meta: {
                             title: menu_data.menu_list[item].title
                         },
-                        component: () => import('@/views/module' + menu_data.menu_list[item].path + '.vue')
+                        component: () => import('@/views' + menu_data.menu_list[item].path + '.vue')
                     }
                 )
                 break;
@@ -66,7 +66,7 @@ if (typeof menu_data === 'object') {
                             title: menu_data.menu_list[item].title,
                             api: menu_data.menu_list[item].api + menu_data.menu_list[item].api_params
                         },
-                        component: () => import('@/views/components/va_dypage/va_dy' + menu_data.menu_list[item].route_type + '_route.vue')
+                        component: () => import('@/components/ia_dypage/ia_dy' + menu_data.menu_list[item].route_type + '_route.vue')
                     }
                 )
                 break;
@@ -76,7 +76,7 @@ if (typeof menu_data === 'object') {
 }
 
 // 导入tpvue核心模块路由
-import core from '@/views/module/core/route.js'
+import core from '@/views/core/route.js'
 routers = routers.concat(core.parent)
 routers[0].children = routers[0].children.concat(core.children)
 

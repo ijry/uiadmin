@@ -148,7 +148,7 @@
 
 <script>
 export default {
-    name: 'va_dyform_item',
+    name: 'IaDyformItem',
     props: {
         prop: '',
         item: {},

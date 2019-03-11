@@ -1,19 +1,22 @@
 <template>
   <div>
-    <VaDylist :api="api"></VaDylist>
+    <Card shadow>
+        <VaDyform :api="api" :foot_hide="false"></VaDyform>
+        <div style="text-align: right;font-size: 12px;color: #808695;transform: scale(0.8)">via iadypage</div>
+    </Card>
   </div>
 </template>
 
 <script>
-import VaDylist from '@/views/components/va_dypage/va_dylist'
+import VaDyform from '@/components/ia_dypage/ia_dyform'
 export default {
-    name: 'va_dylist_route',
+    name: 'IaDyformRoute',
     components: {
-        VaDylist
+        VaDyform
     },
     data () {
         return {
-            api: ''
+            api: this.$route.meta.api
         };
     },
     created: function(){
@@ -23,7 +26,7 @@ export default {
     },
     methods: {
         loadData () {
-            if (this.$route.meta.dytype == 'dylist') {
+            if (this.$route.meta.dytype == 'dyform') {
                 let _this = this
                 let length = this.$route.params.length
                 if (length > 0) {

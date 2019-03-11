@@ -314,7 +314,7 @@
     </div>
 </template>
 <script>
-    import Layout from '@/views/layout';
+    import Layout from '@/components/layout';
     import Fullscreen from './fullscreen'
     import { mapMutations, mapActions, mapGetters } from 'vuex'
     import util from './store/util.js'
@@ -392,7 +392,7 @@
                                                             meta: {
                                                                 title: menu_data.menu_list[item].title
                                                             },
-                                                            component: () => import('@/views/module' + menu_data.menu_list[item].path + '.vue')
+                                                            component: () => import('@/views' + menu_data.menu_list[item].path + '.vue')
                                                         }
                                                     )
                                                     break;
@@ -407,7 +407,7 @@
                                                                 title: menu_data.menu_list[item].title,
                                                                 api: menu_data.menu_list[item].api + menu_data.menu_list[item].api_params
                                                             },
-                                                            component: () => import('@/views/components/va_dypage/va_dy' + menu_data.menu_list[item].route_type + '_route.vue')
+                                                            component: () => import('@/components/ia_dypage/ia_dy' + menu_data.menu_list[item].route_type + '_route.vue')
                                                         }
                                                     )
                                                     break;
