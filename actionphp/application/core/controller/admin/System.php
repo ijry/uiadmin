@@ -30,7 +30,7 @@ class System extends Admin
 
     /**
      * 删除缓存
-     * 
+     *
      * @return \think\Response
      * @author jry <ijry@qq.com>
      */
