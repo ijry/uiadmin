@@ -1,26 +1,25 @@
 {
-    "name": "tpvue/tpvue",
+    "name": "actionphp",
     "description": "the new thinkphp framework",
     "type": "project",
     "keywords": [
         "framework",
-        "thinkphp",
-        "tpvue"
+        "initadmin",
+        "actionphp"
     ],
-    "homepage": "http://tpvue.com/",
+    "homepage": "https://initadmin.net",
     "license": "Apache-2.0",
     "authors": [
         {
             "name": "jry",
-            "email": "598821125@qq.com"
+            "email": "ijry@qq.com"
         }
     ],
     "require": {
         "php": ">=5.6.0",
         "topthink/framework": "5.1.*",
-        "firebase/php-jwt": "^5.0",
-        "guzzlehttp/guzzle": "~6.0",
-        "topthink/think-queue": "^2.0"
+        "topthink/think-queue": "^2.0",
+        "firebase/php-jwt": "^5.0"
     },
     "autoload": {
         "psr-4": {
