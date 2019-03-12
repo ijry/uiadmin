@@ -167,14 +167,18 @@ class Module extends Admin
                 }
 
                 // 创建模块后台API分组
-                $data_api = [];
-                $data_api['module'] = $data_db['name'];
-                $data_api['menu_type'] = 0;
-                $ret_api = true;
-                if (!$this->core_menu->where($data_api)->find()) {
-                    $data_api['title'] = $data_db['title'];
-                    $data_api['path'] = '/' . $module_name;
-                    $ret_api = $this->core_menu->save($data_api);
+                if ($data_db['create_menu_group']) {
+                    $data_api = [];
+                    $data_api['module'] = $data_db['name'];
+                    $data_api['menu_type'] = 0;
+                    $ret_api = true;
+                    if (!$this->core_menu->where($data_api)->find()) {
+                        $data_api['title'] = $data_db['title'];
+                        $data_api['path'] = '/' . $module_name;
+                        $ret_api = $this->core_menu->save($data_api);
+                    }
+                } else {
+                    $ret_api = true;
                 }
                 if ($ret_api) {
                     // 提交事务
@@ -217,6 +221,10 @@ class Module extends Admin
                 ->addFormItem('build', 'build版本号', 'text', '', [
                     'placeholder' => '请输入build版本号如beta1_201902241200',
                     'tip' => 'build版本号是一个更细小的版本单位，如release_201902241200'
+                ])
+                ->addFormItem('create_menu_group', '菜单分组', 'radio', 0, [
+                    'options' => ['1' => '是', '0' => '否'],
+                    'tip' => '如果您的模块具有后台左侧菜单请选择是，如果是作为第三方SDK或者没有后台功能请选择否'
                 ])
                 ->addFormItem('sortnum', '排序', 'text', '')
                 ->addFormRule('name', [
