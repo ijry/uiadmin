@@ -8,12 +8,14 @@ class ComposerStaticInit1658a37dc6e6c79b16274ee6eac74201
 {
     public static $files = array (
         '9b552a3cc426e3287cc811caefa3cf53' => __DIR__ . '/..' . '/topthink/think-helper/src/helper.php',
+        'ddc3cd2a04224f9638c5d0de6a69c7e3' => __DIR__ . '/..' . '/topthink/think-migration/src/config.php',
         'cc56288302d9df745d97c934d6a6e5f0' => __DIR__ . '/..' . '/topthink/think-queue/src/common.php',
     );
 
     public static $prefixLengthsPsr4 = array (
         't' => 
         array (
+            'think\\migration\\' => 16,
             'think\\helper\\' => 13,
             'think\\composer\\' => 15,
             'think\\' => 6,
@@ -22,6 +24,10 @@ class ComposerStaticInit1658a37dc6e6c79b16274ee6eac74201
         array (
             'app\\' => 4,
         ),
+        'P' => 
+        array (
+            'Phinx\\' => 6,
+        ),
         'F' => 
         array (
             'Firebase\\JWT\\' => 13,
@@ -29,6 +35,10 @@ class ComposerStaticInit1658a37dc6e6c79b16274ee6eac74201
     );
 
     public static $prefixDirsPsr4 = array (
+        'think\\migration\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/topthink/think-migration/src',
+        ),
         'think\\helper\\' => 
         array (
             0 => __DIR__ . '/..' . '/topthink/think-helper/src',
@@ -39,11 +49,16 @@ class ComposerStaticInit1658a37dc6e6c79b16274ee6eac74201
         ),
         'think\\' => 
         array (
-            0 => __DIR__ . '/..' . '/topthink/think-queue/src',
+            0 => __DIR__ . '/..' . '/topthink/think-image/src',
+            1 => __DIR__ . '/..' . '/topthink/think-queue/src',
         ),
         'app\\' => 
         array (
             0 => __DIR__ . '/../..' . '/application',
+        ),
+        'Phinx\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/topthink/think-migration/phinx/src/Phinx',
         ),
         'Firebase\\JWT\\' => 
         array (

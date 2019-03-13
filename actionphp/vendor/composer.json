@@ -1,0 +1,20 @@
+{
+    "name": "extend",
+    "description": "composer extend",
+    "require": {
+        "phpoffice/phpword": "v0.13.*",
+        "phpoffice/phpspreadsheet": "^1.1",
+        "jaeger/querylist": "^4.0",
+        "jaeger/querylist-absolute-url": "^4.0",
+        "jaeger/querylist-curl-multi": "^4.0",
+        "liesauer/ql-plugin-simpleform": "^4.0",
+        "jaeger/querylist-phantomjs": "^4.0",
+        "endroid/qr-code": "^3.5"
+    },
+    "repositories": {
+        "packagist": {
+            "type": "composer",
+            "url": "https://packagist.phpcomposer.com"
+        }
+    }
+}
