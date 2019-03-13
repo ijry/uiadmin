@@ -25,6 +25,13 @@ use \Firebase\JWT\JWT; //导入JWT
  */
 class Common extends Controller
 {
+    protected function initialize()
+    {
+        if (is_file(app_path . '/vendor/vendor/autoload.php')) {
+            require_once app_path . '/vendor/vendor/autoload.php';
+        }
+    }
+
     /**
     * 判断用户是否登陆方法
     * @param  string $token
@@ -56,7 +63,7 @@ class Common extends Controller
             if ($info['expire_time'] <= time()) {
                 return ['code' => 0, 'msg' => '登录过期请重新登录', 'data' => ['need_login' => 1]];
             }
-            
+
             //解密
             JWT::$leeway = 60;//当前时间减去60，把时间留点余地
             $decoded = JWT::decode($jwt, $info['key'], ['HS256']); //HS256方式，这里要和签发的时候对应
