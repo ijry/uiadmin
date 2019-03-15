@@ -197,7 +197,7 @@ class User extends Admin
             if (count($data_db) <= 0 ) {
                 return json(['code' => 0, 'msg' => '无数据提交', 'data' => []]);
             }
-            if (isset($data_db['password'])) {
+            if (isset($data_db['password']) && $data_db['password'] != '') {
                 $data_db['key'] = \think\helper\Str::random(64); //秘钥
                 $data_db['password'] = user_md5($data_db['password'], $data_db['key']); // 密码不能明文需要加密存储
             }
