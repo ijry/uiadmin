@@ -28,12 +28,108 @@ class Module extends Admin
 {
     private $core_module;
     private $core_menu;
+    private $core_config;
 
     protected function initialize()
     {
         parent::initialize();
         $this->core_module = new \app\core\model\Module();
         $this->core_menu = new \app\core\model\Menu();
+        $this->core_config = new \app\core\model\Config();
+    }
+
+    /**
+     * 导出模块
+     *
+     * @return \think\Response
+     */
+    public function export($id)
+    {
+        if (request()->isPost()) {
+            if ($id == 1) {
+                return json(['code' => 0, 'msg' => 'ID为1的核心模块不需要导出', 'data' => []]);
+            }
+            $info = $this->core_module
+                ->field('name,title,description,developer,website,version,build')
+                ->where(['id' => $id])
+                ->find()->toArray();;
+            if (!$info) {
+                return json(['code' => 0, 'msg' => '不存在模块信息', 'data' => []]);
+            }
+
+            // 导出基本信息
+            $expot_info = [];
+            $expot_info['info'] = $info;
+
+            // 导出配置
+            $expot_info['config'] = $this->core_config
+                ->field('module,config_cate,name,title,config_type,value,placeholder,tip,options,is_system,is_dev,sortnum,status')
+                ->where('module', '=', $info['name'])
+                ->select()->toArray();
+
+            // 导出API
+            $expot_info['api'] = $this->core_menu
+                ->field('module,icon,path,pmenu,title,tip,menu_type,route_type,api_prefix,api_suffix,api_params,api_method,doc,is_hide,sortnum')
+                ->where('module', '=', $info['name'])
+                ->select()->toArray();
+
+            // 导出模块数据表
+            $mysql_conn = mysqli_connect(
+                config('database.hostname'),
+                config('database.username'),
+                config('database.password')
+            ) or die("Mysql连接失败！");
+            $database = config('database.database');
+            mysqli_select_db($mysql_conn, $database);
+            mysqli_query($mysql_conn, 'SET NAMES utf8');
+            // 获取表
+            $table_result = mysqli_query($mysql_conn, 'show tables');
+            $tables = array();
+            while ($row = mysqli_fetch_array($table_result)) {
+                if (\think\helper\Str::startsWith($row[0], 'ia_' . $info['name'] . '_')) {
+                    $tables[]['table_name'] = $row[0];
+                }
+            }
+            // 循环取得所有表的备注及表中列消息
+            foreach ($tables as $k => $v) {
+                $sql = 'SELECT * FROM ';
+                $sql .= 'INFORMATION_SCHEMA.TABLES ';
+                $sql .= 'WHERE ';
+                $sql .= "table_name = '{$v['table_name']}'  AND table_schema = '{$database}'";
+                $table_result = mysqli_query($mysql_conn, $sql);
+                while ($t = mysqli_fetch_array($table_result)) {
+                    $tables[$k]['table_comment'] = $t['TABLE_COMMENT'];
+                }
+
+                $sql = 'SELECT * FROM ';
+                $sql .= 'INFORMATION_SCHEMA.COLUMNS ';
+                $sql .= 'WHERE ';
+                $sql .= "table_name = '{$v['table_name']}' AND table_schema = '{$database}'";
+                $fields       = array();
+                $field_result = mysqli_query($mysql_conn, $sql);
+                while ($t = mysqli_fetch_array($field_result)) {
+                    $fields[] = $t;
+                }
+                foreach ($fields as $field) {
+                    $tables[$k]['table_columns'][] = '`'
+                        .$field['COLUMN_NAME'] .'` '
+                        .$field['COLUMN_TYPE'] .' '
+                        .($field['IS_NULLABLE'] == 'YES' ? 'NULL': 'NOT NULL') .' '
+                        .$field['EXTRA'].' COMMENT \''
+                        .$field['COLUMN_COMMENT'].'\'';
+                }
+
+                // 获取表数据
+                $tables[$k]['table_rows'] = Db::table($v['table_name'])->select();
+            }
+            mysqli_close($mysql_conn);
+            $expot_info['tables'] = $tables;
+
+            // 写入文件
+            // dump($expot_info);
+            file_put_contents(env('app_path') . $info['name'] .'/install/initadmin.json', json_encode($expot_info));
+            return json(['code' => 200, 'msg' => '导出成功', 'data' => []]);
+        }
     }
 
     /**
@@ -219,8 +315,8 @@ class Module extends Admin
                     'tip' => '版本号由三位数字组成x.x.x'
                 ])
                 ->addFormItem('build', 'build版本号', 'text', '', [
-                    'placeholder' => '请输入build版本号如beta1_201902241200',
-                    'tip' => 'build版本号是一个更细小的版本单位，如release_201902241200'
+                    'placeholder' => '请输入build版本号如beta1_20190301',
+                    'tip' => 'build版本号是一个更细小的版本单位，如release_20190301'
                 ])
                 ->addFormItem('create_menu_group', '菜单分组', 'radio', 0, [
                     'options' => ['1' => '是', '0' => '否'],
@@ -295,7 +391,15 @@ class Module extends Admin
             }
 
             //数据构造
-            $data_db = $data;
+            // 核心模块特殊处理
+            if ($id == 1) {
+                $data_db = [
+                    'version' => $data['version'],
+                    'build' => $data['build'],
+                ];
+            } else {
+                $data_db = $data;
+            }
             if (count($data_db) <= 0 ) {
                 return json(['code' => 0, 'msg' => '无数据提交', 'data' => []]);
             }
@@ -340,8 +444,8 @@ class Module extends Admin
                     'tip' => '版本号由三位数字组成x.x.x'
                 ])
                 ->addFormItem('build', 'build版本号', 'text', '', [
-                    'placeholder' => '请输入build版本号如beta1_201902241200',
-                    'tip' => 'build版本号是一个更细小的版本单位，如release_201902241200'
+                    'placeholder' => '请输入build版本号如beta1_20190301',
+                    'tip' => 'build版本号是一个更细小的版本单位，如release_20190301'
                 ])
                 ->addFormItem('sortnum', '排序', 'text', '')
                 ->addFormRule('name', [
