@@ -7,8 +7,6 @@ CREATE TABLE `ia_core_module` (
   `website` varchar(255) NOT NULL DEFAULT '' COMMENT '开发者网站',
   `version` varchar(255) NOT NULL DEFAULT '' COMMENT '版本号',
   `build` varchar(255) NOT NULL DEFAULT '' COMMENT 'build版本',
-  `api` longtext COMMENT 'api数据',
-  `api_dov` longtext COMMENT 'api接口文档',
   `status` tinyint(1) NOT NULL DEFAULT '0' COMMENT '状态',
   `sortnum` int(11) NOT NULL DEFAULT '0' COMMENT '排序',
   `delete_time` int(11) NOT NULL DEFAULT '0' COMMENT '删除时间',
@@ -16,9 +14,9 @@ CREATE TABLE `ia_core_module` (
   UNIQUE KEY `name` (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='后台模块表';
 
-INSERT INTO `ia_core_module` (`id`, `name`, `title`, `description`, `developer`, `website`, `version`, `build`, `api`, `api_dov`, `status`, `sortnum`, `delete_time`)
+INSERT INTO `ia_core_module` (`id`, `name`, `title`, `description`, `developer`, `website`, `version`, `build`, `status`, `sortnum`, `delete_time`)
 VALUES
-	(1, 'core', '核心', 'InitAdmin/actionphp核心模块', 'jry', 'https://initadmin.net', '0.1.0', 'beta1_201902221237', NULL, NULL, 1, 1, 0);
+  (1, 'core', '核心', 'InitAdmin/actionphp核心模块', 'jry', 'https://initadmin.net', '0.1.0', 'beta1_201904', 1, 1, 0);
 
 
 CREATE TABLE `ia_core_menu` (
@@ -68,7 +66,7 @@ VALUES
   (22, 'core', '', '/core/module/lists', '/developer', '模块管理', '管理系统安装的功能模块', 1, 'list', 'v1', '', '', 'GET', NULL, 0, 1, 0),
   (23, 'core', '', '/core/module/add', '/core/module/lists', '创建模块', '创建一个新模块', 2, 'form', 'v1', '', '', 'GET|POST', NULL, 0, 0, 0),
   (24, 'core', '', '/core/module/edit', '/core/module/lists', '修改模块', '修改模块信息', 2, 'form', 'v1', '/:id', '', 'GET|PUT', NULL, 0, 0, 0),
-  (25, 'core', '', '/core/module/export', '/core/module/lists', '导出模块', '导出模块信息便于分享模块', 2, 'from', 'v1', '/:id', '', 'GET', NULL, 0, 0, 0),
+  (25, 'core', '', '/core/module/export', '/core/module/lists', '导出模块', '导出模块信息便于分享模块', 2, 'from', 'v1', '/:id', '', 'POST', NULL, 0, 0, 0),
   (26, 'core', '', '/core/config/add', '/core/config/lists', '增加配置', '增加系统配置', 2, 'form', 'v1', '', '', 'GET|POST', NULL, 0, 0, 0),
   (27, 'core', '', '/core/config/edit', '/core/config/lists', '修改配置', '修改系统配置', 2, 'form', 'v1', '/:id', '', 'GET|PUT', NULL, 0, 0, 0),
   (28, 'core', '', '/core/config/saveBatch', '/system', '系统设置', '批量修改系统配置的值', 1, 'form', 'v1', '/:module', '/core', 'GET|PUT', NULL, 0, 1, 0),
