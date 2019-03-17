@@ -27,8 +27,8 @@ class Common extends Controller
 {
     protected function initialize()
     {
-        if (is_file(env('app_path') . '/vendor/vendor/autoload.php')) {
-            require_once env('app_path') . '/vendor/vendor/autoload.php';
+        if (is_file(env('root_path') . 'vendor/vendor/autoload.php')) {
+            require_once env('root_path') . 'vendor/vendor/autoload.php';
         }
     }
 

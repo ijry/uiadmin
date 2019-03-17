@@ -201,12 +201,16 @@ export default {
                             title: button_data.page_data.title,
                             content: button_data.page_data.content,
                             onOk: () => {
-                                axios.delete(button_data.page_data.api + api_suffix)
-                                    .then(function (res) {
+                                axios({
+                                    method: button_data.page_data.form_method,
+                                    url: button_data.page_data.api + api_suffix,
+                                    data: {}
+                                }).then(function (res) {
                                         res = res.data
-                                        if(res.code=='200'){
+                                        if (res.code=='200') {
+                                            _this.loadData()
                                             _this.$Message.success(res.msg)
-                                        }else{
+                                        } else {
                                             _this.$Message.error(res.msg)
                                         }
                                     })

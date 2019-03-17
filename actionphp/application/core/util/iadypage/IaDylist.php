@@ -44,6 +44,7 @@ class IaDylist {
         $btn['page_data'] = [
             'page_type' => isset($page_data['page_type']) ? $page_data['page_type'] : 'modal',
             'modal_type' => isset($page_data['modal_type']) ? $page_data['modal_type'] : 'form',
+            'form_method' => isset($page_data['form_method']) ? $page_data['form_method'] : 'delete',
             'show' => false,
             'api' => $page_data['api'],
             'api_blank' => '',
@@ -76,6 +77,7 @@ class IaDylist {
         $btn['page_data'] = [
             'page_type' => isset($page_data['page_type']) ? $page_data['page_type'] : 'modal',
             'modal_type' => isset($page_data['modal_type']) ? $page_data['modal_type'] : 'form',
+            'form_method' => isset($page_data['form_method']) ? $page_data['form_method'] : 'delete',
             'show' => false,
             'api' => $page_data['api'],
             'api_blank' => '',
