@@ -108,7 +108,7 @@ class Config extends Admin
                     if (env('read_only') == true) {
                         return json(['code' => 0, 'msg' => '无写入权限', 'data' => []]);
                     }
-                    $this->core_config->save(['value' => $value], ['name' => $name]);
+                    $this->core_config->save(['value' => $value], ['name' => $name, 'module' => $module]);
                 }
                 return json(['code' => 200, 'msg' => '保存成功', 'data' => []]);
             } else {
@@ -116,7 +116,7 @@ class Config extends Admin
             }
         } else {
             //获取分组信息
-            $info = $this->core_config
+            $config_cate = $this->core_config
                 ->where('name', '=', 'config_cate')
                 ->find();
 
@@ -213,7 +213,7 @@ class Config extends Admin
             }
 
             //获取分组信息
-            $info = $this->core_config
+            $config_cate = $this->core_config
                 ->where('name', 'config_cate')
                 ->find();
 
@@ -227,7 +227,7 @@ class Config extends Admin
                     'options' => $module_list_select
                 ])
                 ->addFormItem('config_cate', '配置分组', 'radio', '', [
-                    'options' => parse_attr($info['value'])
+                    'options' => parse_attr($config_cate['value'])
                 ])
                 ->addFormItem('name', '配置名称', 'text', '', [
                     'placeholder' => '请输入英文',
@@ -355,7 +355,7 @@ class Config extends Admin
             }
 
             //获取分组信息
-            $info = $this->core_config
+            $config_cate = $this->core_config
                 ->where('name', 'config_cate')
                 ->find();
 
@@ -369,7 +369,7 @@ class Config extends Admin
                     'options' => $module_list_select
                 ])
                 ->addFormItem('config_cate', '配置分组', 'radio', '', [
-                    'options' => parse_attr($info['value'])
+                    'options' => parse_attr($config_cate['value'])
                 ])
                 ->addFormItem('name', '配置名称', 'text', '', [
                     'placeholder' => '请输入英文',
