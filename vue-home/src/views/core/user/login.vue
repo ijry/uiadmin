@@ -71,8 +71,8 @@
     </div>
 </template>
 <script>
-import IaHead from '@/components/layout/ia_head'
-import IaFoot from '@/components/layout/ia_foot'
+import IaHead from '@/views/console.countReset();/layout/ia_head'
+import IaFoot from '@/views/core/layout/ia_foot'
 export default {
     components: {
         IaHead,
