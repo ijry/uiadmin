@@ -50,8 +50,8 @@ class Config extends Admin
             ->select()->toArray();
 
         //构造动态页面数据
-        $ia_dylist      = new \app\core\util\iadypage\IaDylist();
-        $list_data = $ia_dylist->init()
+        $ibuilder_list = new \app\core\util\ibuilder\IbuilderList();
+        $list_data = $ibuilder_list->init()
             ->addTopButton('add', '添加', ['api' => '/v1/admin/core/config/add'])
             ->addRightButton('edit', '修改', ['api' => '/v1/admin/core/config/edit', 'title' => '修改配置信息'])
             ->addColumn('id' , 'ID', ['width' => '50px'])
@@ -128,11 +128,11 @@ class Config extends Admin
                 ->select()->toArray();
 
             //构造动态页面数据
-            $ia_dyform      = new \app\core\util\iadypage\IaDyform();
-            $ia_dyform->init()
+            $ibuilder_form = new \app\core\util\ibuilder\IbuilderForm();
+            $ibuilder_form->init()
                 ->setFormMethod('put');
                 foreach ($config_list as $key => $val) {
-                    $ia_dyform->addFormItem(
+                    $ibuilder_form->addFormItem(
                         $val['name'],
                         $val['title'],
                         $val['config_type'],
@@ -144,8 +144,8 @@ class Config extends Admin
                         ]
                     );
                 }
-            $ia_dyform->setFormValues();
-            $form_data = $ia_dyform->getData();
+            $ibuilder_form->setFormValues();
+            $form_data = $ibuilder_form->getData();
 
             //返回数据
             return json([
@@ -218,8 +218,8 @@ class Config extends Admin
                 ->find();
 
             //构造动态页面数据
-            $ia_dyform      = new \app\core\util\iadypage\IaDyform();
-            $form_data = $ia_dyform->init()
+            $ibuilder_form = new \app\core\util\ibuilder\IbuilderForm();
+            $form_data = $ibuilder_form->init()
                 ->setFormMethod('post')
                 ->addFormItem('module', '模块', 'select', '', [
                     'placeholder' => '请选择模块',
@@ -240,7 +240,7 @@ class Config extends Admin
                 ->addFormItem('config_type', '配置类型', 'select', '', [
                     'placeholder' => '请选择表单类型',
                     'tip' => '表单类型',
-                    'options' => $ia_dyform->form_type
+                    'options' => $ibuilder_form->form_type
                 ])
                 ->addFormItem('value', '默认值', 'textarea', '', [
                     'placeholder' => '请输入配置默认值',
@@ -360,8 +360,8 @@ class Config extends Admin
                 ->find();
 
             //构造动态页面数据
-            $ia_dyform      = new \app\core\util\iadypage\IaDyform();
-            $form_data = $ia_dyform->init()
+            $ibuilder_form = new \app\core\util\ibuilder\IbuilderForm();
+            $form_data = $ibuilder_form->init()
                 ->setFormMethod('put')
                 ->addFormItem('module', '模块', 'select', '', [
                     'placeholder' => '请选择模块',
@@ -382,7 +382,7 @@ class Config extends Admin
                 ->addFormItem('config_type', '配置类型', 'select', '', [
                     'placeholder' => '请选择表单类型',
                     'tip' => '表单类型',
-                    'options' => $ia_dyform->form_type
+                    'options' => $ibuilder_form->form_type
                 ])
                 ->addFormItem('value', '默认值', 'textarea', '', [
                     'placeholder' => '请输入配置默认值',

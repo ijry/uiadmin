@@ -145,8 +145,8 @@ class Module extends Admin
         $data_list = $tree->list2tree($data_list);
 
         // 构造动态页面数据
-        $ia_dylist      = new \app\core\util\iadypage\IaDylist();
-        $list_data = $ia_dylist->init()
+        $ibuilder_list = new \app\core\util\ibuilder\IbuilderList();
+        $list_data = $ibuilder_list->init()
             ->addTopButton('add', '创建新模块', ['api' => '/v1/admin/core/module/add'])
             ->addRightButton('config', '设置', [
                 'api' => '/v1/admin/core/config/saveBatch/',
@@ -289,8 +289,8 @@ class Module extends Admin
             }
         } else {
             // 构造动态页面数据
-            $ia_dyform      = new \app\core\util\iadypage\IaDyform();
-            $form_data = $ia_dyform->init()
+            $ibuilder_form = new \app\core\util\ibuilder\IbuilderForm();
+            $form_data = $ibuilder_form->init()
                 ->setFormMethod('post')
                 ->addFormItem('name', '模块名称', 'text', '', [
                     'placeholder' => '请输入模块名称',
@@ -418,8 +418,8 @@ class Module extends Admin
                 ->find();
 
             // 构造动态页面数据
-            $ia_dyform      = new \app\core\util\iadypage\IaDyform();
-            $form_data = $ia_dyform->init()
+            $ibuilder_form = new \app\core\util\ibuilder\IbuilderForm();
+            $form_data = $ibuilder_form->init()
                 ->setFormMethod('put')
                 ->addFormItem('name', '模块名称', 'text', '', [
                     'placeholder' => '请输入模块名称',

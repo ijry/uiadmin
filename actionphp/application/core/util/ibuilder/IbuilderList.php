@@ -11,13 +11,14 @@
  * +----------------------------------------------------------------------
 */
 
-namespace app\core\util\iadypage;
+namespace app\core\util\ibuilder;
 
 /**
- * 动态列表
+ * IbuilderList动态列表
+ *
  * @author jry <ijry@qq.com>
  */
-class IaDylist {
+class IbuilderList {
 
     // 数据
     private $data;
