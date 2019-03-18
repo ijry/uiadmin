@@ -19,10 +19,10 @@
             <Form @submit.native.prevent :ref="ref" :model="data.form_values" :label-position="label_position" :label-width="label_width" :rules="data.form_rules">
                 <template v-for="(item,key,index) in data.form_items">
                     <template v-if="data.form_rules[item.name] != ''">
-                        <IaDyformItem :ref="'dyformitem_' + item.name" :key="index" :item="item" :form_values="data.form_values" :prop="item.name"></IaDyformItem>
+                        <IbuilderformItem :ref="'formitem_' + item.name" :key="index" :item="item" :form_values="data.form_values" :prop="item.name"></IbuilderformItem>
                     </template>
                     <template v-else-if="data.form_rules[item.name] == ''">
-                        <IaDyformItem :ref="'dyformitem_' + item.name" :key="index" :item="item" :form_values="data.form_values"></IaDyformItem>
+                        <IbuilderformItem :ref="'formitem_' + item.name" :key="index" :item="item" :form_values="data.form_values"></IbuilderformItem>
                     </template>
                 </template>
                 <!-- 按钮 -->
@@ -48,11 +48,11 @@
     </div>
 </template>
 <script>
-import IaDyformItem from '@/components/ia_dypage/ia_dyform_item'
+import IbuilderformItem from '@/views/core/ibuilder/ibuilder_form_item'
 export default {
-    name: 'DynamicForm',
+    name: 'IbuilderForm',
     components: {
-        IaDyformItem
+        IbuilderformItem
     },
     props: {
         api: '',
@@ -110,7 +110,7 @@ export default {
             // 获取checkboxtree的选中项目
             for (let index in _this.data.form_items) {
                 if (_this.data.form_items[index].type == 'checkboxtree') {
-                    let admin_auth = _this.$refs['dyformitem_' + _this.data.form_items[index].name][0].getChecked('admin_auth')
+                    let admin_auth = _this.$refs['formitem_' + _this.data.form_items[index].name][0].getChecked('admin_auth')
                     _this.data.form_values[_this.data.form_items[index].name] = admin_auth
                 }
             };

@@ -51,7 +51,7 @@ export default {
             }
         },
      },
-     actions: { 
+     actions: {
         //调用这里去触发mutations，如何调用？在组件内使用this.$store.dispatch('action中对应名字', 参数)
         addVisitedViews({commit}, data){
             //通过解构赋值得到commit方法

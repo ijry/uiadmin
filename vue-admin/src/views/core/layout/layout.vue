@@ -1,5 +1,5 @@
 <style scoped lang="less">
-    @import '../../plugins/iview-variables.less';
+    @import '../../../plugins/iview-variables.less';
     .layout {
         border: 0px solid #d7dde4;
         background: #f5f7f9;
@@ -314,7 +314,7 @@
     </div>
 </template>
 <script>
-    import Layout from '@/components/layout';
+    import Layout from './layout';
     import Fullscreen from './fullscreen'
     import { mapMutations, mapActions, mapGetters } from 'vuex'
     import util from './store/util.js'
@@ -407,7 +407,7 @@
                                                                 title: menu_data.menu_list[item].title,
                                                                 api: menu_data.menu_list[item].api + menu_data.menu_list[item].api_params
                                                             },
-                                                            component: () => import('@/components/ia_dypage/ia_dy' + menu_data.menu_list[item].route_type + '_route.vue')
+                                                            component: () => import('@/views/core/ibuilder/ibuilder_' + menu_data.menu_list[item].route_type + '_route.vue')
                                                         }
                                                     )
                                                     break;

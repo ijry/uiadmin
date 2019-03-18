@@ -148,7 +148,7 @@
 
 <script>
 export default {
-    name: 'IaDyformItem',
+    name: 'IbuilderFormItem',
     props: {
         prop: '',
         item: {},

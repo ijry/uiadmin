@@ -86,11 +86,11 @@ class Api extends Admin
             }
 
             //构造动态页面数据
-            $ia_dyform      = new \app\core\util\iadypage\IaDyform();
-            $ia_dyform->init()
+            $ibuilder_form = new \app\core\util\ibuilder\IbuilderForm();
+            $ibuilder_form->init()
                 ->setFormMethod('put');
             foreach ($doc_info as $key => $value) {
-                $ia_dyform->addFormItem($key . '[method]', '请求地址', 'static', $key . '：/' . $info['api_prefix'] . $entry .$info['path'] . $info['api_suffix'])
+                $ibuilder_form->addFormItem($key . '[method]', '请求地址', 'static', $key . '：/' . $info['api_prefix'] . $entry .$info['path'] . $info['api_suffix'])
                     ->addFormItem($key . '[description]', '接口说明', 'text', $doc_info[$key]['description'])
                     ->addFormItem($key . '[params]', '请求参数', 'formlist', $doc_info[$key]['params'], [
                         'options' => [
@@ -103,7 +103,7 @@ class Api extends Admin
                     ])
                     ->addFormItem($key . '[divider]', '', 'divider', '');
             }
-            $form_data = $ia_dyform->setFormValues()
+            $form_data = $ibuilder_form->setFormValues()
                 ->getData();
 
             //返回数据
@@ -138,8 +138,8 @@ class Api extends Admin
         $menu_tree = $tree->list2tree($data_list, 'path', 'pmenu', 'children', 0, false);
 
         //构造动态页面数据
-        $ia_dylist      = new \app\core\util\iadypage\IaDylist();
-        $list_data = $ia_dylist->init()
+        $ibuilder_list = new \app\core\util\ibuilder\IbuilderList();
+        $list_data = $ibuilder_list->init()
             ->addTopButton('add', '添加', ['api' => '/v1/admin/core/api/add'])
             ->addRightButton('doc', '文档', ['api' => '/v1/admin/core/api/doc', 'width' => '1000', 'title' => 'API文档编辑', 'api_suffix' =>['id']])
             ->addRightButton('edit', '修改', ['api' => '/v1/admin/core/api/edit', 'title' => '修改API'])
@@ -243,8 +243,8 @@ class Api extends Admin
             }
 
             //构造动态页面数据
-            $ia_dyform      = new \app\core\util\iadypage\IaDyform();
-            $form_data = $ia_dyform->init()
+            $ibuilder_form = new \app\core\util\ibuilder\IbuilderForm();
+            $form_data = $ibuilder_form->init()
                 ->setFormMethod('post')
                 ->addFormItem('module', '模块', 'select', '', [
                     'placeholder' => '请选择模块',
@@ -412,8 +412,8 @@ class Api extends Admin
             }
 
             //构造动态页面数据
-            $ia_dyform      = new \app\core\util\iadypage\IaDyform();
-            $form_data = $ia_dyform->init()
+            $ibuilder_form = new \app\core\util\ibuilder\IbuilderForm();
+            $form_data = $ibuilder_form->init()
                 ->setFormMethod('put')
                 ->addFormItem('module', '模块', 'select', '', [
                     'placeholder' => '请选择模块',

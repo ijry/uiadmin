@@ -52,8 +52,8 @@ class Role extends Admin
         $data_tree = $tree->list2tree($data_list);
 
         //构造动态页面数据
-        $ia_dylist      = new \app\core\util\iadypage\IaDylist();
-        $list_data = $ia_dylist->init()
+        $ibuilder_list = new \app\core\util\ibuilder\IbuilderList();
+        $list_data = $ibuilder_list->init()
             ->addTopButton('add', '添加角色', ['api' => '/v1/admin/core/role/add'])
             ->addRightButton('member', '成员', [
                 'modal_type' => 'list',
@@ -162,8 +162,8 @@ class Role extends Admin
             }
 
             //构造动态页面数据
-            $ia_dyform      = new \app\core\util\iadypage\IaDyform();
-            $form_data = $ia_dyform->init()
+            $ibuilder_form = new \app\core\util\ibuilder\IbuilderForm();
+            $form_data = $ibuilder_form->init()
                 ->setFormMethod('post')
                 ->addFormItem('pid', '上级', 'select', 0, [
                     'tip' => '选择上级后会限制权限范围不大于上级',
@@ -296,8 +296,8 @@ class Role extends Admin
             }
 
             //构造动态页面数据
-            $ia_dyform      = new \app\core\util\iadypage\IaDyform();
-            $form_data = $ia_dyform->init()
+            $ibuilder_form = new \app\core\util\ibuilder\IbuilderForm();
+            $form_data = $ibuilder_form->init()
                 ->setFormMethod('put')
                ->addFormItem('pid', '上级', 'select', 0, [
                     'tip' => '选择上级后会限制权限范围不大于上级',

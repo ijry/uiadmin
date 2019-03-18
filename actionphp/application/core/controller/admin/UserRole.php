@@ -52,8 +52,8 @@ class UserRole extends Admin
         }
 
         //构造动态页面数据
-        $ia_dylist      = new \app\core\util\iadypage\IaDylist();
-        $list_data = $ia_dylist->init()
+        $ibuilder_list = new \app\core\util\ibuilder\IbuilderList();
+        $list_data = $ibuilder_list->init()
             ->addTopButton('add', '添加成员', ['api' => '/v1/admin/core/user_role/add/' . $name])
             ->addRightButton('delete', '删除', [
                 'api' => '/v1/admin/core/user_role/delete',
@@ -134,8 +134,8 @@ class UserRole extends Admin
             }
         } else {
             //构造动态页面数据
-            $ia_dyform      = new \app\core\util\iadypage\IaDyform();
-            $form_data = $ia_dyform->init()
+            $ibuilder_form = new \app\core\util\ibuilder\IbuilderForm();
+            $form_data = $ibuilder_form->init()
                 ->setFormMethod('put')
                 ->addFormItem('role_name', '角色名称', 'text', $name, [
                     'placeholder' => '请输入角色名称',

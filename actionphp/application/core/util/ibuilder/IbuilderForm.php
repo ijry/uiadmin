@@ -11,14 +11,14 @@
  * +----------------------------------------------------------------------
 */
 
-namespace app\core\util\iadypage;
+namespace app\core\util\ibuilder;
 
 /**
- * 动态表单
+ * IbuilderForm动态表单
  *
  * @author jry <ijry@qq.com>
  */
-class IaDyform {
+class IbuilderForm {
 
     // 数据
     private $data;

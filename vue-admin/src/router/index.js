@@ -16,7 +16,7 @@ import routes from './routers';
 import store from '@/store'
 import iView from 'iview';
 import util from '@/libs/util';
-import util1 from '@/components/layout/store/util';
+import util1 from '@/views/core/layout/store/util';
 
 Vue.use(Router);
 
@@ -42,7 +42,7 @@ router.beforeEach((to, from, next) => {
         name: 'home' // 跳转首页
     })
   }
- 
+
   //进度条
   iView.LoadingBar.start();
   util.title(to.meta.title);

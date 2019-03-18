@@ -17,7 +17,6 @@ export default {
   },
   mutations: {
   },
-  actions: {  
+  actions: {
   }
 }
-  

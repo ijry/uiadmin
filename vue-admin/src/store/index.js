@@ -16,8 +16,8 @@ import Vuex from 'vuex'
 import app from './module/app'
 import user from './module/user'
 
-import tagsview from '@/components/layout/store/tagsview' //多标签
-import menu from '@/components/layout/store/menu' //左侧导航
+import tagsview from '@/views/core/layout/store/tagsview' //多标签
+import menu from '@/views/core/layout/store/menu' //左侧导航
 
 Vue.use(Vuex)
 
