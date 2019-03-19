@@ -227,8 +227,8 @@ class Menu extends Admin
                     'tip' => '系统内容了动态页面技术，可以自动生成后台前端页面',
                     'options' => [
                         ['title' => 'Vue路由', 'value' => 'route',],
-                        ['title' => 'IA动态列表', 'value' => 'list',],
-                        ['title' => 'IA动态表单', 'value' => 'form',]
+                        ['title' => 'iBuilder动态列表', 'value' => 'list',],
+                        ['title' => 'iBuilder动态表单', 'value' => 'form',]
                     ]
                 ])
                 ->addFormItem('is_hide', '是否隐藏', 'radio', 0, [
@@ -426,8 +426,8 @@ class Menu extends Admin
                     'tip' => '系统内容了动态页面技术，可以自动生成后台前端页面',
                     'options' => [
                         ['title' => 'Vue路由', 'value' => 'route',],
-                        ['title' => 'IA动态列表', 'value' => 'list',],
-                        ['title' => 'IA动态表单', 'value' => 'form',]
+                        ['title' => 'iBuilder动态列表', 'value' => 'list',],
+                        ['title' => 'iBuilder动态表单', 'value' => 'form',]
                     ]
                 ])
                 ->addFormItem('is_hide', '是否隐藏', 'radio', 0, [
