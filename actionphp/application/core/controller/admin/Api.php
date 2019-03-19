@@ -270,9 +270,13 @@ class Api extends Admin
                     'placeholder' => '接口前缀',
                     'tip' => '一般默认v1'
                 ])
-                ->addFormItem('api_suffix', '接口参数', 'text', '', [
-                    'placeholder' => '请输入接口参数',
+                ->addFormItem('api_suffix', '接口后缀', 'text', '', [
+                    'placeholder' => '请输入接口后缀参数',
                     'tip' => '接口参数举例：/:id/:name'
+                ])
+                ->addFormItem('api_params', '接口参数', 'text', '', [
+                    'placeholder' => '请输入接口参数实际值',
+                    'tip' => '接口参数的实际值举例：/core'
                 ])
                 ->addFormItem('api_method', '请求方法', 'checkbox', [], [
                     'placeholder' => '请勾选请求方法',
@@ -434,9 +438,13 @@ class Api extends Admin
                     'placeholder' => '接口前缀',
                     'tip' => '一般默认v1'
                 ])
-                ->addFormItem('api_suffix', '接口参数', 'text', '', [
-                    'placeholder' => '请输入接口参数',
+                ->addFormItem('api_suffix', '接口后缀', 'text', '', [
+                    'placeholder' => '请输入接口后缀参数',
                     'tip' => '接口参数举例：/:id/:name'
+                ])
+                ->addFormItem('api_params', '接口参数', 'text', '', [
+                    'placeholder' => '请输入接口参数实际值',
+                    'tip' => '接口参数的实际值举例：/core'
                 ])
                 ->addFormItem('api_method', '请求方法', 'checkbox', [], [
                     'placeholder' => '请勾选请求方法',
