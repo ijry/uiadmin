@@ -111,7 +111,6 @@ class Menu extends Admin
                 'menu_type' => 'require',
                 'path' => 'require',
                 'api_prefix' => 'require',
-                'api_method' => 'require',
             ],
             [
                 'module.require' => '请选择模块',
@@ -119,7 +118,6 @@ class Menu extends Admin
                 'menu_type.require' => '菜单类型必须',
                 'path.require' => '接口路径必须',
                 'api_prefix.require' => '接口前缀必须',
-                'api_method.require' => '请求方法必须',
             ]);
             $data = input('post.');
             if (!$validate->check($data)) {
@@ -212,7 +210,7 @@ class Menu extends Admin
                     'placeholder' => '请输入接口参数',
                     'tip' => '接口参数举例：/:id/:name'
                 ])
-                ->addFormItem('api_method', '请求方法', 'checkbox', [[]], [
+                ->addFormItem('api_method', '请求方法', 'checkbox', [, [
                     'placeholder' => '请勾选请求方法',
                     'tip' => '尽量符合Restful风格',
                     'options' => [
@@ -255,9 +253,6 @@ class Menu extends Admin
                 ->addFormRule('path', [
                     ['required' => true, 'message' => '请输入接口路径', 'trigger' => 'blur'],
                 ])
-                ->addFormRule('api_method', [
-                    ['required' => true, 'type' => 'array', 'min' =>  2, 'message' => '请勾选请求方法', 'trigger' => 'change'],
-                ])
                 ->addFormRule('route_type', [
                     ['required' => true, 'type' => 'string', 'message' => '请选择是页面路由方式', 'trigger' => 'change'],
                 ])
@@ -296,7 +291,6 @@ class Menu extends Admin
                 'menu_type' => 'require',
                 'path' => 'require',
                 'api_prefix' => 'require',
-                'api_method' => 'require',
             ],
             [
                 'module.require' => '请选择模块',
@@ -304,7 +298,6 @@ class Menu extends Admin
                 'menu_type.require' => '菜单类型必须',
                 'path.require' => '接口路径必须',
                 'api_prefix.require' => '接口前缀必须',
-                'api_method.require' => '请求方法必须',
             ]);
             $data = input('post.');
             if (!$validate->check($data)) {
@@ -453,9 +446,6 @@ class Menu extends Admin
                 ])
                 ->addFormRule('path', [
                     ['required' => true, 'message' => '请输入接口路径', 'trigger' => 'blur'],
-                ])
-                ->addFormRule('api_method', [
-                    ['required' => true, 'type' => 'array', 'min' =>  1, 'message' => '请勾选请求方法', 'trigger' => 'change'],
                 ])
                 ->addFormRule('route_type', [
                     ['required' => true, 'type' => 'string', 'message' => '请选择是页面路由方式', 'trigger' => 'change'],
