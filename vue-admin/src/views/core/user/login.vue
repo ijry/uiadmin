@@ -71,9 +71,8 @@ export default {
             this.loading = true
             let _this = this
             axios.post('/v1/core/user/login', {
-                    identity_type: 0,
-                    identifier: _this.formLogin.account,
-                    credential: _this.formLogin.password
+                    account: _this.formLogin.account,
+                    password: _this.formLogin.password
                 })
                 .then(function (res) {
                     res = res.data
