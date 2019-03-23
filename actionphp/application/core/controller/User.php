@@ -55,14 +55,14 @@ class User extends Home
     */
     public function info()
     {
-        $ret = $this->is_login();
-        if($ret['code'] != 200){
-            return json($ret);
+        $uid = $this->isLogin();
+        try {
+            $user_service = controller('core/User', 'service');
+            $user_info = $user_service->info($uid);
+            return json(['code' => 200, 'msg' => '用户信息', 'data' => ['user_info' => $user_info]]);
+        } catch(\Exception $e) {
+            return json(['code' => 0, 'msg' => $e->getMessage()]);
         }
-        $user_info = $this->core_user
-            ->field('id,nickname,username,email,avatar')
-            ->find($ret['data']['uid']);
-        return json(['code' => 200, 'msg' => '用户信息', 'data' => ['user_info' => $user_info]]);
     }
 
     /**
