@@ -23,4 +23,19 @@ use app\core\controller\common\Common;
  */
 class Home extends Common
 {
+    /**
+     * 是否登录
+     *
+     * @author jry <ijry@qq.com>
+     */
+    protected function isLogin() {
+        // 登录验证
+        $ret = parent::isLogin();
+        if ($ret['code'] != 200) {
+            echo json_encode($ret);
+            exit;
+        } else {
+            return $ret['data']['data']->uid;
+        }
+    }
 }
