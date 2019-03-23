@@ -30,7 +30,7 @@ class Admin extends Common
         parent::initialize();
 
         // 登录验证
-        $ret = $this->is_login();
+        $ret = $this->isLogin();
         if ($ret['code'] != 200) {
             echo json_encode($ret);
             exit;

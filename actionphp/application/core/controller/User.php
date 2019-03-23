@@ -43,8 +43,8 @@ class User extends Home
     */
     public function isLogin()
     {
-        $ret = $this->is_login();
-        return json($ret);
+        $uid = $this->isLogin();
+        return json(['code' => 200, 'msg' => '已登录系统', 'data' => ['uid' => $uid]]);
     }
 
     /**

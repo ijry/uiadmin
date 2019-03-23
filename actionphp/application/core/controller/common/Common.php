@@ -38,7 +38,7 @@ class Common extends Controller
     * @return array
     * @author jry <ijry@qq.com>
     */
-    protected function is_login()
+    protected function isLogin()
     {
         //获取token
         $token = Request::header('Authorization');
