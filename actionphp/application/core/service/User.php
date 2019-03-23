@@ -17,10 +17,14 @@ use \Firebase\JWT\JWT; //导入JWT
 
 class User
 {
+    private $core_user;
+    private $core_identity;
     private $core_login;
 
     public function __construct()
     {
+        $this->core_user = new \app\core\model\User();
+        $this->core_identity = new \app\core\model\Identity();
         $this->core_login = new \app\core\model\Login();
     }
 
@@ -40,6 +44,34 @@ class User
      * @author jry <598821125@qq.com>
      */
     public function getById($id) {
+        $user_info = $this->core_user
+            ->field('id,nickname,username,avatar')
+            ->find($id)
+            ->toArray();
+        return $user_info;
+    }
+
+    /**
+     * 通过ID获取用户
+     * @return array
+     *
+     * @author jry <598821125@qq.com>
+     */
+    public function info($id) {
+        $user_info = $this->getById($id);
+
+        // 敏感数据
+        $user_info['email'] = $this->core_identity
+            ->field('identifier,verified')
+            ->where('uid', '=', $user_info['id'])
+            ->where('identity_type', '=', 2)
+            ->find();
+        $user_info['mobile'] = $this->core_identity
+            ->field('identifier,verified')
+            ->where('uid', '=', $user_info['id'])
+            ->where('identity_type', '=', 1)
+            ->find();
+        return $user_info;
     }
 
     /**
