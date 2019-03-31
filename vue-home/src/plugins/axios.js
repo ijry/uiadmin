@@ -18,7 +18,7 @@ import axios from "axios";
 import util from '@/libs/util'
 
 // Full config:  https://github.com/axios/axios#request-config
-axios.defaults.headers.common['Authorization'] = 'Bearer ' + util.getToken();
+axios.defaults.headers.common['Authorization'] = util.getToken();
 const contentType = 'application/json'  // application/x-www-form-urlencoded或者application/json
 axios.defaults.headers.post['Content-Type'] = contentType;
 axios.defaults.transformRequest = data => {

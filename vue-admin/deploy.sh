@@ -17,6 +17,6 @@ git add -A
 git commit -m 'deploy'
 
 # 部署
-# git push -f git@github.com:ijry/initadmin.git master:gh-pages
+git push -f git@github.com:ijry/initadmin.git master:gh-pages
 
 cd -

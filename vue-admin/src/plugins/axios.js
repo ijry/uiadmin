@@ -18,7 +18,7 @@ import util from '@/libs/util'
 import router from '@/router'
 
 // Full config:  https://github.com/axios/axios#request-config
-axios.defaults.headers.common['Authorization'] = 'Bearer ' + util.getToken();
+axios.defaults.headers.common['Authorization'] = util.getToken();
 const contentType = 'application/json'  // application/x-www-form-urlencoded或者application/json
 axios.defaults.headers.post['Content-Type'] = contentType;
 axios.defaults.transformRequest = data => {
@@ -40,7 +40,7 @@ const _axios = axios.create(config);
 _axios.interceptors.request.use(
   function(config) {
     // Do something before request is sent
-    config.headers.Authorization = 'Bearer ' + util.getToken();
+    config.headers.Authorization = util.getToken();
     return config;
   },
   function(error) {
