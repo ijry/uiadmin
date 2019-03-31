@@ -163,11 +163,11 @@ class Api extends Admin
                 'type' => 'template',
                 'template' => 'right_button_list'
             ])
+            ->setDataList($menu_tree)
             ->getData();
 
         //返回数据
         return json(['code' => 200, 'msg' => '成功', 'data' => [
-            'data_list' => $menu_tree,
             'list_data' => $list_data
         ]]);
     }

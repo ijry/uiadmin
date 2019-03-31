@@ -17,7 +17,7 @@
 <template>
   <div>
     <Card shadow>
-        <template v-if="this.data_list.length > 0">
+        <template v-if="this.list_data.data_list.length > 0">
             <template v-for="(item,key) in list_data.top_button_list">
                 <Modal :scrollable="item.page_data.scrollable" :draggable="item.page_data.draggable" :ref="'top_modal_' + key" :key="'top_modal_' + key" v-model="item.page_data.show":width="item.page_data.width?item.page_data.width:600" :title="item.page_data.title">
                     <IbuilderForm :ref="'top_form_' + key" :api="item.page_data.api_blank" :foot_hide="true"></IbuilderForm>
@@ -48,7 +48,7 @@
                 :expand-type="false"
                 :selectable="false"
                 :columns="list_data.columns"
-                :data="this.data_list" >
+                :data="this.list_data.data_list" >
                 <template slot="right_button_list" slot-scope="scope">
                     <Button
                         v-for="(item,key) in list_data.right_button_list"
@@ -111,8 +111,8 @@ export default {
     },
     data () {
         return {
-            data_list: [],
             list_data: {
+                data_list: [],
                 top_button_list: {},
                 right_button_list: {},
             }
@@ -162,7 +162,6 @@ export default {
                         if (res.code == '200') {
                             //console.log(res)
                             _this.list_data = res.data.list_data
-                            _this.data_list = res.data.data_list
                         } else {
                             _this.$Message.error(res.msg)
                         }
