@@ -154,7 +154,7 @@ class User extends Home
             return json(['code' => 0, 'msg' => '登录失败:' . $e->getMessage()]);
         }
         if ($jwt) {
-            return json(['code' => 200, 'msg' => '登陆成功', 'data' => ['token' => 'Bearer' . $jwt]]);
+            return json(['code' => 200, 'msg' => '登陆成功', 'data' => ['token' => 'Bearer ' . $jwt]]);
         } else {
             return json(['code' => 0, 'msg' => '添加失败', 'data' => []]);
         }
