@@ -13,8 +13,9 @@
 
 namespace app\core\controller\common;
 
-use think\Controller;
+use think\Db;
 use think\Request;
+use think\Controller;
 
 /**
  * 默认控制器
@@ -32,6 +33,11 @@ class Index extends Controller
     public function index()
     {
         //dump(user_md5('initadmin.net', 'initadmin-auth-key'));
-        return 'InitAdmin后台接口actionphp版本运行中...<br/>接口域名：' . request()->domain() . '<br/>';
+
+        // 环境检测
+        if (!function_exists('mb_strlen')) {
+            dump('缺少php-mbstring扩展');
+        }
+        return 'InitAdmin后台接口actionphp版本运行中...<br/>接口域名：' . request()->domain() . '/api/<br/>';
     }
 }

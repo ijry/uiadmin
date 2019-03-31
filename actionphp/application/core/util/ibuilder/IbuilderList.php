@@ -29,6 +29,7 @@ class IbuilderList {
      */
     public function init() {
         $this->data = [
+            'data_list' => [],
             'top_button_list' => [],
             'right_button_list' => [],
             'columns' => [],
@@ -124,6 +125,15 @@ class IbuilderList {
             $column['template'] = $data['template'];
         }
         $this->data['columns'][] = $column;
+        return $this;
+    }
+
+    /**
+     * 设置列表数据
+     * @author jry <ijry@qq.com>
+     */
+    public function setDataList($data_list) {
+        $this->data['data_list'] = $data_list;
         return $this;
     }
 
