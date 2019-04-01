@@ -77,7 +77,7 @@ class UserRole extends Admin
                 'type' => 'template',
                 'template' => 'right_button_list'
             ])
-            ->setDataList($menu_tree)
+            ->setDataList($data_list)
             ->getData();
 
         //返回数据

@@ -58,7 +58,7 @@ class Menu extends Admin
         $tree      = new Tree();
         $menu_tree = $tree->list2tree($data_list, 'path', 'pmenu', 'children', 0, false);
 
-        //构造动态页面数据
+        // 构造动态页面数据
         $ibuilder_list = new \app\core\util\ibuilder\IbuilderList();
         $list_data = $ibuilder_list->init()
             ->addTopButton('add', '添加菜单', ['api' => '/v1/admin/core/menu/add'])
@@ -89,7 +89,7 @@ class Menu extends Admin
             ->setDataList($menu_tree)
             ->getData();
 
-        //返回数据
+        // 返回数据
         return json(['code' => 200, 'msg' => '成功', 'data' => [
             'list_data' => $list_data
         ]]);
@@ -104,7 +104,7 @@ class Menu extends Admin
     public function add()
     {
         if(request()->isPost()){
-            //数据验证
+            // 数据验证
             $validate = Validate::make([
                 'module'  => 'require',
                 'title' => 'require',
@@ -124,14 +124,14 @@ class Menu extends Admin
                 return json(['code' => 200, 'msg' => $validate->getError(), 'data' => []]);
             }
 
-            //数据构造
+            // 数据构造
             $data_db = $data;
             if (count($data_db) <= 0 ) {
                 return json(['code' => 0, 'msg' => '无数据提交', 'data' => []]);
             }
             $data_db['api_method'] = implode('|', $data_db['api_method']);
 
-            //存储数据
+            // 存储数据
             $ret = $this->core_menu->save($data_db);
             if ($ret) {
                 return json(['code' => 200, 'msg' => '添加成功', 'data' => []]);
@@ -139,7 +139,7 @@ class Menu extends Admin
                 return json(['code' => 0, 'msg' => '添加失败' . $this->core_menu->getError(), 'data' => []]);
             }
         } else {
-            //获取模块列表
+            // 获取模块列表
             $module_list = $this->core_module
                 ->where('status', 1)
                 ->order('sortnum asc')
@@ -150,7 +150,7 @@ class Menu extends Admin
                 $module_list_select[$key]['value'] = $val['name'];
             }
 
-            //获取菜单基于标题的树状列表
+            // 获取菜单基于标题的树状列表
             $menu_list = $this->core_menu
                 ->order('sortnum asc')
                 ->select()->toArray();
@@ -162,7 +162,7 @@ class Menu extends Admin
                 $menu_tree_select[$key1]['value'] = $val1['path'];
             }
 
-            //构造动态页面数据
+            // 构造动态页面数据
             $ibuilder_form = new \app\core\util\ibuilder\IbuilderForm();
             $form_data = $ibuilder_form->init()
                 ->setFormMethod('post')
@@ -266,7 +266,7 @@ class Menu extends Admin
                 ->setFormValues()
                 ->getData();
 
-            //返回数据
+            // 返回数据
             return json(
                 [
                     'code' => 200,
@@ -288,7 +288,7 @@ class Menu extends Admin
     public function edit($id)
     {
         if(request()->isPut()){
-            //数据验证
+            // 数据验证
             $validate = Validate::make([
                 'module'  => 'require',
                 'title' => 'require',
@@ -308,7 +308,7 @@ class Menu extends Admin
                 return json(['code' => 200, 'msg' => $validate->getError(), 'data' => []]);
             }
 
-            //数据构造
+            // 数据构造
             $data_db = $data;
             if (count($data_db) <= 0 ) {
                 return json(['code' => 0, 'msg' => '无数据提交', 'data' => []]);
@@ -318,9 +318,9 @@ class Menu extends Admin
             }
 
             // 存储数据
-            try{
+            try {
                 $ret = $this->core_menu->save($data_db, ['id' => $id]);
-            }catch(\Exception $e){
+            } catch (\Exception $e) {
                 return json(['code' => 0, 'msg' => '修改失败' . json_encode($e), 'data' => []]);
             }
             if ($ret) {
@@ -329,14 +329,14 @@ class Menu extends Admin
                 return json(['code' => 0, 'msg' => '修改失败' . $this->core_menu->getError(), 'data' => []]);
             }
         } else {
-            //获取菜单信息
-            //用户信息
+            // 获取菜单信息
+            // 用户信息
             $info = $this->core_menu
                 ->where('id', $id)
                 ->find();
             $info['api_method'] = explode('|', $info['api_method']);
 
-            //获取模块列表
+            // 获取模块列表
             $module_list = $this->core_module
                 ->where('status', 1)
                 ->order('sortnum asc')
@@ -347,7 +347,7 @@ class Menu extends Admin
                 $module_list_select[$key]['value'] = $val['name'];
             }
 
-            //获取菜单基于标题的树状列表
+            // 获取菜单基于标题的树状列表
             $menu_list = $this->core_menu
                 ->where(['delete_time' => 0])
                 ->order('sortnum asc')
@@ -360,7 +360,7 @@ class Menu extends Admin
                 $menu_tree_select[$key]['value'] = $val['path'];
             }
 
-            //构造动态页面数据
+            // 构造动态页面数据
             $ibuilder_form = new \app\core\util\ibuilder\IbuilderForm();
             $form_data = $ibuilder_form->init()
                 ->setFormMethod('put')
@@ -464,7 +464,7 @@ class Menu extends Admin
                 ->setFormValues($info)
                 ->getData();
 
-            //返回数据
+            // 返回数据
             return json([
                 'code' => 200,
                 'msg' => '成功',

@@ -80,7 +80,7 @@ class Role extends Admin
                 'type' => 'template',
                 'template' => 'right_button_list'
             ])
-            ->setDataList($menu_tree)
+            ->setDataList($data_tree)
             ->getData();
 
         //返回数据
