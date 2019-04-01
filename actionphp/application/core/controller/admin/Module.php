@@ -39,100 +39,6 @@ class Module extends Admin
     }
 
     /**
-     * 导出模块
-     *
-     * @return \think\Response
-     */
-    public function export($id)
-    {
-        if (request()->isPost()) {
-            if ($id == 1) {
-                return json(['code' => 0, 'msg' => 'ID为1的核心模块不需要导出', 'data' => []]);
-            }
-            $info = $this->core_module
-                ->field('name,title,description,developer,website,version,build')
-                ->where(['id' => $id])
-                ->find()->toArray();;
-            if (!$info) {
-                return json(['code' => 0, 'msg' => '不存在模块信息', 'data' => []]);
-            }
-
-            // 导出基本信息
-            $expot_info = [];
-            $expot_info['info'] = $info;
-
-            // 导出配置
-            $expot_info['config'] = $this->core_config
-                ->field('module,config_cate,name,title,config_type,value,placeholder,tip,options,is_system,is_dev,sortnum,status')
-                ->where('module', '=', $info['name'])
-                ->select()->toArray();
-
-            // 导出API
-            $expot_info['api'] = $this->core_menu
-                ->field('module,icon,path,pmenu,title,tip,menu_type,route_type,api_prefix,api_suffix,api_params,api_method,doc,is_hide,sortnum')
-                ->where('module', '=', $info['name'])
-                ->select()->toArray();
-
-            // 导出模块数据表
-            $mysql_conn = mysqli_connect(
-                config('database.hostname'),
-                config('database.username'),
-                config('database.password')
-            ) or die("Mysql连接失败！");
-            $database = config('database.database');
-            mysqli_select_db($mysql_conn, $database);
-            mysqli_query($mysql_conn, 'SET NAMES utf8');
-            // 获取表
-            $table_result = mysqli_query($mysql_conn, 'show tables');
-            $tables = array();
-            while ($row = mysqli_fetch_array($table_result)) {
-                if (\think\helper\Str::startsWith($row[0], 'ia_' . $info['name'] . '_')) {
-                    $tables[]['table_name'] = $row[0];
-                }
-            }
-            // 循环取得所有表的备注及表中列消息
-            foreach ($tables as $k => $v) {
-                $sql = 'SELECT * FROM ';
-                $sql .= 'INFORMATION_SCHEMA.TABLES ';
-                $sql .= 'WHERE ';
-                $sql .= "table_name = '{$v['table_name']}'  AND table_schema = '{$database}'";
-                $table_result = mysqli_query($mysql_conn, $sql);
-                while ($t = mysqli_fetch_array($table_result)) {
-                    $tables[$k]['table_comment'] = $t['TABLE_COMMENT'];
-                }
-
-                $sql = 'SELECT * FROM ';
-                $sql .= 'INFORMATION_SCHEMA.COLUMNS ';
-                $sql .= 'WHERE ';
-                $sql .= "table_name = '{$v['table_name']}' AND table_schema = '{$database}'";
-                $fields       = array();
-                $field_result = mysqli_query($mysql_conn, $sql);
-                while ($t = mysqli_fetch_array($field_result)) {
-                    $fields[] = $t;
-                }
-                foreach ($fields as $field) {
-                    $tables[$k]['table_columns'][] = '`'
-                        .$field['COLUMN_NAME'] .'` '
-                        .$field['COLUMN_TYPE'] .' '
-                        .($field['IS_NULLABLE'] == 'YES' ? 'NULL': 'NOT NULL') .' '
-                        .$field['EXTRA'].' COMMENT \''
-                        .$field['COLUMN_COMMENT'].'\'';
-                }
-
-                // 获取表数据
-                $tables[$k]['table_rows'] = Db::table($v['table_name'])->select();
-            }
-            mysqli_close($mysql_conn);
-            $expot_info['tables'] = $tables;
-
-            // 写入文件
-            // dump($expot_info);
-            file_put_contents(env('app_path') . $info['name'] .'/install/initadmin.json', json_encode($expot_info));
-            return json(['code' => 200, 'msg' => '导出成功', 'data' => []]);
-        }
-    }
-
-    /**
      * 模块列表
      *
      * @return \think\Response
@@ -154,7 +60,6 @@ class Module extends Admin
                 'api_suffix' => ['name']
             ])
             ->addRightButton('edit', '修改', ['api' => '/v1/admin/core/module/edit', 'title' => '修改模块信息'])
-            ->addRightButton('export', '导出', ['api' => '/v1/admin/core/module/export', 'title' => '导出模块'])
             ->addColumn('id' , 'ID', ['width' => '50px'])
             ->addColumn('name', '名称', ['width' => '120px'])
             ->addColumn('title', '标题', ['width' => '120px'])
@@ -169,7 +74,7 @@ class Module extends Admin
                 'type' => 'template',
                 'template' => 'right_button_list'
             ])
-            ->setDataList($menu_tree)
+            ->setDataList($data_list)
             ->getData();
 
         // 返回数据

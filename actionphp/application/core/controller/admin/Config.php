@@ -44,12 +44,12 @@ class Config extends Admin
      */
     public function lists()
     {
-        //用户列表
+        // 用户列表
         $data_list = $this->core_config
             ->order('module asc')
             ->select()->toArray();
 
-        //构造动态页面数据
+        // 构造动态页面数据
         $ibuilder_list = new \app\core\util\ibuilder\IbuilderList();
         $list_data = $ibuilder_list->init()
             ->addTopButton('add', '添加', ['api' => '/v1/admin/core/config/add'])
@@ -70,10 +70,10 @@ class Config extends Admin
                 'type' => 'template',
                 'template' => 'right_button_list'
             ])
-            ->setDataList($menu_tree)
+            ->setDataList($data_list)
             ->getData();
 
-        //返回数据
+        // 返回数据
         return json([
             'code' => 200, 'msg' => '成功', 'data' => [
                 'list_data' => $list_data
@@ -115,19 +115,19 @@ class Config extends Admin
                 return json(['code' => 0, 'msg' => '保存失败:' . $this->core_config->getError(), 'data' => []]);
             }
         } else {
-            //获取分组信息
+            // 获取分组信息
             $config_cate = $this->core_config
                 ->where('name', '=', 'config_cate')
                 ->find();
 
-            //获取所有配置
+            // 获取所有配置
             $config_list = $this->core_config
                 ->order('sortnum asc')
                 ->where('module', '=', $module)
                 ->where('status', '=', 1)
                 ->select()->toArray();
 
-            //构造动态页面数据
+            // 构造动态页面数据
             $ibuilder_form = new \app\core\util\ibuilder\IbuilderForm();
             $ibuilder_form->init()
                 ->setFormMethod('put');
@@ -147,7 +147,7 @@ class Config extends Admin
             $ibuilder_form->setFormValues();
             $form_data = $ibuilder_form->getData();
 
-            //返回数据
+            // 返回数据
             return json([
                 'code' => 200,
                 'msg' => '成功',
@@ -201,7 +201,7 @@ class Config extends Admin
                 return json(['code' => 0, 'msg' => '添加失败:' . $this->core_config->getError(), 'data' => []]);
             }
         } else {
-            //获取模块列表
+            // 获取模块列表
             $module_list = $this->core_module
                 ->where('status', 1)
                 ->order('sortnum asc')
@@ -212,12 +212,12 @@ class Config extends Admin
                 $module_list_select[$key]['value'] = $val['name'];
             }
 
-            //获取分组信息
+            // 获取分组信息
             $config_cate = $this->core_config
                 ->where('name', 'config_cate')
                 ->find();
 
-            //构造动态页面数据
+            // 构造动态页面数据
             $ibuilder_form = new \app\core\util\ibuilder\IbuilderForm();
             $form_data = $ibuilder_form->init()
                 ->setFormMethod('post')
@@ -287,7 +287,7 @@ class Config extends Admin
                 ->setFormValues()
                 ->getData();
 
-            //返回数据
+            // 返回数据
             return json([
                 'code' => 200,
                 'msg' => '成功',
@@ -338,12 +338,12 @@ class Config extends Admin
                 return json(['code' => 0, 'msg' => '修改失败:' . $this->core_config->getError(), 'data' => []]);
             }
         } else {
-            //用户信息
+            // 用户信息
             $info = $this->core_config
                 ->where('id', $id)
                 ->find();
 
-            //获取模块列表
+            // 获取模块列表
             $module_list = $this->core_module
                 ->where('status', 1)
                 ->order('sortnum asc')
@@ -354,12 +354,12 @@ class Config extends Admin
                 $module_list_select[$key]['value'] = $val['name'];
             }
 
-            //获取分组信息
+            // 获取分组信息
             $config_cate = $this->core_config
                 ->where('name', 'config_cate')
                 ->find();
 
-            //构造动态页面数据
+            // 构造动态页面数据
             $ibuilder_form = new \app\core\util\ibuilder\IbuilderForm();
             $form_data = $ibuilder_form->init()
                 ->setFormMethod('put')
@@ -429,7 +429,7 @@ class Config extends Admin
                 ->setFormValues($info)
                 ->getData();
 
-            //返回数据
+            // 返回数据
             return json([
                 'code' => 200,
                 'msg' => '成功',
