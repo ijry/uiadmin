@@ -21,7 +21,8 @@
         "topthink/think-queue": "^2.0",
         "firebase/php-jwt": "^5.0",
         "topthink/think-image": "^1.0",
-        "topthink/think-migration": "^2.0"
+        "topthink/think-migration": "^2.0",
+        "guzzlehttp/guzzle": "^6.3"
     },
     "autoload": {
         "psr-4": {
