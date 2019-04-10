@@ -1,38 +1,36 @@
 <style scoped lang="less">
     .main-nav {
-        .container {
-            .layout {
+        .layout {
+            display: flex;
+            justify-content: space-between;
+            .layout-logo {
                 display: flex;
-                justify-content: space-between;
-                .layout-logo {
-                    display: flex;
-                    .logo {
-                        margin-top: 8px;
-                        margin-right: 8px;
-                        height: 45px;
-                    }
-                    .title {
-                        width: 85px;
-                        height: 50px;
-                        font-size: 18px;
-                        font-weight: 500;
-                        color: #0099CC;
-                    }
-                    .slogn {
-                        width: 120px;
-                        height: 50px;
-                    }
+                .logo {
+                    margin-top: 8px;
+                    margin-right: 8px;
+                    height: 45px;
                 }
-                .layout-nav {
-                    margin-right: 20px;
+                .title {
+                    width: 85px;
+                    height: 50px;
+                    font-size: 18px;
+                    font-weight: 500;
+                    color: #0099CC;
                 }
+                .slogn {
+                    width: 120px;
+                    height: 50px;
+                }
+            }
+            .layout-nav {
+                margin-right: 20px;
             }
         }
     }
 </style>
 <template>
     <Menu class="main-nav" mode="horizontal" :theme="theme" :active-name="active">
-        <div class="container">
+        <div v-bind:class="{'container': hasContainer}">
             <div class="layout">
                 <div class="layout-logo">
                     <div>
@@ -49,16 +47,13 @@
                         首页
                     </MenuItem>
                     <MenuItem to="/preview" name="2" @click="this.active = 2">
-                        截图
+                        在线演示
                     </MenuItem>
-                    <MenuItem to="https://ijry.github.io/initadmin/" target="_blank" name="3">
-                        演示
+                    <MenuItem to="/downloads" name="5" @click="this.active = 5">
+                        免费下载
                     </MenuItem>
-                    <MenuItem to="https://github.com/ijry/.git" target="_blank" name="5">
-                        下载
-                    </MenuItem>
-                    <MenuItem to="http://doc.initadmin.net" target="_blank" name="7">
-                        文档
+                    <MenuItem to="/docs" name="7" @click="this.active = 7">
+                        开发文档
                     </MenuItem>
                     <MenuItem to="/support" name="9"  @click="this.active = 9">
                         支持
@@ -75,13 +70,20 @@
 <script>
     export default {
         name: 'ia_head',
+        props: {
+            hasContainerProp: {
+                default: true
+            }
+        },
         data () {
             return {
+                hasContainer: true,
                 theme: 'light',
                 active: 1
             };
         },
         created: function () {
+            this.hasContainer = this.hasContainerProp
         },
         mounted:function(){
         },
