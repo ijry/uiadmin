@@ -378,7 +378,7 @@
                                     res1 = res1.data;
                                     if (res1.code=='200') {
                                         menu_data = {
-                                            menu_tree: res.data.data_list,
+                                            menu_tree: res.data.list_data.data_list,
                                             menu_list: res1.data.data_list,
                                         }
                                         _this.$store.dispatch('setMenuList', menu_data);
