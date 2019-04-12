@@ -17,7 +17,7 @@
 <template>
   <div>
     <Card shadow>
-        <template v-if="this.list_data.data_list.length > 0">
+        <template v-if="loading == false">
             <template v-for="(item,key) in list_data.top_button_list">
                 <Modal :scrollable="item.page_data.scrollable" :draggable="item.page_data.draggable" :ref="'top_modal_' + key" :key="'top_modal_' + key" v-model="item.page_data.show":width="item.page_data.width?item.page_data.width:600" :title="item.page_data.title">
                     <IbuilderForm :ref="'top_form_' + key" :api="item.page_data.api_blank" :foot_hide="true"></IbuilderForm>
@@ -112,6 +112,7 @@ export default {
     data () {
         return {
             list_data: {
+                loading: false,
                 data_list: [],
                 top_button_list: {},
                 right_button_list: {},
@@ -154,6 +155,7 @@ export default {
             if (api != '') {
                 this.api = api
             }
+            this.loading = true
             if (this.api) {
                 let _this = this
                 axios.get(this.api)
@@ -165,9 +167,10 @@ export default {
                         } else {
                             _this.$Message.error(res.msg)
                         }
+                        _this.loading = false
                     })
                     .catch(function (error) {
-                        console.log(error)
+                        _this.loading = false
                     });
             }
         },
