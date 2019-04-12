@@ -36,29 +36,29 @@ class User extends Home
     }
 
     /**
-    * 是否登陆
-    *
-    * @return \think\Response
-    * @author jry <ijry@qq.com>
-    */
+     * 是否登陆
+     *
+     * @return \think\Response
+     * @author jry <ijry@qq.com>
+     */
     public function isLogin()
     {
-        $uid = $this->isLogin();
-        return json(['code' => 200, 'msg' => '已登录系统', 'data' => ['uid' => $uid]]);
+        $login = parent::isLogin();
+        return json(['code' => 200, 'msg' => '已登录系统', 'data' => ['uid' => $login['uid']]]);
     }
 
     /**
-    * 获取用户信息
-    *
-    * @return \think\Response
-    * @author jry <ijry@qq.com>
-    */
+     * 获取用户信息
+     *
+     * @return \think\Response
+     * @author jry <ijry@qq.com>
+     */
     public function info()
     {
-        $uid = $this->isLogin();
+        $login = parent::isLogin();
         try {
             $user_service = controller('core/User', 'service');
-            $user_info = $user_service->info($uid);
+            $user_info = $user_service->getById($login['uid']);
             return json(['code' => 200, 'msg' => '用户信息', 'data' => ['user_info' => $user_info]]);
         } catch(\Exception $e) {
             return json(['code' => 0, 'msg' => $e->getMessage()]);
@@ -154,32 +154,31 @@ class User extends Home
             return json(['code' => 0, 'msg' => '登录失败:' . $e->getMessage()]);
         }
         if ($jwt) {
-            return json(['code' => 200, 'msg' => '登陆成功', 'data' => ['token' => 'Bearer ' . $jwt]]);
+            return json(['code' => 200, 'msg' => '登陆成功', 'data' => [
+                'token' => 'Bearer ' . $jwt,
+                'user_info' => $user_info
+            ]]);
         } else {
             return json(['code' => 0, 'msg' => '添加失败', 'data' => []]);
         }
     }
 
     /**
-    * 注销登录
-    *
-    * @return \think\Response
-    * @author jry <ijry@qq.com>
-    */
+     * 注销登录
+     *
+     * @return \think\Response
+     * @author jry <ijry@qq.com>
+     */
     public function logout()
     {
-        $ret = $this->is_login();
-        if ($ret['code'] == 200) {
-            $ret = $this->core_login
-                ->where('token', $ret['data']['data']->token)
-                ->delete(true);
-            if ($ret) {
-                return json(['code' => 200, 'msg' => '注销成功', 'data' => []]);
-            } else {
-                return json(['code' => 0, 'msg' => '注销失败', 'data' => []]);
-            }
+        $login = parent::isLogin();
+        $ret = $this->core_login
+            ->where('token', $login['token'])
+            ->delete(true);
+        if ($ret) {
+            return json(['code' => 200, 'msg' => '注销成功', 'data' => []]);
         } else {
-            return json($ret);
+            return json(['code' => 0, 'msg' => '注销失败', 'data' => []]);
         }
     }
 }

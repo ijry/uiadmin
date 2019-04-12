@@ -32,15 +32,13 @@ class Admin extends Common
         // 登录验证
         $ret = $this->isLogin();
         if ($ret['code'] != 200) {
-            echo json_encode($ret);
-            exit;
+            return json($ret);
         }
 
         // 权限验证
         $uid = $ret['data']['data']->uid;
         if (!$uid) {
-            echo json_encode(['code' => 0, 'msg' => '缺少UID', 'data' => []]);
-            exit;
+            return json(['code' => 0, 'msg' => '缺少UID', 'data' => []]);
         }
         // 获取该uid的角色id
         $role_list = Db::name('core_user')->where('id', $uid)->value('roles');
@@ -72,11 +70,9 @@ class Admin extends Common
                     return true;
                 }
             }
-            echo json_encode(['code' => 0, 'msg' => '无此接口权限', 'data' => []]);
-            exit;
+            return json(['code' => 0, 'msg' => '无此接口权限', 'data' => []]);
         } else {
-            echo json_encode(['code' => 0, 'msg' => '无后台权限', 'data' => []]);
-            exit;
+            return json(['code' => 0, 'msg' => '无后台权限', 'data' => []]);
         }
     }
 }

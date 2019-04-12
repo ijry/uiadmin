@@ -52,29 +52,6 @@ class User
     }
 
     /**
-     * 通过ID获取用户
-     * @return array
-     *
-     * @author jry <598821125@qq.com>
-     */
-    public function info($id) {
-        $user_info = $this->getById($id);
-
-        // 敏感数据
-        $user_info['email'] = $this->core_identity
-            ->field('identifier,verified')
-            ->where('uid', '=', $user_info['id'])
-            ->where('identity_type', '=', 2)
-            ->find();
-        $user_info['mobile'] = $this->core_identity
-            ->field('identifier,verified')
-            ->where('uid', '=', $user_info['id'])
-            ->where('identity_type', '=', 1)
-            ->find();
-        return $user_info;
-    }
-
-    /**
      * 登录
      * @return mixed
      *
