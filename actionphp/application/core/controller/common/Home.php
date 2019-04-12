@@ -38,4 +38,8 @@ class Home extends Common
             return $ret['data']['data']->uid;
         }
     }
+    protected function is_login() {
+        $ret = parent::isLogin();
+        return $ret;
+    }
 }
