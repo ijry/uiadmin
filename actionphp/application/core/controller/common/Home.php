@@ -32,7 +32,8 @@ class Home extends Common
         // 登录验证
         $ret = parent::isLogin();
         if ($ret['code'] != 200) {
-            return json($ret);
+            echo json_encode($ret);
+            exit;
         } else {
             return (Array)$ret['data']['data'];
         }
