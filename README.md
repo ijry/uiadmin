@@ -1,7 +1,6 @@
 # InitAdmin
 
 [![Build Status](https://travis-ci.org/ijry/initadmin.svg?branch=master)](https://travis-ci.org/ijry/initadmin)
-[![Total Downloads](https://img.shields.io/github/downloads/ijry/initadmin/total.svg)](https://img.shields.io/github/downloads/ijry/initadmin/total.svg)
 [![Repo Size](https://img.shields.io/github/repo-size/ijry/initadmin.svg)](https://img.shields.io/github/repo-size/ijry/initadmin.svg)
 [![License](https://img.shields.io/github/license/ijry/initadmin.svg)](https://img.shields.io/github/license/ijry/initadmin.svg)
 [![Star](https://img.shields.io/github/stars/ijry/initadmin.svg?style=social)](https://img.shields.io/github/stars/ijry/initadmin.svg?style=social)
