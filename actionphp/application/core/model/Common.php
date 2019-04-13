@@ -29,7 +29,7 @@ class Common extends Model
         });
         self::event('before_update', function ($model) {
             if (env('read_only') == true) {
-                $model->$error = '数据库无写入权限';
+                $model->error = '数据库无写入权限';
                 return false;
             }
         });
