@@ -17,7 +17,7 @@ namespace think;
 //准许跨域请求
 header("Access-Control-Allow-Origin: * ");
 header("Access-Control-Allow-Methods: POST, GET, OPTIONS, PUT, DELETE");
-header("Access-Control-Allow-Headers: Content-Type,Authorization");
+header("Access-Control-Allow-Headers: Content-Type,Authorization,CloudId,CloudPid");
 
 /**
  * 在检测到option请求的时候就停止继续执行
