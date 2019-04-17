@@ -26,6 +26,7 @@ class IbuilderForm {
         'text' => '单行文本',
         'textarea' => '多行文本',
         'array' => '自定义数组',
+        'markdown' => 'Markdown',
         'select' => '下拉框',
         'radio' => '单选框',
         'checkbox' => '多选框',
@@ -41,7 +42,7 @@ class IbuilderForm {
         'images' => '多图上传',
         'file' => '单文件上传',
         'files' => '多文件上传',
-        'checkboxtree' => '树桩表格复选',
+        'checkboxtree' => '树状表格复选',
     ];
 
     /**
@@ -53,7 +54,8 @@ class IbuilderForm {
             'form_method' => 'post',
             'form_items' => [],
             'form_values' => [],
-            'form_rules' => []
+            'form_rules' => [],
+            'form_tabs' => [],
         ];
         return $this;
     }
