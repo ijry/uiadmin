@@ -1,4 +1,4 @@
-language: node_js
+language: php
 # nodejs版本
 node_js:
     - '8'
@@ -6,21 +6,21 @@ node_js:
 # Travis-CI Caching
 cache:
   directories:
-    - vue-admin/node_modules
+    - vendor/vendor/
 
 # S: Build Lifecycle
 install:
-  - cd ./vue-admin
-  - npm install
+  - cd ./vendor
+  - composer install
 
-# 无其他依赖项所以执行npm run build 构建就行了
+# 构建
 script:
-  - npm run demo
-  - cd ./dist
-  - git init
-  - git add -A
-  - git commit -m 'deploy'
-  - git push -f https://${GITHUB_USERNAME}:${GITHUB_PASSWORD}@github.com/ijry/initadmin.git master:gh-pages
+  # - npm run build
+  # - cd ./dist
+  # - git init
+  # - git add -A
+  # - git commit -m 'deploy'
+  # - git push -f https://${GITHUB_USERNAME}:${GITHUB_PASSWORD}@github.com/ijry/initadmin.git master:gh-pages
 
 # 指定分支，只有指定的分支提交时才会运行脚本
 branches:
