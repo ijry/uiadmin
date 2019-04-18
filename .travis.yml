@@ -1,7 +1,8 @@
 language: php
-# nodejs版本
-node_js:
-    - '8'
+# 版本
+php:
+  - 7.1.9
+  - nightly
 
 # Travis-CI Caching
 cache:
@@ -10,8 +11,8 @@ cache:
 
 # S: Build Lifecycle
 install:
-  - cd ./vendor
-  - composer install
+  # - cd ./vendor
+  # - composer install --prefer-dist --optimize-autoloader --quiet
 
 # 构建
 script:

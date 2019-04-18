@@ -2,11 +2,11 @@
 
 [![Build Status](https://travis-ci.org/ijry/initadmin.svg?branch=master)](https://travis-ci.org/ijry/initadmin)
 ![Downloads](https://img.shields.io/badge/downloads-1K-brightgreen.svg)
-![RepoSize](https://img.shields.io/github/repo-size/ijry/initadmin.svg)
 ![License](https://img.shields.io/badge/license-Apache2-brightgreen.svg)
 ![ibuilder](https://img.shields.io/badge/ibuilder-yes-brightgreen.svg)
 ![ibuilder](https://img.shields.io/badge/cloudadmin-%E4%BA%91%E5%90%8E%E5%8F%B0-brightgreen.svg)
 ![version](https://img.shields.io/badge/initadmin-actionphp-brightgreen.svg)
+![RepoSize](https://img.shields.io/github/repo-size/ijry/initadmin.svg)
 ![Star](https://img.shields.io/github/stars/ijry/initadmin.svg?style=social)
 
 ![InitAdmin](https://github.com/ijry/initadmin/raw/master/preview/3.png)
