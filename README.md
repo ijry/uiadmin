@@ -1,4 +1,4 @@
-# InitAdmin
+# InitAdmin/ActionPHP
 
 [![Build Status](https://travis-ci.org/ijry/initadmin.svg?branch=master)](https://travis-ci.org/ijry/initadmin)
 [![Repo Size](https://img.shields.io/github/repo-size/ijry/initadmin.svg)](https://img.shields.io/github/repo-size/ijry/initadmin.svg)
