@@ -28,7 +28,7 @@ class Router
     public function run($params)
     {
         //内置路由
-        Route::rule('/', 'core/common.Index/index'); // 首页访问路由
+        Route::rule('/', 'core/index/index'); // 首页访问路由
 
         //计算后台API路由
         $data_list = Db::name('core_menu')

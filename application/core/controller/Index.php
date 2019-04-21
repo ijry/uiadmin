@@ -11,7 +11,7 @@
  * +----------------------------------------------------------------------
 */
 
-namespace app\core\controller\common;
+namespace app\core\controller;
 
 use think\Db;
 use think\Request;
@@ -38,6 +38,9 @@ class Index extends Controller
         if (!function_exists('mb_strlen')) {
             dump('缺少php-mbstring扩展');
         }
-        return 'InitAdmin后台接口actionphp版本运行中...<br/>接口域名：' . request()->domain() . '/api/<br/>';
+        return 'InitAdmin后台接口actionphp版本运行中...<br/>'
+            .'接口域名：' . request()->domain() . '/api/<br/>'
+            .'后台地址：<a href="https://admin.jiangruyi.com/#/home?api='
+            .request()->domain().'/api/" target="_blank">点击登录后台管理</a>';
     }
 }
