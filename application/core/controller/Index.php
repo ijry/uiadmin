@@ -30,7 +30,7 @@ class Index extends Controller
      * @return \think\Response
      * @author jry <ijry@qq.com>
      */
-    public function index()
+    public function api()
     {
         //dump(user_md5('initadmin.net', 'initadmin-auth-key'));
 
