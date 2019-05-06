@@ -40,7 +40,7 @@ class Index extends Controller
         }
         return 'InitAdmin后台接口actionphp版本运行中...<br/>'
             .'接口域名：' . request()->domain() . request()->baseFile() . '/api/<br/>'
-            .'后台地址：<a href="https://admin.jiangruyi.com/#/home?api='
-            .request()->domain() . request()->baseFile() .'/api/" target="_blank">点击登录后台管理</a>';
+            .'后台地址：<a href="admin.php?api='
+            .request()->domain() . request()->baseFile() .'/api/&demo=1" target="_blank">点击登录后台管理</a>';
     }
 }
