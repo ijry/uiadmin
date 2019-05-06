@@ -39,8 +39,8 @@ class Index extends Controller
             dump('缺少php-mbstring扩展');
         }
         return 'InitAdmin后台接口actionphp版本运行中...<br/>'
-            .'接口域名：' . request()->domain() . '/api/<br/>'
+            .'接口域名：' . request()->domain() . request()->baseFile() . '/api/<br/>'
             .'后台地址：<a href="https://admin.jiangruyi.com/#/home?api='
-            .request()->domain().'/api/" target="_blank">点击登录后台管理</a>';
+            .request()->domain() . request()->baseFile() .'/api/" target="_blank">点击登录后台管理</a>';
     }
 }
