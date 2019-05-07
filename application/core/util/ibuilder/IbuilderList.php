@@ -33,6 +33,7 @@ class IbuilderList {
             'top_button_list' => [],
             'right_button_list' => [],
             'columns' => [],
+            'total_count' => 0,
         ];
         return $this;
     }
@@ -136,6 +137,15 @@ class IbuilderList {
      */
     public function setDataList($data_list) {
         $this->data['data_list'] = $data_list;
+        return $this;
+    }
+
+    /**
+     * 数据总数
+     * @author jry <ijry@qq.com>
+     */
+    public function setTotalCount($total_count) {
+        $this->data['total_count'] = $total_count;
         return $this;
     }
 
