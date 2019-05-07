@@ -90,6 +90,31 @@ class IbuilderForm {
         if (isset($extra['tip'])) {
             $extra['tip'] = $extra['tip'];
         }
+        // 上传
+        if (in_array($item['type'], ['image', 'images', 'file', 'files'])) {
+            // 上传接口
+            if (isset($extra['action'])) {
+                $extra['action'] = $extra['action'];
+            } else {
+                $extra['action'] = request()->root(true) . '/api/v1/core/index/upload/';
+            }
+            // 文件格式
+            if (isset($extra['format'])) {
+                $extra['format'] = $extra['format'];
+            } else {
+                if (in_array($item['type'], ['image', 'images'])) {
+                    $extra['format'] = ['jpg','jpeg','png','gif','ico'];
+                } else {
+                    $extra['format'] = ['jpg','jpeg','png','gif','ico', 'swf', 'flv', 'mp3', 'wav', 'wma', 'wmv', 'mid', 'avi', 'mpg', 'asf', 'rm', 'rmvb', 'mp4', 'doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx', 'pdf', 'wps', 'txt', 'zip', 'rar', 'gz', 'bz2', '7z', 'ipa', 'apk', 'dmg', 'iso', 'pem', 'p12', 'wgt'];
+                }
+            }
+            // 文件大小限制
+            if (isset($extra['max_size'])) {
+                $extra['max_size'] = $extra['max_size'];
+            } else {
+                $extra['max_size'] = 512;
+            }
+        }
         if (isset($extra['options'])) {
             $options = [];
             foreach ($extra['options'] as $key => $val) {

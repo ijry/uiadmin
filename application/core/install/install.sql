@@ -79,7 +79,9 @@ VALUES
   (36, 'core', '', '/core/user/isLogin', '', '检查登录状态', '检查用户是否真的登录', 5, 'route', 'v1', '', '', 'GET', NULL, 0, 0, 0),
   (37, 'core', '', '/core/user/info', '', '获取用户信息', '获取登录的用户信息', 5, 'route', 'v1', '', '', 'GET', NULL, 0, 0, 0),
   (38, 'core', '', '/core/api/doc', '/core/api/trees', '修改API文档', '修改API接口文档', 2, 'form', 'v1', '/:id', '', 'GET|PUT', NULL, 0, 0, 0),
-  (39, 'core', '', '/core/user/logout', '', '注销登录', '', 5, 'route', 'v1', '', '', 'DELETE', NULL, 0, 0, 0);
+  (39, 'core', '', '/core/user/logout', '', '注销登录', '', 5, 'route', 'v1', '', '', 'DELETE', NULL, 0, 0, 0),
+	(40, 'core', '', '/core/index/upload', '', '上传文件', '上传图片和文件', 5, 'route', 'v1', '', '', 'POST', NULL, 0, 0, 0),
+	(41, 'core', '', '/core/index/config', '', '获取配置', '获取模块的公开配置', 5, 'route', 'v1', '', '', 'GET', NULL, 0, 0, 0);
 
 
 CREATE TABLE `ia_core_user` (
