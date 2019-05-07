@@ -33,7 +33,11 @@ class IbuilderList {
             'top_button_list' => [],
             'right_button_list' => [],
             'columns' => [],
-            'total_count' => 0,
+            'data_page' => [
+                'total_count' => 0,
+                'limit' => 0,
+                'page' => 0
+            ],
         ];
         return $this;
     }
@@ -141,11 +145,15 @@ class IbuilderList {
     }
 
     /**
-     * 数据总数
+     * 设置分页
      * @author jry <ijry@qq.com>
      */
-    public function setTotalCount($total_count) {
-        $this->data['total_count'] = $total_count;
+    public function setDataPage($total_count, $limit = 10, $page = 1) {
+        $this->data['data_page'] = [
+            'total_count' => $total_count,
+            'limit' => $limit,
+            'page' => $page
+        ];
         return $this;
     }
 
