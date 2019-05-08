@@ -121,7 +121,7 @@ class Menu extends Admin
             ]);
             $data = input('post.');
             if (!$validate->check($data)) {
-                return json(['code' => 200, 'msg' => $validate->getError(), 'data' => []]);
+                return json(['code' => 0, 'msg' => $validate->getError(), 'data' => []]);
             }
 
             // 数据构造
@@ -152,6 +152,7 @@ class Menu extends Admin
 
             // 获取菜单基于标题的树状列表
             $menu_list = $this->core_menu
+                ->where('menu_type', '<', 4)
                 ->order('sortnum asc')
                 ->select()->toArray();
             $tree      = new Tree();
@@ -305,7 +306,7 @@ class Menu extends Admin
             ]);
             $data = input('post.');
             if (!$validate->check($data)) {
-                return json(['code' => 200, 'msg' => $validate->getError(), 'data' => []]);
+                return json(['code' => 0, 'msg' => $validate->getError(), 'data' => []]);
             }
 
             // 数据构造
@@ -349,7 +350,7 @@ class Menu extends Admin
 
             // 获取菜单基于标题的树状列表
             $menu_list = $this->core_menu
-                ->where(['delete_time' => 0])
+                ->where('menu_type', '<', 4)
                 ->order('sortnum asc')
                 ->select()->toArray();
             $tree      = new Tree();

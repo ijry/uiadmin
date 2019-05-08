@@ -24,9 +24,17 @@ class IbuilderForm {
     private $data;
     public $form_type = [
         'text' => '单行文本',
+        'password' => '密码',
+        'url' => 'URL网址',
+        'email' => '邮箱',
+        'date' => '日期',
+        'number' => '数字',
+        'digit' => '浮点型数字',
+        'tel' => '手机号',
         'textarea' => '多行文本',
         'array' => '自定义数组',
         'markdown' => 'Markdown',
+        'tinymce' => 'TinyMCE富文本',
         'select' => '下拉框',
         'radio' => '单选框',
         'checkbox' => '多选框',

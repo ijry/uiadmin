@@ -110,12 +110,12 @@ class Role extends Admin
             ],
             [
                 'pid.number' => 'pid必须数字',
-                'name.require' => '用户名必须',
-                'title.require' => '密码必须'
+                'name.require' => '名称必须',
+                'title.require' => '标题必须'
             ]);
             $data = input('post.');
             if (!$validate->check($data)) {
-                return json(['code' => 200, 'msg' => $validate->getError(), 'data' => []]);
+                return json(['code' => 0, 'msg' => $validate->getError(), 'data' => []]);
             }
 
             //数据构造
@@ -232,12 +232,12 @@ class Role extends Admin
             ],
             [
                 'pid.number' => 'pid必须数字',
-                'name.require' => '用户名必须',
-                'title.require' => '密码必须'
+                'name.require' => '名称必须',
+                'title.require' => '标题必须'
             ]);
             $data = input('post.');
             if (!$validate->check($data)) {
-                return json(['code' => 200, 'msg' => $validate->getError(), 'data' => []]);
+                return json(['code' => 0, 'msg' => $validate->getError(), 'data' => []]);
             }
 
             // 数据构造

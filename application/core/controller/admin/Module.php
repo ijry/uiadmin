@@ -114,7 +114,7 @@ class Module extends Admin
             ]);
             $data = input('post.');
             if (!$validate->check($data)) {
-                return json(['code' => 200, 'msg' => $validate->getError(), 'data' => []]);
+                return json(['code' => 0, 'msg' => $validate->getError(), 'data' => []]);
             }
 
             // 数据构造
@@ -142,9 +142,7 @@ class Module extends Admin
                 $path = [
                     '__file__'   => [
                         $module_name . '/common.php',
-                        $module_name . '/install/install.php',
-                        $module_name . '/install/install.sql',
-                        $module_name . '/install/ininstall.sql'
+                        $module_name . '/install/install.json'
                     ],
                     '__dir__'    => [
                         $module_name . '/behavior',
@@ -292,7 +290,7 @@ class Module extends Admin
             ]);
             $data = input('post.');
             if (!$validate->check($data)) {
-                return json(['code' => 200, 'msg' => $validate->getError(), 'data' => []]);
+                return json(['code' => 0, 'msg' => $validate->getError(), 'data' => []]);
             }
 
             //数据构造

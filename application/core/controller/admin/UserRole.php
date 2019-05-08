@@ -110,7 +110,7 @@ class UserRole extends Admin
             ]);
             $data = input('post.');
             if (!$validate->check($data)) {
-                return json(['code' => 200, 'msg' => $validate->getError(), 'data' => []]);
+                return json(['code' => 0, 'msg' => $validate->getError(), 'data' => []]);
             }
 
             // 数据构造
