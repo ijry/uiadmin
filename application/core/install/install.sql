@@ -42,7 +42,7 @@ CREATE TABLE `ia_core_menu` (
 
 INSERT INTO `ia_core_menu` (`id`, `module`, `icon`, `path`, `pmenu`, `title`, `tip`, `menu_type`, `route_type`, `api_prefix`, `api_suffix`, `api_params`, `api_method`, `doc`, `is_hide`, `sortnum`, `delete_time`)
 VALUES
-  (1, 'core', 'md-code', '/developer', '', '开发者', '一般是开发者采用得到的工具', 0, '0', '', '', '', '', NULL, 0, 99, 0),
+  (1, 'core', 'md-code', '/developer', '', '开发', '一般是开发者采用得到的工具', 0, '0', '', '', '', '', NULL, 0, 99, 0),
   (2, 'core', '', '/core/menu/lists', '/developer', '菜单列表', '管理后台左侧的菜单导航', 3, 'list', 'v1', '', '', 'GET', NULL, 0, 0, 0),
   (3, 'core', '', '/core/role/trees', '/system', '权限管理', '管理系统角色及权限', 1, 'list', 'v1', '', '', 'GET', NULL, 0, 2, 0),
   (4, 'core', '', '/core/user/lists', '/system', '用户列表', '系统注册用户列表', 1, 'list', 'v1', '', '', 'GET', NULL, 0, 3, 0),

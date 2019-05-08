@@ -45,12 +45,19 @@ class Api extends Admin
     public function doc($id)
     {
         if(request()->isPut()){
-            //获取数据
-            $data = input('post.');
+            // 获取数据
+            $post_data = input('post.');
 
-            //存储数据
+            // 处理数据
+            $data = [];
+            foreach ($post_data as $key => $value) {
+                $key_ex = explode('_', $key);
+                $data[$key_ex[0]][$key_ex[1]] = $value;
+            }
+
+            // 存储数据
             try{
-                $ret = $this->core_menu->save(['doc' => json_encode($data)], ['id' => $id]);
+                $ret = $this->core_menu->save(['doc' => json_encode($data, JSON_UNESCAPED_UNICODE)], ['id' => $id]);
             }catch(\Exception $e){
                 return json(['code' => 0, 'msg' => '修改失败' . json_encode($e), 'data' => []]);
             }
@@ -60,7 +67,7 @@ class Api extends Admin
                 return json(['code' => 0, 'msg' => '修改失败', 'data' => []]);
             }
         } else {
-            //获取菜单信息
+            // 获取菜单信息
             $info = $this->core_menu
                 ->where('id', $id)
                 ->find();
@@ -85,14 +92,14 @@ class Api extends Admin
                 $entry = '/admin';
             }
 
-            //构造动态页面数据
+            // 构造动态页面数据
             $ibuilder_form = new \app\core\util\ibuilder\IbuilderForm();
             $ibuilder_form->init()
                 ->setFormMethod('put');
             foreach ($doc_info as $key => $value) {
-                $ibuilder_form->addFormItem($key . '[method]', '请求地址', 'static', $key . '：/' . $info['api_prefix'] . $entry .$info['path'] . $info['api_suffix'])
-                    ->addFormItem($key . '[description]', '接口说明', 'text', $doc_info[$key]['description'])
-                    ->addFormItem($key . '[params]', '请求参数', 'formlist', $doc_info[$key]['params'], [
+                $ibuilder_form->addFormItem($key . '_method', '请求地址', 'static', $key . '：/' . $info['api_prefix'] . $entry .$info['path'] . $info['api_suffix'])
+                    ->addFormItem($key . '_description', '接口说明', 'text', $doc_info[$key]['description'])
+                    ->addFormItem($key . '_params', '请求参数', 'formlist', $doc_info[$key]['params'], [
                         'options' => [
                             ['title' => '是否必须', 'value' => 'require', 'span' => 2],
                             ['title' => '参数名', 'value' => 'name', 'span' => 4],
@@ -101,7 +108,7 @@ class Api extends Admin
                             ['title' => '示例', 'value' => 'example', 'span' => 4]
                         ]
                     ])
-                    ->addFormItem($key . '[divider]', '', 'divider', '');
+                    ->addFormItem($key . '_divider', '', 'divider', '');
             }
             $form_data = $ibuilder_form->setFormValues()
                 ->getData();
