@@ -36,11 +36,11 @@ class System extends Admin
      */
     public function cleanRuntime()
     {
-        $ret = Cache::clear(); 
+        $ret = Cache::clear();
         if ($ret) {
-            return json(['code' => 200, 'msg' => '删除成功', 'data' => []]);
+            return $this->return(['code' => 200, 'msg' => '删除成功', 'data' => []]);
         } else {
-            return json(['code' => 0, 'msg' => '删除错误', 'data' => []]);
+            return $this->return(['code' => 0, 'msg' => '删除错误', 'data' => []]);
         }
     }
 }

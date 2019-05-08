@@ -44,7 +44,7 @@ class User extends Home
     public function isLogin()
     {
         $login = parent::isLogin();
-        return json(['code' => 200, 'msg' => '已登录系统', 'data' => ['uid' => $login['uid']]]);
+        return $this->return(['code' => 200, 'msg' => '已登录系统', 'data' => ['uid' => $login['uid']]]);
     }
 
     /**
@@ -59,9 +59,9 @@ class User extends Home
         try {
             $user_service = controller('core/User', 'service');
             $user_info = $user_service->getById($login['uid']);
-            return json(['code' => 200, 'msg' => '用户信息', 'data' => ['user_info' => $user_info]]);
+            return $this->return(['code' => 200, 'msg' => '用户信息', 'data' => ['user_info' => $user_info]]);
         } catch(\Exception $e) {
-            return json(['code' => 0, 'msg' => $e->getMessage()]);
+            return $this->return(['code' => 0, 'msg' => $e->getMessage()]);
         }
     }
 
@@ -80,10 +80,10 @@ class User extends Home
 
         // 数据验证
         if (!$account) {
-            return json(['code' => 0, 'msg' => '请输入账号']);
+            return $this->return(['code' => 0, 'msg' => '请输入账号']);
         }
         if (!$password) {
-            return json(['code' => 0, 'msg' => '请输入密码']);
+            return $this->return(['code' => 0, 'msg' => '请输入密码']);
         }
 
         //匹配登录方式
@@ -95,19 +95,19 @@ class User extends Home
                 ->where($map)
                 ->find();
             if (!$user_identity_info) {
-                return json(['code' => 0, 'msg' => '邮箱不存在']);
+                return $this->return(['code' => 0, 'msg' => '邮箱不存在']);
             }
             if ($user_identity_info['verified'] !== 1) {
-                return json(['code' => 0, 'msg' => '邮箱未通过验证']);
+                return $this->return(['code' => 0, 'msg' => '邮箱未通过验证']);
             }
             $user_info = $this->core_user
                 ->where(['id' => $user_identity_info['uid']])
                 ->find();
             if (!$user_info) {
-                return json(['code' => 0, 'msg' => '用户不存在']);
+                return $this->return(['code' => 0, 'msg' => '用户不存在']);
             }
             if ($user_info['status'] !== 1) {
-                return json(['code' => 0, 'msg' => '账号状态异常']);
+                return $this->return(['code' => 0, 'msg' => '账号状态异常']);
             }
         } elseif (preg_match("/^1\d{10}$/", $account)) { // 手机号登录
             $map = [];
@@ -117,17 +117,17 @@ class User extends Home
                 ->where($map)
                 ->find();
             if (!$user_identity_info) {
-                return json(['code' => 0, 'msg' => '手机号不存在']);
+                return $this->return(['code' => 0, 'msg' => '手机号不存在']);
             }
             if ($user_identity_info['verified'] !== 1) {
-                return json(['code' => 0, 'msg' => '手机号未通过验证']);
+                return $this->return(['code' => 0, 'msg' => '手机号未通过验证']);
             }
             $user_info = $this->core_user->where(['id' => $user_identity_info['uid']])->find();
             if (!$user_info) {
-                return json(['code' => 0, 'msg' => '用户不存在']);
+                return $this->return(['code' => 0, 'msg' => '用户不存在']);
             }
             if ($user_info['status'] !== 1) {
-                return json(['code' => 0, 'msg' => '账号状态异常']);
+                return $this->return(['code' => 0, 'msg' => '账号状态异常']);
             }
         } else { // 用户名登录
             $map = [];
@@ -136,14 +136,14 @@ class User extends Home
                 ->where($map)
                 ->find();
             if (!$user_info) {
-                return json(['code' => 0, 'msg' => '用户名不存在']);
+                return $this->return(['code' => 0, 'msg' => '用户名不存在']);
             }
             if ($user_info['status'] !== 1) {
-                return json(['code' => 0, 'msg' => '账号状态异常']);
+                return $this->return(['code' => 0, 'msg' => '账号状态异常']);
             }
         }
         if ($user_info['password'] !== user_md5($password, $user_info['key'])) {
-            return json(['code' => 0, 'msg' => '密码错误']);
+            return $this->return(['code' => 0, 'msg' => '密码错误']);
         }
 
         // 记录登录状态
@@ -151,17 +151,17 @@ class User extends Home
             $user_service = controller('core/User', 'service');
             $jwt = $user_service->login($user_info, input('post.client'));
         } catch(\Exception $e) {
-            return json(['code' => 0, 'msg' => '登录失败:' . $e->getMessage()]);
+            return $this->return(['code' => 0, 'msg' => '登录失败:' . $e->getMessage()]);
         }
         if ($jwt) {
             unset($user_info['key']);
             unset($user_info['password']);
-            return json(['code' => 200, 'msg' => '登陆成功', 'data' => [
+            return $this->return(['code' => 200, 'msg' => '登陆成功', 'data' => [
                 'token' => 'Bearer ' . $jwt,
                 'user_info' => $user_info
             ]]);
         } else {
-            return json(['code' => 0, 'msg' => '添加失败', 'data' => []]);
+            return $this->return(['code' => 0, 'msg' => '添加失败', 'data' => []]);
         }
     }
 
@@ -178,9 +178,9 @@ class User extends Home
             ->where('token', $login['token'])
             ->delete(true);
         if ($ret) {
-            return json(['code' => 200, 'msg' => '注销成功', 'data' => []]);
+            return $this->return(['code' => 200, 'msg' => '注销成功', 'data' => []]);
         } else {
-            return json(['code' => 0, 'msg' => '注销失败', 'data' => []]);
+            return $this->return(['code' => 0, 'msg' => '注销失败', 'data' => []]);
         }
     }
 }

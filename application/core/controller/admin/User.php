@@ -79,7 +79,7 @@ class User extends Admin
             ->getData();
 
         //返回数据
-        return json([
+        return $this->return([
             'code' => 200, 'msg' => '成功', 'data' => [
                 'list_data' => $list_data
             ]
@@ -108,13 +108,13 @@ class User extends Admin
             ]);
             $data = input('post.');
             if (!$validate->check($data)) {
-                return json(['code' => 0, 'msg' => $validate->getError(), 'data' => []]);
+                return $this->return(['code' => 0, 'msg' => $validate->getError(), 'data' => []]);
             }
 
             //数据构造
             $data_db = $data;
             if (count($data_db) <= 0 ) {
-                return json(['code' => 0, 'msg' => '无数据提交', 'data' => []]);
+                return $this->return(['code' => 0, 'msg' => '无数据提交', 'data' => []]);
             }
             $data_db['avatar'] = isset($data_db['avatar']) ? $data_db['avatar'] : '';
             $data_db['key'] = \think\helper\Str::random(64); //秘钥
@@ -125,9 +125,9 @@ class User extends Admin
             //存储数据
             $ret = $this->core_user->save($data_db);
             if ($ret) {
-                return json(['code' => 200, 'msg' => '添加用户成功', 'data' => []]);
+                return $this->return(['code' => 200, 'msg' => '添加用户成功', 'data' => []]);
             } else {
-                return json(['code' => 0, 'msg' => '添加用户失败:' . $this->core_user->getError(), 'data' => []]);
+                return $this->return(['code' => 0, 'msg' => '添加用户失败:' . $this->core_user->getError(), 'data' => []]);
             }
         } else {
             //构造动态页面数据
@@ -159,7 +159,7 @@ class User extends Admin
                 ->getData();
 
             //返回数据
-            return json([
+            return $this->return([
                 'code' => 200,
                 'msg' => '成功',
                 'data' => [
@@ -189,13 +189,13 @@ class User extends Admin
                 ]);
             $data = input('post.');
             if (!$validate->check($data)) {
-                return json(['code' => 0, 'msg' => $validate->getError(), 'data' => []]);
+                return $this->return(['code' => 0, 'msg' => $validate->getError(), 'data' => []]);
             }
 
             //数据构造
             $data_db = $data;
             if (count($data_db) <= 0 ) {
-                return json(['code' => 0, 'msg' => '无数据提交', 'data' => []]);
+                return $this->return(['code' => 0, 'msg' => '无数据提交', 'data' => []]);
             }
             if (isset($data_db['password']) && $data_db['password'] != '') {
                 $data_db['key'] = \think\helper\Str::random(64); //秘钥
@@ -205,9 +205,9 @@ class User extends Admin
             //存储数据
             $ret = $this->core_user->update($data_db, ['id' => $id]);
             if ($ret) {
-                return json(['code' => 200, 'msg' => '修改用户信息成功', 'data' => []]);
+                return $this->return(['code' => 200, 'msg' => '修改用户信息成功', 'data' => []]);
             } else {
-                return json(['code' => 0, 'msg' => '修改用户信息失败:' . $this->core_user->getError(), 'data' => []]);
+                return $this->return(['code' => 0, 'msg' => '修改用户信息失败:' . $this->core_user->getError(), 'data' => []]);
             }
         } else {
             //用户信息
@@ -241,7 +241,7 @@ class User extends Admin
                 ->getData();
 
             //返回数据
-            return json([
+            return $this->return([
                 'code' => 200,
                 'msg' => '成功',
                 'data' => [
@@ -270,9 +270,9 @@ class User extends Admin
             ->find()
             ->delete();
         if ($ret) {
-            return json(['code' => 200, 'msg' => '删除成功', 'data' => []]);
+            return $this->return(['code' => 200, 'msg' => '删除成功', 'data' => []]);
         } else {
-            return json(['code' => 0, 'msg' => '删除错误:' . $this->core_user->getError(), 'data' => []]);
+            return $this->return(['code' => 0, 'msg' => '删除错误:' . $this->core_user->getError(), 'data' => []]);
         }
     }
 }

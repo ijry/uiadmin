@@ -78,7 +78,7 @@ class Module extends Admin
             ->getData();
 
         // 返回数据
-        return json([
+        return $this->return([
             'code' => 200, 'msg' => '成功', 'data' => [
                 'list_data' => $list_data
             ]
@@ -114,13 +114,13 @@ class Module extends Admin
             ]);
             $data = input('post.');
             if (!$validate->check($data)) {
-                return json(['code' => 0, 'msg' => $validate->getError(), 'data' => []]);
+                return $this->return(['code' => 0, 'msg' => $validate->getError(), 'data' => []]);
             }
 
             // 数据构造
             $data_db = $data;
             if (count($data_db) <= 0 ) {
-                return json(['code' => 0, 'msg' => '无数据提交', 'data' => []]);
+                return $this->return(['code' => 0, 'msg' => '无数据提交', 'data' => []]);
             }
             $data_db['status']   = 1;
 
@@ -130,7 +130,7 @@ class Module extends Admin
                 ->where('name', $data_db['name'])
                 ->count();
             if ($exist > 0) {
-                return json(['code' => 0, 'msg' => '模块名称已经存在请换一个', 'data' => []]);
+                return $this->return(['code' => 0, 'msg' => '模块名称已经存在请换一个', 'data' => []]);
             }
 
 
@@ -163,7 +163,7 @@ class Module extends Admin
                 // 存储数据
                 $ret = $this->core_module->save($data_db);
                 if (!$ret) {
-                    return json(['code' => 0, 'msg' => '添加模块失败:' . $this->core_module->getError(), 'data' => []]);
+                    return $this->return(['code' => 0, 'msg' => '添加模块失败:' . $this->core_module->getError(), 'data' => []]);
                 }
 
                 // 创建模块后台API分组
@@ -183,9 +183,9 @@ class Module extends Admin
                 if ($ret_api) {
                     // 提交事务
                     Db::commit();
-                    return json(['code' => 200, 'msg' => '添加模块成功', 'data' => []]);
+                    return $this->return(['code' => 200, 'msg' => '添加模块成功', 'data' => []]);
                 } else {
-                    return json(['code' => 0, 'msg' => '添加模块失败:' . $this->core_menu->getError(), 'data' => []]);
+                    return $this->return(['code' => 0, 'msg' => '添加模块失败:' . $this->core_menu->getError(), 'data' => []]);
                 }
             } catch (\Exception $e) {
                 // 回滚事务
@@ -252,7 +252,7 @@ class Module extends Admin
                 ->getData();
 
             //返回数据
-            return json([
+            return $this->return([
                 'code' => 200,
                 'msg' => '成功',
                 'data' => [
@@ -291,7 +291,7 @@ class Module extends Admin
             ]);
             $data = input('post.');
             if (!$validate->check($data)) {
-                return json(['code' => 0, 'msg' => $validate->getError(), 'data' => []]);
+                return $this->return(['code' => 0, 'msg' => $validate->getError(), 'data' => []]);
             }
 
             //数据构造
@@ -305,15 +305,15 @@ class Module extends Admin
                 $data_db = $data;
             }
             if (count($data_db) <= 0 ) {
-                return json(['code' => 0, 'msg' => '无数据提交', 'data' => []]);
+                return $this->return(['code' => 0, 'msg' => '无数据提交', 'data' => []]);
             }
 
             // 存储数据
             $ret = $this->core_module->update($data_db, ['id' => $id]);
             if ($ret) {
-                return json(['code' => 200, 'msg' => '修改模块信息成功', 'data' => []]);
+                return $this->return(['code' => 200, 'msg' => '修改模块信息成功', 'data' => []]);
             } else {
-                return json(['code' => 0, 'msg' => '修改模块信息失败:' . $this->core_module->getError(), 'data' => []]);
+                return $this->return(['code' => 0, 'msg' => '修改模块信息失败:' . $this->core_module->getError(), 'data' => []]);
             }
         } else {
             // 模块信息
@@ -377,7 +377,7 @@ class Module extends Admin
                 ->getData();
 
             // 返回数据
-            return json([
+            return $this->return([
                 'code' => 200,
                 'msg' => '成功',
                 'data' => [

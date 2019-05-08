@@ -40,8 +40,8 @@ class Common extends Controller
      */
     protected function return($data)
     {
-        // 判断pathinfo中是否含有/api/v1/来判断时API请求还是页面请求
-        if (\think\helper\Str::contains(request()->pathinfo(), '/api/v1/')) {
+        // 判断pathinfo中是否含有api/v1/来判断时API请求还是页面请求
+        if (\think\helper\Str::contains(request()->pathinfo(), 'api/v1/')) {
             return json($data);
         } else {
             $this->assign($data['data']);

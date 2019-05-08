@@ -74,7 +74,7 @@ class Config extends Admin
             ->getData();
 
         // 返回数据
-        return json([
+        return $this->return([
             'code' => 200, 'msg' => '成功', 'data' => [
                 'list_data' => $list_data
             ]
@@ -95,7 +95,7 @@ class Config extends Admin
             // 数据构造
             $data_db = $data;
             if (count($data_db) <= 0 ) {
-                return json(['code' => 0, 'msg' => '无数据提交', 'data' => []]);
+                return $this->return(['code' => 0, 'msg' => '无数据提交', 'data' => []]);
             }
 
             // 存储数据
@@ -106,13 +106,13 @@ class Config extends Admin
                         $value = implode(',', $value);
                     }
                     if (env('read_only') == true) {
-                        return json(['code' => 0, 'msg' => '无写入权限', 'data' => []]);
+                        return $this->return(['code' => 0, 'msg' => '无写入权限', 'data' => []]);
                     }
                     $this->core_config->save(['value' => $value], ['name' => $name, 'module' => $module]);
                 }
-                return json(['code' => 200, 'msg' => '保存成功', 'data' => []]);
+                return $this->return(['code' => 200, 'msg' => '保存成功', 'data' => []]);
             } else {
-                return json(['code' => 0, 'msg' => '保存失败:' . $this->core_config->getError(), 'data' => []]);
+                return $this->return(['code' => 0, 'msg' => '保存失败:' . $this->core_config->getError(), 'data' => []]);
             }
         } else {
             // 获取分组信息
@@ -148,7 +148,7 @@ class Config extends Admin
             $form_data = $ibuilder_form->getData();
 
             // 返回数据
-            return json([
+            return $this->return([
                 'code' => 200,
                 'msg' => '成功',
                 'data' => [
@@ -182,13 +182,13 @@ class Config extends Admin
             ]);
             $data = input('post.');
             if (!$validate->check($data)) {
-                return json(['code' => 0, 'msg' => $validate->getError(), 'data' => []]);
+                return $this->return(['code' => 0, 'msg' => $validate->getError(), 'data' => []]);
             }
 
             // 数据构造
             $data_db = $data;
             if (count($data_db) <= 0 ) {
-                return json(['code' => 0, 'msg' => '无数据提交', 'data' => []]);
+                return $this->return(['code' => 0, 'msg' => '无数据提交', 'data' => []]);
             }
             $data_db['is_system'] = 0;
             $data_db['status']   = 1;
@@ -196,9 +196,9 @@ class Config extends Admin
             // 存储数据
             $ret = $this->core_config->save($data_db);
             if ($ret) {
-                return json(['code' => 200, 'msg' => '添加成功', 'data' => []]);
+                return $this->return(['code' => 200, 'msg' => '添加成功', 'data' => []]);
             } else {
-                return json(['code' => 0, 'msg' => '添加失败:' . $this->core_config->getError(), 'data' => []]);
+                return $this->return(['code' => 0, 'msg' => '添加失败:' . $this->core_config->getError(), 'data' => []]);
             }
         } else {
             // 获取模块列表
@@ -288,7 +288,7 @@ class Config extends Admin
                 ->getData();
 
             // 返回数据
-            return json([
+            return $this->return([
                 'code' => 200,
                 'msg' => '成功',
                 'data' => [
@@ -321,21 +321,21 @@ class Config extends Admin
             ]);
             $data = input('post.');
             if (!$validate->check($data)) {
-                return json(['code' => 0, 'msg' => $validate->getError(), 'data' => []]);
+                return $this->return(['code' => 0, 'msg' => $validate->getError(), 'data' => []]);
             }
 
             // 数据构造
             $data_db = $data;
             if (count($data_db) <= 0 ) {
-                return json(['code' => 0, 'msg' => '无数据提交', 'data' => []]);
+                return $this->return(['code' => 0, 'msg' => '无数据提交', 'data' => []]);
             }
 
             // 存储数据
             $ret = $this->core_config->update($data_db, ['id' => $id]);
             if ($ret) {
-                return json(['code' => 200, 'msg' => '修改成功', 'data' => []]);
+                return $this->return(['code' => 200, 'msg' => '修改成功', 'data' => []]);
             } else {
-                return json(['code' => 0, 'msg' => '修改失败:' . $this->core_config->getError(), 'data' => []]);
+                return $this->return(['code' => 0, 'msg' => '修改失败:' . $this->core_config->getError(), 'data' => []]);
             }
         } else {
             // 用户信息
@@ -430,7 +430,7 @@ class Config extends Admin
                 ->getData();
 
             // 返回数据
-            return json([
+            return $this->return([
                 'code' => 200,
                 'msg' => '成功',
                 'data' => [
@@ -452,16 +452,16 @@ class Config extends Admin
             ->where(['id' => $id])
             ->find();
         if ($info['is_system']) {
-            return json(['code' => 0, 'msg' => '系统级别不允许删除', 'data' => []]);
+            return $this->return(['code' => 0, 'msg' => '系统级别不允许删除', 'data' => []]);
         }
 
         $ret = $this->core_config
             ->where(['id' => $id])
             ->delete(true);
         if ($ret) {
-            return json(['code' => 200, 'msg' => '删除成功', 'data' => []]);
+            return $this->return(['code' => 200, 'msg' => '删除成功', 'data' => []]);
         } else {
-            return json(['code' => 0, 'msg' => '删除错误:' . $this->core_config->getError(), 'data' => []]);
+            return $this->return(['code' => 0, 'msg' => '删除错误:' . $this->core_config->getError(), 'data' => []]);
         }
     }
 }

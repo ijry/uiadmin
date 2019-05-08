@@ -81,7 +81,7 @@ class UserRole extends Admin
             ->getData();
 
         //返回数据
-        return json(
+        return $this->return(
             [
                 'code' => 200, 'msg' => '成功', 'data' => [
                     'list_data' => $list_data
@@ -110,7 +110,7 @@ class UserRole extends Admin
             ]);
             $data = input('post.');
             if (!$validate->check($data)) {
-                return json(['code' => 0, 'msg' => $validate->getError(), 'data' => []]);
+                return $this->return(['code' => 0, 'msg' => $validate->getError(), 'data' => []]);
             }
 
             // 数据构造
@@ -128,9 +128,9 @@ class UserRole extends Admin
                 ['id' => $data['uid']]
             );
             if ($ret) {
-                return json(['code' => 200, 'msg' => '添加角色成员成功', 'data' => []]);
+                return $this->return(['code' => 200, 'msg' => '添加角色成员成功', 'data' => []]);
             } else {
-                return json(['code' => 0, 'msg' => '添加角色成员失败:' . $this->core_user->getError(), 'data' => []]);
+                return $this->return(['code' => 0, 'msg' => '添加角色成员失败:' . $this->core_user->getError(), 'data' => []]);
             }
         } else {
             //构造动态页面数据
@@ -156,7 +156,7 @@ class UserRole extends Admin
                 ->getData();
 
             //返回数据
-            return json(
+            return $this->return(
                 [
                     'code' => 200,
                     'msg' => '成功',
@@ -177,7 +177,7 @@ class UserRole extends Admin
     public function delete($uid, $name)
     {
         if ($uid == 1) {
-            return json(['code' => 0,'msg' => '超级管理员不允许删除','data' => []]);
+            return $this->return(['code' => 0,'msg' => '超级管理员不允许删除','data' => []]);
         }
         $user_info  = $this->core_user->where('id', $uid)->find();
         if ($user_info['roles']) {
@@ -193,9 +193,9 @@ class UserRole extends Admin
             ['id' => $uid]
         );
         if ($ret) {
-            return json(['code' => 200, 'msg' => '删除成功', 'data' => []]);
+            return $this->return(['code' => 200, 'msg' => '删除成功', 'data' => []]);
         } else {
-            return json(['code' => 0, 'msg' => '删除错误:' . $this->core_user->getError(), 'data' => []]);
+            return $this->return(['code' => 0, 'msg' => '删除错误:' . $this->core_user->getError(), 'data' => []]);
         }
     }
 }

@@ -75,7 +75,7 @@ class Index extends Controller
         }
 
         // 返回数据
-        return json([
+        return $this->return([
             'code' => 200,
             'msg'  => '成功',
             'data' => [
@@ -99,7 +99,7 @@ class Index extends Controller
         $info = $file->move( './static/uploads');
         if ($info) {
             // 成功上传后 获取上传信息
-            return json([
+            return $this->return([
                 'code' => 200,
                 'msg' => '上传成功',
                 'data' => [
@@ -109,7 +109,7 @@ class Index extends Controller
             ]);
         } else {
             // 返回数据
-            return json([
+            return $this->return([
                 'code' => 0,
                 'msg'  => $file->getError(),
                 'data' => [

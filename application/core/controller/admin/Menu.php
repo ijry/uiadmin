@@ -90,7 +90,7 @@ class Menu extends Admin
             ->getData();
 
         // 返回数据
-        return json(['code' => 200, 'msg' => '成功', 'data' => [
+        return $this->return(['code' => 200, 'msg' => '成功', 'data' => [
             'list_data' => $list_data
         ]]);
     }
@@ -121,22 +121,22 @@ class Menu extends Admin
             ]);
             $data = input('post.');
             if (!$validate->check($data)) {
-                return json(['code' => 0, 'msg' => $validate->getError(), 'data' => []]);
+                return $this->return(['code' => 0, 'msg' => $validate->getError(), 'data' => []]);
             }
 
             // 数据构造
             $data_db = $data;
             if (count($data_db) <= 0 ) {
-                return json(['code' => 0, 'msg' => '无数据提交', 'data' => []]);
+                return $this->return(['code' => 0, 'msg' => '无数据提交', 'data' => []]);
             }
             $data_db['api_method'] = implode('|', $data_db['api_method']);
 
             // 存储数据
             $ret = $this->core_menu->save($data_db);
             if ($ret) {
-                return json(['code' => 200, 'msg' => '添加成功', 'data' => []]);
+                return $this->return(['code' => 200, 'msg' => '添加成功', 'data' => []]);
             } else {
-                return json(['code' => 0, 'msg' => '添加失败' . $this->core_menu->getError(), 'data' => []]);
+                return $this->return(['code' => 0, 'msg' => '添加失败' . $this->core_menu->getError(), 'data' => []]);
             }
         } else {
             // 获取模块列表
@@ -268,7 +268,7 @@ class Menu extends Admin
                 ->getData();
 
             // 返回数据
-            return json(
+            return $this->return(
                 [
                     'code' => 200,
                     'msg' => '成功',
@@ -306,13 +306,13 @@ class Menu extends Admin
             ]);
             $data = input('post.');
             if (!$validate->check($data)) {
-                return json(['code' => 0, 'msg' => $validate->getError(), 'data' => []]);
+                return $this->return(['code' => 0, 'msg' => $validate->getError(), 'data' => []]);
             }
 
             // 数据构造
             $data_db = $data;
             if (count($data_db) <= 0 ) {
-                return json(['code' => 0, 'msg' => '无数据提交', 'data' => []]);
+                return $this->return(['code' => 0, 'msg' => '无数据提交', 'data' => []]);
             }
             if (isset($data_db['api_method'])) {
                 $data_db['api_method'] = implode('|', $data_db['api_method']);
@@ -322,12 +322,12 @@ class Menu extends Admin
             try {
                 $ret = $this->core_menu->save($data_db, ['id' => $id]);
             } catch (\Exception $e) {
-                return json(['code' => 0, 'msg' => '修改失败' . json_encode($e), 'data' => []]);
+                return $this->return(['code' => 0, 'msg' => '修改失败' . json_encode($e), 'data' => []]);
             }
             if ($ret) {
-                return json(['code' => 200, 'msg' => '修改成功', 'data' => []]);
+                return $this->return(['code' => 200, 'msg' => '修改成功', 'data' => []]);
             } else {
-                return json(['code' => 0, 'msg' => '修改失败' . $this->core_menu->getError(), 'data' => []]);
+                return $this->return(['code' => 0, 'msg' => '修改失败' . $this->core_menu->getError(), 'data' => []]);
             }
         } else {
             // 获取菜单信息
@@ -466,7 +466,7 @@ class Menu extends Admin
                 ->getData();
 
             // 返回数据
-            return json([
+            return $this->return([
                 'code' => 200,
                 'msg' => '成功',
                 'data' => [
@@ -491,7 +491,7 @@ class Menu extends Admin
         foreach ($data_list as $key => &$val) {
             $val['api'] = $val['api_prefix'] . '/admin' . $val['path'];
         }
-        return json(['code' => 200, 'msg' => '成功', 'data' => ['data_list' => $data_list]]);
+        return $this->return(['code' => 200, 'msg' => '成功', 'data' => ['data_list' => $data_list]]);
     }
 
     /**
@@ -510,7 +510,7 @@ class Menu extends Admin
             ->where(['pmenu' => $info['path']])
             ->count();
         if ($exist > 0) {
-            return json(['code' => 0, 'msg' => '存在子菜单无法删除', 'data' => []]);
+            return $this->return(['code' => 0, 'msg' => '存在子菜单无法删除', 'data' => []]);
         }
 
         $ret = $this->core_menu
@@ -518,9 +518,9 @@ class Menu extends Admin
             ->find()
             ->delete();
         if ($ret) {
-            return json(['code' => 200, 'msg' => '删除成功', 'data' => []]);
+            return $this->return(['code' => 200, 'msg' => '删除成功', 'data' => []]);
         } else {
-            return json(['code' => 0, 'msg' => '删除错误' . $this->core_menu->getError(), 'data' => []]);
+            return $this->return(['code' => 0, 'msg' => '删除错误' . $this->core_menu->getError(), 'data' => []]);
         }
     }
 }

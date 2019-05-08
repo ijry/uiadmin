@@ -84,7 +84,7 @@ class Role extends Admin
             ->getData();
 
         //返回数据
-        return json(
+        return $this->return(
             [
                 'code' => 200, 'msg' => '成功', 'data' => [
                     'list_data' => $list_data
@@ -115,13 +115,13 @@ class Role extends Admin
             ]);
             $data = input('post.');
             if (!$validate->check($data)) {
-                return json(['code' => 0, 'msg' => $validate->getError(), 'data' => []]);
+                return $this->return(['code' => 0, 'msg' => $validate->getError(), 'data' => []]);
             }
 
             //数据构造
             $data_db = $data;
             if (count($data_db) <= 0 ) {
-                return json(['code' => 0, 'msg' => '无数据提交', 'data' => []]);
+                return $this->return(['code' => 0, 'msg' => '无数据提交', 'data' => []]);
             }
             $data_db['status'] = 1;
             $data_db['sortnum'] = isset($data_db['sortnum']) ? $data_db['sortnum'] : 0;
@@ -131,9 +131,9 @@ class Role extends Admin
             // 存储数据
             $ret = $this->core_role->save($data_db);
             if ($ret) {
-                return json(['code' => 200, 'msg' => '添加角色成功', 'data' => []]);
+                return $this->return(['code' => 200, 'msg' => '添加角色成功', 'data' => []]);
             } else {
-                return json(['code' => 0, 'msg' => '添加角色失败:' . $this->core_role->getError(), 'data' => []]);
+                return $this->return(['code' => 0, 'msg' => '添加角色失败:' . $this->core_role->getError(), 'data' => []]);
             }
         } else {
             //获取后台权限接口
@@ -199,7 +199,7 @@ class Role extends Admin
                 ->getData();
 
             //返回数据
-            return json(
+            return $this->return(
                 [
                     'code' => 200,
                     'msg' => '成功',
@@ -221,7 +221,7 @@ class Role extends Admin
     {
         if(request()->isPut()){
             if ($id == 1) {
-                return json(['code' => 0,'msg' => '超级管理员角色不允许修改','data' => []]);
+                return $this->return(['code' => 0,'msg' => '超级管理员角色不允许修改','data' => []]);
             }
 
             // 数据验证
@@ -237,13 +237,13 @@ class Role extends Admin
             ]);
             $data = input('post.');
             if (!$validate->check($data)) {
-                return json(['code' => 0, 'msg' => $validate->getError(), 'data' => []]);
+                return $this->return(['code' => 0, 'msg' => $validate->getError(), 'data' => []]);
             }
 
             // 数据构造
             $data_db = $data;
             if (count($data_db) <= 0 ) {
-                return json(['code' => 0, 'msg' => '无数据提交', 'data' => []]);
+                return $this->return(['code' => 0, 'msg' => '无数据提交', 'data' => []]);
             }
             if (isset($data_db['admin_auth']) && is_array($data_db['admin_auth'])) {
                 $data_db['admin_auth'] = implode(',', $data_db['admin_auth']);
@@ -255,9 +255,9 @@ class Role extends Admin
             // 存储数据
             $ret = $this->core_role->update($data_db, ['id' => $id]);
             if ($ret) {
-                return json(['code' => 200, 'msg' => '修改角色成功', 'data' => []]);
+                return $this->return(['code' => 200, 'msg' => '修改角色成功', 'data' => []]);
             } else {
-                return json(['code' => 0, 'msg' => '修改角色失败:' . $this->core_role->getError(), 'data' => []]);
+                return $this->return(['code' => 0, 'msg' => '修改角色失败:' . $this->core_role->getError(), 'data' => []]);
             }
         } else {
             //获取角色信息
@@ -334,7 +334,7 @@ class Role extends Admin
                 ->getData();
 
             //返回数据
-            return json([
+            return $this->return([
                 'code' => 200,
                 'msg' => '成功',
                 'data' => [
@@ -353,16 +353,16 @@ class Role extends Admin
     public function delete($id)
     {
         if ($id == 1) {
-            return json(['code' => 0,'msg' => '超级管理员角色不允许删除','data' => []]);
+            return $this->return(['code' => 0,'msg' => '超级管理员角色不允许删除','data' => []]);
         }
         $ret = $this->core_role
             ->where('id', $id)
             ->find()
             ->delete();
         if ($ret) {
-            return json(['code' => 200, 'msg' => '删除成功', 'data' => []]);
+            return $this->return(['code' => 200, 'msg' => '删除成功', 'data' => []]);
         } else {
-            return json(['code' => 0, 'msg' => '删除错误:' . $this->core_role->getError(), 'data' => []]);
+            return $this->return(['code' => 0, 'msg' => '删除错误:' . $this->core_role->getError(), 'data' => []]);
         }
     }
 }
