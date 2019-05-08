@@ -103,9 +103,8 @@ class Index extends Controller
                 'code' => 200,
                 'msg' => '上传成功',
                 'data' => [
-                    'item_name' => input('item_name'),
                     'name' => $info->getSaveName(),
-                    'url' => rtrim(request()->root(true), 'index.php') . 'static/uploads/' . $info->getSaveName()
+                    'url' => rtrim(rtrim(request()->root(true), 'index.php'), '/') . '/static/uploads/' . $info->getSaveName()
                 ]
             ]);
         } else {
@@ -114,7 +113,6 @@ class Index extends Controller
                 'code' => 0,
                 'msg'  => $file->getError(),
                 'data' => [
-                    'item_name' => input('item_name'),
                     'name' => '',
                     'url' => ''
                 ]
