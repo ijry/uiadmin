@@ -14,9 +14,9 @@
 // +----------------------------------------------------------------------
 return [
     // 应用名称
-    'app_name'               => 'tpvue',
+    'app_name'               => 'initadmin',
     // 应用地址
-    'app_host'               => 'tpvue.com',
+    'app_host'               => 'initadmin.net',
     // 应用调试模式
     'app_debug'              => false,
     // 应用Trace

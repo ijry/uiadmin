@@ -154,7 +154,8 @@ class Module extends Admin
                         $module_name . '/lang',
                         $module_name . '/service',
                         $module_name . '/util',
-                        $module_name . '/validate'
+                        $module_name . '/validate',
+                        $module_name . '/view'
                     ]
                 ];
                 \think\facade\Build::run($path);

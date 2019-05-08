@@ -33,11 +33,28 @@ class Common extends Controller
     }
 
     /**
-    * 判断用户是否登陆方法
-    * @param  string $token
-    * @return array
-    * @author jry <ijry@qq.com>
-    */
+     * 返回数据或者页面
+     * @param  array $data
+     * @return \think\Response
+     * @author jry <ijry@qq.com>
+     */
+    protected function return($data)
+    {
+        // 判断pathinfo中是否含有/api/v1/来判断时API请求还是页面请求
+        if (\think\helper\Str::contains(request()->pathinfo(), '/api/v1/')) {
+            return json($data);
+        } else {
+            $this->assign($data['data']);
+            return $this->fetch();
+        }
+    }
+
+    /**
+     * 判断用户是否登陆方法
+     * @param  string $token
+     * @return array
+     * @author jry <ijry@qq.com>
+     */
     protected function isLogin()
     {
         //获取token
