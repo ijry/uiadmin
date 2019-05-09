@@ -73,6 +73,7 @@ class Router
             );
         }
 
-        //dump(Route::getNames());exit;
+        // 模板标签
+        config('template.taglib_pre_load', 'app\cms\taglib\Cms');
     }
 }
