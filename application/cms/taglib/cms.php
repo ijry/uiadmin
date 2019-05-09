@@ -29,15 +29,15 @@ class Cms extends TagLib{
     /**
      * 分类列表
      */
-    public function tag_cate_list($tag, $content)
+    public function tagCate_list($tag, $content)
     {
         $id = $tag['id'];
         $cate_id = isset($tag['cate_id']) ? $tag['cate_id'] : 0;
         $parse = '<?php ';
         $parse .= '$cms_cate = new \app\cms\model\Cate();';
-        $parse .= '$data_list = $cms_cate->select()->toArray();';
+        $parse .= '$_data_list = $cms_cate->select()->toArray();';
         $parse .= '$tree      = new \app\core\util\Tree();';
-        $parse .= '$__LIST__ = $tree->list2tree($data_list);';
+        $parse .= '$__LIST__ = $tree->list2tree($_data_list);';
         $parse .= ' ?>';
         $parse .= '{volist name="__LIST__" id="' . $id . '"}';
         $parse .= $content;

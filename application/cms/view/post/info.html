@@ -3,7 +3,15 @@
 {block name="style"}
     <style type="text/css" media="screen">
         .banner img {
-            height: 400px;
+            height: 180px;
+        }
+        .banner-content {
+            height: 100px;
+            color: #fff;
+            font-size: 22px;
+            padding-top: 80px;
+            background-size: 100% 100%;
+            background-image: url('<?php echo request()->root(); ?>/static/banner.png');
         }
         .post-item {
             align-items: flex-start;
@@ -43,9 +51,9 @@
 
 {block name="banner"}
     <div>
-        <div class="banner-content" style="background-color: #4AB8FC;">
-            <div class="container">
-                <img src="<?php echo request()->root(); ?>/static/cms.png" alt="">
+        <div class="banner-content">
+            <div class="container" style="text-align: center;">
+                {$info.title}
             </div>
         </div>
     </div>
@@ -54,26 +62,8 @@
 {block name="main"}
     <div class="container flex" style="align-items: flex-start;padding-top: 20px;">
         <el-main style="padding-right: 20px !important;">
-            <div class="post-list">
-                {volist name="data_list" id="vo"}
-                    <a class="post-item flex" href="{:url('/cms/post/info/' . $vo['id'])}">
-                        <div class="cover" style="">
-                            <img src="{$vo.cover}" alt="{$vo.title}">
-                        </div>
-                        <div class="content">
-                            <div class="title">
-                                {$vo.title}
-                            </div>
-                            <div class="description">
-                                {$vo.description}
-                            </div>
-                            <div class="info">
-                                <span>{$vo.post_time|time_format}</span>
-                                <span>{$vo.view_count}</span>
-                            </div>
-                        </div>
-                    </a>
-                {/volist}
+            <div>
+                {$info.content|raw}
             </div>
         </el-main>
         <el-aside>
@@ -94,4 +84,15 @@
             </div>
         </el-aside>
     </div>
+{/block}
+
+{block name="vue"}
+    <script>
+        new Vue({
+          el: '#app',
+          data: function() {
+            return {}
+          }
+        })
+    </script>
 {/block}

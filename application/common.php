@@ -23,6 +23,32 @@ function user_md5($str, $auth_key)
 }
 
 /**
+ * 毫秒时间戳
+ * @return int
+ * @author jry <598821125@qq.com>
+ */
+function micro_time()
+{
+    list($t1, $t2) = explode(' ', microtime());
+    return (float) sprintf('%.0f', (floatval($t1) + floatval($t2)) * 1000);
+}
+
+/**
+ * 时间戳格式化
+ * @param int $time
+ * @return string 完整的时间显示
+ * @author jry <598821125@qq.com>
+ */
+function time_format($time = null, $format = 'Y-m-d H:i')
+{
+    if (!$time) {
+        return '';
+    } else {
+        return date($format, intval($time));
+    }
+}
+
+/**
  * 根据配置类型解析配置
  * @param  string $type  配置类型
  * @param  string  $value 配置值

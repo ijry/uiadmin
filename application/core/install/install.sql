@@ -206,3 +206,90 @@ CREATE TABLE `ia_core_userlog` (
   `remark` varchar(255) NOT NULL DEFAULT '' COMMENT '备注',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户安全记录';
+
+
+
+DROP TABLE IF EXISTS `ia_cms_cate`;
+
+CREATE TABLE `ia_cms_cate` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  `pid` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '上级分类',
+  `cate_type` int(11) NOT NULL DEFAULT '0' COMMENT '分类类型0列表1单页2路由',
+  `title` varchar(128) NOT NULL DEFAULT '' COMMENT '标题',
+  `description` varchar(128) NOT NULL DEFAULT '' COMMENT '简介',
+  `cover` varchar(256) NOT NULL DEFAULT '' COMMENT '封面图',
+  `banner` varchar(256) NOT NULL DEFAULT '' COMMENT 'Banner图',
+  `content` longtext COMMENT '单页类型时的内容',
+  `sortnum` int(11) NOT NULL DEFAULT '0' COMMENT '排序',
+  `status` int(3) NOT NULL DEFAULT '0' COMMENT '状态1正常0禁用',
+  `is_hide` int(1) NOT NULL DEFAULT '0' COMMENT '是否隐藏',
+  `create_time` int(11) NOT NULL DEFAULT '0' COMMENT '创建时间',
+  `delete_time` int(11) NOT NULL DEFAULT '0' COMMENT '删除时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='CMS分类表';
+
+LOCK TABLES `ia_cms_cate` WRITE;
+/*!40000 ALTER TABLE `ia_cms_cate` DISABLE KEYS */;
+
+INSERT INTO `ia_cms_cate` (`id`, `pid`, `cate_type`, `title`, `description`, `cover`, `banner`, `content`, `sortnum`, `status`, `is_hide`, `create_time`, `delete_time`)
+VALUES
+  (2,0,0,'产品服务','','','',NULL,0,1,0,0,0),
+  (3,0,0,'客户案例','','','',NULL,0,1,0,0,0),
+  (4,0,0,'新闻动态','','','',NULL,0,1,0,0,0),
+  (5,0,0,'关于我们','','','',NULL,0,1,0,0,0);
+
+/*!40000 ALTER TABLE `ia_cms_cate` ENABLE KEYS */;
+UNLOCK TABLES;
+
+
+# Dump of table ia_cms_post
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `ia_cms_post`;
+
+CREATE TABLE `ia_cms_post` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '发布ID',
+  `uid` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '用户ID',
+  `cid` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '分类ID',
+  `title` varchar(128) NOT NULL DEFAULT '' COMMENT '标题',
+  `description` varchar(128) NOT NULL DEFAULT '' COMMENT '简介',
+  `content` longtext NOT NULL COMMENT '内容',
+  `cover` varchar(256) NOT NULL DEFAULT '' COMMENT '封面图',
+  `post_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '发布时间',
+  `view_count` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '阅读数量',
+  `comment_count` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '回复数量',
+  `status` int(1) NOT NULL DEFAULT '0' COMMENT '状态1禁用1正常',
+  `review_status` int(1) NOT NULL DEFAULT '1' COMMENT '审核状态0待审核1通过-1拒绝',
+  `delete_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '删除时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='文章发布表';
+
+LOCK TABLES `ia_cms_post` WRITE;
+/*!40000 ALTER TABLE `ia_cms_post` DISABLE KEYS */;
+
+INSERT INTO `ia_cms_post` (`id`, `uid`, `cid`, `title`, `description`, `content`, `cover`, `post_time`, `view_count`, `comment_count`, `status`, `review_status`, `delete_time`)
+VALUES
+  (3,0,4,'InitAdmin正式发布','InitAdmin是一套渐进式模块化开源后台(目前基于ThinkPHP5.1+Vue2)，采用前后端分离技术，数据交互采用json格式，功能低耦合高内聚；核心模块支持系统设置、权限管理、用户管理、菜单管理、API管理等功能','<p><span style=\"color: #323232; font-family: \'Century Gothic\', \'Microsoft yahei\'; font-size: 16px; background-color: #ffffff;\">InitAdmin是一套渐进式模块化开源后台(目前基于ThinkPHP5.1+Vue2)，采用前后端分离技术，数据交互采用json格式，功能低耦合高内聚；核心模块支持系统设置、权限管理、用户管理、菜单管理、API管理等功能，后期上线模块商城将打造类似composer、npm的开放式插件市场；同时我们将打造一套兼容性的API标准，从ThinkPHP5.1+Vue2开始，逐步覆盖larval、spring-boot、django、yii、koa、react等多语言框架。</span><br style=\"color: #323232; font-family: \'Century Gothic\', \'Microsoft yahei\'; font-size: 16px; background-color: #ffffff;\" /><br style=\"color: #323232; font-family: \'Century Gothic\', \'Microsoft yahei\'; font-size: 16px; background-color: #ffffff;\" /><span style=\"color: #323232; font-family: \'Century Gothic\', \'Microsoft yahei\'; font-size: 16px; background-color: #ffffff;\">官方网站：&nbsp;</span><a style=\"color: #72b939; text-decoration-line: none; font-family: \'Century Gothic\', \'Microsoft yahei\'; font-size: 16px; background-color: #ffffff;\" href=\"https://initadmin.net/\">https://initadmin.net</a></p>','http://localhost/initadmin/public/static/cms.png',1557205908,0,0,1,1,0),
+  (4,0,4,'InitAdmin正式发布','InitAdmin是一套渐进式模块化开源后台(目前基于ThinkPHP5.1+Vue2)，采用前后端分离技术，数据交互采用json格式，功能低耦合高内聚；核心模块支持系统设置、权限管理、用户管理、菜单管理、API管理等功能','<p><span style=\"color: #323232; font-family: \'Century Gothic\', \'Microsoft yahei\'; font-size: 16px; background-color: #ffffff;\">InitAdmin是一套渐进式模块化开源后台(目前基于ThinkPHP5.1+Vue2)，采用前后端分离技术，数据交互采用json格式，功能低耦合高内聚；核心模块支持系统设置、权限管理、用户管理、菜单管理、API管理等功能，后期上线模块商城将打造类似composer、npm的开放式插件市场；同时我们将打造一套兼容性的API标准，从ThinkPHP5.1+Vue2开始，逐步覆盖larval、spring-boot、django、yii、koa、react等多语言框架。</span><br style=\"color: #323232; font-family: \'Century Gothic\', \'Microsoft yahei\'; font-size: 16px; background-color: #ffffff;\" /><br style=\"color: #323232; font-family: \'Century Gothic\', \'Microsoft yahei\'; font-size: 16px; background-color: #ffffff;\" /><span style=\"color: #323232; font-family: \'Century Gothic\', \'Microsoft yahei\'; font-size: 16px; background-color: #ffffff;\">官方网站：&nbsp;</span><a style=\"color: #72b939; text-decoration-line: none; font-family: \'Century Gothic\', \'Microsoft yahei\'; font-size: 16px; background-color: #ffffff;\" href=\"https://initadmin.net/\">https://initadmin.net</a></p>','http://localhost/initadmin/public/static/cms.png',1557205908,0,0,1,1,0),
+  (5,0,4,'InitAdmin正式发布','InitAdmin是一套渐进式模块化开源后台(目前基于ThinkPHP5.1+Vue2)，采用前后端分离技术，数据交互采用json格式，功能低耦合高内聚；核心模块支持系统设置、权限管理、用户管理、菜单管理、API管理等功能','<p><span style=\"color: #323232; font-family: \'Century Gothic\', \'Microsoft yahei\'; font-size: 16px; background-color: #ffffff;\">InitAdmin是一套渐进式模块化开源后台(目前基于ThinkPHP5.1+Vue2)，采用前后端分离技术，数据交互采用json格式，功能低耦合高内聚；核心模块支持系统设置、权限管理、用户管理、菜单管理、API管理等功能，后期上线模块商城将打造类似composer、npm的开放式插件市场；同时我们将打造一套兼容性的API标准，从ThinkPHP5.1+Vue2开始，逐步覆盖larval、spring-boot、django、yii、koa、react等多语言框架。</span><br style=\"color: #323232; font-family: \'Century Gothic\', \'Microsoft yahei\'; font-size: 16px; background-color: #ffffff;\" /><br style=\"color: #323232; font-family: \'Century Gothic\', \'Microsoft yahei\'; font-size: 16px; background-color: #ffffff;\" /><span style=\"color: #323232; font-family: \'Century Gothic\', \'Microsoft yahei\'; font-size: 16px; background-color: #ffffff;\">官方网站：&nbsp;</span><a style=\"color: #72b939; text-decoration-line: none; font-family: \'Century Gothic\', \'Microsoft yahei\'; font-size: 16px; background-color: #ffffff;\" href=\"https://initadmin.net/\">https://initadmin.net</a></p>','http://localhost/initadmin/public/static/cms.png',1557205908,0,0,1,1,0),
+  (6,0,4,'InitAdmin正式发布','InitAdmin是一套渐进式模块化开源后台(目前基于ThinkPHP5.1+Vue2)，采用前后端分离技术，数据交互采用json格式，功能低耦合高内聚；核心模块支持系统设置、权限管理、用户管理、菜单管理、API管理等功能','<p><span style=\"color: #323232; font-family: \'Century Gothic\', \'Microsoft yahei\'; font-size: 16px; background-color: #ffffff;\">InitAdmin是一套渐进式模块化开源后台(目前基于ThinkPHP5.1+Vue2)，采用前后端分离技术，数据交互采用json格式，功能低耦合高内聚；核心模块支持系统设置、权限管理、用户管理、菜单管理、API管理等功能，后期上线模块商城将打造类似composer、npm的开放式插件市场；同时我们将打造一套兼容性的API标准，从ThinkPHP5.1+Vue2开始，逐步覆盖larval、spring-boot、django、yii、koa、react等多语言框架。</span><br style=\"color: #323232; font-family: \'Century Gothic\', \'Microsoft yahei\'; font-size: 16px; background-color: #ffffff;\" /><br style=\"color: #323232; font-family: \'Century Gothic\', \'Microsoft yahei\'; font-size: 16px; background-color: #ffffff;\" /><span style=\"color: #323232; font-family: \'Century Gothic\', \'Microsoft yahei\'; font-size: 16px; background-color: #ffffff;\">官方网站：&nbsp;</span><a style=\"color: #72b939; text-decoration-line: none; font-family: \'Century Gothic\', \'Microsoft yahei\'; font-size: 16px; background-color: #ffffff;\" href=\"https://initadmin.net/\">https://initadmin.net</a></p>','http://localhost/initadmin/public/static/cms.png',1557205908,0,0,1,1,0),
+  (7,0,4,'InitAdmin正式发布','InitAdmin是一套渐进式模块化开源后台(目前基于ThinkPHP5.1+Vue2)，采用前后端分离技术，数据交互采用json格式，功能低耦合高内聚；核心模块支持系统设置、权限管理、用户管理、菜单管理、API管理等功能','<p><span style=\"color: #323232; font-family: \'Century Gothic\', \'Microsoft yahei\'; font-size: 16px; background-color: #ffffff;\">InitAdmin是一套渐进式模块化开源后台(目前基于ThinkPHP5.1+Vue2)，采用前后端分离技术，数据交互采用json格式，功能低耦合高内聚；核心模块支持系统设置、权限管理、用户管理、菜单管理、API管理等功能，后期上线模块商城将打造类似composer、npm的开放式插件市场；同时我们将打造一套兼容性的API标准，从ThinkPHP5.1+Vue2开始，逐步覆盖larval、spring-boot、django、yii、koa、react等多语言框架。</span><br style=\"color: #323232; font-family: \'Century Gothic\', \'Microsoft yahei\'; font-size: 16px; background-color: #ffffff;\" /><br style=\"color: #323232; font-family: \'Century Gothic\', \'Microsoft yahei\'; font-size: 16px; background-color: #ffffff;\" /><span style=\"color: #323232; font-family: \'Century Gothic\', \'Microsoft yahei\'; font-size: 16px; background-color: #ffffff;\">官方网站：&nbsp;</span><a style=\"color: #72b939; text-decoration-line: none; font-family: \'Century Gothic\', \'Microsoft yahei\'; font-size: 16px; background-color: #ffffff;\" href=\"https://initadmin.net/\">https://initadmin.net</a></p>','http://localhost/initadmin/public/static/cms.png',1557205908,0,0,1,1,0),
+  (8,0,4,'InitAdmin正式发布','InitAdmin是一套渐进式模块化开源后台(目前基于ThinkPHP5.1+Vue2)，采用前后端分离技术，数据交互采用json格式，功能低耦合高内聚；核心模块支持系统设置、权限管理、用户管理、菜单管理、API管理等功能','<p><span style=\"color: #323232; font-family: \'Century Gothic\', \'Microsoft yahei\'; font-size: 16px; background-color: #ffffff;\">InitAdmin是一套渐进式模块化开源后台(目前基于ThinkPHP5.1+Vue2)，采用前后端分离技术，数据交互采用json格式，功能低耦合高内聚；核心模块支持系统设置、权限管理、用户管理、菜单管理、API管理等功能，后期上线模块商城将打造类似composer、npm的开放式插件市场；同时我们将打造一套兼容性的API标准，从ThinkPHP5.1+Vue2开始，逐步覆盖larval、spring-boot、django、yii、koa、react等多语言框架。</span><br style=\"color: #323232; font-family: \'Century Gothic\', \'Microsoft yahei\'; font-size: 16px; background-color: #ffffff;\" /><br style=\"color: #323232; font-family: \'Century Gothic\', \'Microsoft yahei\'; font-size: 16px; background-color: #ffffff;\" /><span style=\"color: #323232; font-family: \'Century Gothic\', \'Microsoft yahei\'; font-size: 16px; background-color: #ffffff;\">官方网站：&nbsp;</span><a style=\"color: #72b939; text-decoration-line: none; font-family: \'Century Gothic\', \'Microsoft yahei\'; font-size: 16px; background-color: #ffffff;\" href=\"https://initadmin.net/\">https://initadmin.net</a></p>','http://localhost/initadmin/public/static/cms.png',1557205908,0,0,1,1,0),
+  (9,0,4,'InitAdmin正式发布','InitAdmin是一套渐进式模块化开源后台(目前基于ThinkPHP5.1+Vue2)，采用前后端分离技术，数据交互采用json格式，功能低耦合高内聚；核心模块支持系统设置、权限管理、用户管理、菜单管理、API管理等功能','<p><span style=\"color: #323232; font-family: \'Century Gothic\', \'Microsoft yahei\'; font-size: 16px; background-color: #ffffff;\">InitAdmin是一套渐进式模块化开源后台(目前基于ThinkPHP5.1+Vue2)，采用前后端分离技术，数据交互采用json格式，功能低耦合高内聚；核心模块支持系统设置、权限管理、用户管理、菜单管理、API管理等功能，后期上线模块商城将打造类似composer、npm的开放式插件市场；同时我们将打造一套兼容性的API标准，从ThinkPHP5.1+Vue2开始，逐步覆盖larval、spring-boot、django、yii、koa、react等多语言框架。</span><br style=\"color: #323232; font-family: \'Century Gothic\', \'Microsoft yahei\'; font-size: 16px; background-color: #ffffff;\" /><br style=\"color: #323232; font-family: \'Century Gothic\', \'Microsoft yahei\'; font-size: 16px; background-color: #ffffff;\" /><span style=\"color: #323232; font-family: \'Century Gothic\', \'Microsoft yahei\'; font-size: 16px; background-color: #ffffff;\">官方网站：&nbsp;</span><a style=\"color: #72b939; text-decoration-line: none; font-family: \'Century Gothic\', \'Microsoft yahei\'; font-size: 16px; background-color: #ffffff;\" href=\"https://initadmin.net/\">https://initadmin.net</a></p>','http://localhost/initadmin/public/static/cms.png',1557205908,0,0,1,1,0);
+
+/*!40000 ALTER TABLE `ia_cms_post` ENABLE KEYS */;
+UNLOCK TABLES;
+
+INSERT INTO `ia_core_menu` (`id`, `module`, `icon`, `path`, `pmenu`, `title`, `tip`, `menu_type`, `route_type`, `api_prefix`, `api_suffix`, `api_params`, `api_method`, `doc`, `is_hide`, `sortnum`, `delete_time`)
+VALUES
+  (41, 'cms', 'ios-create', '/cms', '', '内容', '', 0, '', '', '', '', '', NULL, 0, 2, 0),
+  (42, 'cms', '', '/cms/cate/trees', '/cms', '分类管理', '', 1, 'list', 'v1', '', '', 'GET', NULL, 0, 0, 0),
+  (43, 'cms', '', '/cms/post/lists', '/cms/cate/trees', '文章管理', '', 2, 'list', 'v1', '/:cid', '', 'GET', NULL, 0, 0, 0),
+  (44, 'cms', '', '/cms/cate/add', '/cms/cate/trees', '添加分类', '', 2, 'form', 'v1', '', '', 'POST|GET', NULL, 0, 0, 0),
+  (45, 'cms', '', '/cms/cate/edit', '/cms/cate/trees', '修改分类', '', 2, 'form', 'v1', '/:id', '', 'PUT|GET', NULL, 0, 0, 0),
+  (46, 'cms', '', '/cms/post/add', '/cms/post/lists', '添加文章', '', 2, 'form', 'v1', '/:cid', '', 'POST|GET', NULL, 0, 0, 0),
+  (47, 'cms', '', '/cms/post/edit', '/cms/post/lists', '修改文章', '', 2, 'form', 'v1', '/:id', '', 'PUT|GET', NULL, 0, 0, 0),
+  (48, 'cms', '', '/cms/post/lists', '', '文章列表', '', 5, 'route', 'v1', '/:cid', '', 'GET', NULL, 0, 51, 0),
+  (49, 'cms', '', '/cms/post/info', '', '文章详情', '', 5, 'route', 'v1', '/:id', '', 'GET', NULL, 0, 51, 0),
+  (50, 'cms', '', '/cms/post/my', '', '我的文章', '', 5, 'route', 'v1', '', '', 'GET', NULL, 0, 51, 0);
+

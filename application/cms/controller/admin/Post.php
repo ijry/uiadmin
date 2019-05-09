@@ -45,7 +45,7 @@ class Post extends Admin
     {
         // 列表
         $data_list = $this->cms_post
-            ->where('cate_id', $cid)
+            ->where('cid', $cid)
             ->select()
             ->toArray();
         $tree      = new Tree();
@@ -98,11 +98,11 @@ class Post extends Admin
         if(request()->isPost()){
             // 数据验证
             $validate = Validate::make([
-                'cate_id'  => 'number',
+                'cid'  => 'number',
                 'title' => 'require'
             ],
             [
-                'cate_id.number' => 'cate_id必须数字',
+                'cid.number' => 'cid必须数字',
                 'title.require' => '文章标题必须'
             ]);
             $data = input('post.');
@@ -142,7 +142,7 @@ class Post extends Admin
             $ibuilder_form = new \app\core\util\ibuilder\IbuilderForm();
             $form_data = $ibuilder_form->init()
                 ->setFormMethod('post')
-                ->addFormItem('cate_id', '上级', 'select', $cid, [
+                ->addFormItem('cid', '上级', 'select', $cid, [
                     'options' => $cate_tree_select
                 ])
                 ->addFormItem('title', '文章标题', 'text', '', [
@@ -181,12 +181,12 @@ class Post extends Admin
         if(request()->isPut()){
             // 数据验证
             $validate = Validate::make([
-                'cate_id'  => 'require|number',
+                'cid'  => 'require|number',
                 'title' => 'require'
             ],
             [
-                'cate_id.number' => 'cate_id必须数字',
-                'cate_id.require' => '文章标题必须'
+                'cid.number' => 'cid必须数字',
+                'cid.require' => '文章标题必须'
             ]);
             $data = input('post.');
             if (!$validate->check($data)) {
@@ -228,7 +228,7 @@ class Post extends Admin
             $ibuilder_form = new \app\core\util\ibuilder\IbuilderForm();
             $form_data = $ibuilder_form->init()
                 ->setFormMethod('put')
-               ->addFormItem('cate_id', '分类', 'select', 0, [
+               ->addFormItem('cid', '分类', 'select', 0, [
                     'tip' => '分类',
                     'options' => $cate_tree_select
                 ])

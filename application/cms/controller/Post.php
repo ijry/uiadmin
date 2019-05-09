@@ -25,11 +25,12 @@ use app\core\controller\common\Home;
  */
 class Post extends Home
 {
-    private $cms_post;
+    private $cms_post,$cms_cate;
 
     public function initialize()
     {
         $this->cms_post = new \app\cms\model\Post();
+        $this->cms_cate = new \app\cms\model\Cate();
     }
 
     /**
@@ -74,14 +75,24 @@ class Post extends Home
      * @return \think\Response
      * @author jry <ijry@qq.com>
      */
-    public function lists()
+    public function lists($cid)
     {
+        // 分类信息
+        $cate_info = $this->cms_cate
+            ->where('id', '=', $cid)
+            ->where('status', '=', 1)
+            ->find()
+            ->toArray();
+
+        // 文章列表
         $data_list = $this->cms_post
+            ->where('cid', '=', $cid)
             ->where('status', '=', 1)
             ->where('review_status', '=', 1)
             ->select()
             ->toArray();
         return $this->return(['code' => 200, 'msg' => '成功', 'data' => [
+            'cate_info' => $cate_info,
             'data_list' =>$data_list
         ]]);
     }
