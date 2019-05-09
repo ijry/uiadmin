@@ -38,15 +38,15 @@ class Router
             ->select();
         foreach ($data_list as $key => $val) {
             $path = explode('/', $val['path']);
-            // 前后端分离路由
-            Route::rule(
-                'api/' . $val['api_prefix'] . '/admin' . $val['path'] . $val['api_suffix'],
-                $path[1] . '/admin.' . $path[2] . '/' . $path[3],
-                $val['api_method']
-            );
             // 前后端不分离路由
             Route::rule(
                 '/admin' . $val['path'] . $val['api_suffix'],
+                $path[1] . '/admin.' . $path[2] . '/' . $path[3],
+                $val['api_method']
+            );
+            // 前后端分离路由
+            Route::rule(
+                'api/' . $val['api_prefix'] . '/admin' . $val['path'] . $val['api_suffix'],
                 $path[1] . '/admin.' . $path[2] . '/' . $path[3],
                 $val['api_method']
             );
@@ -59,15 +59,15 @@ class Router
             ->select();
         foreach ($data_list as $key => $val) {
             $path = explode('/', $val['path']);
-            // 前后端分离路由
-            Route::rule(
-                'api/' . $val['api_prefix'] . $val['path'] . $val['api_suffix'],
-                $path[1] . '/' . $path[2] . '/' . $path[3],
-                $val['api_method']
-            );
             // 前后端不分离路由
             Route::rule(
                 $val['path'] . $val['api_suffix'],
+                $path[1] . '/' . $path[2] . '/' . $path[3],
+                $val['api_method']
+            );
+            // 前后端分离路由
+            Route::rule(
+                'api/' . $val['api_prefix'] . $val['path'] . $val['api_suffix'],
                 $path[1] . '/' . $path[2] . '/' . $path[3],
                 $val['api_method']
             );

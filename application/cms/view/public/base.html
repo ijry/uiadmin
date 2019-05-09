@@ -85,7 +85,7 @@
                           </el-menu-item>
                           {cms:cate_list id="vo"}
                               <el-menu-item index="{$key}">
-                                  <a href="{:url('/cms/post/lists/' . $vo['id'])}" title="{$vo.title}">{$vo.title}</a>
+                                  <a href="{:url('cms/post/lists', ['cid' => $vo['id']])}" title="{$vo.title}">{$vo.title}</a>
                               </el-menu-item>
                           {/cms:cate_list}
                         </el-menu>
