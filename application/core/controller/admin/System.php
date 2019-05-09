@@ -29,6 +29,18 @@ class System extends Admin
     }
 
     /**
+     * 后台首页
+     *
+     * @return \think\Response
+     * @author jry <ijry@qq.com>
+     */
+    public function index()
+    {
+        return $this->return(['code' => 200, 'msg' => '成功', 'data' => [
+        ]]);
+    }
+
+    /**
      * 删除缓存
      *
      * @return \think\Response

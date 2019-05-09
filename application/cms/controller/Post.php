@@ -29,6 +29,7 @@ class Post extends Home
 
     public function initialize()
     {
+        parent::initialize();
         $this->cms_post = new \app\cms\model\Post();
         $this->cms_cate = new \app\cms\model\Cate();
     }

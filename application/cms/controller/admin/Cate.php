@@ -30,7 +30,6 @@ class Cate extends Admin
     protected function initialize()
     {
         parent::initialize();
-
         $this->cms_cate = new \app\cms\model\Cate();
     }
 
