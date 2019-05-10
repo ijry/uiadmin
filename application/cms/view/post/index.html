@@ -56,7 +56,7 @@
         <el-main style="padding-right: 20px !important;">
             <div class="post-list">
                 {volist name="data_list" id="vo"}
-                    <a class="post-item flex" href="{:url('cms/post/info/', ['id' => $vo['id']])}">
+                    <a class="post-item flex" href="{:url('cms/post/info', ['id' => $vo['id']])}">
                         <div class="cover" style="">
                             <img src="{$vo.cover}" alt="{$vo.title}">
                         </div>
