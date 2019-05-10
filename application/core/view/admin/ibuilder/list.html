@@ -1,0 +1,50 @@
+{extend name="core@admin/public/base" /}
+
+{block name="style"}
+    <style type="text/css" media="screen">
+    </style>
+{/block}
+
+{block name="main"}
+    <div>
+      <el-table
+        :data="tableData"
+        style="width: 100%;margin-bottom: 20px;"
+        border
+        row-key="id">
+        <el-table-column
+          prop="id"
+          label="ID"
+          sortable
+          width="180">
+        </el-table-column>
+        <el-table-column
+          prop="nickname"
+          label="昵称"
+          sortable
+          width="180">
+        </el-table-column>
+        <el-table-column
+          prop="username"
+          label="用户名">
+        </el-table-column>
+      </el-table>
+{/block}
+
+{block name="vue"}
+    <script>
+        {include file="admin/public:util" /}
+        new Vue({
+            el: '#app',
+            data: function() {
+                return {
+                    {include file="admin/public:data" /},
+                    tableData: <?php echo json_encode($list_data['data_list']); ?>
+                }
+            },
+            methods: {
+                {include file="admin/public:methods" /}
+            }
+        });
+    </script>
+{/block}

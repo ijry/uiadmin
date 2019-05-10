@@ -1,0 +1,36 @@
+// 清除缓存
+async cleanRuntime () {
+    // 清除服务器缓存
+    let res = await util.request({
+        url: '/v1/admin/core/system/cleanRuntime',
+        method: 'delete'
+    });
+    if (res.code == 200) {
+        // 刷新页面
+        window.location.reload();
+    } else {
+        alert(res.msg);
+    }
+},
+// 注销登录
+async logout () {
+    //清楚服务器缓存
+    let res = await util.request({
+        url: '/v1/core/user/logout',
+        method: 'delete'
+    });
+    if (res.code == 200) {
+        // 刷新页面
+        window.location.reload();
+    } else {
+        alert(res.msg);
+    }
+},
+// 缩放左侧导航
+collapsedSider () {
+    if (this.isCollapsed == true) {
+        this.isCollapsed = false;
+    } else {
+        this.isCollapsed = true;
+    }
+}

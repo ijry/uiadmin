@@ -26,11 +26,15 @@
             align-items: center;
             text-decoration: none;
         }
+        .el-input input {
+            border-radius: 20px;
+        }
         .wrap {
             height: 100vh;
         }
-        .el-aside {
-            border-right: solid 1px #e6e6e6;
+        .main-aside {
+            background-color: #042C60;
+            border-right: solid 0px #e6e6e6;
         }
         .logo-box {
             text-align: center;
@@ -39,22 +43,30 @@
             height: 60px;
         }
         .logo-box .title {
-            color: #2d8cf0;
+            color: #C0C4CC;
             font-size: 20px;
         }
         .logo-box .logo {
-            height: 46px;
+            height: 40px;
             margin-right: 10px;
         }
         .main-menu {
             border-right: 0 !important;
         }
         .main-menu a {
-            color: #606266;
+            color: #C0C4CC;
             text-decoration: none;
         }
+        .main-menu .el-menu-item {
+            background-color: rgba(255, 255, 255, .1) !important;
+        }
+        .main-menu .el-menu-item:hover {
+            padding-left: 38px !important;
+            border-left: 2px solid #C0C4CC !important;
+        }
         .header {
-            border-bottom: solid 1px #e6e6e6;
+            background: #fff;
+            border-bottom: solid 0px #e6e6e6;
         }
         .header a {
             font-size: 16px;
@@ -62,10 +74,24 @@
             text-decoration: none;
         }
         .el-main {
+            background: #f5f7f9;
             padding: 0px !important;
         }
         .main {
             padding: 15px;
+        }
+        .search {
+            padding: 10px 10px 0px;
+
+        }
+        .search .el-input input {
+            border: 0;
+            color: #fff;
+            background: rgba(255, 255, 255, .1);
+        }
+        .search .el-input input:focus {
+            border: 0;
+            box-shadow: none;
         }
     </style>
     {block name="style"}{/block}
@@ -74,12 +100,27 @@
     <div id="app">
         <div class="wrap">
             <el-container style="height: 100vh;">
-                <el-aside width="200px">
+                <el-aside class="main-aside" :style="{width: isCollapsed ? '70px': '200px'}">
                     <div class="logo-box flex">
                         <img src="<?php echo request()->root(); ?>/static/logo.png" class="logo">
-                        <span class="title">InitAdmin</span>
+                        <span v-if="isCollapsed == false" class="title">InitAdmin</span>
                     </div>
-                    <el-menu default-active="home" class="main-menu">
+                    <div class="search" v-if="isCollapsed == false">
+                        <el-input
+                            size="medium"
+                            suffix-icon="el-icon-search"
+                            v-model="keyword"
+                            placeholder="搜索菜单">
+                        </el-input>
+                    </div>
+                    <el-menu
+                        background-color="#042C60"
+                        text-color="#C0C4CC"
+                        active-text-color="#ffffff"
+                        default-active="0-0"
+                        :default-openeds="['0-1']"
+                        :collapse="isCollapsed"
+                        class="main-menu">
                         {core:menu_list id="vo"}
                             <?php if($vo['menu_type'] == 0): ?>
                                 <el-submenu index="0-{$key}">
@@ -90,8 +131,8 @@
                                     <?php if(isset($vo['children'])): ?>
                                         {volist name="vo.children" id="vo1"}
                                             <?php if($vo1['menu_type'] == 1): ?>
-                                                <el-menu-item index="1-1">
-                                                    <a href="{:url($vo['path'])}">{$vo1.title}</a>
+                                                <el-menu-item index="1-{$key}">
+                                                    <a href="<?php echo request()->root(); ?>/admin{$vo1['path']}.html">{$vo1.title}</a>
                                                 </el-menu-item>
                                             <?php endif; ?>
                                         {/volist}
@@ -105,6 +146,7 @@
                     <el-container>
                         <el-header class="header flex" style="justify-content: space-between;">
                             <div>
+                                <span @click="collapsedSider" :class="isCollapsed ? 'el-icon-s-unfold' : 'el-icon-s-fold'"></span>
                             </div>
                             <div>
                                 <a target="_blank" href="<?php echo request()->root(); ?>">访问前台</a>
@@ -125,81 +167,18 @@
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     {block name="vue"}
         <script>
-            let util = {};
-            // request
-            util.request = function ({
-                method = "get",
-                url,
-                data = {},
-                header = {
-                    contentType: 'application/json'
-                },
-                dataType = 'json',
-                success,
-                fail,
-                complete
-            }) {
-                // 请求
-                if (0 != url.indexOf("http")) {
-                    url = '<?php echo request()->root(); ?>/api' + url
-                }
-                let params = {};
-                if (method == 'get') {
-                    params = data;
-                }
-                return new Promise((resolve, reject) => {
-                    axios({
-                        method: method,
-                        url: url,
-                        data: data,
-                        params: params,
-                        headers: header
-                    }).then(function(res) {
-                        resolve(res.data);
-                    }).catch(function(error) {
-                        let res = new Object();
-                        res.code = 0;
-                        res.msg = error.message;
-                        reject(res);
-                    });
-                })
-            };
+            {include file="admin/public:util" /}
             new Vue({
                 el: '#app',
                 data: function() {
-                    return {}
+                    return {
+                        {include file="admin/public:data" /}
+                    }
                 },
                 methods: {
-                    // 清除缓存
-                    async cleanRuntime () {
-                        // 清除服务器缓存
-                        let res = await util.request({
-                            url: '/v1/admin/core/system/cleanRuntime',
-                            method: 'delete'
-                        });
-                        if (res.code == 200) {
-                            // 刷新页面
-                            window.location.reload();
-                        } else {
-                            alert(res.msg);
-                        }
-                    },
-                    // 注销登录
-                    async logout () {
-                        //清楚服务器缓存
-                        let res = await util.request({
-                            url: '/v1/core/user/logout',
-                            method: 'delete'
-                        });
-                        if (res.code == 200) {
-                            // 刷新页面
-                            window.location.reload();
-                        } else {
-                            alert(res.msg);
-                        }
-                    }
+                    {include file="admin/public:methods" /}
                 }
-            })
+            });
         </script>
     {/block}
     {block name="script"}{/block}
