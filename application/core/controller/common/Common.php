@@ -49,10 +49,16 @@ class Common extends Controller
         } else {
             if (isset($data['data'])) {
                 if (isset($data['data']['need_login']) && $data['data']['need_login'] == 1) {
-                    return $this->error($data['msg'], 'core/admin.index/login');
+                    return $this->error('请登录系统', 'core/admin.index/login');
                 } else {
                     $this->assign($data['data']);
-                    return $this->fetch();
+                    if (isset($data['data']['list_data'])) {
+                        return $this->fetch('admin/ibuilder/list');
+                    } else if(isset($data['data']['form_data'])) {
+                        return $this->fetch('admin/ibuilder/form');
+                    } else {
+                        return $this->fetch();
+                    }
                 }
             } else {
                 return $this->fetch();
