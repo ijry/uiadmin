@@ -44,5 +44,4 @@ class Cms extends TagLib{
         $parse .= '{/volist}';
         return $parse;
     }
-
 }
