@@ -44,7 +44,7 @@ class Menu extends Admin
      */
     public function trees()
     {
-        // 计算路由
+        // 获取列表
         $data_list = $this->core_menu
             ->where('delete_time', 0)
             ->where('menu_type', '<', 4)

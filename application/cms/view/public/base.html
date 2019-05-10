@@ -70,55 +70,58 @@
     {block name="style"}{/block}
 </head>
 <body>
-    <div id="app" class="wrap">
-        <el-container>
-            <el-header class="header">
-                {block name="menu"}
-                    <div class="container flex" style="justify-content: space-between;">
-                        <div class="logo-box flex" style="">
-                            <img src="<?php echo request()->root(); ?>/static/logo.png" class="logo">
-                            <span class="title">InitAdmin</span>
-                        </div>
-                        <el-menu default-active="home" class="main-menu" mode="horizontal">
-                          <el-menu-item index="home">
-                              <a href="<?php echo request()->root(); ?>" title="首页">首页</a>
-                          </el-menu-item>
-                          {cms:cate_list id="vo"}
-                              <el-menu-item index="{$key}">
-                                  <a href="{:url('cms/post/lists', ['cid' => $vo['id']])}" title="{$vo.title}">{$vo.title}</a>
+    <div id="app">
+        <div class="wrap">
+            <el-container>
+                <el-header class="header">
+                    {block name="menu"}
+                        <div class="container flex" style="justify-content: space-between;">
+                            <div class="logo-box flex" style="">
+                                <img src="<?php echo request()->root(); ?>/static/logo.png" class="logo">
+                                <span class="title">InitAdmin</span>
+                            </div>
+                            <el-menu default-active="home" class="main-menu" mode="horizontal">
+                              <el-menu-item index="home">
+                                  <a href="<?php echo request()->root(); ?>" title="首页">首页</a>
                               </el-menu-item>
-                          {/cms:cate_list}
-                        </el-menu>
-                    </div>
-                {/block}
-            </el-header>
-            <div class="banner">
-                {block name="banner"}{/block}
-            </div>
-            <div class="main">
-                <el-container>
-                    {block name="main"}主内容{/block}
-                </el-container>
-            </div>
-            <el-footer class="footer">
-                {block name="footer"}
-                    <div class="container">
-                        <div class="flex" style="justify-content: space-between;">
-                            <div>
-                                Copyright © 2018-2019 initadmin.net All Rights Reserved
-                            </div>
-                            <div style="text-align: right;">
-                                <a target="_blank" href="http://www.beian.miit.gov.cn">苏ICP备18067203号</a>
-                            </div>
-                        </Row>
-                    </div>
-                {/block}
-            </el-footer>
-        </el-container>
+                              {cms:cate_list id="vo"}
+                                  <el-menu-item index="{$key}">
+                                      <a href="{:url('cms/post/lists', ['cid' => $vo['id']])}" title="{$vo.title}">{$vo.title}</a>
+                                  </el-menu-item>
+                              {/cms:cate_list}
+                            </el-menu>
+                        </div>
+                    {/block}
+                </el-header>
+                <div class="banner">
+                    {block name="banner"}{/block}
+                </div>
+                <div class="main">
+                    <el-container>
+                        {block name="main"}主内容{/block}
+                    </el-container>
+                </div>
+                <el-footer class="footer">
+                    {block name="footer"}
+                        <div class="container">
+                            <div class="flex" style="justify-content: space-between;">
+                                <div>
+                                    Copyright © 2018-2019 initadmin.net All Rights Reserved
+                                </div>
+                                <div style="text-align: right;">
+                                    <a target="_blank" href="http://www.beian.miit.gov.cn">苏ICP备18067203号</a>
+                                </div>
+                            </Row>
+                        </div>
+                    {/block}
+                </el-footer>
+            </el-container>
+        </div>
     </div>
 </body>
     <script src="https://unpkg.com/vue/dist/vue.js"></script>
     <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     {block name="vue"}
         <script>
             new Vue({

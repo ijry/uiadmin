@@ -47,8 +47,16 @@ class Common extends Controller
         if (\think\helper\Str::contains(request()->pathinfo(), 'api/v1/')) {
             return json($data);
         } else {
-            $this->assign($data['data']);
-            return $this->fetch();
+            if (isset($data['data'])) {
+                if (isset($data['data']['need_login']) && $data['data']['need_login'] == 1) {
+                    return $this->error($data['msg'], 'core/admin.index/login');
+                } else {
+                    $this->assign($data['data']);
+                    return $this->fetch();
+                }
+            } else {
+                return $this->fetch();
+            }
         }
     }
 
@@ -60,19 +68,22 @@ class Common extends Controller
      */
     protected function isLogin()
     {
-        //获取token
+        // 获取token
         $token = Request::header('Authorization');
         if (!$token) {
-            return ['code' => 0, 'msg' => 'AuthorizationToken未提交'];
+            $token = session('Authorization'); // 支持session
+            if (!$token) {
+                return ['code' => 0, 'msg' => 'AuthorizationToken未提交', 'data' => ['need_login' => 1]];
+            }
         }
         $jwt = explode(' ', $token)[1]; //签发的Token
         if (!$jwt) {
-            return ['code' => 0, 'msg' => '未提交用户Token'];
+            return ['code' => 0, 'msg' => '未提交用户Token', 'data' => ['need_login' => 1]];
         }
 
-        //jwt验证
+        // jwt验证
         try {
-            //数据库验证
+            // 数据库验证
             $info = Db::name('core_login')
                 ->removeOption('where')
                 ->where('token', $jwt)
@@ -85,15 +96,15 @@ class Common extends Controller
             }
 
             //解密
-            JWT::$leeway = 60;//当前时间减去60，把时间留点余地
-            $decoded = JWT::decode($jwt, $info['key'], ['HS256']); //HS256方式，这里要和签发的时候对应
+            JWT::$leeway = 60; // 当前时间减去60，把时间留点余地
+            $decoded = JWT::decode($jwt, $info['key'], ['HS256']); // HS256方式，这里要和签发的时候对应
             $arr = (array)$decoded;
             if ($arr['data']->uid != $info['uid']) {
                 return ['code' => 0, 'msg' => '数据异常请联系管理员', 'data' => ['need_login' => 1]];
             }
             $arr['data']->token = $jwt;
             return ['code' => 200, 'data' => $arr];
-        } catch(\Firebase\JWT\SignatureInvalidException $e) {  //签名不正确
+        } catch(\Firebase\JWT\SignatureInvalidException $e) {  // 签名不正确
             return ['code' => 0, 'msg' => $e->getMessage(), 'data' => ['need_login' => 1]];
         }catch(\Firebase\JWT\BeforeValidException $e) {  // 签名在某个时间点之后才能用
             return ['code' => 0, 'msg' => $e->getMessage(), 'data' => ['need_login' => 1]];

@@ -70,18 +70,18 @@ VALUES
   (26, 'core', '', '/core/config/add', '/core/config/lists', '增加配置', '增加系统配置', 2, 'form', 'v1', '', '', 'GET|POST', NULL, 0, 0, 0),
   (27, 'core', '', '/core/config/edit', '/core/config/lists', '修改配置', '修改系统配置', 2, 'form', 'v1', '/:id', '', 'GET|PUT', NULL, 0, 0, 0),
   (28, 'core', '', '/core/config/saveBatch', '/system', '系统设置', '批量修改系统配置的值', 1, 'form', 'v1', '/:module', '/core', 'GET|PUT', NULL, 0, 1, 0),
-  (29, 'core', '', '/core/user/login', '', '用户登录', '用户登录', 5, '', 'v1', '', '', 'POST', '{\"POST\":{\"description\":\"\\u4f7f\\u7528\\u51ed\\u8bc1\\u767b\\u5f55\\u7cfb\\u7edf\",\"params\":[{\"description\":\"\\u652f\\u6301\\u591a\\u79cd\\u8eab\\u4efd\\u9a8c\\u8bc1\\u65b9\\u5f0f\",\"require\":\"0\",\"name\":\"identity_type\",\"title\":\"\\u9a8c\\u8bc1\\u65b9\\u5f0f\",\"example\":\"0\"},{\"require\":\"1\",\"name\":\"identifier\",\"title\":\"\\u8d26\\u53f7\",\"description\":\"\\u7528\\u6237\\u540d\\uff0c\\u90ae\\u7bb1\\uff0c\\u624b\\u673a\\u53f7\",\"example\":\"admin@qq.com\"},{\"name\":\"credential\",\"require\":\"1\",\"title\":\"\\u51ed\\u8bc1\",\"description\":\"\\u5bc6\\u7801\",\"example\":\"qwe123\"}]}}', 0, 0, 0),
+  (29, 'core', '', '/core/user/login', '', '用户登录', '用户登录', 5, '', 'v1', '', '', 'GET|POST', '{\"POST\":{\"description\":\"\\u4f7f\\u7528\\u51ed\\u8bc1\\u767b\\u5f55\\u7cfb\\u7edf\",\"params\":[{\"description\":\"\\u652f\\u6301\\u591a\\u79cd\\u8eab\\u4efd\\u9a8c\\u8bc1\\u65b9\\u5f0f\",\"require\":\"0\",\"name\":\"identity_type\",\"title\":\"\\u9a8c\\u8bc1\\u65b9\\u5f0f\",\"example\":\"0\"},{\"require\":\"1\",\"name\":\"identifier\",\"title\":\"\\u8d26\\u53f7\",\"description\":\"\\u7528\\u6237\\u540d\\uff0c\\u90ae\\u7bb1\\uff0c\\u624b\\u673a\\u53f7\",\"example\":\"admin@qq.com\"},{\"name\":\"credential\",\"require\":\"1\",\"title\":\"\\u51ed\\u8bc1\",\"description\":\"\\u5bc6\\u7801\",\"example\":\"qwe123\"}]}}', 0, 0, 0),
   (30, 'core', '', '/core/api/add', '/core/api/trees', '添加前台API', '添加前台API接口', 2, 'form', 'v1', '', '', 'GET|POST', NULL, 0, 0, 0),
   (31, 'core', '', '/core/api/delete', '/core/api/trees', '删除前台API', '删除后前台API接口', 2, '0', 'v1', '/:id', '', 'DELETE', NULL, 0, 0, 0),
   (32, 'core', '', '/core/api/edit', '/core/api/trees', '修改前台API', '修改前台API接口', 2, 'form', 'v1', '/:id', '', 'GET|PUT', NULL, 0, 0, 0),
   (33, 'core', '', '/core/api/trees', '/developer', 'API管理', '管理前台API', 1, 'list', 'v1', '', '', 'GET', NULL, 0, 3, 0),
-  (34, 'core', '', '/core/user/register', '', '用户注册', '', 5, 'route', 'v1', '', '', 'POST', NULL, 0, 0, 0),
   (36, 'core', '', '/core/user/isLogin', '', '检查登录状态', '检查用户是否真的登录', 5, 'route', 'v1', '', '', 'GET', NULL, 0, 0, 0),
   (37, 'core', '', '/core/user/info', '', '获取用户信息', '获取登录的用户信息', 5, 'route', 'v1', '', '', 'GET', NULL, 0, 0, 0),
   (38, 'core', '', '/core/api/doc', '/core/api/trees', '修改API文档', '修改API接口文档', 2, 'form', 'v1', '/:id', '', 'GET|PUT', NULL, 0, 0, 0),
   (39, 'core', '', '/core/user/logout', '', '注销登录', '', 5, 'route', 'v1', '', '', 'DELETE', NULL, 0, 0, 0),
 	(40, 'core', '', '/core/index/upload', '', '上传文件', '上传图片和文件', 5, 'route', 'v1', '', '', 'POST', NULL, 0, 0, 0),
-	(41, 'core', '', '/core/index/config', '', '获取配置', '获取模块的公开配置', 5, 'route', 'v1', '', '', 'GET', NULL, 0, 0, 0);
+	(51, 'core', '', '/core/index/config', '', '获取配置', '获取模块的公开配置', 5, 'route', 'v1', '', '', 'GET', NULL, 0, 0, 0),
+  (52, 'core', '', '/core/index/login', '', '后台登录', '后台登录', 3, '', 'v1', '', '', 'GET|POST', '{\"POST\":{\"description\":\"使用凭证登录系统\",\"params\":[{\"description\":\"支持多种身份验证方式\",\"require\":\"0\",\"name\":\"identity_type\",\"title\":\"验证方式\",\"example\":\"0\"},{\"require\":\"1\",\"name\":\"identifier\",\"title\":\"账号\",\"description\":\"用户名，邮箱，手机号\",\"example\":\"admin@qq.com\"},{\"name\":\"credential\",\"require\":\"1\",\"title\":\"凭证\",\"description\":\"密码\",\"example\":\"qwe123\"}],\"divider\":\"\"}}', 1, 0, 0);
 
 
 CREATE TABLE `ia_core_user` (
@@ -207,6 +207,11 @@ CREATE TABLE `ia_core_userlog` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户安全记录';
 
+
+
+INSERT INTO `ia_core_module` (`name`, `title`, `description`, `developer`, `website`, `version`, `build`, `status`, `sortnum`, `delete_time`)
+VALUES
+  ('cms', '内容', '内容模块为通用的CMS文章博客模块', 'jry', 'https://jiangruyi.com', '0.1.0', 'beta1_20190508', 1, 2, 0);
 
 
 DROP TABLE IF EXISTS `ia_cms_cate`;

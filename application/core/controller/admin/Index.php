@@ -11,24 +11,24 @@
  * +----------------------------------------------------------------------
 */
 
-namespace app\core\controller;
+namespace app\core\controller\admin;
 
 use think\Db;
 use think\Request;
-use app\core\controller\common\Home;
+use app\core\controller\common\Common;
 
 /**
- * 用户控制器
+ * 默认控制器
  *
  * @author jry <ijry@qq.com>
  */
-class User extends Home
+class Index extends Common
 {
     private $core_user;
     private $core_identity;
     private $core_login;
 
-    public function initialize()
+    protected function initialize()
     {
         parent::initialize();
         $this->core_user = new \app\core\model\User();
@@ -37,39 +37,8 @@ class User extends Home
     }
 
     /**
-     * 是否登陆
+     * 后台登录
      *
-     * @return \think\Response
-     * @author jry <ijry@qq.com>
-     */
-    public function isLogin()
-    {
-        $login = parent::isLogin();
-        return $this->return(['code' => 200, 'msg' => '已登录系统', 'data' => ['uid' => $login['uid']]]);
-    }
-
-    /**
-     * 获取用户信息
-     *
-     * @return \think\Response
-     * @author jry <ijry@qq.com>
-     */
-    public function info()
-    {
-        $login = parent::isLogin();
-        try {
-            $user_service = controller('core/User', 'service');
-            $user_info = $user_service->getById($login['uid']);
-            return $this->return(['code' => 200, 'msg' => '用户信息', 'data' => ['user_info' => $user_info]]);
-        } catch(\Exception $e) {
-            return $this->return(['code' => 0, 'msg' => $e->getMessage()]);
-        }
-    }
-
-    /**
-     * 用户登录
-     *
-     * @param  \think\Request  $request
      * @return \think\Response
      * @author jry <ijry@qq.com>
      */
@@ -167,25 +136,6 @@ class User extends Home
             }
         } else {
             return $this->return(['code' => 200, 'msg' => '成功', 'data' => []]);
-        }
-    }
-
-    /**
-     * 注销登录
-     *
-     * @return \think\Response
-     * @author jry <ijry@qq.com>
-     */
-    public function logout()
-    {
-        $login = parent::isLogin();
-        $ret = $this->core_login
-            ->where('token', $login['token'])
-            ->delete(true);
-        if ($ret) {
-            return $this->return(['code' => 200, 'msg' => '注销成功', 'data' => []]);
-        } else {
-            return $this->return(['code' => 0, 'msg' => '注销失败', 'data' => []]);
         }
     }
 }

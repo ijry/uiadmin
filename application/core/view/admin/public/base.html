@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>{block name="title"}InitAdmin{/block}</title>
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <style type="text/css">
+        body {
+            margin: 0;
+            padding: 0;
+        }
+        .flex {
+            display: flex;
+            display: -webkit-flex;
+            align-items: center;
+            text-decoration: none;
+        }
+        .flex-col {
+            display: flex;
+            display: -webkit-flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+        }
+        .wrap {
+            height: 100vh;
+        }
+        .el-aside {
+            border-right: solid 1px #e6e6e6;
+        }
+        .logo-box {
+            text-align: center;
+            justify-content: center;
+            align-items: center;
+            height: 60px;
+        }
+        .logo-box .title {
+            color: #2d8cf0;
+            font-size: 20px;
+        }
+        .logo-box .logo {
+            height: 46px;
+            margin-right: 10px;
+        }
+        .main-menu {
+            border-right: 0 !important;
+        }
+        .main-menu a {
+            color: #606266;
+            text-decoration: none;
+        }
+        .header {
+            border-bottom: solid 1px #e6e6e6;
+        }
+        .header a {
+            font-size: 16px;
+            color: #303133;
+            text-decoration: none;
+        }
+        .el-main {
+            padding: 0px !important;
+        }
+        .main {
+            padding: 15px;
+        }
+    </style>
+    {block name="style"}{/block}
+</head>
+<body>
+    <div id="app">
+        <div class="wrap">
+            <el-container style="height: 100vh;">
+                <el-aside width="200px">
+                    <div class="logo-box flex">
+                        <img src="<?php echo request()->root(); ?>/static/logo.png" class="logo">
+                        <span class="title">InitAdmin</span>
+                    </div>
+                    <el-menu default-active="home" class="main-menu">
+                        {core:menu_list id="vo"}
+                            <?php if($vo['menu_type'] == 0): ?>
+                                <el-submenu index="0-{$key}">
+                                    <template slot="title">
+                                      <i class="el-icon-folder-opened"></i>
+                                      <span>{$vo.title}</span>
+                                    </template>
+                                    <?php if(isset($vo['children'])): ?>
+                                        {volist name="vo.children" id="vo1"}
+                                            <?php if($vo1['menu_type'] == 1): ?>
+                                                <el-menu-item index="1-1">
+                                                    <a href="{:url($vo['path'])}">{$vo1.title}</a>
+                                                </el-menu-item>
+                                            <?php endif; ?>
+                                        {/volist}
+                                    <?php endif; ?>
+                                </el-submenu>
+                            <?php endif; ?>
+                        {/core:menu_list}
+                    </el-menu>
+                </el-aside>
+                <el-main>
+                    <el-container>
+                        <el-header class="header flex" style="justify-content: space-between;">
+                            <div>
+                            </div>
+                            <div>
+                                <a target="_blank" href="<?php echo request()->root(); ?>">访问前台</a>
+                                <span @click="cleanRuntime">清除缓存</span>
+                            </div>
+                        </el-header>
+                        <div class="main">
+                            {block name="main"}主内容{/block}
+                        </div>
+                    </el-container>
+                </el-main>
+            </el-container>
+        </div>
+    </div>
+</body>
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    {block name="vue"}
+        <script>
+            let util = {};
+            // request
+            util.request = function ({
+                method = "get",
+                url,
+                data = {},
+                header = {
+                    contentType: 'application/json'
+                },
+                dataType = 'json',
+                success,
+                fail,
+                complete
+            }) {
+                // 请求
+                if (0 != url.indexOf("http")) {
+                    url = '<?php echo request()->root(); ?>/api' + url
+                }
+                let params = {};
+                if (method == 'get') {
+                    params = data;
+                }
+                return new Promise((resolve, reject) => {
+                    axios({
+                        method: method,
+                        url: url,
+                        data: data,
+                        params: params,
+                        headers: header
+                    }).then(function(res) {
+                        resolve(res.data);
+                    }).catch(function(error) {
+                        let res = new Object();
+                        res.code = 0;
+                        res.msg = error.message;
+                        reject(res);
+                    });
+                })
+            };
+            new Vue({
+                el: '#app',
+                data: function() {
+                    return {}
+                },
+                methods: {
+                    // 清除缓存
+                    async cleanRuntime () {
+                        // 清除服务器缓存
+                        let res = await util.request({
+                            url: '/v1/admin/core/system/cleanRuntime',
+                            method: 'delete'
+                        });
+                        if (res.code == 200) {
+                            // 刷新页面
+                            window.location.reload();
+                        } else {
+                            alert(res.msg);
+                        }
+                    },
+                    // 注销登录
+                    async logout () {
+                        //清楚服务器缓存
+                        let res = await util.request({
+                            url: '/v1/core/user/logout',
+                            method: 'delete'
+                        });
+                        if (res.code == 200) {
+                            // 刷新页面
+                            window.location.reload();
+                        } else {
+                            alert(res.msg);
+                        }
+                    }
+                }
+            })
+        </script>
+    {/block}
+    {block name="script"}{/block}
+</html>

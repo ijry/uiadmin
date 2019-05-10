@@ -88,6 +88,7 @@ class User
         $data['client_type'] = $client['type'];
         $data['client_name'] = $client['name'];
         if ($this->core_login->insert($data)) {
+            session('Authorization', 'Bearer ' . $jwt); // 支持session+jwt登录方式
             return $jwt;
         }
         return false;

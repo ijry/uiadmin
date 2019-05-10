@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>InitAdmin后台登录</title>
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <style type="text/css">
+        body {
+            margin: 0;
+            padding: 0;
+        }
+        .wrap{
+            width: 100%;
+            height: 100vh;
+            text-align: center;
+            background: #002538;
+        }
+        .main {
+            position: absolute;
+            top: 20%;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <div class="wrap">
+            <el-row class="main" :gutter="0" type="flex" justify="center">
+                <el-col :xs="8" :sm="6" :md="5" :lg="4" :xl="3">
+                    <div style="width: 100%;color: #fff;margin-bottom: 30px;">
+                        <img
+                            style="width: 120px;margin-bottom: 10px;"
+                            src="<?php echo request()->root(); ?>/static/logo.png">
+                        <h2>InitAdmin后台登录</h2>
+                    </div>
+                    <el-form ref="login" :model="login">
+                        <el-form-item>
+                            <el-input prefix-icon="el-icon-user" v-model="login.account" placeholder="账号" clearable></el-input>
+                        </el-form-item>
+                        <el-form-item>
+                            <el-input prefix-icon="el-icon-lock" v-model="login.password" placeholder="密码" clearable show-password></el-input>
+                        </el-form-item>
+                        <el-form-item>
+                            <el-button :loading="login.loading" type="primary" @click="handleSubmit">立即登录</el-button>
+                        </el-form-item>
+                    </el-form>
+                </el-col>
+            </el-row>
+        </div>
+    </div>
+</body>
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script>
+        let util = {};
+        // request
+        util.request = function ({
+            method = "get",
+            url,
+            data = {},
+            header = {
+                contentType: 'application/json'
+            },
+            dataType = 'json',
+            success,
+            fail,
+            complete
+        }) {
+            // 请求
+            if (0 != url.indexOf("http")) {
+                url = '<?php echo request()->root(); ?>/api' + url
+            }
+            let params = {};
+            if (method == 'get') {
+                params = data;
+            }
+            return new Promise((resolve, reject) => {
+                axios({
+                    method: method,
+                    url: url,
+                    data: data,
+                    params: params,
+                    headers: header
+                }).then(function(res) {
+                    resolve(res.data);
+                }).catch(function(error) {
+                    let res = new Object();
+                    res.code = 0;
+                    res.msg = error.message;
+                    reject(res);
+                });
+            })
+        };
+        new Vue({
+            el: '#app',
+            data: function() {
+                return {
+                    isDemo: false,
+                    login: {
+                        loading: false,
+                        account: '',
+                        password: ''
+                    },
+                    loginRule: {
+                        account: [
+                            { required: true, message: '请填写账号', trigger: 'blur' }
+                        ],
+                        password: [
+                            { required: true, message: '请填写密码', trigger: 'blur' },
+                            { type: 'string', min: 6, message: '密码至少6位', trigger: 'blur' }
+                        ]
+                    }
+                }
+            },
+            created() {
+                if (this.isDemo == 'true') {
+                    this.login.account = 'initadmin';
+                    this.login.password = 'initadmin.net';
+                }
+            },
+            methods: {
+                handleSubmit: async function(){
+                    this.login.loading = true;
+                    let res = await util.request({
+                        url: '/v1/admin/core/index/login',
+                        data: this.login,
+                        method: 'post',
+                    });
+                    if (res.code == 200) {
+                        this.$message({
+                            message: res.msg,
+                            type: 'success'
+                        });
+                        // 跳转首页
+                        location.href = "<?php echo request()->root(); ?>/admin/";
+                    } else {
+                        this.$message({
+                            message: res.msg,
+                            type: 'error'
+                        });
+                    }
+                    this.login.loading = false;
+                }
+            }
+        })
+    </script>
+</html>

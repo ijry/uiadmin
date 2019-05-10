@@ -23,7 +23,7 @@ class Cms extends TagLib{
      */
     protected $tags = [
         // 标签定义： attr 属性列表 close 是否闭合（0 或者1 默认1） alias 标签别名 level 嵌套层次
-        'cate_list' => ['attr' => 'id,cate_id', 'close' => 1],
+        'cate_list' => ['attr' => 'id,cid', 'close' => 1],
     ];
 
     /**
@@ -32,7 +32,7 @@ class Cms extends TagLib{
     public function tagCate_list($tag, $content)
     {
         $id = $tag['id'];
-        $cate_id = isset($tag['cate_id']) ? $tag['cate_id'] : 0;
+        $cid = isset($tag['cid']) ? $tag['cid'] : 0;
         $parse = '<?php ';
         $parse .= '$cms_cate = new \app\cms\model\Cate();';
         $parse .= '$_data_list = $cms_cate->select()->toArray();';

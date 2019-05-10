@@ -30,7 +30,7 @@ class Router
         // 内置路由
         Route::rule('/', 'cms/post/index'); // 首页访问路由
         Route::rule('/api/', 'core/index/api'); // API访问路由
-        Route::rule('/admin', 'core/admin.system/index'); // 后台首页访问路由
+        Route::rule('/admin/', 'core/admin.system/index'); // 后台首页访问路由
 
         // 计算后台API路由
         $data_list = Db::name('core_menu')
@@ -75,6 +75,6 @@ class Router
         }
 
         // 模板标签
-        config('template.taglib_pre_load', 'app\cms\taglib\Cms');
+        config('template.taglib_pre_load', 'app\core\taglib\Core,app\cms\taglib\Cms');
     }
 }
