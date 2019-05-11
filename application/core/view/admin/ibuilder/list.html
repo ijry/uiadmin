@@ -2,16 +2,39 @@
 
 {block name="style"}
     <style type="text/css" media="screen">
+      .top-button,
+      .top-button a,
       .right-button,
       .right-button a {
           color: #909399;
           text-decoration: none;
+      }
+      .top-button-list {
+        margin-bottom: 15px;
       }
     </style>
 {/block}
 
 {block name="main"}
     <div class="ibuilder-list">
+      <div class="top-button-list">
+        {foreach $list_data['top_button_list'] as $key0=>$vo0}
+          <?php if($vo0['page_data']['modal_type'] == 'confirm'): ?>
+            <el-button
+              @click="right_button_modal('{$key0}', scope)"
+              class="top-button form_method"
+              size="medium">
+              {$vo0.title}
+            </el-button>
+          <?php else: ?>
+            <el-button
+              class="top-button"
+              size="medium">
+              <a :href="'<?php echo request()->root(); ?>/admin/{$vo0.page_data.path}/' + '.html'">{$vo0.title}</a>
+            </el-button>
+          <?php endif; ?>
+        {/foreach}
+      </div>
       <el-table
         :data="list_data.data_list"
         style="width: 100%;margin-bottom: 20px;"
