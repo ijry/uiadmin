@@ -126,13 +126,10 @@ class IbuilderList {
         $column = [
             'key' => $key,
             'title' => $title,
-            'width' => '150px'
+            'width' => '100px'
         ];
         if (isset($data['width'])) {
             $column['width'] = $data['width'];
-        }
-        if (isset($data['minWidth'])) {
-            $column['minWidth'] = $data['minWidth'];
         }
         if (isset($data['type'])) {
             $column['type'] = $data['type'];
@@ -140,7 +137,7 @@ class IbuilderList {
         if (isset($data['template'])) {
             $column['template'] = $data['template'];
             if ($data['template'] == 'right_button_list') {
-                $column['width'] = 90 * count($this->data['right_button_list']) . 'px';
+                $column['width'] = 60 * count($this->data['right_button_list']) . 'px';
             }
         }
         $this->data['columns'][] = $column;

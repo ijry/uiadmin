@@ -78,11 +78,10 @@ class Menu extends Admin
             ->addColumn('title', '菜单标题', ['width' => '230px'])
             ->addColumn('menu_type', '类型', ['width' => '50px'])
             ->addColumn('api_method', '请求方法', ['width' => '90px'])
-            ->addColumn('admin_api', '后台接口', ['minWidth' => '140px'])
+            ->addColumn('admin_api', '后台接口', ['minWidth' => '250px'])
             ->addColumn('is_hide', '隐藏', ['width' => '50px'])
             ->addColumn('sortnum', '排序', ['width' => '50px'])
             ->addColumn('right_button_list', '操作', [
-                'minWidth' => '50px',
                 'type' => 'template',
                 'template' => 'right_button_list'
             ])
