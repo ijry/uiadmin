@@ -1,0 +1,266 @@
+{extend name="core@admin/public/base" /}
+
+{block name="style"}
+    <style type="text/css" media="screen">
+      .ibuilder-form {
+        background-color: #fff;
+        padding: 15px 0;
+      }
+      .image-uploader .el-upload {
+        border: 1px dashed #d9d9d9;
+        border-radius: 6px;
+        cursor: pointer;
+        position: relative;
+        overflow: hidden;
+      }
+      .image-uploader .el-upload:hover {
+        border-color: #409EFF;
+      }
+      .image-uploader-icon {
+        font-size: 28px;
+        color: #8c939d;
+        width: 178px;
+        height: 178px;
+        line-height: 178px;
+        text-align: center;
+      }
+      .image {
+        width: 178px;
+        height: 178px;
+        display: block;
+      }
+    </style>
+{/block}
+
+{block name="main"}
+    <div class="ibuilder-form">
+      <el-form ref="ref" :model="form_data.form_values" label-width="80px">
+        {foreach $form_data['form_items'] as $key=>$vo}
+          {switch $vo['type']}
+              {case divider}
+                <el-divider></el-divider>
+              {/case}
+              {case static}
+                <el-form-item label="{$vo.title}">
+                  <span>{$vo.value}</span>
+                </el-form-item>
+              {/case}
+              {case text}
+                <el-form-item label="{$vo.title}">
+                  <el-input v-model="form_data.form_values.{$vo.name}" placeholder="{$vo.extra.placeholder}" clearable></el-input>
+                </el-form-item>
+              {/case}
+              {case password}
+                <el-form-item label="{$vo.title}">
+                  <el-input v-model="form_data.form_values.{$vo.name}" placeholder="{$vo.extra.placeholder}" clearable show-password></el-input>
+                </el-form-item>
+              {/case}
+              {case url}
+                <el-form-item label="{$vo.title}">
+                  <el-input v-model="form_data.form_values.{$vo.name}" placeholder="{$vo.extra.placeholder}" clearable></el-input>
+                </el-form-item>
+              {/case}
+              {case email}
+                <el-form-item label="{$vo.title}">
+                  <el-input v-model="form_data.form_values.{$vo.name}" placeholder="{$vo.extra.placeholder}" clearable></el-input>
+                </el-form-item>
+              {/case}
+              {case number}
+                <el-form-item label="{$vo.title}">
+                  <el-input v-model="form_data.form_values.{$vo.name}" placeholder="{$vo.extra.placeholder}" clearable></el-input>
+                </el-form-item>
+              {/case}
+              {case digit}
+                <el-form-item label="{$vo.title}">
+                  <el-input v-model="form_data.form_values.{$vo.name}" placeholder="{$vo.extra.placeholder}" clearable></el-input>
+                </el-form-item>
+              {/case}
+              {case tel}
+                <el-form-item label="{$vo.title}">
+                  <el-input v-model="form_data.form_values.{$vo.name}" placeholder="{$vo.extra.placeholder}" clearable></el-input>
+                </el-form-item>
+              {/case}
+              {case textarea}
+                <el-form-item label="{$vo.title}">
+                  <el-input type="textarea" v-model="form_data.form_values.{$vo.name}" placeholder="{$vo.extra.placeholder}" clearable></el-input>
+                </el-form-item>
+              {/case}
+              {case array}
+                <el-form-item label="{$vo.title}">
+                  <el-input type="textarea" v-model="form_data.form_values.{$vo.name}" placeholder="{$vo.extra.placeholder}" clearable></el-input>
+                </el-form-item>
+              {/case}
+              {case select}
+                <el-form-item label="{$vo.title}">
+                  <el-select v-model="form_data.form_values.{$vo.name}" placeholder="{$vo.extra.placeholder}">
+                      <el-option
+                        v-for="(item1,key1,index1) in form_data.form_items[{$key}].extra.options"
+                        :key="index1"
+                        :label="item1.title"
+                        :value="item1.value">
+                      </el-option>
+                  </el-select>
+                </el-form-item>
+              {/case}
+              {case radio}
+                <el-form-item label="{$vo.title}">
+                  <el-radio-group v-model="form_data.form_values.{$vo.name}">
+                    <el-radio
+                      v-for="(item1,key1,index1) in form_data.form_items[{$key}].extra.options"
+                      :key="index1"
+                      :label="item1.value">
+                      {{item1.title}}
+                    </el-radio>
+                  </el-radio-group>
+                </el-form-item>
+              {/case}
+              {case checkbox}
+                <el-form-item label="{$vo.title}">
+                  <el-checkbox-group v-model="form_data.form_values.{$vo.name}">
+                    <el-checkbox
+                      v-for="(item1,key1,index1) in form_data.form_items[{$key}].extra.options"
+                      :key="index1"
+                      :label="item1.title">
+                    </el-checkbox>
+                  </el-checkbox-group>
+                </el-form-item>
+              {/case}
+              {case switch}
+                <el-form-item label="{$vo.title}">
+                  <el-switch
+                    v-model="form_data.form_values.{$vo.name}"
+                    active-text="{$vo1.options[0].title}"
+                    inactive-text="{$vo1.options[1].title}">
+                  </el-switch>
+                </el-form-item>
+              {/case}
+              {case slider}
+                <el-form-item label="{$vo.title}">
+                  <el-slider v-model="form_data.form_values.{$vo.name}"></el-slider>
+                </el-form-item>
+              {/case}
+              {case datepicker}
+                <el-form-item label="{$vo.title}">
+                  <el-date-picker type="date" placeholder="选择日期" v-model="form_data.form_values.{$vo.name}""></el-date-picker>
+                </el-form-item>
+              {/case}
+              {case timepicker}
+                <el-form-item label="{$vo.title}">
+                  <el-time-picker placeholder="选择时间" v-model="form_data.form_values.{$vo.name}""></el-time-picker>
+                </el-form-item>
+              {/case}
+              {case datetimepicker}
+                <el-form-item label="{$vo.title}">
+                  <el-date-picker type="datetime" placeholder="选择日期时间" v-model="form_data.form_values.{$vo.name}""></el-date-picker>
+                </el-form-item>
+              {/case}
+              {case rate}
+                <el-form-item label="{$vo.title}">
+                  <el-rate v-model="form_data.form_values.{$vo.name}"></el-rate>
+                </el-form-item>
+              {/case}
+              {case cascader}
+                <el-form-item label="{$vo.title}">
+                  <el-cascader
+                    :options="form_data.form_items[{$key}].extra.options"
+                    v-model="form_data.form_values.{$vo.name}">
+                  </el-cascader>
+                </el-form-item>
+              {/case}
+              {case colorpicker}
+                <el-form-item label="{$vo.title}">
+                  <el-color-picker v-model="form_data.form_values.{$vo.name}"></el-color-picker>
+                </el-form-item>
+              {/case}
+              {case image}
+                <el-form-item label="{$vo.title}">
+                  <el-upload
+                    class="image-uploader"
+                    action="{$vo.extra.action}"
+                    :show-file-list="false"
+                    :on-success="handleUploadSuccess"
+                    :before-upload="beforeUpload">
+                    <img v-if="form_data.form_values.{$vo.name}" :src="form_data.form_values.{$vo.name}" class="image">
+                    <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+                  </el-upload>
+                </el-form-item>
+              {/case}
+              {case images}
+                <el-form-item label="{$vo.title}">
+                </el-form-item>
+              {/case}
+              {case file}
+                <el-form-item label="{$vo.title}">
+                </el-form-item>
+              {/case}
+              {case files}
+                <el-form-item label="{$vo.title}">
+                </el-form-item>
+              {/case}
+              {case checkboxtree}
+                <el-form-item label="{$vo.title}">
+                </el-form-item>
+              {/case}
+              {case formlist}
+                <el-form-item label="{$vo.title}">
+                </el-form-item>
+              {/case}
+              {default /}
+          {/switch}
+        {/foreach}
+        <el-form-item>
+          <el-button type="primary" :loading="loading" @click="submit">立即提交</el-button>
+          <el-button @click="cannel">取消</el-button>
+        </el-form-item>
+      </el-form>
+{/block}
+
+{block name="vue"}
+    <script>
+        {include file="core@admin/public:util" /}
+        new Vue({
+            el: '#app',
+            data: function() {
+                return {
+                    {include file="core@admin/public:data" /},
+                    loading: false,
+                    form_data: <?php echo json_encode($form_data); ?>
+                }
+            },
+            methods: {
+                {include file="core@admin/public:methods" /},
+                handleUploadSuccess(res, file) {
+                  console.log(res);
+                },
+                beforeUpload(file) {
+                  return true;
+                },
+                async submit() {
+                  this.loading = true;
+                  // 提交数据
+                  let res = await util.request({
+                      url: '/v1/<?php echo(request()->path()); ?>',
+                      method: this.form_data.form_method,
+                      data: this.form_data.form_values
+                  });
+                  if (res.code == '200') {
+                      this.$message({
+                          message: res.msg,
+                          type: 'success'
+                      });
+                      history.go(-1);
+                  } else {
+                      this.$message({
+                          message: res.msg,
+                          type: 'error'
+                      });
+                  }
+                  this.loading = false
+                },
+                cannel() {
+                  history.go(-1);
+                }
+            }
+        });
+    </script>
+{/block}

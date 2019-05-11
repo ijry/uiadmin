@@ -142,7 +142,7 @@ class User extends Admin
                     'placeholder' => '请输入用户名',
                     'tip' => '用户名唯一不重复，可以用来登录系统'
                 ])
-                ->addFormItem('password', '密码', 'text', '', [
+                ->addFormItem('password', '密码', 'password', '', [
                     'placeholder' => '请输入用户密码',
                     'tip' => '密码必须要包含字母数字和符号中的两种'
                 ])
@@ -227,7 +227,7 @@ class User extends Admin
                     'placeholder' => '请输入用户名',
                     'tip' => '用户名唯一不重复，可以用来登录系统'
                 ])
-                ->addFormItem('password', '密码', 'text', '', [
+                ->addFormItem('password', '密码', 'password', '', [
                     'placeholder' => '请输入用户密码',
                     'tip' => '密码必须要包含字母数字和符号中的两种'
                 ])
