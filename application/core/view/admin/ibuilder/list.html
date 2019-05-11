@@ -30,7 +30,7 @@
             <el-button
               class="top-button"
               size="medium">
-              <a :href="'<?php echo request()->root(); ?>/admin/{$vo0.page_data.path}/' + '.html'">{$vo0.title}</a>
+              <a :href="'<?php echo request()->root(); ?>/admin/{$vo0.page_data.path}' + '.html'">{$vo0.title}</a>
             </el-button>
           <?php endif; ?>
         {/foreach}
@@ -60,7 +60,15 @@
                     <el-button
                       class="right-button"
                       size="mini">
-                      <a :href="'<?php echo request()->root(); ?>/admin/{$vo1.page_data.path}/' + scope.row.{$vo1.page_data.api_suffix[0]} + '.html'">{$vo1.title}</a>
+                      <?php if(isset($vo1['page_data']['api_suffix'][0])): ?>
+                        <a :href="'<?php echo request()->root(); ?>/admin/{$vo1.page_data.path}/' + scope.row.{$vo1.page_data.api_suffix[0]} + '.html'">
+                          {$vo1.title}
+                        </a>
+                      <?php else: ?>
+                        <a :href="'<?php echo request()->root(); ?>/admin/{$vo1.page_data.path}' + '.html'">
+                          {$vo1.title}
+                        </a>
+                      <?php endif; ?>
                     </el-button>
                   <?php endif; ?>
                 {/foreach}
