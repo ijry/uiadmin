@@ -51,16 +51,17 @@
             margin-right: 10px;
         }
         .main-menu {
+            user-select: none;
             border-right: 0 !important;
         }
         .main-menu a {
             color: #C0C4CC;
             text-decoration: none;
         }
-        .main-menu .el-menu-item {
-            background-color: rgba(255, 255, 255, .1) !important;
+        .main-menu .el-submenu .el-menu-item {
+            background-color: rgba(255, 255, 255, .05) !important;
         }
-        .main-menu .el-menu-item:hover {
+        .main-menu .el-submenu .el-menu-item:hover {
             padding-left: 38px !important;
             border-left: 2px solid #C0C4CC !important;
         }
@@ -89,7 +90,7 @@
         .search .el-input input {
             border: 0;
             color: #fff;
-            background: rgba(255, 255, 255, .1);
+            background: rgba(255, 255, 255, .06);
         }
         .search .el-input input:focus {
             border: 0;
@@ -103,10 +104,10 @@
         <div class="wrap">
             <el-container style="height: 100vh;">
                 <el-aside class="main-aside" :style="{width: isCollapsed ? '70px': '200px'}">
-                    <div class="logo-box flex">
+                    <a class="logo-box flex" href="<?php echo request()->root(); ?>/admin/">
                         <img src="<?php echo request()->root(); ?>/static/logo.png" class="logo">
                         <span v-if="isCollapsed == false" class="title">InitAdmin</span>
-                    </div>
+                    </a>
                     <div class="search" v-if="isCollapsed == false">
                         <el-input
                             size="medium"
@@ -123,6 +124,10 @@
                         :default-openeds="['0-1']"
                         :collapse="isCollapsed"
                         class="main-menu">
+                        <el-menu-item index="0">
+                            <i class="el-icon-house"></i>
+                            <a href="<?php echo request()->root(); ?>/admin/">首页</a>
+                        </el-menu-item>
                         {core:menu_list id="vo"}
                             <?php if($vo['menu_type'] == 0): ?>
                                 <el-submenu index="0-{$key}">
@@ -151,7 +156,7 @@
                                 <span @click="collapsedSider" :class="isCollapsed ? 'el-icon-s-unfold' : 'el-icon-s-fold'"></span>
                             </div>
                             <div>
-                                <a target="_blank" href="<?php echo request()->root(); ?>">访问前台</a>
+                                <a target="_blank" href="<?php echo request()->domain(); ?><?php echo request()->rootUrl(); ?>">访问前台</a>
                                 <span @click="cleanRuntime">清除缓存</span>
                             </div>
                         </el-header>
