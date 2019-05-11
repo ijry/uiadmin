@@ -167,16 +167,16 @@
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     {block name="vue"}
         <script>
-            {include file="admin/public:util" /}
+            {include file="core@admin/public:util" /}
             new Vue({
                 el: '#app',
                 data: function() {
                     return {
-                        {include file="admin/public:data" /}
+                        {include file="core@admin/public:data" /}
                     }
                 },
                 methods: {
-                    {include file="admin/public:methods" /}
+                    {include file="core@admin/public:methods" /}
                 }
             });
         </script>

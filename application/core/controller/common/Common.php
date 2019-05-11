@@ -43,9 +43,13 @@ class Common extends Controller
      */
     protected function return($data)
     {
-        // 判断pathinfo中是否含有api/v1/来判断时API请求还是页面请求
-        if (\think\helper\Str::contains(request()->pathinfo(), 'api/v1/')) {
-            return json($data);
+        // 判断pathinfo中是否以api/开头来判断时API请求还是页面请求
+        if (\think\helper\Str::startsWith(request()->pathinfo(), 'api/')) {
+            if (\think\helper\Str::contains(request()->pathinfo(), '.html')) {
+                dump($data);
+            } else {
+                return json($data);
+            }
         } else {
             if (isset($data['data'])) {
                 if (isset($data['data']['need_login']) && $data['data']['need_login'] == 1) {
@@ -53,9 +57,9 @@ class Common extends Controller
                 } else {
                     $this->assign($data['data']);
                     if (isset($data['data']['list_data'])) {
-                        return $this->fetch('admin/ibuilder/list');
+                        return $this->fetch('core@admin/ibuilder/list');
                     } else if(isset($data['data']['form_data'])) {
-                        return $this->fetch('admin/ibuilder/form');
+                        return $this->fetch('core@admin/ibuilder/form');
                     } else {
                         return $this->fetch();
                     }

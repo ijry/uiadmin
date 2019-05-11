@@ -53,6 +53,7 @@ class IbuilderList {
             'modal_type' => isset($page_data['modal_type']) ? $page_data['modal_type'] : 'form',
             'form_method' => isset($page_data['form_method']) ? $page_data['form_method'] : 'delete',
             'show' => false,
+            'path' => isset($page_data['path']) ? $page_data['path'] : '',
             'api' => $page_data['api'],
             'api_blank' => '',
             'api_suffix' => isset($page_data['api_suffix']) ? $page_data['api_suffix'] : [],
@@ -66,6 +67,9 @@ class IbuilderList {
             'draggable' => false,
             'scrollable' => true,
         ];
+        if ($btn['page_data']['path'] == '') {
+            $btn['page_data']['path'] = ltrim($btn['page_data']['api'], '/v1/admin');
+        }
         $btn['style'] = [
             'type' => isset($style['type']) ? $style['type'] : 'default',
             'size' => isset($style['size']) ? $style['size'] : 'default',
@@ -87,6 +91,7 @@ class IbuilderList {
             'modal_type' => isset($page_data['modal_type']) ? $page_data['modal_type'] : 'form',
             'form_method' => isset($page_data['form_method']) ? $page_data['form_method'] : 'delete',
             'show' => false,
+            'path' => isset($page_data['path']) ? $page_data['path'] : '',
             'api' => $page_data['api'],
             'api_blank' => '',
             'api_suffix' => isset($page_data['api_suffix']) ? $page_data['api_suffix'] : ['id'],
@@ -100,6 +105,9 @@ class IbuilderList {
             'draggable' => false,
             'scrollable' => true,
         ];
+        if ($btn['page_data']['path'] == '') {
+            $btn['page_data']['path'] = ltrim($btn['page_data']['api'], '/v1/admin');
+        }
         $btn['style'] = [
             'type' => isset($style['type']) ? $style['type'] : 'default',
             'size' => isset($style['size']) ? $style['size'] : 'default',
@@ -117,7 +125,8 @@ class IbuilderList {
     public function addColumn($key, $title, $data = []) {
         $column = [
             'key' => $key,
-            'title' => $title
+            'title' => $title,
+            'width' => '150px'
         ];
         if (isset($data['width'])) {
             $column['width'] = $data['width'];
@@ -130,6 +139,9 @@ class IbuilderList {
         }
         if (isset($data['template'])) {
             $column['template'] = $data['template'];
+            if ($data['template'] == 'right_button_list') {
+                $column['width'] = 90 * count($this->data['right_button_list']) . 'px';
+            }
         }
         $this->data['columns'][] = $column;
         return $this;
