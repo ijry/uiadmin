@@ -2,6 +2,7 @@
 
 {block name="style"}
     <style type="text/css" media="screen">
+      .right-button,
       .right-button a {
           color: #909399;
           text-decoration: none;
@@ -12,10 +13,10 @@
 {block name="main"}
     <div>
       <el-table
-        :data="tableData"
+        :data="list_data.data_list"
         style="width: 100%;margin-bottom: 20px;"
         border
-        row-key="id">
+        row-key="title">
         {foreach $list_data['columns'] as $key=>$vo}
           <?php if(isset($vo['template']) && $vo['template'] == 'right_button_list'): ?>
             <el-table-column
@@ -25,11 +26,20 @@
               width="{$vo.width}">
               <template slot-scope="scope">
                 {foreach $list_data['right_button_list'] as $key1=>$vo1}
-                  <el-button
-                    class="right-button"
-                    size="mini">
-                    <a href="<?php echo request()->root(); ?>/admin/{$vo1.page_data.path}">{$vo1.title}</a>
-                  </el-button>
+                  <?php if($vo1['page_data']['modal_type'] == 'confirm'): ?>
+                    <el-button
+                      @click="right_button_modal('{$key1}', scope)"
+                      class="right-button form_method"
+                      size="mini">
+                      {$vo1.title}
+                    </el-button>
+                  <?php else: ?>
+                    <el-button
+                      class="right-button"
+                      size="mini">
+                      <a :href="'<?php echo request()->root(); ?>/admin/{$vo1.page_data.path}/' + scope.row.{$vo1.page_data.api_suffix[0]} + '.html'">{$vo1.title}</a>
+                    </el-button>
+                  <?php endif; ?>
                 {/foreach}
               </template>
             </el-table-column>
@@ -53,11 +63,46 @@
             data: function() {
                 return {
                     {include file="core@admin/public:data" /},
-                    tableData: <?php echo json_encode($list_data['data_list']); ?>
+                    list_data: <?php echo json_encode($list_data); ?>
                 }
             },
             methods: {
-                {include file="core@admin/public:methods" /}
+                {include file="core@admin/public:methods" /},
+                right_button_modal(key, scope) {
+                  let button_data = this.list_data.right_button_list[key];
+                  var api_suffix = '';
+                  if (this.list_data.right_button_list[key].page_data.api_suffix) {
+                      let asd = this.list_data.right_button_list[key].page_data.api_suffix;
+                      for(let v of asd) {
+                          api_suffix = api_suffix + '/' + scope.row[v];
+                      };
+                  } else {
+                      api_suffix = '/' + scope.row.id;
+                  }
+                  this.$confirm(button_data.page_data.content, button_data.page_data.title, {
+                    dangerouslyUseHTMLString: true,
+                    confirmButtonText: button_data.page_data.okText,
+                    cancelButtonText: button_data.page_data.cancelText,
+                    type: 'warning'
+                  }).then( async () => {
+                    let res = await util.request({
+                        url: button_data.page_data.api + api_suffix,
+                        method: button_data.page_data.form_method
+                    });
+                    if (res.code=='200') {
+                        this.$message({
+                          type: 'success',
+                          message: res.msg
+                        });
+                        location.reload();
+                    } else {
+                        this.$message({
+                          type: 'error',
+                          message: res.msg
+                        });
+                    }
+                  });
+                }
             }
         });
     </script>
