@@ -134,7 +134,7 @@
                                         {volist name="vo.children" id="vo1"}
                                             <?php if($vo1['menu_type'] == 1): ?>
                                                 <el-menu-item index="1-{$key}">
-                                                    <a href="<?php echo request()->root(); ?>/admin{$vo1['path']}.html">{$vo1.title}</a>
+                                                    <a href="<?php echo request()->root(); ?>/admin{$vo1['path']}{$vo1.api_params}.html">{$vo1.title}</a>
                                                 </el-menu-item>
                                             <?php endif; ?>
                                         {/volist}
