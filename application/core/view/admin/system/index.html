@@ -2,11 +2,48 @@
 
 {block name="style"}
     <style type="text/css" media="screen">
+        .el-card {
+            height: 350px;
+        }
     </style>
 {/block}
 
 {block name="main"}
-    <div>
-        后台首页
-    </div>
+    <el-row :gutter="20">
+        <el-col :span="12">
+            <el-card shadow="never" class="box-card">
+                <div slot="header" class="clearfix">
+                    <span>系统信息</span>
+                </div>
+                <div>
+                    <div>后台名称：InitAdmin后台</div>
+                    <div>官方网站：<a target="_blank" href="https://initadmin.net">https://initadmin.net</a></div>
+                    <div>开发文档：<a target="_blank" href="https://initadmin.net/#/docs">https://initadmin.net/#/docs</a></div>
+                    <div>客户端框架：vue-admin v0.1.0</div>
+                    <div>服务端框架：actionphp v0.1.0</div>
+                    <div>
+                        <span>云后台管理：</span>
+                        <a target="_blank" href="http://admin.jiangruyi.com?api=<?php echo request()->domain() . request()->baseFile() . '/api/'; ?>">
+                            http://admin.jiangruyi.com
+                        </a>
+                    </div>
+                    <el-divider></el-divider>
+                    <div>PHP版本：7.0</div>
+                    <div>数据库版本：Mysql5.7</div>
+                    <div>文件上传限制：100M</div>
+                </div>
+            </el-card>
+        </el-col>
+        <el-col :span="12">
+            <el-card shadow="never" class="box-card">
+                <div slot="header" class="clearfix">
+                    <span>APP与交流群</span>
+                </div>
+                <div>
+                    <img style="width: 200px;margin-right: 10px;" src="https://admin.jiangruyi.com/img/app.ef222224.png">
+                    <img style="width: 200px;margin-right: 10px;" src="https://admin.jiangruyi.com/img/qun_qq.a49e406d.png">
+                </div>
+            </el-card>
+        </el-col>
+    </el-row>
 {/block}
