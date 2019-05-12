@@ -81,7 +81,13 @@ VALUES
   ('core', '', '/core/user/logout', '', '注销登录', '', 5, 'route', 'v1', '', '', 'DELETE', NULL, 0, 0, 0),
 	('core', '', '/core/index/upload', '', '上传文件', '上传图片和文件', 5, 'route', 'v1', '', '', 'POST', NULL, 0, 0, 0),
 	('core', '', '/core/index/config', '', '获取配置', '获取模块的公开配置', 5, 'route', 'v1', '', '', 'GET', NULL, 0, 0, 0),
-  ('core', '', '/core/index/login', '', '后台登录', '后台登录', 3, '', 'v1', '', '', 'GET|POST', '{\"POST\":{\"description\":\"使用凭证登录系统\",\"params\":[{\"description\":\"支持多种身份验证方式\",\"require\":\"0\",\"name\":\"identity_type\",\"title\":\"验证方式\",\"example\":\"0\"},{\"require\":\"1\",\"name\":\"identifier\",\"title\":\"账号\",\"description\":\"用户名，邮箱，手机号\",\"example\":\"admin@qq.com\"},{\"name\":\"credential\",\"require\":\"1\",\"title\":\"凭证\",\"description\":\"密码\",\"example\":\"qwe123\"}],\"divider\":\"\"}}', 1, 0, 0);
+  ('core', '', '/core/index/login', '', '后台登录', '后台登录', 3, '', 'v1', '', '', 'GET|POST', '{\"POST\":{\"description\":\"使用凭证登录系统\",\"params\":[{\"description\":\"支持多种身份验证方式\",\"require\":\"0\",\"name\":\"identity_type\",\"title\":\"验证方式\",\"example\":\"0\"},{\"require\":\"1\",\"name\":\"identifier\",\"title\":\"账号\",\"description\":\"用户名，邮箱，手机号\",\"example\":\"admin@qq.com\"},{\"name\":\"credential\",\"require\":\"1\",\"title\":\"凭证\",\"description\":\"密码\",\"example\":\"qwe123\"}],\"divider\":\"\"}}', 1, 0, 0),
+  ('core', '', '/core/install/step1', '', '安装步骤1', '', 5, '', 'v1', '', '', 'GET|POST', '', 0, 0, 0),
+  ('core', '', '/core/install/step2', '', '安装步骤2', '', 5, '', 'v1', '', '', 'GET|POST', '', 0, 0, 0),
+  ('core', '', '/core/install/step3', '', '安装步骤3', '', 5, '', 'v1', '', '', 'GET|POST', '', 0, 0, 0),
+  ('core', '', '/core/install/step4', '', '安装步骤4', '', 5, '', 'v1', '', '', 'GET|POST', '', 0, 0, 0),
+  ('core', '', '/core/install/step5', '', '安装步骤5', '', 5, '', 'v1', '', '', 'GET|POST', '', 0, 0, 0);
+
 
 
 CREATE TABLE `ia_core_user` (
@@ -213,9 +219,6 @@ INSERT INTO `ia_core_module` (`name`, `title`, `description`, `developer`, `webs
 VALUES
   ('cms', '内容', '内容模块为通用的CMS文章博客模块', 'jry', 'https://jiangruyi.com', '0.1.0', 'beta1_20190508', 1, 2, 0);
 
-
-DROP TABLE IF EXISTS `ia_cms_cate`;
-
 CREATE TABLE `ia_cms_cate` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT 'ID',
   `pid` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '上级分类',
@@ -233,24 +236,12 @@ CREATE TABLE `ia_cms_cate` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='CMS分类表';
 
-LOCK TABLES `ia_cms_cate` WRITE;
-/*!40000 ALTER TABLE `ia_cms_cate` DISABLE KEYS */;
-
 INSERT INTO `ia_cms_cate` (`id`, `pid`, `cate_type`, `title`, `description`, `cover`, `banner`, `content`, `sortnum`, `status`, `is_hide`, `create_time`, `delete_time`)
 VALUES
   (2,0,0,'产品服务','','','',NULL,0,1,0,0,0),
   (3,0,0,'客户案例','','','',NULL,0,1,0,0,0),
   (4,0,0,'新闻动态','','','',NULL,0,1,0,0,0),
   (5,0,0,'关于我们','','','',NULL,0,1,0,0,0);
-
-/*!40000 ALTER TABLE `ia_cms_cate` ENABLE KEYS */;
-UNLOCK TABLES;
-
-
-# Dump of table ia_cms_post
-# ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `ia_cms_post`;
 
 CREATE TABLE `ia_cms_post` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '发布ID',
@@ -269,9 +260,6 @@ CREATE TABLE `ia_cms_post` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='文章发布表';
 
-LOCK TABLES `ia_cms_post` WRITE;
-/*!40000 ALTER TABLE `ia_cms_post` DISABLE KEYS */;
-
 INSERT INTO `ia_cms_post` (`id`, `uid`, `cid`, `title`, `description`, `content`, `cover`, `post_time`, `view_count`, `comment_count`, `status`, `review_status`, `delete_time`)
 VALUES
   (3,0,4,'InitAdmin正式发布','InitAdmin是一套渐进式模块化开源后台(目前基于ThinkPHP5.1+Vue2)，采用前后端分离技术，数据交互采用json格式，功能低耦合高内聚；核心模块支持系统设置、权限管理、用户管理、菜单管理、API管理等功能','<p><span style=\"color: #323232; font-family: \'Century Gothic\', \'Microsoft yahei\'; font-size: 16px; background-color: #ffffff;\">InitAdmin是一套渐进式模块化开源后台(目前基于ThinkPHP5.1+Vue2)，采用前后端分离技术，数据交互采用json格式，功能低耦合高内聚；核心模块支持系统设置、权限管理、用户管理、菜单管理、API管理等功能，后期上线模块商城将打造类似composer、npm的开放式插件市场；同时我们将打造一套兼容性的API标准，从ThinkPHP5.1+Vue2开始，逐步覆盖larval、spring-boot、django、yii、koa、react等多语言框架。</span><br style=\"color: #323232; font-family: \'Century Gothic\', \'Microsoft yahei\'; font-size: 16px; background-color: #ffffff;\" /><br style=\"color: #323232; font-family: \'Century Gothic\', \'Microsoft yahei\'; font-size: 16px; background-color: #ffffff;\" /><span style=\"color: #323232; font-family: \'Century Gothic\', \'Microsoft yahei\'; font-size: 16px; background-color: #ffffff;\">官方网站：&nbsp;</span><a style=\"color: #72b939; text-decoration-line: none; font-family: \'Century Gothic\', \'Microsoft yahei\'; font-size: 16px; background-color: #ffffff;\" href=\"https://initadmin.net/\">https://initadmin.net</a></p>','http://localhost/initadmin/public/static/cms.png',1557205908,0,0,1,1,0),
@@ -282,8 +270,6 @@ VALUES
   (8,0,4,'InitAdmin正式发布','InitAdmin是一套渐进式模块化开源后台(目前基于ThinkPHP5.1+Vue2)，采用前后端分离技术，数据交互采用json格式，功能低耦合高内聚；核心模块支持系统设置、权限管理、用户管理、菜单管理、API管理等功能','<p><span style=\"color: #323232; font-family: \'Century Gothic\', \'Microsoft yahei\'; font-size: 16px; background-color: #ffffff;\">InitAdmin是一套渐进式模块化开源后台(目前基于ThinkPHP5.1+Vue2)，采用前后端分离技术，数据交互采用json格式，功能低耦合高内聚；核心模块支持系统设置、权限管理、用户管理、菜单管理、API管理等功能，后期上线模块商城将打造类似composer、npm的开放式插件市场；同时我们将打造一套兼容性的API标准，从ThinkPHP5.1+Vue2开始，逐步覆盖larval、spring-boot、django、yii、koa、react等多语言框架。</span><br style=\"color: #323232; font-family: \'Century Gothic\', \'Microsoft yahei\'; font-size: 16px; background-color: #ffffff;\" /><br style=\"color: #323232; font-family: \'Century Gothic\', \'Microsoft yahei\'; font-size: 16px; background-color: #ffffff;\" /><span style=\"color: #323232; font-family: \'Century Gothic\', \'Microsoft yahei\'; font-size: 16px; background-color: #ffffff;\">官方网站：&nbsp;</span><a style=\"color: #72b939; text-decoration-line: none; font-family: \'Century Gothic\', \'Microsoft yahei\'; font-size: 16px; background-color: #ffffff;\" href=\"https://initadmin.net/\">https://initadmin.net</a></p>','http://localhost/initadmin/public/static/cms.png',1557205908,0,0,1,1,0),
   (9,0,4,'InitAdmin正式发布','InitAdmin是一套渐进式模块化开源后台(目前基于ThinkPHP5.1+Vue2)，采用前后端分离技术，数据交互采用json格式，功能低耦合高内聚；核心模块支持系统设置、权限管理、用户管理、菜单管理、API管理等功能','<p><span style=\"color: #323232; font-family: \'Century Gothic\', \'Microsoft yahei\'; font-size: 16px; background-color: #ffffff;\">InitAdmin是一套渐进式模块化开源后台(目前基于ThinkPHP5.1+Vue2)，采用前后端分离技术，数据交互采用json格式，功能低耦合高内聚；核心模块支持系统设置、权限管理、用户管理、菜单管理、API管理等功能，后期上线模块商城将打造类似composer、npm的开放式插件市场；同时我们将打造一套兼容性的API标准，从ThinkPHP5.1+Vue2开始，逐步覆盖larval、spring-boot、django、yii、koa、react等多语言框架。</span><br style=\"color: #323232; font-family: \'Century Gothic\', \'Microsoft yahei\'; font-size: 16px; background-color: #ffffff;\" /><br style=\"color: #323232; font-family: \'Century Gothic\', \'Microsoft yahei\'; font-size: 16px; background-color: #ffffff;\" /><span style=\"color: #323232; font-family: \'Century Gothic\', \'Microsoft yahei\'; font-size: 16px; background-color: #ffffff;\">官方网站：&nbsp;</span><a style=\"color: #72b939; text-decoration-line: none; font-family: \'Century Gothic\', \'Microsoft yahei\'; font-size: 16px; background-color: #ffffff;\" href=\"https://initadmin.net/\">https://initadmin.net</a></p>','http://localhost/initadmin/public/static/cms.png',1557205908,0,0,1,1,0);
 
-/*!40000 ALTER TABLE `ia_cms_post` ENABLE KEYS */;
-UNLOCK TABLES;
 
 INSERT INTO `ia_core_menu` (`module`, `icon`, `path`, `pmenu`, `title`, `tip`, `menu_type`, `route_type`, `api_prefix`, `api_suffix`, `api_params`, `api_method`, `doc`, `is_hide`, `sortnum`, `delete_time`)
 VALUES

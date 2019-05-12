@@ -1,0 +1,61 @@
+{extend name="install:base" /}
+
+{block name="style"}
+    <style type="text/css" media="screen">
+      .title {
+        text-align: left;
+        color: #606266;
+        padding: 20px;
+      }
+    </style>
+{/block}
+
+{block name="step"}
+    <el-steps :active="3" align-center finish-status="success">
+      <el-step title="用户协议" description=""></el-step>
+      <el-step title="环境检测" description=""></el-step>
+      <el-step title="参数设置" description=""></el-step>
+      <el-step title="开始安装" description=""></el-step>
+      <el-step title="安装成功" description=""></el-step>
+    </el-steps>
+{/block}
+
+{block name="main"}
+    <div class="container flex" style="padding: 50px 0;justify-content: center;">
+      <div id="show-list" class="install-database"></div>
+      <el-button type="primary" disabled>正在安装，请稍后...</el-button>
+    </div>
+{/block}
+
+{block name="vue"}
+    <script>
+        {include file="install:util" /}
+        new Vue({
+          el: '#app',
+          data: function() {
+            return {}
+          },
+          mounted() {
+            let _this = this;
+            setInterval(async function() {
+              let res = await util.request({
+                  url: '/v1/<?php echo(request()->path()); ?>',
+                  method: 'post'
+              });
+              if (res.code == '200') {
+                  _this.$message({
+                      message: res.msg,
+                      type: 'success'
+                  });
+                  location.href = "{:url('core/install/step5')}";
+              } else {
+                  if (res.data.error) {
+                    alert(res.data.error_msg);
+                  }
+              }
+            }, 500);
+          },
+          methods: {}
+        })
+    </script>
+{/block}

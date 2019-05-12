@@ -1,0 +1,43 @@
+{extend name="install:base" /}
+
+{block name="style"}
+    <style type="text/css" media="screen">
+    </style>
+{/block}
+
+{block name="step"}
+    <el-steps :active="5" align-center finish-status="success">
+      <el-step title="用户协议" description=""></el-step>
+      <el-step title="环境检测" description=""></el-step>
+      <el-step title="参数设置" description=""></el-step>
+      <el-step title="开始安装" description=""></el-step>
+      <el-step title="安装成功" description=""></el-step>
+    </el-steps>
+{/block}
+
+{block name="main"}
+    <div class="container" style="padding: 25px 50px;text-align: center;">
+        <div style="padding-bottom: 20px;">
+          <div>
+            <img src="<?php echo request()->root(); ?>/static/success.png" height="120">
+          </div>
+          <div style="color: #606266;">安装成功</div>
+        </div>
+        <div style="padding: 30px 0;text-align: center;">
+          <el-button type="primary">
+            <a target="_blank" href="<?php echo request()->root(); ?>">打开前台</a>
+          </el-button>
+          <el-button type="primary">
+            <a target="_blank" href="<?php echo request()->root(); ?>/admin/">打开后台(本地版ElementUI)</a>
+          </el-button>
+          <el-button type="success">
+            <a target="_blank" href="http://admin.jiangruyi.com?api=<?php echo request()->domain() . request()->baseFile() .'/api/&demo=1'; ?>">打开后台(云端版iView)</a>
+          </el-button>
+        </div>
+        <el-alert
+          title="后台管理员用户名为initadmin密码为initadmin.net，请尽快登录系统进行修改，防止系统被恶意攻击。"
+          type="error"
+          :closable="false">
+        </el-alert>
+    </div>
+{/block}

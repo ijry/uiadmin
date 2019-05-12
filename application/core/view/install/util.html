@@ -1,0 +1,39 @@
+let util = {};
+// request
+util.request = function ({
+    method = "get",
+    url,
+    data = {},
+    header = {
+        contentType: 'application/json'
+    },
+    dataType = 'json',
+    success,
+    fail,
+    complete
+}) {
+    // 请求
+    if (0 != url.indexOf("http")) {
+        url = '<?php echo request()->root(); ?>/api' + url
+    }
+    let params = {};
+    if (method == 'get') {
+        params = data;
+    }
+    return new Promise((resolve, reject) => {
+        axios({
+            method: method,
+            url: url,
+            data: data,
+            params: params,
+            headers: header
+        }).then(function(res) {
+            resolve(res.data);
+        }).catch(function(error) {
+            let res = new Object();
+            res.code = 0;
+            res.msg = error.message;
+            reject(res);
+        });
+    })
+};

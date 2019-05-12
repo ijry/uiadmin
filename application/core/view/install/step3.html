@@ -1,0 +1,101 @@
+{extend name="install:base" /}
+
+{block name="style"}
+    <style type="text/css" media="screen">
+      .title {
+        text-align: left;
+        color: #606266;
+        padding: 20px;
+      }
+    </style>
+{/block}
+
+{block name="step"}
+    <el-steps :active="2" align-center finish-status="success">
+      <el-step title="用户协议" description=""></el-step>
+      <el-step title="环境检测" description=""></el-step>
+      <el-step title="参数设置" description=""></el-step>
+      <el-step title="开始安装" description=""></el-step>
+      <el-step title="安装成功" description=""></el-step>
+    </el-steps>
+{/block}
+
+{block name="main"}
+    <div class="container" style="padding: 20px 0;">
+      <el-form ref="ref" label-width="120px">
+        <el-form-item label="数据库类型">
+          <el-select v-model="form_values.type" placeholder="请选择数据库类型">
+            <el-option label="MySQL" value="mysql"></el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="数据库服务器">
+          <el-input v-model="form_values.hostname" placeholder="数据库服务器，数据库服务器IP，一般为127.0.0.1" clearable></el-input>
+        </el-form-item>
+        <el-form-item label="数据库端口">
+          <el-input v-model="form_values.hostport" placeholder="数据库端口，mysql一般为3306" clearable></el-input>
+        </el-form-item>
+        <el-form-item label="数据库名称">
+          <el-input v-model="form_values.database" placeholder="数据库名称" clearable></el-input>
+        </el-form-item>
+        <el-form-item label="覆盖数据库">
+          <el-radio-group v-model="form_values.cover" text-color="yellow" fill="red">
+            <el-radio-button label="1">不覆盖</el-radio-button>
+            <el-radio-button label="-1">覆盖（危险！千万要先备份数据！）</el-radio-button>
+          </el-radio-group>
+        </el-form-item>
+        <el-form-item label="数据库用户名">
+          <el-input v-model="form_values.username" placeholder="数据库用户名" clearable></el-input>
+        </el-form-item>
+        <el-form-item label="数据库密码">
+          <el-input v-model="form_values.password" placeholder="数据库密码" clearable show-password></el-input>
+        </el-form-item>
+      </el-form>
+    </div>
+    <div class="flex" style="margin-top: 30px;justify-content: flex-end;">
+        <el-button type="info" style="margin-right: 25px;"><a href="{:url('core/install/step2')}">上一步</a></el-button>
+        <el-button type="primary" @click="next">下一步</el-button>
+    </div>
+{/block}
+
+{block name="vue"}
+    <script>
+        {include file="install:util" /}
+        new Vue({
+          el: '#app',
+          data: function() {
+            return {
+              form_values: {
+                type: 'mysql',
+                hostname: '127.0.0.1',
+                hostport: '3306',
+                database: 'initadmin_{$rand}',
+                cover: 1,
+                username: 'root',
+                password: 'root',
+              }
+            }
+          },
+          methods: {
+            async next() {
+              let res = await util.request({
+                  url: '/v1/<?php echo(request()->path()); ?>',
+                  method: 'post',
+                  data: this.form_values
+              });
+              if (res.code == '200') {
+                  this.$message({
+                      message: res.msg,
+                      type: 'success'
+                  });
+                  location.href = "{:url('core/install/step4')}";
+              } else {
+                  this.$message({
+                      message: res.msg,
+                      type: 'error'
+                  });
+              }
+            }
+          }
+        })
+    </script>
+{/block}

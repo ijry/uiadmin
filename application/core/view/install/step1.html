@@ -1,0 +1,30 @@
+{extend name="install:base" /}
+
+{block name="style"}
+    <style type="text/css" media="screen">
+    </style>
+{/block}
+
+{block name="step"}
+    <el-steps :active="0" align-center>
+      <el-step title="用户协议" description=""></el-step>
+      <el-step title="环境检测" description=""></el-step>
+      <el-step title="参数设置" description=""></el-step>
+      <el-step title="开始安装" description=""></el-step>
+      <el-step title="安装成功" description=""></el-step>
+    </el-steps>
+{/block}
+
+{block name="main"}
+    <div class="container" style="height: 380px;overflow-y: scroll;">
+        <p>感谢您选择InitAdmin，希望我们的努力能为您提供一个简单、高效、卓越的轻量级开发后台。</p>
+        <p>用户须知：本协议是您与InitAdmin之间关于您使用InitAdmin产品及服务的法律协议。无论您是个人或组织、盈利与否、用途如何（包括以学习和研究为目的），均需仔细阅读本协议，包括免除或者限制InitAdmin责任的免责条款及对您的权利限制。请您审阅并接受或不接受本服务条款。如您不同意本服务条款及InitAdmin随时对其的修改，您应不使用或主动取消InitAdmin产品。否则，您的任何对InitAdmin的相关服务的注册、登录、下载、查看等使用行为将被视为您对本服务条款全部的完全接受，包括接受InitAdmin对服务条款随时所做的任何修改。</p>
+        <p>本服务条款一旦发生变更, InitAdmin将在官网上公布修改内容。修改后的服务条款一旦在网站公布即有效代替原来的服务条款。您可随时登陆官网查阅最新版服务条款。如果您选择接受本条款，即表示您同意接受协议各项条件的约束。如果您不同意本服务条款，则不能获得使用本服务的权利。您若有违反本条款规定，InitAdmin有权随时中止或终止您对InitAdmin产品的使用资格并保留追究相关法律责任的权利。</p>
+        <p>在理解、同意、并遵守本协议的全部条款后，方可开始使用InitAdmin产品。您也可能与InitAdmin直接签订另一书面协议，以补充或者取代本协议的全部或者任何部分。</p>
+        <p>InitAdmin拥有InitAdmin的全部知识产权，包括商标和著作权。InitAdmin只允许您在遵守本协议各项条款的情况下复制、下载、安装、使用或者以其他方式受益于本软件的功能或者知识产权。</p>
+    </div>
+    <div class="flex" style="margin-top: 30px;justify-content: flex-end;">
+        <el-button type="text" style="margin-right: 25px;">不同意</el-button>
+        <el-button type="primary"><a href="{:url('core/install/step2')}">同意协议并下一步</a></el-button>
+    </div>
+{/block}

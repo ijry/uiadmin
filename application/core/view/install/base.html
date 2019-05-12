@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>{block name="title"}InitAdmin安装{/block}</title>
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <style type="text/css">
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #eee;
+        }
+        .flex {
+            display: flex;
+            display: -webkit-flex;
+            align-items: center;
+            text-decoration: none;
+        }
+        .flex-col {
+            display: flex;
+            display: -webkit-flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+        }
+        .el-button a {
+            color: #fff;
+            text-decoration: none;
+        }
+        .logo-box {
+            padding: 25px;
+        }
+        .logo-box .logo {
+            width: 60px;
+            margin-right: 10px;
+        }
+        .logo-box .title {
+            font-size: 20px;
+            color: #606266;
+        }
+        .main-col {
+            padding: 30px;
+            min-height: 600px;
+            background-color: #fff;
+        }
+        .main {
+            margin-top: 10px;
+        }
+        .is-process {
+            color: #409EFF !important;
+            border-color: #409EFF !important;
+        }
+        .text-success {
+            font-weight: bold;
+            color: #67C23A;
+        }
+        .text-danger {
+            font-weight: bold;
+            color: #F56C6C;
+        }
+    </style>
+    {block name="style"}{/block}
+</head>
+<body>
+    <div id="app">
+        <div class="wrap">
+            <a target="_blank" href="https://initadmin.net" class="logo-box flex" style="justify-content: center;align-items: middle;">
+                 <img src="<?php echo request()->root(); ?>/static/logo.png" class="logo">
+                 <span class="title">InitAdmin安装程序</span>
+            </a>
+            <el-row type="flex" justify="center">
+                <el-col :span="5"></el-col>
+                <el-col :span="14" class="main-col">
+                    <el-container class="main-container">
+                        <el-header class="header">
+                            {block name="step"}步骤{/block}
+                        </el-header>
+                        <div class="main">
+                            {block name="main"}主内容{/block}
+                        </div>
+                    </el-container>
+                </el-col>
+                <el-col :span="5"></el-col>
+            </el-row>
+            <div style="text-align: center;padding-top: 20px;color: #666;">
+                版权所有 © initadmin.net(jry) All rights reserved
+            </div>
+        </div>
+    </div>
+</body>
+    <script src="https://unpkg.com/vue/dist/vue.min.js"></script>
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    {block name="vue"}
+        <script>
+            new Vue({
+              el: '#app',
+              data: function() {
+                return {}
+              }
+            })
+        </script>
+    {/block}
+    {block name="script"}{/block}
+</html>

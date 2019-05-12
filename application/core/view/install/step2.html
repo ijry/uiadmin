@@ -1,0 +1,131 @@
+{extend name="install:base" /}
+
+{block name="style"}
+    <style type="text/css" media="screen">
+      .title {
+        text-align: left;
+        color: #606266;
+        padding: 20px;
+      }
+    </style>
+{/block}
+
+{block name="step"}
+    <el-steps :active="1" align-center finish-status="success">
+      <el-step title="用户协议" description=""></el-step>
+      <el-step title="环境检测" description=""></el-step>
+      <el-step title="参数设置" description=""></el-step>
+      <el-step title="开始安装" description=""></el-step>
+      <el-step title="安装成功" description=""></el-step>
+    </el-steps>
+{/block}
+
+{block name="main"}
+    <div class="container">
+        <div class="title">
+          运行环境检查
+        </div>
+        <el-table
+          :data="check_env"
+          style="width: 100%">
+          <el-table-column
+            prop="title"
+            label="项目"
+            width="250">
+          </el-table-column>
+          <el-table-column
+            prop="limit"
+            label="所需配置"
+            width="250">
+          </el-table-column>
+          <el-table-column
+            prop="current"
+            label="当前配置">
+            <template slot-scope="scope">
+              <span :class="scope.row.icon"></span>
+              {{scope.row.current}}
+            </template>
+          </el-table-column>
+        </el-table>
+        <div class="title">
+          目录、文件权限检查
+        </div>
+        <el-table
+          :data="check_dirfile"
+          style="width: 100%">
+          <el-table-column
+            prop="path"
+            label="目录/文件"
+            width="500">
+          </el-table-column>
+          <el-table-column
+            prop="current"
+            label="当前状态">
+            <template slot-scope="scope">
+              <span :class="scope.row.icon"></span>
+              {{scope.row.current}}
+            </template>
+          </el-table-column>
+        </el-table>
+        <div class="title">
+          函数及扩展依赖性检查
+        </div>
+        <el-table
+          :data="check_func_and_ext"
+          style="width: 100%">
+          <el-table-column
+            prop="name"
+            label="名称"
+            width="500">
+          </el-table-column>
+          <el-table-column
+            prop="current"
+            label="当前状态">
+            <template slot-scope="scope">
+              <span :class="scope.row.icon"></span>
+              {{scope.row.title}}
+            </template>
+          </el-table-column>
+        </el-table>
+    </div>
+    <div class="flex" style="margin-top: 30px;justify-content: flex-end;">
+        <el-button type="info" style="margin-right: 25px;"><a href="{:url('core/install/step1')}">上一步</a></el-button>
+        <el-button type="primary" @click="next">下一步</el-button>
+    </div>
+{/block}
+
+{block name="vue"}
+    <script>
+        {include file="install:util" /}
+        new Vue({
+          el: '#app',
+          data: function() {
+            return {
+              check_env: <?php echo json_encode($check_env); ?>,
+              check_dirfile: <?php echo json_encode($check_dirfile); ?>,
+              check_func_and_ext: <?php echo json_encode($check_func_and_ext); ?>
+            }
+          },
+          methods: {
+            async next() {
+              let res = await util.request({
+                  url: '/v1/<?php echo(request()->path()); ?>',
+                  method: 'post'
+              });
+              if (res.code == '200') {
+                  this.$message({
+                      message: res.msg,
+                      type: 'success'
+                  });
+                  location.href = "{:url('core/install/step3')}";
+              } else {
+                  this.$message({
+                      message: res.msg,
+                      type: 'error'
+                  });
+              }
+            }
+          }
+        })
+    </script>
+{/block}
