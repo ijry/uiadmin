@@ -2,9 +2,6 @@
 
 {block name="style"}
     <style type="text/css" media="screen">
-        .banner img {
-            height: 400px;
-        }
         .post-item {
             align-items: flex-start;
             margin-bottom: 15px;
@@ -42,11 +39,9 @@
 {/block}
 
 {block name="banner"}
-    <div>
-        <div class="banner-content" style="background-color: #4AB8FC;">
-            <div class="container">
-                <img src="<?php echo request()->root(); ?>/static/cms.png" alt="">
-            </div>
+    <div class="banner-bg" style="background-color: #4AB8FC;">
+        <div class="container">
+            <img style="height: 400px;" src="<?php echo request()->root(); ?>/static/cms.png" alt="">
         </div>
     </div>
 {/block}

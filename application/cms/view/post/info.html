@@ -2,17 +2,6 @@
 
 {block name="style"}
     <style type="text/css" media="screen">
-        .banner img {
-            height: 180px;
-        }
-        .banner-content {
-            height: 100px;
-            color: #fff;
-            font-size: 22px;
-            padding-top: 80px;
-            background-size: 100% 100%;
-            background-image: url('<?php echo request()->root(); ?>/static/banner.png');
-        }
         .post-item {
             align-items: flex-start;
             margin-bottom: 15px;
@@ -50,11 +39,11 @@
 {/block}
 
 {block name="banner"}
-    <div>
-        <div class="banner-content">
-            <div class="container" style="text-align: center;">
-                {$info.title}
-            </div>
+    <div class="main-banner">
+        <div class="content">
+            <h1 class="title">{$info.title}</h1>
+            <p class="description"></p>
+            <p class="info"></p>
         </div>
     </div>
 {/block}
@@ -84,15 +73,4 @@
             </div>
         </el-aside>
     </div>
-{/block}
-
-{block name="vue"}
-    <script>
-        new Vue({
-          el: '#app',
-          data: function() {
-            return {}
-          }
-        })
-    </script>
 {/block}

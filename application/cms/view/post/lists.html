@@ -2,17 +2,6 @@
 
 {block name="style"}
     <style type="text/css" media="screen">
-        .banner img {
-            height: 180px;
-        }
-        .banner-content {
-            height: 100px;
-            color: #fff;
-            font-size: 22px;
-            padding-top: 80px;
-            background-size: 100% 100%;
-            background-image: url('<?php echo request()->root(); ?>/static/banner.png');
-        }
         .post-item {
             align-items: flex-start;
             margin-bottom: 15px;
@@ -50,9 +39,11 @@
 {/block}
 
 {block name="banner"}
-    <div class="banner-content">
-        <div class="container" style="text-align: center;">
-            {$cate_info.title}
+    <div class="main-banner">
+        <div class="content">
+            <h1 class="title">{$cate_info.title}</h1>
+            <p class="description"></p>
+            <p class="info"></p>
         </div>
     </div>
 {/block}
