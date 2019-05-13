@@ -27,6 +27,12 @@ class Router
     // 行为逻辑
     public function run($params)
     {
+        // 调试模式
+        if (env('app_debug')) {
+            error_reporting(E_ALL);
+            ini_set('display_errors', '1');
+        }
+
         // 默认路由
         Route::rule(
             'core/install/step5',
