@@ -5,12 +5,15 @@
         .el-card {
             height: 350px;
         }
+        a {
+            text-decoration: none;
+        }
     </style>
 {/block}
 
 {block name="main"}
     <el-row :gutter="20">
-        <el-col :span="12">
+        <el-col :xs="24" :sm="12">
             <el-card shadow="never" class="box-card">
                 <div slot="header" class="clearfix">
                     <span>系统信息</span>
@@ -34,7 +37,7 @@
                 </div>
             </el-card>
         </el-col>
-        <el-col :span="12">
+        <el-col :xs="24" :sm="12">
             <el-card shadow="never" class="box-card">
                 <div slot="header" class="clearfix">
                     <span>APP与交流群</span>

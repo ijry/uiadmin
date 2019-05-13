@@ -8,6 +8,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>{block name="title"}InitAdmin{/block}</title>
     <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/display.css">
     <style type="text/css">
         body {
             margin: 0;
@@ -96,6 +97,28 @@
             border: 0;
             box-shadow: none;
         }
+        @media screen and (max-width: 768px) {
+            .main-aside {
+                display: none;
+                position: absolute;
+                top: 0;
+                bottom: 0;
+                left: 0;
+                z-index: 999;
+            }
+            .base-mask {
+                display: none;
+                position: absolute;
+                top: 0;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                z-index: 998;
+            }
+            .main-aside-display {
+                display: block;
+            }
+        }
     </style>
     {block name="style"}{/block}
 </head>
@@ -103,7 +126,7 @@
     <div id="app">
         <div class="wrap">
             <el-container style="height: 100vh;">
-                <el-aside class="main-aside" :style="{width: isCollapsed ? '70px': '200px'}">
+                <el-aside :class="isDisplay ? 'main-aside main-aside-display' : 'main-aside'" ref="main_aside" :style="{width: isCollapsed ? '70px': '200px'}">
                     <a class="logo-box flex" href="<?php echo request()->root(); ?>/admin/">
                         <img src="<?php echo request()->root(); ?>/static/logo.png" class="logo">
                         <span v-if="isCollapsed == false" class="title">InitAdmin</span>
@@ -153,7 +176,8 @@
                     <el-container>
                         <el-header class="header flex" style="justify-content: space-between;">
                             <div>
-                                <span @click="collapsedSider" :class="isCollapsed ? 'el-icon-s-unfold' : 'el-icon-s-fold'"></span>
+                                <span @click="collapsedSider" :class="isCollapsed ? 'hidden-xs-only el-icon-s-unfold' : 'hidden-xs-only el-icon-s-fold'"></span>
+                                <span @click="menuDisplay" class="hidden-sm-and-up el-icon-s-unfold"></span>
                             </div>
                             <div>
                                 <a target="_blank" href="<?php echo request()->domain(); ?><?php echo request()->rootUrl(); ?>">访问前台</a>
@@ -166,6 +190,7 @@
                     </el-container>
                 </el-main>
             </el-container>
+            <div @click="menuDisplay" :class="isDisplay ? 'base-mask main-aside-display' : 'base-mask'"></div>
         </div>
     </div>
 </body>
