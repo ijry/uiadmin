@@ -25,23 +25,19 @@ use think\Controller;
 class Index extends Controller
 {
     /**
-     * 首页
+     * API对接
      *
      * @return \think\Response
      * @author jry <ijry@qq.com>
      */
     public function api()
     {
-        //dump(user_md5('initadmin.net', 'initadmin-auth-key'));
-
-        // 环境检测
-        if (!function_exists('mb_strlen')) {
-            dump('缺少php-mbstring扩展');
-        }
-        return 'InitAdmin后台接口actionphp版本运行中...<br/>'
-            .'接口域名：' . request()->domain() . request()->baseFile() . '/api/<br/>'
-            .'后台地址：<a href="admin.php?api='
-            .request()->domain() . request()->baseFile() .'/api/&demo=1" target="_blank">点击登录后台管理</a>';
+        $base_url = request()->domain() . request()->baseFile() . '/api/';
+        return $this->return(['code' => 200, 'msg' => '成功', 'data' => [
+            'base_url' => $base_url;
+            'initadmin' => 'ActionPHP',
+            'version' => '0.1.0'
+        ]]);
     }
 
     /**
