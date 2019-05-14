@@ -2,7 +2,7 @@
 async cleanRuntime () {
     // 清除服务器缓存
     let res = await util.request({
-        url: '/v1/admin/core/system/cleanRuntime',
+        url: '/v1/admin/core/index/cleanRuntime',
         method: 'delete'
     });
     if (res.code == 200) {

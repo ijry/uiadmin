@@ -127,7 +127,7 @@
                 handleSubmit: async function(){
                     this.login.loading = true;
                     let res = await util.request({
-                        url: '/v1/admin/core/index/login',
+                        url: '/v1/admin/core/user/login',
                         data: this.login,
                         method: 'post',
                     });

@@ -53,7 +53,7 @@ class Common extends Controller
         } else {
             if (isset($data['data'])) {
                 if (isset($data['data']['need_login']) && $data['data']['need_login'] == 1) {
-                    return $this->error('请登录系统', 'core/admin.index/login');
+                    return $this->redirect('core/admin.user/login');
                 } else {
                     $this->assign($data['data']);
                     if (isset($data['data']['list_data'])) {

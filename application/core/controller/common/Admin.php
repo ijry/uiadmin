@@ -29,6 +29,11 @@ class Admin extends Common
         // initialize
         parent::initialize();
 
+        // 不需要验证登录的页面
+        if (in_array(request()->path(), ['admin/core/user/login', 'api/v1/admin/core/user/login'])) {
+            return true;
+        }
+
         // 登录验证
         $ret = $this->isLogin();
         if ($ret['code'] != 200) {
