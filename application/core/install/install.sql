@@ -171,10 +171,10 @@ CREATE TABLE `ia_core_config` (
 INSERT INTO `ia_core_config` (`module`, `config_cate`, `name`, `title`, `config_type`, `value`, `placeholder`, `tip`, `options`, `is_system`, `is_dev`, `sortnum`, `status`, `delete_time`)
 VALUES
   ('core', 'other', 'config_cate', '配置分组', 'array', 'basic:系统\nother:其它', '请输入配置分组信息', '请输入配置分组信息', '', 1, 0, 7, 1, 0),
-  ('core', 'basic', 'project_title', '项目名称', 'text', 'InitAdmin后台', '请输入项目名称', '请输入项目名称', '', 1, 0, 1, 1, 0),
+  ('core', 'basic', 'title', '项目名称', 'text', 'InitAdmin后台', '请输入项目名称', '请输入项目名称', '', 1, 0, 1, 1, 0),
   ('core', 'basic', 'logo', '项目logo', 'image', '', '请上传系统logo', '请上传系统logo', '', 1, 0, 3, 1, 0),
-  ('core', 'basic', 'logo_favicon', 'ICO图标', 'image', '', '请上传ICO图标', '请上传ICO图标', '', 1, 0, 4, 1, 0),
-  ('core', 'basic', 'project_slogan', '项目口号', 'text', '渐进式模块化后台', '请输入您的项目口号', '请输入您的项目口号', '', 1, 0, 2, 1, 0),
+  ('core', 'basic', 'favicon', 'ICO图标', 'image', '', '请上传ICO图标', '请上传ICO图标', '', 1, 0, 4, 1, 0),
+  ('core', 'basic', 'slogan', '项目口号', 'text', '渐进式模块化后台', '请输入您的项目口号', '请输入您的项目口号', '', 1, 0, 2, 1, 0),
   ('core', 'basic', 'copyright', '版权信息', 'text', 'Copyright © initadmin.net  All rights reserved.', '请输入您的版权信息', '请输入您的版权信息', '', 1, 0, 5, 1, 0),
   ('core', 'basic', 'icp', '备案号', 'text', '苏ICP备15020094号', '请输入您的域名备案号', '请输入您的域名备案号', '', 1, 0, 6, 1, 0);
 

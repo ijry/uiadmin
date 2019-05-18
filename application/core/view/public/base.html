@@ -6,7 +6,7 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>{block name="title"}InitAdmin{/block}</title>
+    <title>{block name="title"}{$config_core.title}{/block}</title>
     <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
     <style type="text/css">
         body {
@@ -116,8 +116,8 @@
                     {block name="banner"}
                         <div class="main-banner">
                             <div class="content">
-                                <h1 class="title">{$config_core.project_title}</h1>
-                                <p class="description">{$config_core.project_slogan}</p>
+                                <h1 class="title">{$config_core.title}</h1>
+                                <p class="description">{$config_core.slogan}</p>
                                 <p class="info"></p>
                             </div>
                         </div>
@@ -133,10 +133,10 @@
                         <div class="container">
                             <div class="flex" style="justify-content: space-between;">
                                 <div>
-                                    Copyright © 2018-2019 initadmin.net All Rights Reserved
+                                    {$config_core.copyright}
                                 </div>
                                 <div style="text-align: right;">
-                                    <a target="_blank" href="http://www.beian.miit.gov.cn">苏ICP备18067203号</a>
+                                    <a target="_blank" href="http://www.beian.miit.gov.cn">{$config_core.icp}</a>
                                 </div>
                             </Row>
                         </div>

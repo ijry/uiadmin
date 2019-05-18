@@ -15,6 +15,7 @@ namespace app\core\controller\admin;
 
 use think\Db;
 use think\Request;
+use think\facade\Cache;
 use app\core\controller\common\Admin;
 
 /**
