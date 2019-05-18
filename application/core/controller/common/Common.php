@@ -55,26 +55,28 @@ class Common extends Controller
                 if (isset($data['data']['need_login']) && $data['data']['need_login'] == 1) {
                     return $this->redirect('core/admin.user/login');
                 } else {
-                    $data_list = Db::name('core_config')
-                        ->field('config_cate,config_type,name,value')
-                        ->where('module', 'core')
-                        ->select();
-                    $return = [];
-                    foreach ($data_list as $key => &$value) {
-                        if ($value['config_type'] == 'array') {
-                            $return[$value['name']] = parse_attr($value['value']);
-                        } else if (in_array($value['config_type'], ['images', 'files'])) {
-                            if ($value['value'] == '') {
-                                $value['value'] = [];
+                    if (is_file(env('root_path') . '.env')) {
+                        $data_list = Db::name('core_config')
+                            ->field('config_cate,config_type,name,value')
+                            ->where('module', 'core')
+                            ->select();
+                        $return = [];
+                        foreach ($data_list as $key => &$value) {
+                            if ($value['config_type'] == 'array') {
+                                $return[$value['name']] = parse_attr($value['value']);
+                            } else if (in_array($value['config_type'], ['images', 'files'])) {
+                                if ($value['value'] == '') {
+                                    $value['value'] = [];
+                                } else {
+                                    $value['value'] = json_decode($value['value'], true);
+                                }
+                                $return[$value['name']] = $value['value'];
                             } else {
-                                $value['value'] = json_decode($value['value'], true);
+                                $return[$value['name']] = $value['value'];
                             }
-                            $return[$value['name']] = $value['value'];
-                        } else {
-                            $return[$value['name']] = $value['value'];
                         }
+                        $data['data']['config_core'] = $return;
                     }
-                    $data['data']['config_core'] = $return;
                     if (!isset($data['data']['ibuilder_base'])) {
                         $data['data']['ibuilder_base'] = 'core@public/base';
                     }

@@ -13,11 +13,18 @@
 // | 模板设置
 // +----------------------------------------------------------------------
 
+$view_base = '';
+if (is_file(env('root_path') . '.env') && !\think\helper\Str::startsWith(request()->path(), 'admin/')) {
+    $view_base = env('root_path') . 'public/view/default/';
+}
+
 return [
     // 模板引擎类型 支持 php think 支持扩展
     'type'         => 'Think',
     // 默认模板渲染规则 1 解析为小写+下划线 2 全部转换小写 3 保持操作方法
     'auto_rule'    => 1,
+    // 模板全局根目录
+    'view_base'    => $view_base,
     // 模板路径
     'view_path'    => '',
     // 模板后缀
