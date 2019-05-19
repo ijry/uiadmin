@@ -19,15 +19,23 @@
       .image-uploader-icon {
         font-size: 28px;
         color: #8c939d;
-        width: 178px;
-        height: 178px;
-        line-height: 178px;
+        width: 128px;
+        height: 128px;
+        line-height: 128px;
         text-align: center;
       }
       .image {
         width: 178px;
         height: 178px;
         display: block;
+      }
+       .el-input {
+        width: 60%;
+      }
+      @media screen and (max-width: 768px) {
+        .el-input {
+          width: 100%;
+        }
       }
     </style>
 {/block}
@@ -181,8 +189,9 @@
                     :on-success="handleUploadSuccess"
                     :before-upload="beforeUpload">
                     <img v-if="form_data.form_values.{$vo.name}" :src="form_data.form_values.{$vo.name}" class="image">
-                    <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+                    <i v-else class="el-icon-plus image-uploader-icon"></i>
                   </el-upload>
+                  <el-input v-model="form_data.form_values.{$vo.name}" placeholder="{$vo.extra.placeholder}" clearable></el-input>
                 </el-form-item>
               {/case}
               {case images}
