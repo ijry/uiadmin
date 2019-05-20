@@ -15,14 +15,14 @@ namespace app\core\controller;
 
 use think\Db;
 use think\Request;
-use think\Controller;
+use app\core\controller\common\Home;
 
 /**
  * 默认控制器
  *
  * @author jry <ijry@qq.com>
  */
-class Index extends Controller
+class Index extends Home
 {
     /**
      * API对接

@@ -42,7 +42,11 @@ CREATE TABLE `ia_core_menu` (
 
 INSERT INTO `ia_core_menu` (`module`, `icon`, `path`, `pmenu`, `title`, `tip`, `menu_type`, `route_type`, `api_prefix`, `api_suffix`, `api_params`, `api_method`, `doc`, `is_hide`, `sortnum`, `delete_time`)
 VALUES
+  ('core', 'md-cog', '/system', '', '系统', '核心系统相关功能', 0, '0', '', '', '', '', NULL, 0, 1, 0),
   ('core', '', '/core/index/index', '', '后台首页', '', 3, 'route', 'v1', '', '', 'GET', NULL, 0, 0, 0),
+  ('core', '', '/core/index/config', '/core', '核心配置', '获取核心模块配置', 5, '', 'v1', '', '', 'GET', NULL, 0, 0, 0)
+  ('core', '', '/core/index/upload', '', '上传文件', '上传图片和文件', 5, 'route', 'v1', '', '', 'POST', NULL, 0, 0, 0),
+  ('core', '', '/core/index/checkUpdate', '/system', '检查更新', '检查InitAdmin新版本', 3, '0', 'v1', '', '', 'GET', NULL, 0, 0, 0),
   ('core', 'md-code', '/developer', '', '开发', '一般是开发者采用得到的工具', 0, '0', '', '', '', '', NULL, 0, 99, 0),
   ('core', '', '/core/menu/lists', '/developer', '菜单列表', '管理后台左侧的菜单导航', 3, 'list', 'v1', '', '', 'GET', NULL, 0, 0, 0),
   ('core', '', '/core/role/trees', '/system', '权限管理', '管理系统角色及权限', 1, 'list', 'v1', '', '', 'GET', NULL, 0, 2, 0),
@@ -51,7 +55,6 @@ VALUES
   ('core', '', '/core/user/delete', '/core/user/lists', '删除用户', '软删除用户', 2, '0', 'v1', '/:id', '', 'DELETE', NULL, 0, 0, 0),
   ('core', '', '/core/user/add', '/core/user/lists', '添加用户', '添加用户', 2, 'form', 'v1', '', '', 'GET|POST', NULL, 0, 0, 0),
   ('core', '', '/core/config/lists', '/developer', '设置管理', '系统常用设置', 1, 'list', 'v1', '', '', 'GET', NULL, 0, 4, 0),
-  ('core', 'md-cog', '/system', '', '系统', '核心系统相关功能', 0, '0', '', '', '', '', NULL, 0, 1, 0),
   ('core', '', '/core/menu/trees', '/developer', '菜单管理', '管理系统后台左侧菜单', 1, 'list', 'v1', '', '', 'GET', NULL, 0, 2, 0),
   ('core', '', '/core/role/edit', '/core/role/trees', '修改角色', '修改角色信息及权限', 2, 'form', 'v1', '/:id', '', 'GET|PUT', NULL, 0, 0, 0),
   ('core', '', '/core/role/delete', '/core/role/trees', '删除角色', '删除角色', 2, '0', 'v1', '/:id', '', 'DELETE', NULL, 0, 0, 0),
@@ -63,7 +66,6 @@ VALUES
   ('core', '', '/core/menu/add', '/core/menu/trees', '添加菜单', '添加后台菜单(接口)', 2, 'form', 'v1', '', '', 'GET|POST', NULL, 0, 0, 0),
   ('core', '', '/core/menu/edit', '/core/menu/trees', '修改菜单', '修改后台菜单(接口)', 2, 'form', 'v1', '/:id', '', 'GET|PUT', NULL, 0, 0, 0),
   ('core', '', '/core/menu/delete', '/core/menu/trees', '删除菜单', '删除后台菜单(接口)', 2, '0', 'v1', '/:id', '', 'DELETE', NULL, 0, 0, 0),
-  ('core', '', '/core/index/checkUpdate', '/system', '检查更新', '检查InitAdmin新版本', 3, '0', 'v1', '', '', 'GET', NULL, 0, 0, 0),
   ('core', '', '/core/module/lists', '/developer', '模块管理', '管理系统安装的功能模块', 1, 'list', 'v1', '', '', 'GET', NULL, 0, 1, 0),
   ('core', '', '/core/module/add', '/core/module/lists', '创建模块', '创建一个新模块', 2, 'form', 'v1', '', '', 'GET|POST', NULL, 0, 0, 0),
   ('core', '', '/core/module/edit', '/core/module/lists', '修改模块', '修改模块信息', 2, 'form', 'v1', '/:id', '', 'GET|PUT', NULL, 0, 0, 0),
@@ -80,8 +82,6 @@ VALUES
   ('core', '', '/core/user/info', '', '获取用户信息', '获取登录的用户信息', 5, 'route', 'v1', '', '', 'GET', NULL, 0, 0, 0),
   ('core', '', '/core/api/doc', '/core/api/trees', '修改API文档', '修改API接口文档', 2, 'form', 'v1', '/:id', '', 'GET|PUT', NULL, 0, 0, 0),
   ('core', '', '/core/user/logout', '', '注销登录', '', 5, 'route', 'v1', '', '', 'DELETE', NULL, 0, 0, 0),
-	('core', '', '/core/index/upload', '', '上传文件', '上传图片和文件', 5, 'route', 'v1', '', '', 'POST', NULL, 0, 0, 0),
-	('core', '', '/core/index/config', '', '获取配置', '获取模块的公开配置', 5, 'route', 'v1', '', '', 'GET', NULL, 0, 0, 0),
   ('core', '', '/core/user/login', '', '后台登录', '后台登录', 3, '', 'v1', '', '', 'GET|POST', '{\"POST\":{\"description\":\"使用凭证登录系统\",\"params\":[{\"description\":\"支持多种身份验证方式\",\"require\":\"0\",\"name\":\"identity_type\",\"title\":\"验证方式\",\"example\":\"0\"},{\"require\":\"1\",\"name\":\"identifier\",\"title\":\"账号\",\"description\":\"用户名，邮箱，手机号\",\"example\":\"admin@qq.com\"},{\"name\":\"credential\",\"require\":\"1\",\"title\":\"凭证\",\"description\":\"密码\",\"example\":\"qwe123\"}],\"divider\":\"\"}}', 1, 0, 0);
 
 
