@@ -14,7 +14,9 @@
 // +----------------------------------------------------------------------
 
 $view_base = '';
-if (is_file(env('root_path') . '.env') && !\think\helper\Str::startsWith(request()->path(), 'admin/')) {
+if (is_file(env('root_path') . '.env')
+    && !\think\helper\Str::startsWith(request()->path(), 'admin/')
+    && request()->path() != 'core/install/step5') {
     $view_base = env('root_path') . 'public/view/default/';
 }
 
