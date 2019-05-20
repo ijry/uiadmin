@@ -42,6 +42,7 @@ CREATE TABLE `ia_core_menu` (
 
 INSERT INTO `ia_core_menu` (`module`, `icon`, `path`, `pmenu`, `title`, `tip`, `menu_type`, `route_type`, `api_prefix`, `api_suffix`, `api_params`, `api_method`, `doc`, `is_hide`, `sortnum`, `delete_time`)
 VALUES
+  ('core', '', '/core/index/index', '', '后台首页', '', 3, 'route', 'v1', '', '', 'GET', NULL, 0, 0, 0),
   ('core', 'md-code', '/developer', '', '开发', '一般是开发者采用得到的工具', 0, '0', '', '', '', '', NULL, 0, 99, 0),
   ('core', '', '/core/menu/lists', '/developer', '菜单列表', '管理后台左侧的菜单导航', 3, 'list', 'v1', '', '', 'GET', NULL, 0, 0, 0),
   ('core', '', '/core/role/trees', '/system', '权限管理', '管理系统角色及权限', 1, 'list', 'v1', '', '', 'GET', NULL, 0, 2, 0),
@@ -87,7 +88,6 @@ VALUES
   ('core', '', '/core/install/step3', '', '安装步骤3', '', 5, '', 'v1', '', '', 'GET|POST', '', 0, 0, 0),
   ('core', '', '/core/install/step4', '', '安装步骤4', '', 5, '', 'v1', '', '', 'GET|POST', '', 0, 0, 0),
   ('core', '', '/core/install/step5', '', '安装步骤5', '', 5, '', 'v1', '', '', 'GET|POST', '', 0, 0, 0);
-
 
 
 CREATE TABLE `ia_core_user` (

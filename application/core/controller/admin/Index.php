@@ -38,7 +38,15 @@ class Index extends Admin
      */
     public function index()
     {
+        // 首页自定义
+        $data_list = [];
+        // $data_list[0] = [
+        //     'span' => '12',
+        //     'type' => 'html',
+        //     'html' => ''
+        // ];
         return $this->return(['code' => 200, 'msg' => '成功', 'data' => [
+            'data_list' => $data_list
         ]]);
     }
 
