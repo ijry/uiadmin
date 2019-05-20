@@ -29,6 +29,6 @@
             return 'http';
         }
     ?>
-    <iframe class="main" src="<?php echo sheme(); ?>://admin.jiangruyi.com/#/home?api=<?php echo $_GET['api']; ?>&demo=<?php echo $_GET['demo']; ?>"></iframe>
+    <iframe class="main" src="<?php echo sheme(); ?>://admin.jiangruyi.com/#/home?api=<?php echo sheme() . '://' . $_SERVER['HTTP_HOST'] . ':' . $_SERVER["SERVER_PORT"] . dirname($_SERVER['REQUEST_URI']) . '/api/'; ?>&demo=1"></iframe>
 </body>
 </html>
