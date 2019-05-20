@@ -82,12 +82,7 @@ VALUES
   ('core', '', '/core/user/logout', '', '注销登录', '', 5, 'route', 'v1', '', '', 'DELETE', NULL, 0, 0, 0),
 	('core', '', '/core/index/upload', '', '上传文件', '上传图片和文件', 5, 'route', 'v1', '', '', 'POST', NULL, 0, 0, 0),
 	('core', '', '/core/index/config', '', '获取配置', '获取模块的公开配置', 5, 'route', 'v1', '', '', 'GET', NULL, 0, 0, 0),
-  ('core', '', '/core/user/login', '', '后台登录', '后台登录', 3, '', 'v1', '', '', 'GET|POST', '{\"POST\":{\"description\":\"使用凭证登录系统\",\"params\":[{\"description\":\"支持多种身份验证方式\",\"require\":\"0\",\"name\":\"identity_type\",\"title\":\"验证方式\",\"example\":\"0\"},{\"require\":\"1\",\"name\":\"identifier\",\"title\":\"账号\",\"description\":\"用户名，邮箱，手机号\",\"example\":\"admin@qq.com\"},{\"name\":\"credential\",\"require\":\"1\",\"title\":\"凭证\",\"description\":\"密码\",\"example\":\"qwe123\"}],\"divider\":\"\"}}', 1, 0, 0),
-  ('core', '', '/core/install/step1', '', '安装步骤1', '', 5, '', 'v1', '', '', 'GET|POST', '', 0, 0, 0),
-  ('core', '', '/core/install/step2', '', '安装步骤2', '', 5, '', 'v1', '', '', 'GET|POST', '', 0, 0, 0),
-  ('core', '', '/core/install/step3', '', '安装步骤3', '', 5, '', 'v1', '', '', 'GET|POST', '', 0, 0, 0),
-  ('core', '', '/core/install/step4', '', '安装步骤4', '', 5, '', 'v1', '', '', 'GET|POST', '', 0, 0, 0),
-  ('core', '', '/core/install/step5', '', '安装步骤5', '', 5, '', 'v1', '', '', 'GET|POST', '', 0, 0, 0);
+  ('core', '', '/core/user/login', '', '后台登录', '后台登录', 3, '', 'v1', '', '', 'GET|POST', '{\"POST\":{\"description\":\"使用凭证登录系统\",\"params\":[{\"description\":\"支持多种身份验证方式\",\"require\":\"0\",\"name\":\"identity_type\",\"title\":\"验证方式\",\"example\":\"0\"},{\"require\":\"1\",\"name\":\"identifier\",\"title\":\"账号\",\"description\":\"用户名，邮箱，手机号\",\"example\":\"admin@qq.com\"},{\"name\":\"credential\",\"require\":\"1\",\"title\":\"凭证\",\"description\":\"密码\",\"example\":\"qwe123\"}],\"divider\":\"\"}}', 1, 0, 0);
 
 
 CREATE TABLE `ia_core_user` (
