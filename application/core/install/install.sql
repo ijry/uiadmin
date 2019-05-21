@@ -44,7 +44,7 @@ INSERT INTO `ia_core_menu` (`module`, `icon`, `path`, `pmenu`, `title`, `tip`, `
 VALUES
   ('core', 'md-cog', '/system', '', '系统', '核心系统相关功能', 0, '0', '', '', '', '', NULL, 0, 1, 0),
   ('core', '', '/core/index/index', '', '后台首页', '', 3, 'route', 'v1', '', '', 'GET', NULL, 0, 0, 0),
-  ('core', '', '/core/index/config', '/core', '核心配置', '获取核心模块配置', 5, '', 'v1', '', '', 'GET', NULL, 0, 0, 0)
+  ('core', '', '/core/index/config', '/core', '核心配置', '获取核心模块配置', 5, '', 'v1', '', '', 'GET', NULL, 0, 0, 0),
   ('core', '', '/core/index/upload', '', '上传文件', '上传图片和文件', 5, 'route', 'v1', '', '', 'POST', NULL, 0, 0, 0),
   ('core', '', '/core/index/checkUpdate', '/system', '检查更新', '检查InitAdmin新版本', 3, '0', 'v1', '', '', 'GET', NULL, 0, 0, 0),
   ('core', 'md-code', '/developer', '', '开发', '一般是开发者采用得到的工具', 0, '0', '', '', '', '', NULL, 0, 99, 0),
