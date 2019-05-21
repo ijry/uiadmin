@@ -39,7 +39,7 @@
             let _this = this;
             setInterval(async function() {
               let res = await util.request({
-                  url: '/v1/<?php echo(request()->path()); ?>',
+                  url: '/v1/core/install/step5',
                   method: 'post'
               });
               if (res.code == '200') {

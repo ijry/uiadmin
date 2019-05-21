@@ -130,33 +130,23 @@ class Install extends Home
      */
     public function step4()
     {
-        if (request()->isPost()) {
-            if (session('install') == true) {
-                return $this->return(['code' => 200, 'msg' => '安装成功']);
-            }
-            return $this->return(['code' => 0, 'msg' => '正在安装', 'data' => [
-                'error' => session('error'),
-                'error_msg' => session('error_msg')
-            ]]);
-        } else {
-            session('step', '4');
-            session('error', null);
-            session('install', null);
-            session('error_msg', null);
-            echo $this->return(['code' => 200, 'msg' => '正在安装']);
+        session('step', '4');
+        session('error', null);
+        session('install', null);
+        session('error_msg', null);
+        echo $this->return(['code' => 200, 'msg' => '正在安装']);
 
-            // 连接数据库
-            $db_config   = session('db_config');
-            $db_instance = Db::connect($db_config);
+        // 连接数据库
+        $db_config   = session('db_config');
+        $db_instance = Db::connect($db_config);
 
-            // 创建数据表
-            $this->create_tables($db_instance, 'ia_');
+        // 创建数据表
+        $this->create_tables($db_instance, 'ia_');
 
-            // 创建配置文件
-            $conf = $this->write_config($db_config);
+        // 创建配置文件
+        $conf = $this->write_config($db_config);
 
-            session('install', true);
-        }
+        session('install', true);
     }
 
     /**
@@ -167,11 +157,21 @@ class Install extends Home
      */
     public function step5()
     {
-        session('step', null);
-        session('error', null);
-        session('install', null);
-        session('error_msg', null);
-        return $this->return(['code' => 200, 'msg' => '成功']);
+        if (request()->isPost()) {
+            if (session('install') == true) {
+                return $this->return(['code' => 200, 'msg' => '安装成功']);
+            }
+            return $this->return(['code' => 0, 'msg' => '正在安装', 'data' => [
+                'error' => session('error'),
+                'error_msg' => session('error_msg')
+            ]]);
+        } else {
+            session('step', null);
+            session('error', null);
+            session('install', null);
+            session('error_msg', null);
+            return $this->return(['code' => 200, 'msg' => '成功']);
+        }
     }
 
     /**

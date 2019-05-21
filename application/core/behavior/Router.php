@@ -37,7 +37,12 @@ class Router
         Route::rule(
             'core/install/step5',
             'core/install/step5',
-            'GET'
+            'GET|POST'
+        );
+        Route::rule(
+            'api/v1/core/install/step5',
+            'core/install/step5',
+            'GET|POST'
         );
         if (!is_file(env('root_path') . '.env')) {
             for ($i = 1; $i  < 5; $i++) {
