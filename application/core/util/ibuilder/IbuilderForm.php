@@ -118,6 +118,8 @@ class IbuilderForm {
             } else {
                 $extra['max_size'] = 512;
             }
+            $extra['driver'] = ''; // 默认上传驱动，不填默认本地上传
+            $extra['data'] = [];
         }
         if (isset($extra['options'])) {
             $options = [];
