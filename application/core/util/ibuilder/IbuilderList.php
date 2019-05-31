@@ -30,6 +30,9 @@ class IbuilderList {
     public function init() {
         $this->data = [
             'data_list' => [],
+            'data_list_params' => [
+                'is_fold' => true
+            ],
             'top_button_list' => [],
             'right_button_list' => [],
             'columns' => [],
