@@ -92,8 +92,11 @@ class IbuilderForm {
         $item['title'] = $title;
         $item['type'] = $type;
         $item['value'] = $value;
+        $item['temp'] = ''; // 临时使用
+        $item['show_modal'] = false; // 显示弹窗
         $extra['placeholder'] = isset($extra['placeholder']) ? $extra['placeholder'] : '';
         $extra['tip'] = isset($extra['tip']) ? $extra['tip'] : '';
+        $extra['position'] = isset($extra['position']) ? $extra['position'] : 'left';
         // 上传
         if (in_array($item['type'], ['image', 'images', 'file', 'files'])) {
             // 上传接口
