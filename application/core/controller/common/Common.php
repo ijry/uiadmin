@@ -86,6 +86,29 @@ class Common extends Controller
                     } else if(isset($data['data']['form_data'])) {
                         return $this->fetch('core@admin/ibuilder/form');
                     } else {
+                        if (is_file(env('root_path') . '.env')
+                            && !\think\helper\Str::startsWith(request()->path(), 'admin/')
+                            && request()->path() != 'core/install/step5') {
+                            // 模板全局根目录
+                            $view_base = env('root_path') . 'public/view/' . $data['data']['config_core']['theme'] . '/';
+                            $this->view->config('view_base', $view_base);
+
+                            // 设置模板字符替换变量
+                            $tpl_replace_string = config('template.tpl_replace_string');
+                            $tpl_replace_string_add = [];
+                            $tpl_replace_string_add['__CSS__'] = request()->rootUrl() . '/view/'
+                                . $data['data']['config_core']['theme'] . '/core/public/css';
+                            $tpl_replace_string_add['__JS__'] = request()->rootUrl() . '/view/'
+                                . $data['data']['config_core']['theme'] . '/core/public/js';
+                            $tpl_replace_string_add['__IMG__'] = request()->rootUrl() . '/view/'
+                                . $data['data']['config_core']['theme'] . '/core/public/img';
+                            $tpl_replace_string_add['__LIBS__'] = request()->rootUrl() . '/view/'
+                                . $data['data']['config_core']['theme'] . '/core/public/libs';
+                            $tpl_replace_string_add['__FONTS__'] = request()->rootUrl() . '/view/'
+                                . $data['data']['config_core']['theme'] . '/core/public/fonts';
+                            $tpl_replace_string = array_merge($tpl_replace_string, $tpl_replace_string_add);
+                            $this->view->config('tpl_replace_string', $tpl_replace_string);
+                        }
                         return $this->fetch();
                     }
                 }

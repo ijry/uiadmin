@@ -171,7 +171,8 @@ VALUES
   ('core', 'basic', 'favicon', 'ICO图标', 'image', '', '请上传ICO图标', '请上传ICO图标', '', 1, 0, 4, 1, 0),
   ('core', 'basic', 'slogan', '项目口号', 'text', '渐进式模块化后台', '请输入您的项目口号', '请输入您的项目口号', '', 1, 0, 2, 1, 0),
   ('core', 'basic', 'copyright', '版权信息', 'text', 'Copyright © initadmin.net  All rights reserved.', '请输入您的版权信息', '请输入您的版权信息', '', 1, 0, 5, 1, 0),
-  ('core', 'basic', 'icp', '备案号', 'text', '苏ICP备15020094号', '请输入您的域名备案号', '请输入您的域名备案号', '', 1, 0, 6, 1, 0);
+  ('core', 'basic', 'icp', '备案号', 'text', '苏ICP备15020094号', '请输入您的域名备案号', '请输入您的域名备案号', '', 1, 0, 6, 1, 0),
+  ('core', 'basic', 'theme', '模板', 'text', 'default', '', '', '', 1, 0, 6, 1, 0);
 
 
 CREATE TABLE `ia_core_login` (

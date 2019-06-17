@@ -13,12 +13,7 @@
 // | 模板设置
 // +----------------------------------------------------------------------
 
-$view_base = '';
-if (is_file(env('root_path') . '.env')
-    && !\think\helper\Str::startsWith(request()->path(), 'admin/')
-    && request()->path() != 'core/install/step5') {
-    $view_base = env('root_path') . 'public/view/default/';
-}
+// 模板主题配置已经移植后台数据库，请登录后台在系统设置里修改即可。
 
 return [
     // 模板引擎类型 支持 php think 支持扩展
@@ -26,7 +21,7 @@ return [
     // 默认模板渲染规则 1 解析为小写+下划线 2 全部转换小写 3 保持操作方法
     'auto_rule'    => 1,
     // 模板全局根目录
-    'view_base'    => $view_base,
+    'view_base'    => '',
     // 模板路径
     'view_path'    => '',
     // 模板后缀
@@ -43,4 +38,8 @@ return [
     'taglib_end'   => '}',
     // 模板缓存
     'tpl_cache' => false,
+    // 模板替换
+    'tpl_replace_string' => [
+        '__STATIC__' => '/static',
+    ]
 ];
