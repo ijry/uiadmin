@@ -134,7 +134,11 @@ class Common extends Controller
                 return ['code' => 0, 'msg' => 'AuthorizationToken未提交', 'data' => ['need_login' => 1]];
             }
         }
-        $jwt = explode(' ', $token)[1]; //签发的Token
+        $toen_array = explode(' ', $token);
+        if (!isset($toen_array[1])) {
+            return ['code' => 0, 'msg' => 'token格式错误', 'data' => ['need_login' => 1]];
+        }
+        $jwt = $toen_array[1]; //签发的Token
         if (!$jwt) {
             return ['code' => 0, 'msg' => '未提交用户Token', 'data' => ['need_login' => 1]];
         }
