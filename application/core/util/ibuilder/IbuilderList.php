@@ -143,6 +143,19 @@ class IbuilderList {
                 $column['width'] = 60 * count($this->data['right_button_list']) . 'px';
             }
         }
+        if (isset($data['options'])) {
+            $options = [];
+            foreach ($data['options'] as $key => $val) {
+                if (!is_array($val) && in_array($column['template'], ['switch', 'radio', 'select', 'checkbox'])) {
+                    $tmp['title'] = $val;
+                    $tmp['value'] = $key;
+                    $options[] = $tmp;
+                } else {
+                    $options[$key] = $val;
+                }
+            }
+            $column['extra']['options'] = $options;
+        }
         $this->data['columns'][] = $column;
         return $this;
     }
