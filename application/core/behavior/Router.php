@@ -34,7 +34,17 @@ class Router
         }
 
         // 只读模式
-        if (env('read_only')) {
+        if (!request()->isGet() && env('read_only') && !in_array(
+                request()->path(),
+                ['api/v1/admin/core/index/cleanRuntime',
+                'api/v1/iadmin/core/index/cleanRuntime',
+                'admin/core/user/login',
+                'api/v1/admin/core/user/login',
+                'core/user/login',
+                'api/v1/core/user/login',
+                'core/user/logout',
+                'api/v1/core/user/logout']
+            )) {
             echo json_encode(['code' => 0, 'msg' => '您只有只读权限', 'data' => []]);
             exit;
         }
