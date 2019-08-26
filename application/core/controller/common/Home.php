@@ -28,7 +28,7 @@ class Home extends Common
      *
      * @author jry <ijry@qq.com>
      */
-    protected function isLogin() {
+    protected function isLogin($redirect = 0) {
         // 登录验证
         $ret = parent::isLogin();
         if ($ret['code'] != 200) {

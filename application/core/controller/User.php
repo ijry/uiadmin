@@ -42,7 +42,7 @@ class User extends Home
      * @return \think\Response
      * @author jry <ijry@qq.com>
      */
-    public function isLogin()
+    public function isLogin($redirect = 0)
     {
         $login = parent::isLogin();
         return $this->return(['code' => 200, 'msg' => '已登录系统', 'data' => ['uid' => $login['uid']]]);

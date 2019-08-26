@@ -124,7 +124,7 @@ class Common extends Controller
      * @return array
      * @author jry <ijry@qq.com>
      */
-    protected function isLogin($redirect)
+    protected function isLogin($redirect = 0)
     {
         // 获取token
         $token = Request::header('Authorization');
