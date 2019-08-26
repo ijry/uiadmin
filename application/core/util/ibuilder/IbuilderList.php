@@ -35,6 +35,7 @@ class IbuilderList {
             ],
             'top_button_list' => [],
             'right_button_list' => [],
+            'right_button_list_modal' => [],
             'columns' => [],
             'data_page' => [
                 'total_count' => 0,

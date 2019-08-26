@@ -52,7 +52,7 @@ class Common extends Controller
             }
         } else {
             if (isset($data['data'])) {
-                if (isset($data['data']['need_login']) && $data['data']['need_login'] == 1) {
+                if ($data['code'] == 401) {
                     return $this->redirect('core/admin.user/login');
                 } else {
                     if (is_file(env('root_path') . '.env')) {
@@ -124,23 +124,23 @@ class Common extends Controller
      * @return array
      * @author jry <ijry@qq.com>
      */
-    protected function isLogin()
+    protected function isLogin($redirect)
     {
         // 获取token
         $token = Request::header('Authorization');
         if (!$token) {
             $token = session('Authorization'); // 支持session
             if (!$token) {
-                return ['code' => 0, 'msg' => 'AuthorizationToken未提交', 'data' => ['need_login' => 1]];
+                return ['code' => 401, 'msg' => 'AuthorizationToken未提交', 'data' => ['redirect' => $redirect]];
             }
         }
         $token_array = explode(' ', $token);
         if (!isset($token_array[1])) {
-            return ['code' => 0, 'msg' => 'token格式错误', 'data' => ['need_login' => 1]];
+            return ['code' => 401, 'msg' => 'token格式错误', 'data' => ['redirect' => $redirect]];
         }
         $jwt = $token_array[1]; //签发的Token
         if (!$jwt) {
-            return ['code' => 0, 'msg' => '未提交用户Token', 'data' => ['need_login' => 1]];
+            return ['code' => 401, 'msg' => '未提交用户Token', 'data' => ['redirect' => $redirect]];
         }
 
         // jwt验证
@@ -151,10 +151,10 @@ class Common extends Controller
                 ->where('token', $jwt)
                 ->find();
             if (!$info) {
-                return ['code' => 0, 'msg' => 'token不存在', 'data' => ['need_login' => 1]];
+                return ['code' => 401, 'msg' => 'token不存在', 'data' => ['redirect' => $redirect]];
             }
             if ($info['expire_time'] <= time()) {
-                return ['code' => 0, 'msg' => '登录过期请重新登录', 'data' => ['need_login' => 1]];
+                return ['code' => 401, 'msg' => '登录过期请重新登录', 'data' => ['redirect' => $redirect]];
             }
 
             //解密
@@ -162,18 +162,18 @@ class Common extends Controller
             $decoded = JWT::decode($jwt, $info['key'], ['HS256']); // HS256方式，这里要和签发的时候对应
             $arr = (array)$decoded;
             if ($arr['data']->uid != $info['uid']) {
-                return ['code' => 0, 'msg' => '数据异常请联系管理员', 'data' => ['need_login' => 1]];
+                return ['code' => 401, 'msg' => '数据异常请联系管理员', 'data' => ['redirect' => $redirect]];
             }
             $arr['data']->token = $jwt;
             return ['code' => 200, 'data' => $arr];
         } catch(\Firebase\JWT\SignatureInvalidException $e) {  // 签名不正确
-            return ['code' => 0, 'msg' => $e->getMessage(), 'data' => ['need_login' => 1]];
+            return ['code' => 401, 'msg' => $e->getMessage(), 'data' => ['redirect' => $redirect]];
         }catch(\Firebase\JWT\BeforeValidException $e) {  // 签名在某个时间点之后才能用
-            return ['code' => 0, 'msg' => $e->getMessage(), 'data' => ['need_login' => 1]];
+            return ['code' => 401, 'msg' => $e->getMessage(), 'data' => ['redirect' => $redirect]];
         }catch(\Firebase\JWT\ExpiredException $e) {  // token过期
-            return ['code' => 0, 'msg' => $e->getMessage(), 'data' => ['need_login' => 1]];
+            return ['code' => 401, 'msg' => $e->getMessage(), 'data' => ['redirect' => $redirect]];
         }catch(Exception $e) {  //其他错误
-            return ['code' => 0, 'msg' => $e->getMessage(), 'data' => ['need_login' => 1]];
+            return ['code' => 401, 'msg' => $e->getMessage(), 'data' => ['redirect' => $redirect]];
         }
     }
 }

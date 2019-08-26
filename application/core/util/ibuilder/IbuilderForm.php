@@ -98,7 +98,7 @@ class IbuilderForm {
         $extra['tip'] = isset($extra['tip']) ? $extra['tip'] : '';
         $extra['position'] = isset($extra['position']) ? $extra['position'] : 'left';
         // 上传
-        if (in_array($item['type'], ['image', 'images', 'file', 'files'])) {
+        if (in_array($item['type'], ['image', 'images', 'file', 'files', 'html', 'tinymce', 'markdown'])) {
             // 上传接口
             if (isset($extra['action'])) {
                 $extra['action'] = $extra['action'];
