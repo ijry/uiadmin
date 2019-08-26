@@ -21,29 +21,5 @@ class Common extends Model
 
     public static function init()
     {
-        self::event('before_insert', function ($model) {
-            if (env('read_only') == true) {
-                $model->error = '当前是只读模式不允许修改';
-                return false;
-            }
-        });
-        self::event('before_update', function ($model) {
-            if (env('read_only') == true) {
-                $model->error = '当前是只读模式不允许修改';
-                return false;
-            }
-        });
-        self::event('before_write', function ($model) {
-            if (env('read_only') == true) {
-                $model->error = '当前是只读模式不允许修改';
-                return false;
-            }
-        });
-        self::event('before_delete', function ($model) {
-            if (env('read_only') == true) {
-                $model->error = '当前是只读模式不允许修改';
-                return false;
-            }
-        });
     }
 }

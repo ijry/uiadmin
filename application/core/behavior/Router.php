@@ -33,6 +33,12 @@ class Router
             ini_set('display_errors', '1');
         }
 
+        // 只读模式
+        if (env('read_only')) {
+            echo json_encode(['code' => 0, 'msg' => '您只有只读权限', 'data' => []]);
+            exit;
+        }
+
         // 默认路由
         Route::rule(
             'core/install/step5',
