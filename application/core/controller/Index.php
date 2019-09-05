@@ -35,7 +35,7 @@ class Index extends Home
         $base_url = request()->domain() . request()->baseFile() . '/api/';
         return $this->return(['code' => 200, 'msg' => '成功', 'data' => [
             'base_url' => $base_url,
-            'initadmin' => 'ActionPHP',
+            'name'     => 'InitAdmin',
             'version' => '0.1.0'
         ]]);
     }
