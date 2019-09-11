@@ -19,11 +19,11 @@ use think\Validate;
 use app\core\controller\common\Home;
 
 /**
- * 文章控制器
+ * 默认控制器
  *
  * @author jry <ijry@qq.com>
  */
-class Post extends Home
+class Index extends Home
 {
     private $cms_post,$cms_cate;
 
@@ -35,67 +35,20 @@ class Post extends Home
     }
 
     /**
-     * 我的
+     * 首页
      *
      * @return \think\Response
      * @author jry <ijry@qq.com>
      */
-    public function my()
+    public function index()
     {
-        $login = $this->isLogin();
         $data_list = $this->cms_post
-            ->where('uid', '=', $login['uid'])
-            ->select()
-            ->toArray();
-        return $this->return(['code' => 200, 'msg' => '成功', 'data' => [
-            'data_list' =>$data_list
-        ]]);
-    }
-
-    /**
-     * 列表
-     *
-     * @return \think\Response
-     * @author jry <ijry@qq.com>
-     */
-    public function lists($cid)
-    {
-        // 分类信息
-        $cate_info = $this->cms_cate
-            ->where('id', '=', $cid)
-            ->where('status', '=', 1)
-            ->find()
-            ->toArray();
-
-        // 文章列表
-        $data_list = $this->cms_post
-            ->where('cid', '=', $cid)
             ->where('status', '=', 1)
             ->where('review_status', '=', 1)
             ->select()
             ->toArray();
         return $this->return(['code' => 200, 'msg' => '成功', 'data' => [
-            'cate_info' => $cate_info,
             'data_list' =>$data_list
-        ]]);
-    }
-
-    /**
-     * 详情
-     *
-     * @return \think\Response
-     * @author jry <ijry@qq.com>
-     */
-    public function info($id)
-    {
-        $info = $this->cms_post
-            ->where('id', '=', $id)
-            ->where('status', '=', 1)
-            ->where('review_status', '=', 1)
-            ->find()
-            ->toArray();
-        return $this->return(['code' => 200, 'msg' => '成功', 'data' => [
-            'info' =>$info
         ]]);
     }
 }

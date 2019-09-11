@@ -81,7 +81,7 @@ class Router
             }
         } else {
             // 内置路由
-            Route::rule('/', 'cms/post/index'); // 首页访问路由
+            Route::rule('/', 'cms/index/index'); // 首页访问路由
             Route::rule('/api/', 'core/index/api'); // API访问路由
             Route::rule('/admin/', 'core/admin.index/index'); // 后台首页访问路由
 

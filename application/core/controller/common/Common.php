@@ -75,7 +75,9 @@ class Common extends Controller
                                 $return[$value['name']] = $value['value'];
                             }
                         }
-                        $data['data']['config_core'] = $return;
+                        // 首页地址
+                        $return['homepage'] = request()->rootUrl();
+                        $data['data']['config_core'] = $data['data']['site_info'] = $return;
                     }
                     if (!isset($data['data']['ibuilder_base'])) {
                         $data['data']['ibuilder_base'] = 'core@public/base';
