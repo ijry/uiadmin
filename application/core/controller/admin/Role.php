@@ -54,7 +54,10 @@ class Role extends Admin
         //构造动态页面数据
         $ibuilder_list = new \app\core\util\ibuilder\IbuilderList();
         $list_data = $ibuilder_list->init()
-            ->addTopButton('add', '添加角色', ['api' => '/v1/admin/core/role/add'])
+            ->addTopButton('add', '添加角色', [
+                'api' => '/v1/admin/core/role/add',
+                'width' => '1000'
+            ])
             ->addRightButton('member', '成员', [
                 'modal_type' => 'list',
                 'api' => '/v1/admin/core/user_role/lists',
@@ -62,7 +65,11 @@ class Role extends Admin
                 'width' => '900',
                 'title' => '角色成员'
             ])
-            ->addRightButton('edit', '修改', ['api' => '/v1/admin/core/role/edit', 'title' => '修改角色'])
+            ->addRightButton('edit', '修改', [
+                'api' => '/v1/admin/core/role/edit',
+                'title' => '修改角色',
+                'width' => '1000',
+            ])
             ->addRightButton('delete', '删除', [
                 'api' => '/v1/admin/core/role/delete',
                 'title' => '确认要删除该角色吗？',
@@ -167,15 +174,18 @@ class Role extends Admin
                 ->setFormMethod('post')
                 ->addFormItem('pid', '上级', 'select', 0, [
                     'tip' => '选择上级后会限制权限范围不大于上级',
-                    'options' => $role_tree_select
+                    'options' => $role_tree_select,
+                    'position' => 'bottom'
                 ])
                 ->addFormItem('name', '英文名', 'text', '', [
                     'placeholder' => '请输入英文名',
-                    'tip' => '英文名其实可以理解为一个系统代号'
+                    'tip' => '英文名其实可以理解为一个系统代号',
+                    'position' => 'bottom'
                 ])
                 ->addFormItem('title', '角色名称', 'text', '', [
                     'placeholder' => '请输入角色名称',
-                    'tip' => '角色名称也可以理解为部门名称'
+                    'tip' => '角色名称也可以理解为部门名称',
+                    'position' => 'bottom'
                 ])
                 ->addFormItem('admin_auth', '后台权限', 'checkboxtree', '',
                      [
@@ -187,7 +197,8 @@ class Role extends Admin
                         ['title' => '类型', 'key' => 'menu_type', 'width' => '40px']
                     ],
                     'data' => $menu_tree,
-                    'expand_key' => 'title'
+                    'expand_key' => 'title',
+                    'position' => 'bottom'
                 ])
                 ->addFormRule('name', [
                     ['required' => true, 'message' => '请填写角色英文名称', 'trigger' => 'change'],
@@ -301,15 +312,18 @@ class Role extends Admin
                 ->setFormMethod('put')
                ->addFormItem('pid', '上级', 'select', 0, [
                     'tip' => '选择上级后会限制权限范围不大于上级',
-                    'options' => $role_tree_select
+                    'options' => $role_tree_select,
+                    'position' => 'bottom'
                 ])
                 ->addFormItem('name', '英文名', 'text', '', [
                     'placeholder' => '请输入英文名',
-                    'tip' => '英文名其实可以理解为一个系统代号'
+                    'tip' => '英文名其实可以理解为一个系统代号',
+                    'position' => 'bottom'
                 ])
                 ->addFormItem('title', '角色名称', 'text', '', [
                     'placeholder' => '请输入角色名称',
-                    'tip' => '角色名称也可以理解为部门名称'
+                    'tip' => '角色名称也可以理解为部门名称',
+                    'position' => 'bottom'
                 ])
                 ->addFormItem('admin_auth', '后台权限', 'checkboxtree', '',
                      [
@@ -321,7 +335,8 @@ class Role extends Admin
                         ['title' => '类型', 'key' => 'menu_type', 'width' => '40px']
                     ],
                     'data' => $menu_tree,
-                    'expand-key' => 'title'
+                    'expand-key' => 'title',
+                    'position' => 'bottom'
                 ])
                 ->addFormItem('sortnum', '排序', 'text', '')
                 ->addFormRule('name', [

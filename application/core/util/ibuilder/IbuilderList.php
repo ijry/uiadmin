@@ -114,7 +114,7 @@ class IbuilderList {
         }
         $btn['style'] = [
             'type' => isset($style['type']) ? $style['type'] : 'default',
-            'size' => isset($style['size']) ? $style['size'] : 'default',
+            'size' => isset($style['size']) ? $style['size'] : 'small',
             'shape' => isset($style['shape']) ? $style['shape'] : 'square',
             'icon' => isset($style['icon']) ? $style['icon'] : '',
         ];
