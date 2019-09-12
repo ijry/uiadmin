@@ -61,6 +61,9 @@ class Index extends Admin
         $table = input('post.table');
         $field = input('post.field');
         $status = input('post.status');
+        if (is_array($status)) {
+            $status = implode(',', $status);
+        }
         $key_val = input('post.key_val');
         $ret = Db::name($table)
             ->where('id', '=' ,$key_val)
