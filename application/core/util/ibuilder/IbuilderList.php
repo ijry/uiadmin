@@ -31,7 +31,9 @@ class IbuilderList {
         $this->data = [
             'data_list' => [],
             'data_list_params' => [
-                'is_fold' => true
+                'expand_key' => 'title',
+                'is_fold' => true,
+                'table_name' => ''
             ],
             'top_button_list' => [],
             'right_button_list' => [],
@@ -42,6 +44,9 @@ class IbuilderList {
                 'limit' => 0,
                 'page' => 0
             ],
+            'filter_items' => [],
+            'filter_values' => [],
+            'right_button_length' => 0
         ];
         return $this;
     }
@@ -180,6 +185,33 @@ class IbuilderList {
             'limit' => $limit,
             'page' => $page
         ];
+        return $this;
+    }
+
+    /**
+     * 设置展开字段
+     * @author jry <ijry@qq.com>
+     */
+    public function setExpandKey($expand_key) {
+        $this->data['data_list_params']['expand_key'] = $expand_key;
+        return $this;
+    }
+
+    /**
+     * 设置默认展开
+     * @author jry <ijry@qq.com>
+     */
+    public function setIsFold($is_fold) {
+        $this->data['data_list_params']['is_fold'] = $is_fold;
+        return $this;
+    }
+
+    /**
+     * 设置数据表名
+     * @author jry <ijry@qq.com>
+     */
+    public function setTableName($table_name) {
+        $this->data['data_list_params']['table_name'] = $table_name;
         return $this;
     }
 

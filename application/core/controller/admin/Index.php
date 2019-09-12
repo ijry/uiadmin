@@ -51,6 +51,27 @@ class Index extends Admin
     }
 
     /**
+     * 设置状态字段
+     *
+     * @return \think\Response
+     * @author jry <ijry@qq.com>
+     */
+    public function setStatus()
+    {
+        $table = input('post.table');
+        $field = input('post.field');
+        $status = input('post.status');
+        $key_val = input('post.key_val');
+        $ret = Db::name($table)
+            ->where('id', '=' ,$key_val)
+            ->update([$field => $status]);
+        if ($ret) {
+            return $this->return(['code' => 200, 'msg' => '修改成功', 'data' => []]);
+        }
+        return $this->return(['code' => 0, 'msg' => '修改失败', 'data' => []]);
+    }
+
+    /**
      * 删除缓存
      *
      * @return \think\Response
