@@ -1,14 +1,15 @@
 <?php
 /**
  * +----------------------------------------------------------------------
- * | InitAdmin/actionphp [ InitAdmin渐进式模块化通用后台 ]
+ * | xyapi [ 渐进式云接口 ]
  * +----------------------------------------------------------------------
- * | Copyright (c) 2018-2019 http://initadmin.net All rights reserved.
+ * | Copyright (c) 2018-2020 http://jiangruyi.com All rights reserved.
  * +----------------------------------------------------------------------
- * | Licensed ( http://www.apache.org/licenses/LICENSE-2.0 )
+ * | Author: jry <598821125@qq.com>
  * +----------------------------------------------------------------------
- * | Author: jry <ijry@qq.com>
- * +----------------------------------------------------------------------
+ * | 版权申明：此源码不是一个自由软件，是jry推出的私有源码，严禁在未经许可的情况下
+ * | 拷贝、复制、传播、使用此源码的任意代码，如有违反，请立即删除，否则您将面临承担相应
+ * | 法律责任的风险。如果需要取得官方授权，请联系官方QQ598821125。
 */
 
 namespace app\core\util;
@@ -193,5 +194,49 @@ class Tree
             }
         }
         return $resultSet;
+    }
+
+    /**
+     * 对数组按字段分组
+     * @return array
+     */
+    public function arrayGroupBy($arr, $key)
+    {
+        $grouped = [];
+        foreach ($arr as $value) {
+            $grouped[$value[$key]][] = $value;
+        }
+        // Recursively build a nested grouping if more parameters are supplied
+        // Each grouped array value is grouped according to the next sequential key
+        if (func_num_args() > 2) {
+            $args = func_get_args();
+            foreach ($grouped as $key => $value) {
+                $parms = array_merge([$value], array_slice($args, 2, func_num_args()));
+                $grouped[$key] = call_user_func_array([this, 'arrayGroupBy'], $parms);
+            }
+        }
+        return $grouped;
+    }
+
+    /**
+     * 获取某个分类的所有子集
+     * @return array
+     */
+    public function getAllChileren($category_list, $id = 0, $level = 1, $id_field = 'id', $pid_field = 'pid'){
+        $subs = [
+            'ids' => [],
+            'list' => []
+        ];
+        foreach($category_list as $item){
+            if($item[$pid_field] == $id){
+                $item['level'] = $level;
+                $subs['ids'][] = $item[$id_field];
+                $subs['list'][] = $item;
+                $tmp = $this->getAllChileren($category_list, $item[$id_field], $level + 1, $id_field, $pid_field);
+                $subs['ids'] = array_merge($subs['ids'], $tmp['ids']);
+                $subs['list'] = array_merge($subs['list'], $tmp['list']);
+            }
+        }
+        return $subs;
     }
 }

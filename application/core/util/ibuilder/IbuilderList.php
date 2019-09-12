@@ -135,7 +135,11 @@ class IbuilderList {
         $column = [
             'key' => $key,
             'title' => $title,
-            'width' => '100px'
+            'width' => '10px',
+            'minWidth' => '',
+            'extra' => [
+                'options' => []
+            ]
         ];
         if (isset($data['width'])) {
             $column['width'] = $data['width'];
