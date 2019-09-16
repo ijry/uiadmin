@@ -82,6 +82,10 @@ class Common extends Controller
                     if (!isset($data['data']['ibuilder_base'])) {
                         $data['data']['ibuilder_base'] = 'core@public/base';
                     }
+                    $template = '';
+                    if (isset($data['data']['template'])) {
+                        $template = $data['data']['template'];
+                    }
                     $this->assign($data['data']);
                     if (isset($data['data']['list_data'])) {
                         return $this->fetch('core@admin/ibuilder/list');
@@ -111,7 +115,7 @@ class Common extends Controller
                             $tpl_replace_string = array_merge($tpl_replace_string, $tpl_replace_string_add);
                             $this->view->config('tpl_replace_string', $tpl_replace_string);
                         }
-                        return $this->fetch();
+                        return $this->fetch($template);
                     }
                 }
             } else {
