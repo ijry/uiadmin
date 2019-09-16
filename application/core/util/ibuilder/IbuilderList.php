@@ -67,6 +67,8 @@ class IbuilderList {
             'api_blank' => '',
             'api_suffix' => isset($page_data['api_suffix']) ? $page_data['api_suffix'] : [],
             'api_params' => isset($page_data['api_params']) ? $page_data['api_params'] : '',
+            'query_suffix' => isset($page_data['query_suffix']) ? $page_data['query_suffix'] : [],  // 参数变量
+            'query_params' => isset($page_data['query_params']) ? $page_data['query_params'] : [],  // 参数实际值
             'title' => isset($page_data['title']) ? $page_data['title'] : $title,
             'content' => isset($page_data['content']) ? $page_data['content'] : '',
             'okText' => isset($page_data['okText']) ? $page_data['okText'] : '',
@@ -105,6 +107,8 @@ class IbuilderList {
             'api_blank' => '',
             'api_suffix' => isset($page_data['api_suffix']) ? $page_data['api_suffix'] : ['id'],
             'api_params' => isset($page_data['api_params']) ? $page_data['api_params'] : '',
+            'query_suffix' => isset($page_data['query_suffix']) ? $page_data['query_suffix'] : [],  // 参数变量
+            'query_params' => isset($page_data['query_params']) ? $page_data['query_params'] : [],  // 参数实际值
             'title' => isset($page_data['title']) ? $page_data['title'] : $title,
             'content' => isset($page_data['content']) ? $page_data['content'] : '',
             'okText' => isset($page_data['okText']) ? $page_data['okText'] : '',
