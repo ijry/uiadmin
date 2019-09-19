@@ -58,7 +58,7 @@ class User extends Home
     {
         $login = parent::isLogin();
         try {
-            $user_service = controller('core/User', 'service');
+            $user_service = new \app\core\service\User();
             $user_info = $user_service->getById($login['uid']);
             return $this->return(['code' => 200, 'msg' => '用户信息', 'data' => ['user_info' => $user_info]]);
         } catch(\Exception $e) {
@@ -150,7 +150,7 @@ class User extends Home
 
             // 记录登录状态
             try {
-                $user_service = controller('core/User', 'service');
+                $user_service = new \app\core\service\User();
                 $jwt = $user_service->login($user_info, input('post.client'));
             } catch(\Exception $e) {
                 return $this->return(['code' => 0, 'msg' => '登录失败:' . $e->getMessage()]);

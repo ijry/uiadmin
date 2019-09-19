@@ -13,9 +13,11 @@
 
 namespace app\core\service;
 
+use think\Model;
 use \Firebase\JWT\JWT; //导入JWT
 
-class User
+class User extends Model
+
 {
     private $core_user;
     private $core_identity;
@@ -46,8 +48,19 @@ class User
     public function getById($id) {
         $user_info = $this->core_user
             ->field('id,nickname,username,avatar')
-            ->find($id)
-            ->toArray();
+            ->where('id', '=', $id)
+            ->find();
+        $user_info['email'] = $this->core_identity
+            ->field('identifier,verified')
+            ->where('uid', '=', $user_info['id'])
+            ->where('identity_type', '=', 2)
+            ->find();
+        $user_info['mobile'] = $this->core_identity
+            ->field('identifier,verified')
+            ->where('uid', '=', $user_info['id'])
+            ->where('identity_type', '=', 1)
+            ->find();
+        $user_info['href'] = url("core/user/home", ["uid" => $user_info["id"]]);
         return $user_info;
     }
 
