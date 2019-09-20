@@ -39,14 +39,141 @@ class Module extends Admin
     }
 
     /**
+     * 安装模块
+     *
+     * @return \think\Response
+     */
+    public function import($name)
+    {
+        // 启动事务
+        Db::startTrans();
+        try {
+            if (is_dir(env('app_path') . $name)) {
+                $module_insall = file_get_contents(env('app_path') . $name . '/install/install.json');
+                $module_insall = json_decode($module_insall, true);
+                $module_insall['info']['status'] = 1;
+
+                // 导入基础信息
+                $this->core_module->save($module_insall['info']);
+
+                // 导入配置
+                $this->core_config->saveAll($module_insall['config']);
+                // 导入菜单及API
+                $this->core_menu->saveAll($module_insall['api']);
+                // 导入数据表
+                foreach ($module_insall['tables'] as $key => $value) {
+                    if (isset($value['table_create'])) {
+                        $value['table_create'] = implode("", $value['table_create']);
+                        if (false === Db::execute($value['table_create'])) {
+                            throw new \Exception($value['table_name'] . "创建出错", 0);
+                        }
+                    }
+                    if (isset($value['table_rows'])) {
+                        if (false === Db::table($value['table_name'])->insertAll($value['table_rows'])) {
+                            throw new \Exception($value['table_name'] . "添加记录出错", 0);
+                        }
+                    }
+                }
+            } else {
+                throw new \Exception("不存在", 0);
+            }
+            Db::commit(); // 提交事务
+            return $this->return([
+                'code' => 200, 'msg' => '恭喜您，安装成功！', 'data' => []
+            ]);
+        } catch (Exception $e) {
+            Db::rollback(); // 回滚事务
+            return $this->return([
+                'code' => 0, 'msg' => $e->getMessage(), 'data' => []
+            ]);
+        }
+    }
+
+    /**
      * 模块列表
      *
      * @return \think\Response
      */
     public function lists()
     {
-        // 用户列表
+        // 模块列表
         $data_list = $this->core_module->select()->toArray();
+
+        // 获取本地未安装模块
+        // 获取已经安装的模块名称
+        $installed_names = $this->core_module->column('name');
+        $dir_list = \app\core\util\File::get_dirs(env('app_path'))['dir'];
+        foreach ($dir_list as $key => $value) {
+            if ($value == '.' || $value == '..') {
+                continue;
+            }
+            if (!in_array($value, $installed_names)) {
+                $module = [];
+                $module['id'] = '';
+                $module['name'] = $value;
+                $module_insall = file_get_contents(env('app_path') . $value . '/install/install.json');
+                $module_insall = json_decode($module_insall, true);
+                $module['title'] = $module_insall['info']['title'];
+                $module['description'] = $module_insall['info']['description'];
+                $module['developer'] = $module_insall['info']['developer'];
+                $module['website'] = $module_insall['info']['website'];
+                $module['version'] = $module_insall['info']['version'];
+                $module['build'] = $module_insall['info']['build'];
+                $data_list[] = $module;
+            }
+        }
+
+        foreach ($data_list as $key => &$value1) {
+            // 兼容接口文档Tree组件异步加载需要
+            $value1['loading'] = false;
+            $value1['children'] = [];
+            // 右侧按钮
+            $value1['right_button_list'] = [];
+            if (!$value1['id']) {
+                $value1['right_button_list'][] = [
+                    'name' => 'info',
+                    'title' => '安装',
+                    'page_data' => [
+                        'form_method' => 'post',
+                        'api' => '/v1/admin/core/module/import',
+                        'title' => '确认要安装该模块吗？',
+                        'api_suffix' => ['name'],
+                        'modal_type' => 'confirm',
+                        'width' => '600',
+                        'okText' => '立即安装',
+                        'cancelText' => '取消安装',
+                        'content' => '<p>安装模块后您将可以使用该模块的功能</p>',
+                    ],
+                    'style' => ['size' => 'small', 'type' => 'success']
+                ];
+            } else {
+                $value1['right_button_list'][] = [
+                    'name' => 'config',
+                    'title' => '设置',
+                    'page_data' => [
+                        'modal_type' => 'form',
+                        'api' => '/v1/admin/core/config/saveBatch/',
+                        'width' => '1000',
+                        'api_suffix' => ['name'],
+                        'title' => '配置'
+                    ],
+                    'style' => ['size' => 'small', 'type' => 'primary']
+                ];
+                $value1['right_button_list'][] = [
+                    'name' => 'edit',
+                    'title' => '修改',
+                    'page_data' => [
+                        'modal_type' => 'form',
+                        'api' => '/v1/admin/core/module/edit',
+                        'width' => '1000',
+                        'title' => '修改模块信息'
+                    ],
+                    'style' => ['size' => 'small']
+                ];
+            }
+        }
+
+        // 转换成树
         $tree      = new Tree();
         $data_list = $tree->list2tree($data_list);
 
@@ -54,23 +181,17 @@ class Module extends Admin
         $ibuilder_list = new \app\core\util\ibuilder\IbuilderList();
         $list_data = $ibuilder_list->init()
             ->addTopButton('add', '创建新模块', ['api' => '/v1/admin/core/module/add'])
-            ->addRightButton('config', '设置', [
-                'api' => '/v1/admin/core/config/saveBatch/',
-                'title' => '配置',
-                'api_suffix' => ['name']
-            ])
-            ->addRightButton('edit', '修改', ['api' => '/v1/admin/core/module/edit', 'title' => '修改模块信息'])
             ->addColumn('id' , 'ID', ['width' => '50px'])
             ->addColumn('name', '名称', ['width' => '120px'])
             ->addColumn('title', '标题', ['width' => '120px'])
-            ->addColumn('description', '描述', ['width' => '240px'])
+            ->addColumn('description', '描述', ['width' => '200px'])
             ->addColumn('developer', '开发者', ['width' => '80px'])
             ->addColumn('version', '版本', ['width' => '80px'])
             ->addColumn('build', 'Build', ['width' => '150px'])
             ->addColumn('sortnum', '排序', ['width' => '50px'])
             ->addColumn('status', '状态', ['width' => '50px'])
             ->addColumn('right_button_list', '操作', [
-                'minWidth' => '50px',
+                'minWidth' => '100px',
                 'type' => 'template',
                 'template' => 'right_button_list'
             ])

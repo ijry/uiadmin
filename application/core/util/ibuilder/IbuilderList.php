@@ -96,6 +96,18 @@ class IbuilderList {
      * @author jry <ijry@qq.com>
      */
     public function addRightButton($name, $title, $page_data = [], $style = []) {
+        $btn = $this->getRightButton($name, $title, $page_data, $style);
+        $this->data['right_button_length'] += 18 * mb_strwidth($btn['title']);
+        $this->data['right_button_list'][$name] = $btn;
+        return $this;
+    }
+
+    /**
+     * 构造右侧按钮
+     * @author jry <ijry@qq.com>
+     */
+    public function getRightButton($name, $title, $page_data = [], $style = []) {
+        $btn = [];
         $btn['title'] = $title;
         $btn['page_data'] = [
             'page_type' => isset($page_data['page_type']) ? $page_data['page_type'] : 'modal',
@@ -105,30 +117,31 @@ class IbuilderList {
             'path' => isset($page_data['path']) ? $page_data['path'] : '',
             'api' => $page_data['api'],
             'api_blank' => '',
-            'api_suffix' => isset($page_data['api_suffix']) ? $page_data['api_suffix'] : ['id'],
-            'api_params' => isset($page_data['api_params']) ? $page_data['api_params'] : '',
+            'api_suffix' => isset($page_data['api_suffix']) ? $page_data['api_suffix'] : ['id'],  // 参数变量
+            'api_params' => isset($page_data['api_params']) ? $page_data['api_params'] : '',  // 参数实际值
             'query_suffix' => isset($page_data['query_suffix']) ? $page_data['query_suffix'] : [],  // 参数变量
             'query_params' => isset($page_data['query_params']) ? $page_data['query_params'] : [],  // 参数实际值
             'title' => isset($page_data['title']) ? $page_data['title'] : $title,
+            'height' => isset($page_data['height']) ? $page_data['height'] : 'auto',
             'content' => isset($page_data['content']) ? $page_data['content'] : '',
             'okText' => isset($page_data['okText']) ? $page_data['okText'] : '',
             'cancelText' => isset($page_data['cancelText']) ? $page_data['cancelText'] : '',
-            'width' => isset($page_data['width']) ? $page_data['width'] : '800',
+            'width' => isset($page_data['width']) ? $page_data['width'] : '1000',
+            'no_refresh' => isset($page_data['no_refresh']) ? $page_data['no_refresh'] : false,
             'loading' => false,
             'draggable' => false,
             'scrollable' => true,
         ];
         if ($btn['page_data']['path'] == '') {
-            $btn['page_data']['path'] = ltrim($btn['page_data']['api'], '/v1/admin');
+            $btn['page_data']['path'] = ltrim($btn['page_data']['api'], '/v1');
         }
         $btn['style'] = [
             'type' => isset($style['type']) ? $style['type'] : 'default',
             'size' => isset($style['size']) ? $style['size'] : 'small',
-            'shape' => isset($style['shape']) ? $style['shape'] : 'square',
+            'shape' => isset($style['shape']) ? $style['shape'] : 'default',
             'icon' => isset($style['icon']) ? $style['icon'] : '',
         ];
-        $this->data['right_button_list'][$name] = $btn;
-        return $this;
+        return $btn;
     }
 
     /**
@@ -139,7 +152,7 @@ class IbuilderList {
         $column = [
             'key' => $key,
             'title' => $title,
-            'width' => '10px',
+            'width' => '100px',
             'minWidth' => '',
             'extra' => [
                 'options' => []
@@ -154,7 +167,10 @@ class IbuilderList {
         if (isset($data['template'])) {
             $column['template'] = $data['template'];
             if ($data['template'] == 'right_button_list') {
-                $column['width'] = 60 * count($this->data['right_button_list']) . 'px';
+                $column['width'] = '';
+                if ($column['minWidth']) {
+                    $column['width'] = (rtrim($column['minWidth'], 'px') + $this->data['right_button_length']) . 'px';
+                }
             }
         }
         if (isset($data['options'])) {
@@ -224,10 +240,71 @@ class IbuilderList {
     }
 
     /**
+     * 添加搜索
+     * @author jry <ijry@qq.com>
+     */
+    public function addFilterItem(
+        $name,
+        $title,
+        $type = 'text',
+        $value = '' ,
+        $extra = []
+    ) {
+        $item['name'] = $name;
+        $item['title'] = $title;
+        $item['type'] = $type;
+        $item['value'] = $value;
+        $extra['placeholder'] = isset($extra['placeholder']) ? $extra['placeholder'] : '';
+        $extra['tip'] = isset($extra['tip']) ? $extra['tip'] : '';
+        $extra['position'] = isset($extra['position']) ? $extra['position'] : 'left';
+        if (isset($extra['options']) && is_array($extra['options'])) {
+            $options = [];
+            foreach ($extra['options'] as $key => $val) {
+                if (!is_array($val)) {
+                    $tmp['title'] = $val;
+                    $tmp['value'] = $key;
+                    $options[] = $tmp;
+                } else {
+                    $options[] = $val;
+                }
+            }
+            $extra['options'] = $options;
+        }
+        $item['extra'] = $extra;
+        $this->data['filter_items'][] = $item;
+        return $this;
+    }
+
+    /**
      * 返回数据
      * @author jry <ijry@qq.com>
      */
     public function getData() {
+        foreach ($this->data['filter_items'] as $key => &$val) {
+            $this->data['filter_values'][$val['name']] = $val['value'];
+            if (is_numeric($val['value']) && in_array($val['type'], ['radio', 'switch'])) {
+                $this->data['filter_values'][$val['name']] = $val['value'] = (int)$this->data['filter_values'][$val['name']];
+            }
+            if ($this->data['filter_values'][$val['name']] == '' && in_array($val['type'], ['checkbox', 'tags', 'images', 'files'])) {
+                $this->data['filter_values'][$val['name']] = $val['value'] = [];
+            }
+        }
+
+        // 处理每一行不同的右侧按钮
+        foreach ($this->data['data_list'] as $key => &$value) {
+            if (isset($value['right_button_list'])) {
+                $btns = [];
+                foreach ($value['right_button_list'] as $key1 => $value1) {
+                    $btn = $this->getRightButton($value1['name'], $value1['title'], $value1['page_data'], $value1['style']);
+                    $btns[$value1['name']] = $btn;
+                    if (!isset($this->data['right_button_list_modal'][$value1['name']])) {
+                        $this->data['right_button_list_modal'][$value1['name']] = $btn;
+                    }
+                }
+                $value['right_button_list'] = $btns;
+                unset($btns);
+            }
+        }
         return $this->data;
     }
 }

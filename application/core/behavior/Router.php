@@ -88,6 +88,7 @@ class Router
             // 计算后台API路由
             $data_list = Db::name('core_menu')
                 ->removeOption('where')
+                ->where('menu_layer', '=' , 'admin')
                 ->where('menu_type', 'in' , '1,2,3')
                 ->select();
             foreach ($data_list as $key => $val) {
@@ -109,7 +110,8 @@ class Router
             // 计算前台API路由
             $data_list = Db::name('core_menu')
                 ->removeOption('where')
-                ->where('menu_type', '=' , '5')
+                ->where('menu_layer', '=' , 'home')
+                ->where('menu_type', 'in' , '1,2,3')
                 ->select();
             foreach ($data_list as $key => $val) {
                 $path = explode('/', $val['path']);
