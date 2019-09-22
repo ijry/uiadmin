@@ -111,15 +111,17 @@ class Module extends Admin
                 $module = [];
                 $module['id'] = '';
                 $module['name'] = $value;
-                $module_insall = file_get_contents(env('app_path') . $value . '/install/install.json');
-                $module_insall = json_decode($module_insall, true);
-                $module['title'] = $module_insall['info']['title'];
-                $module['description'] = $module_insall['info']['description'];
-                $module['developer'] = $module_insall['info']['developer'];
-                $module['website'] = $module_insall['info']['website'];
-                $module['version'] = $module_insall['info']['version'];
-                $module['build'] = $module_insall['info']['build'];
-                $data_list[] = $module;
+                if (is_file(env('app_path') . $value . '/install/install.json')) {
+                    $module_insall = file_get_contents(env('app_path') . $value . '/install/install.json');
+                    $module_insall = json_decode($module_insall, true);
+                    $module['title'] = $module_insall['info']['title'];
+                    $module['description'] = $module_insall['info']['description'];
+                    $module['developer'] = $module_insall['info']['developer'];
+                    $module['website'] = $module_insall['info']['website'];
+                    $module['version'] = $module_insall['info']['version'];
+                    $module['build'] = $module_insall['info']['build'];
+                    $data_list[] = $module;
+                }
             }
         }
 
