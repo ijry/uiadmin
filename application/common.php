@@ -12,6 +12,28 @@
 // 应用公共文件
 
 /**
+ * 登录检查
+ * @param  string $str 要加密的字符串
+ * @return string
+ * @author jry <598821125@qq.com>
+ */
+function is_login()
+{
+    try {
+        // 获取token
+        $token = Request::header('Authorization');
+        if (!$token) {
+            $token = session('Authorization'); // 支持session
+        }
+        $user_service = new \app\core\service\User();
+        $ret = $user_service->is_login($token);
+        return (Array)$ret['data'];
+    } catch (Exception $e) {
+        return false;
+    }
+}
+
+/**
  * 系统非常规MD5加密方法
  * @param  string $str 要加密的字符串
  * @return string
