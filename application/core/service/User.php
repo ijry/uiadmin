@@ -106,4 +106,59 @@ class User extends Model
         }
         return false;
     }
+
+    /**
+     * 登录检测
+     * @param  string $jwt Token
+     * @return mixed
+     *
+     * @author jry <598821125@qq.com>
+     */
+    public function is_login($token)
+    {
+        // jwt验证
+        try {
+            if (!$token) {
+                throw new \Exception('请先登录', 401);
+            }
+            $token_array = explode(' ', $token);
+            if (!isset($token_array[1])) {
+                throw new \Exception('token格式错误', 401);
+            }
+            $jwt = $token_array[1]; // 签发的Token
+            if (!$jwt) {
+                throw new \Exception('未提交用户Token', 401);
+            }
+
+            // 数据库验证
+            $info = \think\Db::name('core_login')
+                ->removeOption('where')
+                ->where('token', $jwt)
+                ->find();
+            if (!$info) {
+                throw new \Exception('token不存在', 401);
+            }
+            if ($info['expire_time'] <= time()) {
+                throw new \Exception('登录过期请重新登录', 401);
+            }
+
+            //解密
+            JWT::$leeway = 60; // 当前时间减去60，把时间留点余地
+            $decoded = JWT::decode($jwt, $info['key'], ['HS256']); // HS256方式，这里要和签发的时候对应
+            $arr = (array)$decoded;
+            if ($arr['data']->uid != $info['uid']) {
+                throw new \Exception('数据异常请联系管理员', 401);
+            }
+            $arr['data']->token = $jwt;
+            return $arr;
+        } catch (\Firebase\JWT\SignatureInvalidException $e) {  // 签名不正确
+            throw new \Exception($e->getMessage(), 401);
+        } catch (\Firebase\JWT\BeforeValidException $e) {  // 签名在某个时间点之后才能用
+            throw new \Exception($e->getMessage(), 401);
+        } catch (\Firebase\JWT\ExpiredException $e) {  // token过期
+            throw new \Exception($e->getMessage(), 401);
+        } catch (Exception $e) {  //其他错误
+            throw new \Exception($e->getMessage(), 401);
+        }
+    }
 }
