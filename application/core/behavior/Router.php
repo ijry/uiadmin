@@ -85,6 +85,28 @@ class Router
             Route::rule('/api/', 'core/index/api'); // API访问路由
             Route::rule('/admin/', 'core/admin.index/index'); // 后台首页访问路由
 
+            // 调用云后台
+            Route::get('/xyadmin/$', function (\think\Request $request, \think\Response $response) {
+                $seconds_to_cache = 86400 * 30;
+                $ts = gmdate("D, d M Y H:i:s", time() + $seconds_to_cache) . " GMT";
+                return $response
+                    ->data(file_get_contents('http://admin.jiangruyi.com/' . $request->pathinfo()))
+                    ->code(200)
+                    ->expires($ts)
+                    ->cacheControl("max-age=$seconds_to_cache")
+                    ->contentType('text/html');
+            });
+            Route::get('/xyadmin/<name>', function (\think\Request $request, \think\Response $response) {
+                $seconds_to_cache = 86400 * 30;
+                $ts = gmdate("D, d M Y H:i:s", time() + $seconds_to_cache) . " GMT";
+                return $response
+                    ->data(file_get_contents('http://admin.jiangruyi.com/' . $request->pathinfo()))
+                    ->code(200)
+                    ->expires($ts)
+                    ->cacheControl("max-age=$seconds_to_cache")
+                    ->contentType('text/' . $request->ext());
+            });
+
             // 计算后台API路由
             $data_list = Db::name('core_menu')
                 ->removeOption('where')
