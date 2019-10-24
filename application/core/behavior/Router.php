@@ -90,21 +90,14 @@ class Router
                 $seconds_to_cache = 86400 * 30;
                 $ts = gmdate("D, d M Y H:i:s", time() + $seconds_to_cache) . " GMT";
                 return $response
-                    ->data(file_get_contents('http://admin.jiangruyi.com/' . $request->pathinfo()))
+                    ->data(file_get_contents('http://admin.starideas.net/' . $request->pathinfo()))
                     ->code(200)
                     ->expires($ts)
                     ->cacheControl("max-age=$seconds_to_cache")
                     ->contentType('text/html');
             });
             Route::get('/xyadmin/<name>', function (\think\Request $request, \think\Response $response) {
-                $seconds_to_cache = 86400 * 30;
-                $ts = gmdate("D, d M Y H:i:s", time() + $seconds_to_cache) . " GMT";
-                return $response
-                    ->data(file_get_contents('http://admin.jiangruyi.com/' . $request->pathinfo()))
-                    ->code(200)
-                    ->expires($ts)
-                    ->cacheControl("max-age=$seconds_to_cache")
-                    ->contentType('text/' . $request->ext());
+                return redirect('http://admin.starideas.net/' . $request->pathinfo());
             });
 
             // 计算后台API路由
