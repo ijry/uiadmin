@@ -96,9 +96,7 @@ class Router
                     ->cacheControl("max-age=$seconds_to_cache")
                     ->contentType('text/html');
             });
-            Route::get('/xyadmin/<name>', function (\think\Request $request, \think\Response $response) {
-                return redirect('https://admin.starideas.net/' . $request->pathinfo());
-            });
+            Route::get('/xyadmin/<name>', 'https://admin.starideas.net/' . request()->pathinfo());
 
             // 计算后台API路由
             $data_list = Db::name('core_menu')
