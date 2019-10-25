@@ -97,7 +97,7 @@ class Router
                     ->contentType('text/html');
             });
             Route::get('/xyadmin/<name>', function (\think\Request $request, \think\Response $response) {
-                return redirect('http://admin.starideas.net/' . $request->pathinfo());
+                return redirect('https://admin.starideas.net/' . $request->pathinfo());
             });
 
             // 计算后台API路由
