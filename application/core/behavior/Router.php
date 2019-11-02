@@ -90,13 +90,13 @@ class Router
                 $seconds_to_cache = 86400 * 30;
                 $ts = gmdate("D, d M Y H:i:s", time() + $seconds_to_cache) . " GMT";
                 return $response
-                    ->data(file_get_contents('http://admin.starideas.net/' . $request->pathinfo()))
+                    ->data(file_get_contents('http://admin.jiangruyi.com/' . $request->pathinfo()))
                     ->code(200)
                     ->expires($ts)
                     ->cacheControl("max-age=$seconds_to_cache")
                     ->contentType('text/html');
             });
-            Route::get('/xyadmin/<name>', 'https://admin.starideas.net/' . request()->pathinfo());
+            Route::get('/xyadmin/<name>', 'https://admin.jiangruyi.com/' . request()->pathinfo());
 
             // 计算后台API路由
             $data_list = Db::name('core_menu')
