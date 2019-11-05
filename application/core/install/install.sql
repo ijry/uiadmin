@@ -27,6 +27,7 @@ CREATE TABLE `ia_core_menu` (
   `pmenu` varchar(255) NOT NULL DEFAULT '' COMMENT '父菜单',
   `title` varchar(255) NOT NULL DEFAULT '' COMMENT '菜单标题',
   `tip` varchar(255) NOT NULL DEFAULT '' COMMENT '提示',
+  `menu_layer` varchar(31) NOT NULL DEFAULT '' COMMENT '菜单分层',
   `menu_type` tinyint(3) NOT NULL DEFAULT '0' COMMENT '菜单类型1导航2按钮3仅接口',
   `route_type` varchar(32) NOT NULL DEFAULT '' COMMENT '路由类型',
   `api_prefix` varchar(255) NOT NULL DEFAULT '' COMMENT '接口前缀',
