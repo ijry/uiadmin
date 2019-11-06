@@ -36,6 +36,7 @@ CREATE TABLE `ia_core_menu` (
   `api_method` varchar(255) NOT NULL DEFAULT '' COMMENT '接口请求方法',
   `doc` longtext COMMENT '接口文档',
   `is_hide` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否隐藏',
+  `status` tinyint(1) NOT NULL DEFAULT '1' COMMENT '状态',
   `sortnum` int(11) NOT NULL DEFAULT '0' COMMENT '排序',
   `delete_time` int(11) NOT NULL DEFAULT '0' COMMENT '删除时间',
   PRIMARY KEY (`id`)
