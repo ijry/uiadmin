@@ -135,7 +135,7 @@ class Api extends Admin
         // 计算路由
         $data_list = $this->core_menu
             ->where('delete_time', '=' ,0)
-            ->where('menu_type', '=', 5)
+            ->where('menu_layer', '=', 'home')
             ->order('sortnum asc')
             ->select()->toArray();
         foreach ($data_list as $key => &$val) {

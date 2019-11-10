@@ -47,7 +47,7 @@ class Menu extends Admin
         // 获取列表
         $data_list = $this->core_menu
             ->where('delete_time', 0)
-            ->where('menu_type', '<', 4)
+            ->where('menu_layer', '=', 'admin')
             ->order('sortnum asc')
             ->select()->toArray();
         foreach ($data_list as $key => &$val) {
