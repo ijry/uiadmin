@@ -152,7 +152,7 @@ class Common extends Controller
             $user_service = new \app\core\service\User();
             $ret = $user_service->is_login($token);
             return ['code' => 200, 'msg' => '成功', 'data' => $ret];
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             return ['code' => $e->getCode(), 'msg' => $e->getMessage(), 'data' => ['redirect' => $redirect]];
         }
     }

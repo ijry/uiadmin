@@ -157,7 +157,7 @@ class User extends Model
             throw new \Exception($e->getMessage(), 401);
         } catch (\Firebase\JWT\ExpiredException $e) {  // token过期
             throw new \Exception($e->getMessage(), 401);
-        } catch (Exception $e) {  //其他错误
+        } catch (\Exception $e) {  //其他错误
             throw new \Exception($e->getMessage(), 401);
         }
     }
