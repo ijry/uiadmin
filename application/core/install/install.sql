@@ -191,8 +191,8 @@ VALUES
   ('core', 1, 'slogan', '项目口号', 'text', '渐进式模块化后台', '请输入您的项目口号', '请输入您的项目口号', '', 1, 0, 2, 1, 0),
   ('core', 1, 'copyright', '版权信息', 'text', 'Copyright © initadmin.net  All rights reserved.', '请输入您的版权信息', '请输入您的版权信息', '', 1, 0, 5, 1, 0),
   ('core', 1, 'icp', '备案号', 'text', '苏ICP备15020094号', '请输入您的域名备案号', '请输入您的域名备案号', '', 1, 0, 6, 1, 0),
-  ('core', 1, 'theme', '主题', 'text', 'default', '主题', '主题', '', 1, 0, 6, 1, 0);
-
+  ('core', 1, 'theme', '主题', 'text', 'default', '主题', '主题', '', 1, 0, 6, 1, 0),
+  ('core', 1, 'url_model', 'URL模式', 'select', 'pathinfo', 'URL模式', 'URL模式', 'rewrite:URL重写模式\npathinfo:PATHINFO模式\ncompatible:兼容模式', 1, 0, 6, 1, 0);
 
 CREATE TABLE `ia_core_login` (
   `uid` int(11) NOT NULL DEFAULT '0' COMMENT 'UID',

@@ -75,6 +75,7 @@ class Router
                     'GET|POST'
                 );
             }
+            \think\facade\Url::root(request()->rootUrl() . '/index.php');
             if (!\think\helper\Str::startsWith(request()->path(), 'core/install')) {
                 Route::rule('/', 'core/install/step1'); // 首页访问路由
                 Route::rule('/:path', 'core/install/step1'); // 任意访问路由
@@ -84,6 +85,27 @@ class Router
             Route::rule('/', 'cms/index/index'); // 首页访问路由
             Route::rule('/api/', 'core/index/api'); // API访问路由
             Route::rule('/admin/', 'core/admin.index/index'); // 后台首页访问路由
+
+            // 设置URL模式
+            $url_model = Db::name('core_config')
+                ->removeOption('where')
+                ->where('module', '=' , 'core')
+                ->where('name', '=' , 'url_model')
+                ->value('value');
+            switch ($url_model) {
+                case 'rewrite': //URL重写模式
+                    \think\facade\Url::root(request()->rootUrl() . '');
+                    break;
+                case 'pathinfo': //pathinfo模式
+                    \think\facade\Url::root(request()->rootUrl() . '/index.php');
+                    break;
+                case 'compatible': // 兼容模式
+                    \think\facade\Url::root(request()->rootUrl() . '/index.php?s=');
+                    break;
+                default:
+                    \think\facade\Url::root(request()->rootUrl() . '/index.php');
+                    break;
+            }
 
             // 调用云后台
             Route::get('/xyadmin/$', function (\think\Request $request, \think\Response $response) {
