@@ -175,16 +175,18 @@ class IbuilderList {
         }
         if (isset($data['options'])) {
             $options = [];
-            foreach ($data['options'] as $key => $val) {
-                if (!is_array($val) && in_array($column['template'], ['switch', 'radio', 'select', 'checkbox'])) {
-                    $tmp['title'] = $val;
-                    $tmp['value'] = $key;
-                    $options[] = $tmp;
-                } else {
-                    $options[$key] = $val;
+            if (is_array($data['options'])) {
+                foreach ($data['options'] as $key => $val) {
+                    if (!is_array($val)) {
+                        $tmp['title'] = $val;
+                        $tmp['value'] = $key;
+                        $options[] = $tmp;
+                    } else {
+                        $options[$key] = $val;
+                    }
                 }
+                $column['extra']['options'] = $options;
             }
-            $column['extra']['options'] = $options;
         }
         $this->data['columns'][] = $column;
         return $this;
@@ -259,16 +261,18 @@ class IbuilderList {
         $extra['position'] = isset($extra['position']) ? $extra['position'] : 'left';
         if (isset($extra['options']) && is_array($extra['options'])) {
             $options = [];
-            foreach ($extra['options'] as $key => $val) {
-                if (!is_array($val)) {
-                    $tmp['title'] = $val;
-                    $tmp['value'] = $key;
-                    $options[] = $tmp;
-                } else {
-                    $options[] = $val;
+            if (is_array($extra['options'])) {
+                foreach ($extra['options'] as $key => $val) {
+                    if (!is_array($val)) {
+                        $tmp['title'] = $val;
+                        $tmp['value'] = $key;
+                        $options[] = $tmp;
+                    } else {
+                        $options[] = $val;
+                    }
                 }
+                $extra['options'] = $options;
             }
-            $extra['options'] = $options;
         }
         $item['extra'] = $extra;
         $this->data['filter_items'][] = $item;

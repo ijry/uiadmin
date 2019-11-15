@@ -126,16 +126,18 @@ class IbuilderForm {
         }
         if (isset($extra['options'])) {
             $options = [];
-            foreach ($extra['options'] as $key => $val) {
-                if (!is_array($val)) {
-                    $tmp['title'] = $val;
-                    $tmp['value'] = $key;
-                    $options[] = $tmp;
-                } else {
-                    $options[] = $val;
+            if (is_array($extra['options'])) {
+                foreach ($extra['options'] as $key => $val) {
+                    if (!is_array($val)) {
+                        $tmp['title'] = $val;
+                        $tmp['value'] = $key;
+                        $options[] = $tmp;
+                    } else {
+                        $options[] = $val;
+                    }
                 }
+                $extra['options'] = $options;
             }
-            $extra['options'] = $options;
         }
         $item['extra'] = $extra;
         $this->data['form_items'][] = $item;
