@@ -18,7 +18,7 @@ namespace think;
 header("Content-type: text/html; charset=utf-8");
 header("Access-Control-Allow-Origin: * ");
 header("Access-Control-Allow-Methods: POST, GET, OPTIONS, PUT, DELETE");
-header("Access-Control-Allow-Headers: Content-Type,Authorization,CloudId,CloudPid");
+header("Access-Control-Allow-Headers: Content-Type,Authorization,CloudId,Eid");
 
 /**
  * 在检测到option请求的时候就停止继续执行
