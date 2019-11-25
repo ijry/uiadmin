@@ -304,6 +304,8 @@ class User extends Admin
             if (isset($data_db['password']) && $data_db['password'] != '') {
                 $data_db['key'] = \think\helper\Str::random(64); //秘钥
                 $data_db['password'] = user_md5($data_db['password'], $data_db['key']); // 密码不能明文需要加密存储
+            } else {
+                unset($data_db['password']);
             }
 
             //存储数据
