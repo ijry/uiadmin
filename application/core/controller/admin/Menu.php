@@ -485,7 +485,7 @@ class Menu extends Admin
     {
         // 计算路由
         $data_list = $this->core_menu
-            ->where('menu_type', 'in', '1,2,3')
+            ->where('menu_layer', '=', 'admin')
             ->select();
         foreach ($data_list as $key => &$val) {
             $val['api'] = $val['api_prefix'] . '/admin' . $val['path'];
