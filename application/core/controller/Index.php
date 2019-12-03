@@ -32,11 +32,26 @@ class Index extends Home
      */
     public function api()
     {
-        $base_url = request()->domain() . request()->baseFile() . '/api/';
+        $api_base = request()->domain() . request()->baseFile() . '/api/';
+        $config_service = new \app\core\service\Config();
+        $site_info = $config_service->getValueByModule('core', [['is_dev', '=', 0]]);
+        $site_info['admin2step']['login'] = explode('|', $site_info['admin2step']['login']); 
+
+        // 返回
         return $this->return(['code' => 200, 'msg' => '成功', 'data' => [
-            'base_url' => $base_url,
+            'lang' => 'php',
             'name'     => 'InitAdmin',
-            'version' => '0.1.0'
+            'version' => '0.1.0',
+            'api' => [
+                'api_base' => $api_base,
+                'api_login' => '/v1/admin/core/user/login',
+                'api_admin' => '/v1/admin/core/index/index',
+                'api_menu_trees' => '/v1/admin/core/menu/trees',
+                'api_menu_lists' => '/v1/admin/core/menu/lists',
+                'api_config' => '/v1/core/index/config?module=core',
+                'api_user_info' => '/v1/core/user/info'
+            ],
+            'site_info' => $site_info
         ]]);
     }
 
