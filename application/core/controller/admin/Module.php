@@ -68,7 +68,7 @@ class Module extends Admin
                             throw new \Exception($value['table_name'] . "创建出错", 0);
                         }
                     }
-                    if (isset($value['table_rows'])) {
+                    if (isset($value['table_rows']) && count($value['table_rows']) > 0) {
                         if (false === Db::table($value['table_name'])->insertAll($value['table_rows'])) {
                             throw new \Exception($value['table_name'] . "添加记录出错", 0);
                         }
