@@ -35,7 +35,9 @@ class Index extends Home
         $api_base = request()->domain() . request()->baseFile() . '/api/';
         $config_service = new \app\core\service\Config();
         $site_info = $config_service->getValueByModule('core', [['is_dev', '=', 0]]);
-        $site_info['admin2step']['login'] = explode('|', $site_info['admin2step']['login']); 
+        if (isset($site_info['admin2step'])) {
+            $site_info['admin2step']['login'] = explode('|', $site_info['admin2step']['login']); 
+        }
 
         // 返回
         return $this->return(['code' => 200, 'msg' => '成功', 'data' => [
