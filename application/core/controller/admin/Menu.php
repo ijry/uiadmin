@@ -128,6 +128,7 @@ class Menu extends Admin
             if (count($data_db) <= 0 ) {
                 return $this->return(['code' => 0, 'msg' => '无数据提交', 'data' => []]);
             }
+            $data_db['menu_layer'] = 'admin';
             $data_db['api_method'] = implode('|', $data_db['api_method']);
 
             // 存储数据

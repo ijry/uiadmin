@@ -211,7 +211,8 @@ class Api extends Admin
             if (count($data_db) <= 0 ) {
                 return $this->return(['code' => 0, 'msg' => '无数据提交', 'data' => []]);
             }
-            $data_db['menu_type'] = 5;
+            $data_db['menu_layer'] = 'home';
+            $data_db['menu_type'] = 3;
             $data_db['api_method'] = implode('|', $data_db['api_method']);
             $data_db['sortnum'] = 0;
 
