@@ -136,12 +136,56 @@ class Install extends Home
         session('error_msg', null);
         echo $this->return(['code' => 200, 'msg' => '正在安装']);
 
-        // 连接数据库
-        $db_config   = session('db_config');
-        $db_instance = Db::connect($db_config);
+        try {
+            // 连接数据库
+            $db_config   = session('db_config');
+            $db_config['prefix'] = config('database.prefix');
+            $db_instance = Db::connect($db_config);
 
-        // 创建数据表
-        $this->create_tables($db_instance, 'ia_');
+            // 安装核心模块
+            $module_insall = file_get_contents(env('app_path') . 'core/install/install.json');
+            $module_insall = json_decode($module_insall, true);
+
+            // 导入数据表
+            foreach ($module_insall['tables'] as $key => $value) {
+                if (isset($value['table_create'])) {
+                    $value['table_create'] = implode("", $value['table_create']);
+                    if (false === $db_instance->execute($value['table_create'])) {
+                        throw new \Exception($value['table_name'] . "创建出错", 0);
+                    }
+                }
+                if (isset($value['table_rows']) && count($value['table_rows']) > 0) {
+                    if (false === $db_instance->table($value['table_name'])->insertAll($value['table_rows'])) {
+                        throw new \Exception($value['table_name'] . "添加记录出错", 0);
+                    }
+                }
+            }
+
+            // 导入配置
+            foreach($module_insall['config'] as $key => &$val) {
+                $val['value'] = $val['default'];
+            }
+            $db_instance->table('xy_core_config')->insertAll($module_insall['config']);
+            // 导入菜单及API
+            $db_instance->table('xy_core_menu')->insertAll($module_insall['api']);
+            // 创建管理员账号
+            $key = \think\helper\Str::random(64);
+            $password = user_md5('uniadmin', $key);
+            $user = $db_instance->table('xy_core_user')->insert([
+                'id' => 1,
+                'key' => $key,
+                'nickname' => '超级管理员',
+                'username' => 'admin',
+                'password' => $password,
+                'avatar' => '',
+                'status' => 1,
+                'roles' => implode(',', ['super_admin']),
+                'register_time' => time()
+            ]);
+        } catch (\Exception $e) {
+            echo($e);
+            exit;
+        }
 
         // 创建配置文件
         $conf = $this->write_config($db_config);

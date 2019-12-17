@@ -6,7 +6,7 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>InitAdmin后台登录</title>
+    <title>UniAdmin后台登录</title>
     <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
     <style type="text/css">
         body {
@@ -35,7 +35,7 @@
                         <img
                             style="width: 120px;margin-bottom: 10px;"
                             src="<?php echo request()->root(); ?>/static/logo.png">
-                        <h2>InitAdmin后台登录</h2>
+                        <h2>UniAdmin后台登录</h2>
                     </div>
                     <el-form ref="login" :model="login">
                         <el-form-item>
@@ -119,8 +119,8 @@
             },
             created() {
                 if (this.isDemo == 'true') {
-                    this.login.account = 'initadmin';
-                    this.login.password = 'initadmin.net';
+                    this.login.account = 'admin';
+                    this.login.password = 'uniadmin';
                 }
             },
             methods: {

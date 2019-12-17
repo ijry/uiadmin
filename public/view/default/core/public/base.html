@@ -105,20 +105,22 @@
                 <el-header class="header">
                     {block name="menu"}
                         <div class="container flex" style="justify-content: space-between;">
-                            <div class="logo-box flex" style="">
-                                <img src="<?php echo request()->root(); ?>/static/logo.png" class="logo">
-                                <span class="title">InitAdmin</span>
-                            </div>
-                            <el-menu default-active="home" class="main-menu" mode="horizontal">
-                              <el-menu-item index="home">
-                                  <a href="/" title="首页">首页</a>
-                              </el-menu-item>
-                              {cms:cate_list id="vo"}
-                                  <el-menu-item index="{$key}">
-                                      <a href="{:url('cms/post/lists', ['cid' => $vo['id']])}" title="{$vo.title}">{$vo.title}</a>
+                            <div class="flex">
+                                <div class="logo-box flex" style="margin-right: 30px;">
+                                    <img src="<?php echo request()->rootUrl(); ?>/static/logo.png" class="logo">
+                                    <span class="title">UniAdmin</span>
+                                </div>
+                                <el-menu default-active="home" class="main-menu" mode="horizontal">
+                                  <el-menu-item index="home">
+                                      <a href="/" title="首页">首页</a>
                                   </el-menu-item>
-                              {/cms:cate_list}
-                            </el-menu>
+                                  {cms:cate_list id="vo"}
+                                      <el-menu-item index="{$key}">
+                                          <a href="{:url('cms/post/lists', ['cid' => $vo['id']])}" title="{$vo.title}">{$vo.title}</a>
+                                      </el-menu-item>
+                                  {/cms:cate_list}
+                                </el-menu>
+                            </div>
                         </div>
                     {/block}
                 </el-header>

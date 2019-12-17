@@ -19,7 +19,7 @@ use think\model\concern\SoftDelete;
 class Identity extends Common
 {
     // 设置当前模型对应的完整数据表名称
-    protected $table = 'ia_core_identity';
+    protected $table = 'xy_core_identity';
 
     public static function init()
     {

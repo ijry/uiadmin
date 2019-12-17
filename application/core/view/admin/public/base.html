@@ -6,7 +6,7 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>{block name="title"}InitAdmin后台管理{/block}</title>
+    <title>{block name="title"}UniAdmin后台管理{/block}</title>
     <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
     <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/display.css">
     <style type="text/css">
@@ -129,7 +129,7 @@
                 <el-aside :class="isDisplay ? 'main-aside main-aside-display' : 'main-aside'" ref="main_aside" :style="{width: isCollapsed ? '70px': '200px'}">
                     <a class="logo-box flex" href="<?php echo request()->root(); ?>/admin/">
                         <img src="<?php echo request()->root(); ?>/static/logo.png" class="logo">
-                        <span v-if="isCollapsed == false" class="title">InitAdmin</span>
+                        <span v-if="isCollapsed == false" class="title">UniAdmin</span>
                     </a>
                     <div class="search" v-if="isCollapsed == false">
                         <el-input

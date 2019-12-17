@@ -90,6 +90,34 @@ class Module extends Admin
     }
 
     /**
+     * 导出模块
+     *
+     * @return \think\Response
+     */
+    public function export($id)
+    {
+        if (request()->isPost()) {
+            // 导出模块数据表
+            $mysql_conn = mysqli_connect(
+                config('database.hostname'),
+                config('database.username'),
+                config('database.password')
+            ) or die("Mysql连接失败！");
+            $module_service = new \app\core\service\Module();
+            if ($id == 'all') {
+                $module_ids = $this->core_module->column('id');
+                foreach ($module_ids as $key => $val) {
+                    $module_service->export($val, $mysql_conn);
+                }
+            } else {
+                $module_service->export($id, $mysql_conn);
+            }
+            mysqli_close($mysql_conn);
+            return $this->return(['code' => 200, 'msg' => '导出成功', 'data' => []]);
+        }
+    }
+
+    /**
      * 模块列表
      *
      * @return \think\Response
@@ -169,6 +197,22 @@ class Module extends Admin
                         'api' => '/v1/admin/core/module/edit',
                         'width' => '1000',
                         'title' => '修改模块信息'
+                    ],
+                    'style' => ['size' => 'small']
+                ];
+                $value1['right_button_list'][] = [
+                    'name' => 'export',
+                    'title' => '导出',
+                    'page_data' => [
+                        'api' => '/v1/admin/core/module/export',
+                        'title' => '确认要导出模块吗？',
+                        'modal_type' => 'confirm',
+                        'form_method' => 'post',
+                        'width' => '600',
+                        'no_refresh' => true,
+                        'okText' => '确认导出',
+                        'cancelText' => '取消操作',
+                        'content' => '<p><p>导出的模块可以分发给别人使用</p><p>将会导出模块基本信息、配置信息、API信息、模块数据表等信息。</p></p>',
                     ],
                     'style' => ['size' => 'small']
                 ];

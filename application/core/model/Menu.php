@@ -19,7 +19,7 @@ use think\model\concern\SoftDelete;
 class Menu extends Common
 {
     // 设置当前模型对应的完整数据表名称
-    protected $table = 'ia_core_menu';
+    protected $table = 'xy_core_menu';
 
     public static function init()
     {

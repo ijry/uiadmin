@@ -42,7 +42,7 @@ class Index extends Home
         // 返回
         return $this->return(['code' => 200, 'msg' => '成功', 'data' => [
             'lang' => 'php',
-            'name'     => 'InitAdmin',
+            'name'     => 'UniAdmin',
             'version' => '0.1.0',
             'api' => [
                 'api_base' => $api_base,

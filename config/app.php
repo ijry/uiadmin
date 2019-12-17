@@ -14,9 +14,9 @@
 // +----------------------------------------------------------------------
 return [
     // 应用名称
-    'app_name'               => 'initadmin',
+    'app_name'               => 'uniadmin',
     // 应用地址
-    'app_host'               => 'initadmin.net',
+    'app_host'               => 'uniadmin.jiangruyi.com',
     // 应用调试模式
     'app_debug'              => true,
     // 应用Trace
