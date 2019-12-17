@@ -27,6 +27,11 @@ class Router
     // 行为逻辑
     public function run($params)
     {
+        // 数据库全局前缀
+        if (!defined('DB_PREFIX')) {
+            define('DB_PREFIX', config('database.prefix'));
+        }
+    
         // 调试模式
         if (env('app_debug')) {
             error_reporting(E_ALL);

@@ -13,7 +13,7 @@
     "config": [
         {
             "module": "core",
-            "config_cate": "99",
+            "config_cate": "other",
             "name": "config_cate",
             "title": "配置分组",
             "config_type": "array",
@@ -28,7 +28,7 @@
         },
         {
             "module": "core",
-            "config_cate": "1",
+            "config_cate": "base",
             "name": "title",
             "title": "项目名称",
             "config_type": "text",
@@ -43,7 +43,7 @@
         },
         {
             "module": "core",
-            "config_cate": "1",
+            "config_cate": "base",
             "name": "logo",
             "title": "项目logo",
             "config_type": "image",
@@ -58,7 +58,7 @@
         },
         {
             "module": "core",
-            "config_cate": "1",
+            "config_cate": "base",
             "name": "favicon",
             "title": "ICO图标",
             "config_type": "image",
@@ -73,7 +73,7 @@
         },
         {
             "module": "core",
-            "config_cate": "1",
+            "config_cate": "base",
             "name": "slogan",
             "title": "项目口号",
             "config_type": "text",
@@ -88,7 +88,7 @@
         },
         {
             "module": "core",
-            "config_cate": "1",
+            "config_cate": "base",
             "name": "copyright",
             "title": "版权信息",
             "config_type": "text",
@@ -103,7 +103,7 @@
         },
         {
             "module": "core",
-            "config_cate": "1",
+            "config_cate": "base",
             "name": "icp",
             "title": "备案号",
             "config_type": "text",
@@ -118,7 +118,7 @@
         },
         {
             "module": "core",
-            "config_cate": "1",
+            "config_cate": "base",
             "name": "theme",
             "title": "主题",
             "config_type": "text",
@@ -133,7 +133,7 @@
         },
         {
             "module": "core",
-            "config_cate": "1",
+            "config_cate": "base",
             "name": "url_model",
             "title": "URL模式",
             "config_type": "select",

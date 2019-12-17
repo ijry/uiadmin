@@ -19,7 +19,7 @@ use think\model\concern\SoftDelete;
 class Role extends Common
 {
     // 设置当前模型对应的完整数据表名称
-    protected $table = 'xy_core_role';
+    protected $table = DB_PREFIX . 'core_role';
 
     public static function init()
     {

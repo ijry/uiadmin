@@ -19,7 +19,7 @@ use think\model\concern\SoftDelete;
 class Module extends Common
 {
     // 设置当前模型对应的完整数据表名称
-    protected $table = 'xy_core_module';
+    protected $table = DB_PREFIX . 'core_module';
 
     public static function init()
     {
