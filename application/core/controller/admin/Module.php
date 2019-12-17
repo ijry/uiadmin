@@ -1,9 +1,9 @@
 <?php
 /**
  * +----------------------------------------------------------------------
- * | InitAdmin/actionphp [ InitAdmin渐进式模块化通用后台 ]
+ * | UniAdmin [ 渐进式模块化通用后台 ]
  * +----------------------------------------------------------------------
- * | Copyright (c) 2018-2019 http://initadmin.net All rights reserved.
+ * | Copyright (c) 2018-2020 http://uniadmin.jiangruyi.com All rights reserved.
  * +----------------------------------------------------------------------
  * | Licensed ( http://www.apache.org/licenses/LICENSE-2.0 )
  * +----------------------------------------------------------------------
