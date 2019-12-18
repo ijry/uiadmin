@@ -169,6 +169,11 @@ class User extends Admin
                 'content' => '<p>删除后将清空绑定的所有登录验证记录</p>',
             ])
             ->addColumn('id' , 'ID', ['width' => '50px'])
+            ->addColumn('avatar', '头像', [
+                'width' => '80px',
+                'type' => 'template',
+                'template' => 'image',
+                'extend' => ['width' => '60']])
             ->addColumn('nickname', '昵称', ['width' => '120px'])
             ->addColumn('username', '用户名', ['width' => '120px'])
             ->addColumn('mobile', '手机号', ['width' => '120px'])
