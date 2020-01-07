@@ -1234,6 +1234,8 @@
             "table_create": [
                 "CREATE TABLE `xy_core_user` (",
                 "  `id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '用户UID',",
+                "  `cloud_alias` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '云应用别名ID',",
+                "  `cloud_id` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '云应用ID',",
                 "  `key` varchar(256) NOT NULL DEFAULT '' COMMENT '密钥',",
                 "  `nickname` varchar(128) NOT NULL DEFAULT '' COMMENT '用户昵称',",
                 "  `username` varchar(128) NOT NULL DEFAULT '' COMMENT '用户名',",
