@@ -28,7 +28,7 @@
         },
         {
             "module": "core",
-            "config_cate": "base",
+            "config_cate": "basic",
             "name": "title",
             "title": "项目名称",
             "config_type": "text",
@@ -43,7 +43,7 @@
         },
         {
             "module": "core",
-            "config_cate": "base",
+            "config_cate": "basic",
             "name": "logo",
             "title": "项目logo",
             "config_type": "image",
@@ -58,7 +58,7 @@
         },
         {
             "module": "core",
-            "config_cate": "base",
+            "config_cate": "basic",
             "name": "favicon",
             "title": "ICO图标",
             "config_type": "image",
@@ -73,7 +73,7 @@
         },
         {
             "module": "core",
-            "config_cate": "base",
+            "config_cate": "basic",
             "name": "slogan",
             "title": "项目口号",
             "config_type": "text",
@@ -88,7 +88,7 @@
         },
         {
             "module": "core",
-            "config_cate": "base",
+            "config_cate": "basic",
             "name": "copyright",
             "title": "版权信息",
             "config_type": "text",
@@ -103,7 +103,7 @@
         },
         {
             "module": "core",
-            "config_cate": "base",
+            "config_cate": "basic",
             "name": "icp",
             "title": "备案号",
             "config_type": "text",
@@ -118,7 +118,7 @@
         },
         {
             "module": "core",
-            "config_cate": "base",
+            "config_cate": "basic",
             "name": "theme",
             "title": "主题",
             "config_type": "text",
@@ -133,7 +133,7 @@
         },
         {
             "module": "core",
-            "config_cate": "base",
+            "config_cate": "basic",
             "name": "url_model",
             "title": "URL模式",
             "config_type": "select",
@@ -144,6 +144,21 @@
             "is_system": 1,
             "is_dev": 0,
             "sortnum": 6,
+            "status": 1
+        },
+        {
+            "module": "core",
+            "config_cate": "basic",
+            "name": "description",
+            "title": "SEO描述",
+            "config_type": "text",
+            "default": "渐进式模块化后台",
+            "placeholder": "请输入您的SEO描述",
+            "tip": "请输入您的SEO描述",
+            "options": "",
+            "is_system": 1,
+            "is_dev": 0,
+            "sortnum": 5,
             "status": 1
         }
     ],
@@ -1234,8 +1249,6 @@
             "table_create": [
                 "CREATE TABLE `xy_core_user` (",
                 "  `id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '用户UID',",
-                "  `cloud_alias` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '云应用别名ID',",
-                "  `cloud_id` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '云应用ID',",
                 "  `key` varchar(256) NOT NULL DEFAULT '' COMMENT '密钥',",
                 "  `nickname` varchar(128) NOT NULL DEFAULT '' COMMENT '用户昵称',",
                 "  `username` varchar(128) NOT NULL DEFAULT '' COMMENT '用户名',",
@@ -1246,6 +1259,8 @@
                 "  `roles` varchar(256) NOT NULL DEFAULT '' COMMENT '用户拥有的角色',",
                 "  `register_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '用户注册时间',",
                 "  `delete_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '删除时间',",
+                "  `cloud_alias` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '云应用别名ID',",
+                "  `cloud_id` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '云应用ID',",
                 "  PRIMARY KEY (`id`)",
                 ") ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户帐号信息表'"
             ],
