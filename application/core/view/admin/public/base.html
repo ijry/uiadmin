@@ -128,7 +128,7 @@
             <el-container style="height: 100vh;">
                 <el-aside :class="isDisplay ? 'main-aside main-aside-display' : 'main-aside'" ref="main_aside" :style="{width: isCollapsed ? '70px': '200px'}">
                     <a class="logo-box flex" href="<?php echo request()->root(); ?>/admin/">
-                        <img src="<?php echo request()->root(); ?>/static/logo.png" class="logo">
+                        <img src="<?php echo request()->rootUrl(); ?>/static/logo.png" class="logo">
                         <span v-if="isCollapsed == false" class="title">UniAdmin</span>
                     </a>
                     <div class="search" v-if="isCollapsed == false">
@@ -151,23 +151,27 @@
                             <i class="el-icon-house"></i>
                             <a href="<?php echo request()->root(); ?>/admin/">首页</a>
                         </el-menu-item>
-                        {core:menu_list id="vo"}
-                            <?php if($vo['menu_type'] == 0): ?>
-                                <el-submenu index="0-{$key}">
-                                    <template slot="title">
-                                      <i class="el-icon-folder-opened"></i>
-                                      <span>{$vo.title}</span>
-                                    </template>
-                                    <?php if(isset($vo['children'])): ?>
-                                        {volist name="vo.children" id="vo1"}
-                                            <?php if($vo1['menu_type'] == 1): ?>
-                                                <el-menu-item index="1-{$key}">
-                                                    <a href="<?php echo request()->root(); ?>/admin{$vo1['path']}{$vo1.api_params}.html">{$vo1.title}</a>
-                                                </el-menu-item>
+                        {core:menu_list id="vo0"}
+                            <?php if(isset($vo0['children'])): ?>
+                                {volist name="vo0.children" id="vo"}
+                                    <?php if($vo['menu_type'] == 0): ?>
+                                        <el-submenu index="0-{$key}">
+                                            <template slot="title">
+                                            <i class="el-icon-folder-opened"></i>
+                                            <span>{$vo.title}</span>
+                                            </template>
+                                            <?php if(isset($vo['children'])): ?>
+                                                {volist name="vo.children" id="vo1"}
+                                                    <?php if($vo1['menu_type'] == 1): ?>
+                                                        <el-menu-item index="1-{$key}">
+                                                            <a href="<?php echo request()->root(); ?>/admin{$vo1['path']}{$vo1.api_params}.html">{$vo1.title}</a>
+                                                        </el-menu-item>
+                                                    <?php endif; ?>
+                                                {/volist}
                                             <?php endif; ?>
-                                        {/volist}
+                                        </el-submenu>
                                     <?php endif; ?>
-                                </el-submenu>
+                                {/volist}
                             <?php endif; ?>
                         {/core:menu_list}
                     </el-menu>
