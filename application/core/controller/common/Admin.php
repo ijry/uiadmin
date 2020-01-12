@@ -37,7 +37,7 @@ class Admin extends Common
         // 登录验证
         $ret = $this->isLogin();
         if ($ret['code'] != 200) {
-            echo $this->return($ret);
+            echo json_encode($ret);
             exit;
         }
 
