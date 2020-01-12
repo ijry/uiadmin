@@ -46,7 +46,6 @@ class Menu extends Admin
     {
         // 获取列表
         $data_list = $this->core_menu
-            ->where('delete_time', 0)
             ->where('menu_layer', '=', 'admin')
             ->order('sortnum asc')
             ->select()->toArray();
@@ -57,6 +56,13 @@ class Menu extends Admin
         }
         $tree      = new Tree();
         $menu_tree = $tree->list2tree($data_list, 'path', 'pmenu', 'children', 0, false);
+        $menu_tree = [
+            0 => [
+                'id' => 0,
+                'title' => '后台',
+                'children' => $menu_tree
+            ]  
+        ];
 
         // 构造动态页面数据
         $ibuilder_list = new \app\core\util\ibuilder\IbuilderList();
