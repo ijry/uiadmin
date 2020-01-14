@@ -80,22 +80,22 @@ class Index extends Admin
                 'type' => 'count',
                 'content' => [
                     [
-                        'item' => ['icon' => 'ivu-icon ivu-icon-md-contacts', 'bgColor' => '#f8f8f8', 'title' => ''],
+                        'item' => ['icon' => 'ivu-icon ivu-icon-md-contacts', 'bgColor' => '#2db7f5', 'title' => ''],
                         'current' => ['value' => $user_total_count, 'suffix' => ''],
                         'content' => ['value' => '注册用户']
                     ],
                     [
-                        'item' => ['icon' => 'ivu-icon ivu-icon-md-person-add', 'bgColor' => '#f8f8f8', 'title' => ''],
+                        'item' => ['icon' => 'ivu-icon ivu-icon-md-person-add', 'bgColor' => '#19be6b', 'title' => ''],
                         'current' => ['value' => $user_today_count, 'suffix' => ''],
                         'content' => ['value' => '今日新增']
                     ],
                     [
-                        'item' => ['icon' => 'ivu-icon ivu-icon-md-clock', 'bgColor' => '#f8f8f8', 'title' => ''],
+                        'item' => ['icon' => 'ivu-icon ivu-icon-md-clock', 'bgColor' => '#ff9900', 'title' => ''],
                         'current' => ['value' => isset($pay_total_count) ? $pay_total_count : $user_week_count, 'suffix' => ''],
                         'content' => ['value' => isset($pay_total_count) ? '总消费' : '本周新增']
                     ],
                     [
-                        'item' => ['icon' => 'ivu-icon ivu-icon-ios-paper-plane', 'bgColor' => '#f8f8f8', 'title' => ''],
+                        'item' => ['icon' => 'ivu-icon ivu-icon-ios-paper-plane', 'bgColor' => '#ed4014', 'title' => ''],
                         'current' => ['value' => isset($pay_today_count) ? $pay_today_count : $user_month_count, 'suffix' => ''],
                         'content' => ['value' => isset($pay_today_count) ? '今日消费' : '本月新增']
                     ]
