@@ -118,6 +118,7 @@ class Router
             }
 
             // 调用云后台
+            Route::get('/xyadmin$', request()->url(true) . '/');
             Route::get('/xyadmin/$', function (\think\Request $request, \think\Response $response) {
                 $seconds_to_cache = 86400 * 30;
                 $ts = gmdate("D, d M Y H:i:s", time() + $seconds_to_cache) . " GMT";
