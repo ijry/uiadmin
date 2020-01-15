@@ -221,7 +221,7 @@
             "module": "core",
             "icon": "",
             "path": "/core/user/lists",
-            "pmenu": "/core",
+            "pmenu": "/core/user",
             "title": "用户列表",
             "tip": "系统注册用户列表",
             "menu_layer": "admin",
