@@ -333,11 +333,25 @@ class Module extends Admin
                     return $this->return(['code' => 0, 'msg' => '添加模块失败:' . $this->core_module->getError(), 'data' => []]);
                 }
 
+                // 创建模块前台API分组
+                $data_api = [];
+                $data_api['module'] = $data_db['name'];
+                $data_api['menu_layer'] = 'home';
+                $data_api['menu_type'] = 0;
+                if (!$this->core_menu->where($data_api)->find()) {
+                    $data_api['title'] = $data_db['title'];
+                    $data_api['path'] = '/' . $module_name;
+                    $data_api['pmenu'] = '/_root_home';
+                    $ret_api = $this->core_menu->save($data_api);
+                }
+
                 // 创建模块后台API分组
                 if ($data_db['create_menu_group']) {
                     $data_api = [];
                     $data_api['module'] = $data_db['name'];
+                    $data_api['menu_layer'] = 'admin';
                     $data_api['menu_type'] = 0;
+                    $data_api['pmenu'] = '/_tab_content';
                     $ret_api = true;
                     if (!$this->core_menu->where($data_api)->find()) {
                         $data_api['title'] = $data_db['title'];

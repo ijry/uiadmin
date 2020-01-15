@@ -212,9 +212,7 @@ class Api extends Admin
                 return $this->return(['code' => 0, 'msg' => '无数据提交', 'data' => []]);
             }
             $data_db['menu_layer'] = 'home';
-            $data_db['menu_type'] = 3;
             $data_db['api_method'] = implode('|', $data_db['api_method']);
-            $data_db['sortnum'] = 0;
 
             //存储数据
             $ret = $this->core_menu->save($data_db);
@@ -270,6 +268,16 @@ class Api extends Admin
                     'placeholder' => '请输入菜单说明',
                     'tip' => '好的说明有助于用户理解'
                 ])
+                ->addFormItem('menu_type', '菜单类型', 'radio', 3, [
+                    'placeholder' => '请选择菜单类型',
+                    'tip' => '请选择菜单类型',
+                    'options' => [
+                        ['title' => '分组', 'value' => 0],
+                        ['title' => '左侧导航', 'value' => 1],
+                        ['title' => '页面按钮', 'value' => 2],
+                        ['title' => '纯接口', 'value' => 3]
+                    ]
+                ])
                 ->addFormItem('path', '接口路径', 'text', '', [
                     'placeholder' => '请输入接口路径',
                     'tip' => '接口路径举例：/core/user/lists'
@@ -300,9 +308,12 @@ class Api extends Admin
                     'placeholder' => '请选择是否自动生成页面',
                     'tip' => '系统内容了动态页面技术，可以自动生成后台前端页面',
                     'options' => [
-                        ['title' => 'Vue路由', 'value' => 'route',],
-                        ['title' => 'iBuilder动态列表', 'value' => 'list',],
-                        ['title' => 'iBuilder动态表单', 'value' => 'form',]
+                        ['title' => 'Vue路由', 'value' => 'route'],
+                        ['title' => 'iBuilder动态列表', 'value' => 'list'],
+                        ['title' => 'iBuilder动态表单', 'value' => 'form'],
+                        ['title' => 'iBuilder动态详情', 'value' => 'info'],
+                        ['title' => 'iBuilder动态组合', 'value' => 'stack'],
+                        ['title' => 'iBuilder动态文档', 'value' => 'doc']
                     ]
                 ])
                 ->addFormItem('sortnum', '排序', 'text', '', [
@@ -438,6 +449,16 @@ class Api extends Admin
                     'placeholder' => '请输入菜单说明',
                     'tip' => '好的说明有助于用户理解'
                 ])
+                ->addFormItem('menu_type', '菜单类型', 'radio', 0, [
+                    'placeholder' => '请选择菜单类型',
+                    'tip' => '请选择菜单类型',
+                    'options' => [
+                        ['title' => '分组', 'value' => 0],
+                        ['title' => '左侧导航', 'value' => 1],
+                        ['title' => '页面按钮', 'value' => 2],
+                        ['title' => '纯接口', 'value' => 3]
+                    ]
+                ])
                 ->addFormItem('path', '接口路径', 'text', '', [
                     'placeholder' => '请输入接口路径',
                     'tip' => '接口路径举例：/core/user/lists'
@@ -468,9 +489,12 @@ class Api extends Admin
                     'placeholder' => '请选择是否自动生成页面',
                     'tip' => '系统内容了动态页面技术，可以自动生成后台前端页面',
                     'options' => [
-                        ['title' => 'Vue路由', 'value' => 'route',],
-                        ['title' => 'iBuilder动态列表', 'value' => 'list',],
-                        ['title' => 'iBuilder动态表单', 'value' => 'form',]
+                        ['title' => 'Vue路由', 'value' => 'route'],
+                        ['title' => 'iBuilder动态列表', 'value' => 'list'],
+                        ['title' => 'iBuilder动态表单', 'value' => 'form'],
+                        ['title' => 'iBuilder动态详情', 'value' => 'info'],
+                        ['title' => 'iBuilder动态组合', 'value' => 'stack'],
+                        ['title' => 'iBuilder动态文档', 'value' => 'doc']
                     ]
                 ])
                 ->addFormItem('sortnum', '排序', 'text', '', [
