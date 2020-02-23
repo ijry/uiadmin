@@ -31,7 +31,7 @@ class Router
         if (!defined('DB_PREFIX')) {
             define('DB_PREFIX', config('database.prefix'));
         }
-    
+
         // 调试模式
         if (env('app_debug')) {
             error_reporting(E_ALL);
@@ -93,8 +93,8 @@ class Router
             } else {
                 Route::rule('/', request()->rootUrl() . '/api/.html'); // 首页访问路由
             }
-            Route::rule('/api/', 'core/index/api'); // API访问路由
-            Route::rule('/admin/', 'core/admin.index/index'); // 后台首页访问路由
+            Route::rule('/api$', 'core/index/api'); // API访问路由
+            Route::rule('/admin$', 'core/admin.index/index'); // 后台首页访问路由
 
             // 设置URL模式
             $url_model = Db::name('core_config')
