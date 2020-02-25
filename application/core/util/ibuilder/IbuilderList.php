@@ -165,7 +165,7 @@ class IbuilderList {
             $column['type'] = $data['type'];
         }
         if (isset($data['template'])) {
-            $column['template'] = $data['template'];
+            $column['template'] = $column['slot'] = $data['template'];
             if ($data['template'] == 'right_button_list') {
                 $column['width'] = '';
                 if ($column['minWidth']) {
