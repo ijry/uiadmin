@@ -166,7 +166,7 @@ class Router
                     $val['path'] . $val['api_suffix'],
                     $path[1] . '/' . $path[2] . '/' . $path[3],
                     $val['api_method']
-                );
+                )->ext('html');
                 // 前后端分离路由
                 Route::rule(
                     'api/' . $val['api_prefix'] . $val['path'] . $val['api_suffix'],
