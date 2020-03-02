@@ -26,7 +26,7 @@ function is_login()
             $token = session('Authorization'); // 支持session
         }
         $user_service = new \app\core\service\User();
-        $ret = $user_service->is_login($token);
+        $ret = $user_service->isLogin($token);
         return (Array)$ret['data'];
     } catch (Exception $e) {
         return false;

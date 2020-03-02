@@ -114,7 +114,7 @@ class User extends Model
      *
      * @author jry <598821125@qq.com>
      */
-    public function is_login($token)
+    public function isLogin($token)
     {
         // jwt验证
         try {
