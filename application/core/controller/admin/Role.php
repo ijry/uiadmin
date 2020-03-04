@@ -80,7 +80,7 @@ class Role extends Admin
                 'content' => '<p><p>如果该角色下有子角色需要先删除或者移动</p><p>如果该角色下有成员需要先移除才可以删除</p><p>删除该角色将会删除对应的权限数据</p></p>',
             ])
             ->addColumn('id' , 'ID', ['width' => '50px'])
-            ->addColumn('title', '部门', ['minWidth' => '100px'])
+            ->addColumn('title', '部门', ['width' => '350px'])
             ->addColumn('sortnum', '排序', ['width' => '50px'])
             ->addColumn('right_button_list', '操作', [
                 'minWidth' => '50px',
