@@ -28,6 +28,24 @@ class Config extends Model
     }
 
     /**
+     * 获取配置
+     * @return array
+     *
+     * @author jry <598821125@qq.com>
+     */
+    public function getSettings($module_name)
+    {
+        if ($this->cloud_id === null) {
+            throw new \Exception('未指定cloud_id', 0);
+        }
+        $module_config = $this->getValueByModule($module_name);
+        if (isset($module_config['is_open']) && $module_config['is_open'] != 1) {
+            throw new \Exception($module_name . '未开启', 0);
+        }
+        return $module_config;
+    }
+
+    /**
      * 获取模块配置
      * @return array
      *
