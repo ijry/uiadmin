@@ -59,6 +59,10 @@ class IbuilderForm {
      */
     public function init() {
         $this->data = [
+            'alert_list' => [
+                'top' => [],
+                'bottom' => []
+            ],
             'form_method' => 'post',
             'form_items' => [],
             'form_values' => [],

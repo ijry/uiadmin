@@ -29,6 +29,10 @@ class IbuilderList {
      */
     public function init() {
         $this->data = [
+            'alert_list' => [
+                'top' => [],
+                'bottom' => []
+            ],
             'data_list' => [],
             'data_list_params' => [
                 'expand_key' => 'title',
@@ -149,6 +153,7 @@ class IbuilderList {
      * @author jry <ijry@qq.com>
      */
     public function addColumn($key, $title, $data = []) {
+        $key = \think\helper\Str::camel($key);
         $column = [
             'key' => $key,
             'title' => $title,
