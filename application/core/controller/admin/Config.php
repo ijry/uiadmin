@@ -273,7 +273,7 @@ class Config extends Admin
                     'tip' => '请输入排序'
                 ])
                 ->addFormRule('config_cate', [
-                    ['required' => true, 'type' => 'number', 'message' => '请选择分组', 'trigger' => 'change'],
+                    ['required' => true, 'type' => 'string', 'message' => '请选择分组', 'trigger' => 'change'],
                 ])
                 ->addFormRule('name', [
                     ['required' => true, 'message' => '请填写配置名称', 'trigger' => 'change'],
@@ -415,7 +415,7 @@ class Config extends Admin
                     'tip' => '请输入排序'
                 ])
                 ->addFormRule('config_cate', [
-                    ['required' => true, 'type' => 'number', 'message' => '请选择分组', 'trigger' => 'change'],
+                    ['required' => true, 'type' => 'string', 'message' => '请选择分组', 'trigger' => 'change'],
                 ])
                 ->addFormRule('name', [
                     ['required' => true, 'message' => '请填写配置名称', 'trigger' => 'change'],

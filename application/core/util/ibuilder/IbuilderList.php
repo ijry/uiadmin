@@ -153,7 +153,6 @@ class IbuilderList {
      * @author jry <ijry@qq.com>
      */
     public function addColumn($key, $title, $data = []) {
-        $key = \think\helper\Str::camel($key);
         $column = [
             'key' => $key,
             'title' => $title,

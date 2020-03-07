@@ -110,7 +110,7 @@ class Cx extends Taglib
 
         $parseStr .= 'if( count($__LIST__)==0 ) : echo "' . $empty . '" ;';
         $parseStr .= 'else: ';
-        $parseStr .= 'foreach(key2camel($__LIST__) as $key=>$' . $id . '): ';
+        $parseStr .= 'foreach($__LIST__ as $key=>$' . $id . '): ';
         $parseStr .= '$mod = ($' . $key . ' % ' . $mod . ' );';
         $parseStr .= '++$' . $key . ';?>';
         $parseStr .= $content;
