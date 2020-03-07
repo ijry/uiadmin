@@ -44,7 +44,8 @@ class Common extends Controller
     protected function return($data)
     {
         // 判断pathinfo中是否以api/开头来判断时API请求还是页面请求
-        if (\think\helper\Str::startsWith(request()->pathinfo(), 'api/')) {
+        if (\think\helper\Str::startsWith(request()->pathinfo(), 'api')) {
+            $data = key2camel($data);
             if (\think\helper\Str::contains(request()->pathinfo(), '.html')) {
                 dump($data);
             } else {
@@ -100,6 +101,7 @@ class Common extends Controller
                 if (isset($data['data']['template'])) {
                     $template = $data['data']['template'];
                 }
+                $data = key2camel($data);
                 $this->assign($data['data']);
                 if (isset($data['data']['list_data'])) {
                     return $this->fetch('core@admin/ibuilder/list');

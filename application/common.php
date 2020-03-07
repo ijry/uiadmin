@@ -11,6 +11,40 @@
  * +----------------------------------------------------------------------
 */
 
+// 获取UUID
+function get_uuid() {
+    $uuid1_object = \Ramsey\Uuid\Uuid::uuid1();
+    $uuid1 = $uuid1_object->getTimeHiAndVersionHex()
+        . $uuid1_object->getTimeMidHex()
+        . $uuid1_object->getTimeLowHex()
+        . $uuid1_object->getClockSeqHiAndReservedHex()
+        . $uuid1_object->getClockSeqLowHex()
+        . $uuid1_object->getNodeHex();
+    return $uuid1;
+}
+
+/**
+ * 转驼峰法
+ * @param  array $data
+ * @return array
+ * @author jry <ijry@qq.com>
+ */
+function key2camel($array) {
+    $data = [];
+    foreach ($array as $key => $value) {
+        if (\think\helper\Str::contains($key, '_')) {
+            $key = \think\helper\Str::camel($key);
+        }
+        if (is_array($value)) {
+            $value = key2camel($value);
+        } else if (is_object($value)) {
+            $value = key2camel($value->toArray());
+        }
+        $data[$key] = $value;
+    }
+    return $data;
+}
+
 /**
  * 登录检查
  * @param  string $str 要加密的字符串
