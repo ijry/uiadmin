@@ -5,7 +5,7 @@
         "description": "UniAdmin渐进式模块化通用后台核心模块",
         "developer": "jry",
         "website": "https://uniadmin.jiangruyi.com",
-        "version": "0.1.0",
+        "version": "0.2.0",
         "build": "build_20191217",
         "hasTaglib": "0",
         "hasCommand": "0"
@@ -1323,7 +1323,7 @@
                     "description": "UniAdmin渐进式模块化通用后台核心模块",
                     "developer": "jry",
                     "website": "https://uniadmin.jiangruyi.com",
-                    "version": "0.1.0",
+                    "version": "0.2.0",
                     "build": "build_20191217",
                     "status": 1,
                     "hasTaglib": "0",

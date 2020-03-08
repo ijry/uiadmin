@@ -396,7 +396,7 @@ class Module extends Admin
                     'placeholder' => '请输入开发者开发者网站',
                 ])
                 ->addFormItem('version', '版本号', 'text', '', [
-                    'placeholder' => '请输入版本号如0.1.0',
+                    'placeholder' => '请输入版本号如0.2.0',
                     'tip' => '版本号由三位数字组成x.x.x'
                 ])
                 ->addFormItem('build', 'build版本号', 'text', '', [
@@ -424,7 +424,7 @@ class Module extends Admin
                     ['required' => true, 'message' => '请填写开发者网站', 'trigger' => 'blur'],
                 ])
                 ->addFormRule('version', [
-                    ['required' => true, 'message' => '请填写版本号，如0.1.0', 'trigger' => 'blur'],
+                    ['required' => true, 'message' => '请填写版本号，如0.2.0', 'trigger' => 'blur'],
                 ])
                 ->addFormRule('build', [
                     ['required' => true, 'message' => '请输入build版本号如beta1_201902241200', 'trigger' => 'blur'],
@@ -525,7 +525,7 @@ class Module extends Admin
                     'placeholder' => '请输入开发者开发者网站',
                 ])
                 ->addFormItem('version', '版本号', 'text', '', [
-                    'placeholder' => '请输入版本号如0.1.0',
+                    'placeholder' => '请输入版本号如0.2.0',
                     'tip' => '版本号由三位数字组成x.x.x'
                 ])
                 ->addFormItem('build', 'build版本号', 'text', '', [
@@ -549,7 +549,7 @@ class Module extends Admin
                     ['required' => true, 'message' => '请填写开发者网站', 'trigger' => 'blur'],
                 ])
                 ->addFormRule('version', [
-                    ['required' => true, 'message' => '请填写版本号，如0.1.0', 'trigger' => 'blur'],
+                    ['required' => true, 'message' => '请填写版本号，如0.2.0', 'trigger' => 'blur'],
                 ])
                 ->addFormRule('build', [
                     ['required' => true, 'message' => '请输入build版本号如beta1_201902241200', 'trigger' => 'blur'],

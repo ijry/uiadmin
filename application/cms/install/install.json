@@ -5,7 +5,7 @@
         "description": "内容模块为通用的CMS文章博客模块",
         "developer": "jry",
         "website": "https://jiangruyi.com",
-        "version": "0.1.0",
+        "version": "0.2.0",
         "build": "build_20190508",
         "hasTaglib": "0",
         "hasCommand": "0"
