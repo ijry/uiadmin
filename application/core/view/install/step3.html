@@ -24,30 +24,30 @@
     <div class="container" style="padding: 20px 0;">
       <el-form ref="ref" label-width="120px">
         <el-form-item label="数据库类型">
-          <el-select v-model="form_values.type" placeholder="请选择数据库类型">
+          <el-select v-model="formValues.type" placeholder="请选择数据库类型">
             <el-option label="MySQL" value="mysql"></el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="数据库服务器">
-          <el-input v-model="form_values.hostname" placeholder="数据库服务器，数据库服务器IP，一般为127.0.0.1" clearable></el-input>
+          <el-input v-model="formValues.hostname" placeholder="数据库服务器，数据库服务器IP，一般为127.0.0.1" clearable></el-input>
         </el-form-item>
         <el-form-item label="数据库端口">
-          <el-input v-model="form_values.hostport" placeholder="数据库端口，mysql一般为3306" clearable></el-input>
+          <el-input v-model="formValues.hostport" placeholder="数据库端口，mysql一般为3306" clearable></el-input>
         </el-form-item>
         <el-form-item label="数据库名称">
-          <el-input v-model="form_values.database" placeholder="数据库名称" clearable></el-input>
+          <el-input v-model="formValues.database" placeholder="数据库名称" clearable></el-input>
         </el-form-item>
         <el-form-item label="覆盖数据库">
-          <el-radio-group v-model="form_values.cover" text-color="yellow" fill="red">
+          <el-radio-group v-model="formValues.cover" text-color="yellow" fill="red">
             <el-radio-button label="1">不覆盖</el-radio-button>
             <el-radio-button label="-1">覆盖（危险！千万要先备份数据！）</el-radio-button>
           </el-radio-group>
         </el-form-item>
         <el-form-item label="数据库用户名">
-          <el-input v-model="form_values.username" placeholder="数据库用户名" clearable></el-input>
+          <el-input v-model="formValues.username" placeholder="数据库用户名" clearable></el-input>
         </el-form-item>
         <el-form-item label="数据库密码">
-          <el-input v-model="form_values.password" placeholder="数据库密码" clearable show-password></el-input>
+          <el-input v-model="formValues.password" placeholder="数据库密码" clearable show-password></el-input>
         </el-form-item>
       </el-form>
     </div>
@@ -64,7 +64,7 @@
           el: '#app',
           data: function() {
             return {
-              form_values: {
+              formValues: {
                 type: 'mysql',
                 hostname: '127.0.0.1',
                 hostport: '3306',
@@ -80,7 +80,7 @@
               let res = await util.request({
                   url: '/v1/<?php echo(request()->path()); ?>',
                   method: 'post',
-                  data: this.form_values
+                  data: this.formValues
               });
               if (res.code == '200') {
                   this.$message({

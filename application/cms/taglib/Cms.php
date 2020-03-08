@@ -17,7 +17,7 @@ use think\template\TagLib;
 /**
  * 标签
  */
-class Cms extends TagLib{
+class Cms extends TagLib {
     /**
      * 定义标签列表
      */
@@ -35,9 +35,9 @@ class Cms extends TagLib{
         $cid = isset($tag['cid']) ? $tag['cid'] : 0;
         $parse = '<?php ';
         $parse .= '$cms_cate = new \app\cms\model\Cate();';
-        $parse .= '$_data_list = $cms_cate->select()->toArray();';
+        $parse .= '$_dataList = $cms_cate->select()->toArray();';
         $parse .= '$tree      = new \app\core\util\Tree();';
-        $parse .= '$__LIST__ = $tree->list2tree($_data_list);';
+        $parse .= '$__LIST__ = $tree->list2tree($_dataList);';
         $parse .= ' ?>';
         $parse .= '{volist name="__LIST__" id="' . $id . '"}';
         $parse .= $content;

@@ -72,9 +72,9 @@ class Api extends Admin
                 ->where('id', $id)
                 ->find();
             $info['doc'] = json_decode($info['doc'], true);
-            $info['api_method'] = explode('|', $info['api_method']);
+            $info['apiMethod'] = explode('|', $info['apiMethod']);
             $doc_info = [];
-            foreach ($info['api_method'] as $key => $value) {
+            foreach ($info['apiMethod'] as $key => $value) {
                 if (isset($info['doc'][$value])) {
                     $doc_info[$value] = $info['doc'][$value];
                 } else {
@@ -86,7 +86,7 @@ class Api extends Admin
                     ];
                 }
             }
-            if ($info['menu_type'] == 5) {
+            if ($info['menuType'] == 5) {
                 $entry = '';
             } else {
                 $entry = '/admin';
@@ -97,7 +97,7 @@ class Api extends Admin
             $ibuilder_form->init()
                 ->setFormMethod('put');
             foreach ($doc_info as $key => $value) {
-                $ibuilder_form->addFormItem($key . '_method', '请求地址', 'static', $key . '：/' . $info['api_prefix'] . $entry .$info['path'] . $info['api_suffix'])
+                $ibuilder_form->addFormItem($key . '_method', '请求地址', 'static', $key . '：/' . $info['apiPrefix'] . $entry .$info['path'] . $info['apiSuffix'])
                     ->addFormItem($key . '_description', '接口说明', 'text', $doc_info[$key]['description'])
                     ->addFormItem($key . '_params', '请求参数', 'formlist', $doc_info[$key]['params'], [
                         'options' => [
@@ -110,7 +110,7 @@ class Api extends Admin
                     ])
                     ->addFormItem($key . '_divider', '', 'divider', '');
             }
-            $form_data = $ibuilder_form->setFormValues()
+            $formData = $ibuilder_form->setFormValues()
                 ->getData();
 
             //返回数据
@@ -118,7 +118,7 @@ class Api extends Admin
                 'code' => 200,
                 'msg' => '成功',
                 'data' => [
-                    'form_data' => $form_data
+                    'formData' => $formData
                 ]
             ]);
         }
@@ -133,27 +133,27 @@ class Api extends Admin
     public function trees()
     {
         // 计算路由
-        $data_list = $this->core_menu
-            ->where('delete_time', '=' ,0)
-            ->where('menu_layer', '=', 'home')
+        $dataList = $this->core_menu
+            ->where('deleteTime', '=' ,0)
+            ->where('menuLayer', '=', 'home')
             ->order('sortnum asc')
             ->select()->toArray();
-        foreach ($data_list as $key => &$val) {
-            $val['api'] = '/' . $val['api_prefix'] . $val['path'] . $val['api_suffix'];
+        foreach ($dataList as $key => &$val) {
+            $val['api'] = '/' . $val['apiPrefix'] . $val['path'] . $val['apiSuffix'];
         }
         $tree      = new Tree();
-        $menu_tree = $tree->list2tree($data_list, 'path', 'pmenu', 'children', 0, false);
+        $menu_tree = $tree->list2tree($dataList, 'path', 'pmenu', 'children', 0, false);
 
         //构造动态页面数据
         $ibuilder_list = new \app\core\util\ibuilder\IbuilderList();
-        $list_data = $ibuilder_list->init()
+        $listData = $ibuilder_list->init()
             ->addTopButton('add', '添加', ['api' => '/v1/admin/core/api/add'])
-            ->addRightButton('doc', '文档', ['api' => '/v1/admin/core/api/doc', 'width' => '1000', 'title' => 'API文档编辑', 'api_suffix' =>['id']])
+            ->addRightButton('doc', '文档', ['api' => '/v1/admin/core/api/doc', 'width' => '1000', 'title' => 'API文档编辑', 'apiSuffix' =>['id']])
             ->addRightButton('edit', '修改', ['api' => '/v1/admin/core/api/edit', 'title' => '修改API'])
             ->addRightButton('delete', '删除', [
                 'api' => '/v1/admin/core/api/delete',
                 'title' => '确认要删除该API吗？',
-                'modal_type' => 'confirm',
+                'modalType' => 'confirm',
                 'width' => '600',
                 'okText' => '确认删除',
                 'cancelText' => '取消操作',
@@ -162,20 +162,20 @@ class Api extends Admin
             ->addColumn('id' , 'ID', ['width' => '50px'])
             ->addColumn('module', '所属模块', ['width' => '80px'])
             ->addColumn('title', '菜单标题', ['width' => '200px'])
-            ->addColumn('api_method', '请求方法', ['width' => '100px'])
+            ->addColumn('apiMethod', '请求方法', ['width' => '100px'])
             ->addColumn('api', '前台接口', ['minWidth' => '150px'])
             ->addColumn('sortnum', '排序', ['width' => '50px'])
-            ->addColumn('right_button_list', '操作', [
+            ->addColumn('rightButtonList', '操作', [
                 'minWidth' => '50px',
                 'type' => 'template',
-                'template' => 'right_button_list'
+                'template' => 'rightButtonList'
             ])
             ->setDataList($menu_tree)
             ->getData();
 
         //返回数据
         return $this->return(['code' => 200, 'msg' => '成功', 'data' => [
-            'list_data' => $list_data
+            'listData' => $listData
         ]]);
     }
 
@@ -193,13 +193,13 @@ class Api extends Admin
                 'module'  => 'require',
                 'title' => 'require',
                 'path' => 'require',
-                'api_prefix' => 'require',
+                'apiPrefix' => 'require',
             ],
             [
                 'module.require' => '请选择模块',
                 'title.require' => '接口名称必须',
                 'path.require' => '接口路径必须',
-                'api_prefix.require' => '接口前缀必须',
+                'apiPrefix.require' => '接口前缀必须',
             ]);
             $data = input('post.');
             if (!$validate->check($data)) {
@@ -211,8 +211,8 @@ class Api extends Admin
             if (count($data_db) <= 0 ) {
                 return $this->return(['code' => 0, 'msg' => '无数据提交', 'data' => []]);
             }
-            $data_db['menu_layer'] = 'home';
-            $data_db['api_method'] = implode('|', $data_db['api_method']);
+            $data_db['menuLayer'] = 'home';
+            $data_db['apiMethod'] = implode('|', $data_db['apiMethod']);
 
             //存储数据
             $ret = $this->core_menu->save($data_db);
@@ -235,7 +235,7 @@ class Api extends Admin
 
             //获取菜单基于标题的树状列表
             $menu_list = $this->core_menu
-                ->where('menu_type', '=', 5)
+                ->where('menuType', '=', 5)
                 ->order('sortnum asc')
                 ->select()->toArray();
             $tree      = new Tree();
@@ -248,7 +248,7 @@ class Api extends Admin
 
             //构造动态页面数据
             $ibuilder_form = new \app\core\util\ibuilder\IbuilderForm();
-            $form_data = $ibuilder_form->init()
+            $formData = $ibuilder_form->init()
                 ->setFormMethod('post')
                 ->addFormItem('module', '模块', 'select', '', [
                     'placeholder' => '请选择模块',
@@ -268,7 +268,7 @@ class Api extends Admin
                     'placeholder' => '请输入菜单说明',
                     'tip' => '好的说明有助于用户理解'
                 ])
-                ->addFormItem('menu_type', '菜单类型', 'radio', 3, [
+                ->addFormItem('menuType', '菜单类型', 'radio', 3, [
                     'placeholder' => '请选择菜单类型',
                     'tip' => '请选择菜单类型',
                     'options' => [
@@ -282,19 +282,19 @@ class Api extends Admin
                     'placeholder' => '请输入接口路径',
                     'tip' => '接口路径举例：/core/user/lists'
                 ])
-                ->addFormItem('api_prefix', '接口前缀', 'text', 'v1', [
+                ->addFormItem('apiPrefix', '接口前缀', 'text', 'v1', [
                     'placeholder' => '接口前缀',
                     'tip' => '一般默认v1'
                 ])
-                ->addFormItem('api_suffix', '接口后缀', 'text', '', [
+                ->addFormItem('apiSuffix', '接口后缀', 'text', '', [
                     'placeholder' => '请输入接口后缀参数',
                     'tip' => '接口参数举例：/:id/:name'
                 ])
-                ->addFormItem('api_params', '接口参数', 'text', '', [
+                ->addFormItem('apiParams', '接口参数', 'text', '', [
                     'placeholder' => '请输入接口参数实际值',
                     'tip' => '接口参数的实际值举例：/core'
                 ])
-                ->addFormItem('api_method', '请求方法', 'checkbox', [], [
+                ->addFormItem('apiMethod', '请求方法', 'checkbox', [], [
                     'placeholder' => '请勾选请求方法',
                     'tip' => '尽量符合Restful风格',
                     'options' => [
@@ -304,7 +304,7 @@ class Api extends Admin
                         ['title' => 'DELETE', 'value' => 'DELETE',]
                     ]
                 ])
-                ->addFormItem('route_type', '动态页面', 'radio', 1, [
+                ->addFormItem('routeType', '动态页面', 'radio', 1, [
                     'placeholder' => '请选择是否自动生成页面',
                     'tip' => '系统内容了动态页面技术，可以自动生成后台前端页面',
                     'options' => [
@@ -329,7 +329,7 @@ class Api extends Admin
                 ->addFormRule('path', [
                     ['required' => true, 'message' => '请输入接口路径', 'trigger' => 'blur'],
                 ])
-                ->addFormRule('route_type', [
+                ->addFormRule('routeType', [
                     ['required' => true, 'type' => 'string', 'message' => '请选择是页面路由方式', 'trigger' => 'change'],
                 ])
                 ->setFormValues()
@@ -341,7 +341,7 @@ class Api extends Admin
                     'code' => 200,
                     'msg' => '成功',
                     'data' => [
-                        'form_data' => $form_data
+                        'formData' => $formData
                     ]
                 ]
             );
@@ -362,13 +362,13 @@ class Api extends Admin
                 'module'  => 'require',
                 'title' => 'require',
                 'path' => 'require',
-                'api_prefix' => 'require',
+                'apiPrefix' => 'require',
             ],
             [
                 'module.require' => '请选择模块',
                 'title.require' => '菜单名称必须',
                 'path.require' => '接口路径必须',
-                'api_prefix.require' => '接口前缀必须',
+                'apiPrefix.require' => '接口前缀必须',
             ]);
             $data = input('post.');
             if (!$validate->check($data)) {
@@ -380,8 +380,8 @@ class Api extends Admin
             if (count($data_db) <= 0 ) {
                 return $this->return(['code' => 0, 'msg' => '无数据提交', 'data' => []]);
             }
-            if (isset($data_db['api_method'])) {
-                $data_db['api_method'] = implode('|', $data_db['api_method']);
+            if (isset($data_db['apiMethod'])) {
+                $data_db['apiMethod'] = implode('|', $data_db['apiMethod']);
             }
 
             // 存储数据
@@ -400,7 +400,7 @@ class Api extends Admin
             $info = $this->core_menu
                 ->where('id', '=', $id)
                 ->find();
-            $info['api_method'] = explode('|', $info['api_method']);
+            $info['apiMethod'] = explode('|', $info['apiMethod']);
 
             //获取模块列表
             $module_list = $this->core_module
@@ -415,7 +415,7 @@ class Api extends Admin
 
             //获取菜单基于标题的树状列表
             $menu_list = $this->core_menu
-                ->where('menu_type', '=', 5)
+                ->where('menuType', '=', 5)
                 ->where('id', '<>', $id)
                 ->order('sortnum asc')
                 ->select()->toArray();
@@ -429,7 +429,7 @@ class Api extends Admin
 
             //构造动态页面数据
             $ibuilder_form = new \app\core\util\ibuilder\IbuilderForm();
-            $form_data = $ibuilder_form->init()
+            $formData = $ibuilder_form->init()
                 ->setFormMethod('put')
                 ->addFormItem('module', '模块', 'select', '', [
                     'placeholder' => '请选择模块',
@@ -449,7 +449,7 @@ class Api extends Admin
                     'placeholder' => '请输入菜单说明',
                     'tip' => '好的说明有助于用户理解'
                 ])
-                ->addFormItem('menu_type', '菜单类型', 'radio', 0, [
+                ->addFormItem('menuType', '菜单类型', 'radio', 0, [
                     'placeholder' => '请选择菜单类型',
                     'tip' => '请选择菜单类型',
                     'options' => [
@@ -463,19 +463,19 @@ class Api extends Admin
                     'placeholder' => '请输入接口路径',
                     'tip' => '接口路径举例：/core/user/lists'
                 ])
-                ->addFormItem('api_prefix', '接口前缀', 'text', 'v1', [
+                ->addFormItem('apiPrefix', '接口前缀', 'text', 'v1', [
                     'placeholder' => '接口前缀',
                     'tip' => '一般默认v1'
                 ])
-                ->addFormItem('api_suffix', '接口后缀', 'text', '', [
+                ->addFormItem('apiSuffix', '接口后缀', 'text', '', [
                     'placeholder' => '请输入接口后缀参数',
                     'tip' => '接口参数举例：/:id/:name'
                 ])
-                ->addFormItem('api_params', '接口参数', 'text', '', [
+                ->addFormItem('apiParams', '接口参数', 'text', '', [
                     'placeholder' => '请输入接口参数实际值',
                     'tip' => '接口参数的实际值举例：/core'
                 ])
-                ->addFormItem('api_method', '请求方法', 'checkbox', [], [
+                ->addFormItem('apiMethod', '请求方法', 'checkbox', [], [
                     'placeholder' => '请勾选请求方法',
                     'tip' => '尽量符合Restful风格',
                     'options' => [
@@ -485,7 +485,7 @@ class Api extends Admin
                         ['title' => 'DELETE', 'value' => 'DELETE',]
                     ]
                 ])
-                ->addFormItem('route_type', '动态页面', 'radio', 1, [
+                ->addFormItem('routeType', '动态页面', 'radio', 1, [
                     'placeholder' => '请选择是否自动生成页面',
                     'tip' => '系统内容了动态页面技术，可以自动生成后台前端页面',
                     'options' => [
@@ -510,7 +510,7 @@ class Api extends Admin
                 ->addFormRule('path', [
                     ['required' => true, 'message' => '请输入接口路径', 'trigger' => 'blur'],
                 ])
-                ->addFormRule('route_type', [
+                ->addFormRule('routeType', [
                     ['required' => true, 'type' => 'string', 'message' => '请选择是页面路由方式', 'trigger' => 'change'],
                 ])
                 ->setFormValues($info)
@@ -521,7 +521,7 @@ class Api extends Admin
                 'code' => 200,
                 'msg' => '成功',
                 'data' => [
-                    'form_data' => $form_data
+                    'formData' => $formData
                 ]
             ]);
         }
@@ -537,11 +537,11 @@ class Api extends Admin
     {
         // 子菜单检测
         $info = $this->core_menu
-            ->where('menu_type', '=', 5)
+            ->where('menuType', '=', 5)
             ->where('id', '=', $id)
             ->find();
         $exist = $this->core_menu
-            ->where('menu_type', '=', 5)
+            ->where('menuType', '=', 5)
             ->where('pmenu', '=', $info['path'])
             ->count();
         if ($exist > 0) {
@@ -549,7 +549,7 @@ class Api extends Admin
         }
 
         $ret = $this->core_menu
-            ->where('menu_type', '=', 5)
+            ->where('menuType', '=', 5)
             ->where('id', '=', $id)
             ->find()
             ->delete();

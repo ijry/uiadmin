@@ -42,13 +42,13 @@ class Index extends Home
      */
     public function index()
     {
-        $data_list = $this->cms_post
+        $dataList = $this->cms_post
             ->where('status', '=', 1)
-            ->where('review_status', '=', 1)
+            ->where('reviewStatus', '=', 1)
             ->select()
             ->toArray();
         return $this->return(['code' => 200, 'msg' => '成功', 'data' => [
-            'data_list' =>$data_list
+            'dataList' =>$dataList
         ]]);
     }
 }

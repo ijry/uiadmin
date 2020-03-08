@@ -43,22 +43,22 @@ class Post extends Admin
     public function lists($cid)
     {
         // 列表
-        $data_list = $this->cms_post
+        $dataList = $this->cms_post
             ->where('cid', $cid)
             ->select()
             ->toArray();
         $tree      = new Tree();
-        $data_tree = $tree->list2tree($data_list);
+        $dataTree = $tree->list2tree($dataList);
 
         // 构造动态页面数据
         $ibuilder_list = new \app\core\util\ibuilder\IbuilderList();
-        $list_data = $ibuilder_list->init()
+        $listData = $ibuilder_list->init()
             ->addTopButton('add', '添加', ['api' => '/v1/admin/cms/post/add/' . $cid])
             ->addRightButton('edit', '修改', ['api' => '/v1/admin/cms/post/edit', 'title' => '修改'])
             ->addRightButton('delete', '删除', [
                 'api' => '/v1/admin/cms/cate/delete',
                 'title' => '确认要删除该文章吗？',
-                'modal_type' => 'confirm',
+                'modalType' => 'confirm',
                 'width' => '600',
                 'okText' => '确认删除',
                 'cancelText' => '取消操作',
@@ -66,21 +66,21 @@ class Post extends Admin
             ])
             ->addColumn('id' , 'ID', ['width' => '50px'])
             ->addColumn('title', '标题', ['minWidth' => '100px'])
-            ->addColumn('view_count', '阅读数', ['width' => '100px'])
+            ->addColumn('viewCount', '阅读数', ['width' => '100px'])
             ->addColumn('sortnum', '排序', ['width' => '50px'])
-            ->addColumn('right_button_list', '操作', [
+            ->addColumn('rightButtonList', '操作', [
                 'minWidth' => '50px',
                 'type' => 'template',
-                'template' => 'right_button_list'
+                'template' => 'rightButtonList'
             ])
-            ->setDataList($data_tree)
+            ->setDataList($dataTree)
             ->getData();
 
         //返回数据
         return $this->return(
             [
                 'code' => 200, 'msg' => '成功', 'data' => [
-                    'list_data' => $list_data
+                    'listData' => $listData
                 ]
             ]
         );
@@ -126,11 +126,11 @@ class Post extends Admin
             }
         } else {
             // 获树状列表
-            $cate_list = $this->cms_cate
+            $cateList = $this->cms_cate
                 ->order('sortnum asc')
                 ->select()->toArray();
             $tree      = new Tree();
-            $cate_tree = $tree->array2tree($cate_list, 'title', 'id', 'pid', 0, false);
+            $cate_tree = $tree->array2tree($cateList, 'title', 'id', 'pid', 0, false);
             $cate_tree_select = [];
             foreach ($cate_tree as $key1 => $val1) {
                 $cate_tree_select[$key1]['title'] = $val1['title_show'];
@@ -139,7 +139,7 @@ class Post extends Admin
 
             // 构造动态页面数据
             $ibuilder_form = new \app\core\util\ibuilder\IbuilderForm();
-            $form_data = $ibuilder_form->init()
+            $formData = $ibuilder_form->init()
                 ->setFormMethod('post')
                 ->addFormItem('cid', '上级', 'select', $cid, [
                     'options' => $cate_tree_select
@@ -162,7 +162,7 @@ class Post extends Admin
                     'code' => 200,
                     'msg' => '成功',
                     'data' => [
-                        'form_data' => $form_data
+                        'formData' => $formData
                     ]
                 ]
             );
@@ -212,11 +212,11 @@ class Post extends Admin
                 ->find();
 
             // 获树状列表
-            $cate_list = $this->cms_cate
+            $cateList = $this->cms_cate
                 ->order('sortnum asc')
                 ->select()->toArray();
             $tree      = new Tree();
-            $cate_tree = $tree->array2tree($cate_list, 'title', 'id', 'pid', 0, false);
+            $cate_tree = $tree->array2tree($cateList, 'title', 'id', 'pid', 0, false);
             $cate_tree_select = [];
             foreach ($cate_tree as $key1 => $val1) {
                 $cate_tree_select[$key1]['title'] = $val1['title_show'];
@@ -225,7 +225,7 @@ class Post extends Admin
 
             //构造动态页面数据
             $ibuilder_form = new \app\core\util\ibuilder\IbuilderForm();
-            $form_data = $ibuilder_form->init()
+            $formData = $ibuilder_form->init()
                 ->setFormMethod('put')
                ->addFormItem('cid', '分类', 'select', 0, [
                     'tip' => '分类',
@@ -248,7 +248,7 @@ class Post extends Admin
                 'code' => 200,
                 'msg' => '成功',
                 'data' => [
-                    'form_data' => $form_data
+                    'formData' => $formData
                 ]
             ]);
         }

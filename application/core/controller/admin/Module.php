@@ -62,15 +62,15 @@ class Module extends Admin
                 $this->core_menu->saveAll($module_insall['api']);
                 // 导入数据表
                 foreach ($module_insall['tables'] as $key => $value) {
-                    if (isset($value['table_create'])) {
-                        $value['table_create'] = implode("", $value['table_create']);
-                        if (false === Db::execute($value['table_create'])) {
-                            throw new \Exception($value['table_name'] . "创建出错", 0);
+                    if (isset($value['tableCreate'])) {
+                        $value['tableCreate'] = implode("", $value['tableCreate']);
+                        if (false === Db::execute($value['tableCreate'])) {
+                            throw new \Exception($value['tableName'] . "创建出错", 0);
                         }
                     }
-                    if (isset($value['table_rows']) && count($value['table_rows']) > 0) {
-                        if (false === Db::table($value['table_name'])->insertAll($value['table_rows'])) {
-                            throw new \Exception($value['table_name'] . "添加记录出错", 0);
+                    if (isset($value['tableRows']) && count($value['tableRows']) > 0) {
+                        if (false === Db::table($value['tableName'])->insertAll($value['tableRows'])) {
+                            throw new \Exception($value['tableName'] . "添加记录出错", 0);
                         }
                     }
                 }
@@ -125,7 +125,7 @@ class Module extends Admin
     public function lists()
     {
         // 模块列表
-        $data_list = $this->core_module->select()->toArray();
+        $dataList = $this->core_module->select()->toArray();
 
         // 获取本地未安装模块
         // 获取已经安装的模块名称
@@ -148,27 +148,27 @@ class Module extends Admin
                     $module['website'] = $module_insall['info']['website'];
                     $module['version'] = $module_insall['info']['version'];
                     $module['build'] = $module_insall['info']['build'];
-                    $data_list[] = $module;
+                    $dataList[] = $module;
                 }
             }
         }
 
-        foreach ($data_list as $key => &$value1) {
+        foreach ($dataList as $key => &$value1) {
             // 兼容接口文档Tree组件异步加载需要
             $value1['loading'] = false;
             $value1['children'] = [];
             // 右侧按钮
-            $value1['right_button_list'] = [];
+            $value1['rightButtonList'] = [];
             if (!$value1['id']) {
-                $value1['right_button_list'][] = [
+                $value1['rightButtonList'][] = [
                     'name' => 'info',
                     'title' => '安装',
-                    'page_data' => [
-                        'form_method' => 'post',
+                    'pageData' => [
+                        'formMethod' => 'post',
                         'api' => '/v1/admin/core/module/import',
                         'title' => '确认要安装该模块吗？',
-                        'api_suffix' => ['name'],
-                        'modal_type' => 'confirm',
+                        'apiSuffix' => ['name'],
+                        'modalType' => 'confirm',
                         'width' => '600',
                         'okText' => '立即安装',
                         'cancelText' => '取消安装',
@@ -177,39 +177,39 @@ class Module extends Admin
                     'style' => ['size' => 'small', 'type' => 'success']
                 ];
             } else {
-                $value1['right_button_list'][] = [
+                $value1['rightButtonList'][] = [
                     'name' => 'config',
                     'title' => '设置',
-                    'page_data' => [
-                        'modal_type' => 'form',
+                    'pageData' => [
+                        'modalType' => 'form',
                         'api' => '/v1/admin/core/config/saveBatch/',
                         'width' => '1000',
-                        'api_suffix' => ['name'],
+                        'apiSuffix' => ['name'],
                         'title' => '配置'
                     ],
                     'style' => ['size' => 'small', 'type' => 'primary']
                 ];
-                $value1['right_button_list'][] = [
+                $value1['rightButtonList'][] = [
                     'name' => 'edit',
                     'title' => '修改',
-                    'page_data' => [
-                        'modal_type' => 'form',
+                    'pageData' => [
+                        'modalType' => 'form',
                         'api' => '/v1/admin/core/module/edit',
                         'width' => '1000',
                         'title' => '修改模块信息'
                     ],
                     'style' => ['size' => 'small']
                 ];
-                $value1['right_button_list'][] = [
+                $value1['rightButtonList'][] = [
                     'name' => 'export',
                     'title' => '导出',
-                    'page_data' => [
+                    'pageData' => [
                         'api' => '/v1/admin/core/module/export',
                         'title' => '确认要导出模块吗？',
-                        'modal_type' => 'confirm',
-                        'form_method' => 'post',
+                        'modalType' => 'confirm',
+                        'formMethod' => 'post',
                         'width' => '600',
-                        'no_refresh' => true,
+                        'noRefresh' => true,
                         'okText' => '确认导出',
                         'cancelText' => '取消操作',
                         'content' => '<p><p>导出的模块可以分发给别人使用</p><p>将会导出模块基本信息、配置信息、API信息、模块数据表等信息。</p></p>',
@@ -221,11 +221,11 @@ class Module extends Admin
 
         // 转换成树
         $tree      = new Tree();
-        $data_list = $tree->list2tree($data_list);
+        $dataList = $tree->list2tree($dataList);
 
         // 构造动态页面数据
         $ibuilder_list = new \app\core\util\ibuilder\IbuilderList();
-        $list_data = $ibuilder_list->init()
+        $listData = $ibuilder_list->init()
             ->addTopButton('add', '创建新模块', ['api' => '/v1/admin/core/module/add'])
             ->addColumn('id' , 'ID', ['width' => '50px'])
             ->addColumn('name', '名称', ['width' => '120px'])
@@ -236,18 +236,18 @@ class Module extends Admin
             ->addColumn('build', 'Build', ['width' => '150px'])
             ->addColumn('sortnum', '排序', ['width' => '50px'])
             ->addColumn('status', '状态', ['width' => '50px'])
-            ->addColumn('right_button_list', '操作', [
+            ->addColumn('rightButtonList', '操作', [
                 'minWidth' => '100px',
                 'type' => 'template',
-                'template' => 'right_button_list'
+                'template' => 'rightButtonList'
             ])
-            ->setDataList($data_list)
+            ->setDataList($dataList)
             ->getData();
 
         // 返回数据
         return $this->return([
             'code' => 200, 'msg' => '成功', 'data' => [
-                'list_data' => $list_data
+                'listData' => $listData
             ]
         ]);
     }
@@ -336,8 +336,8 @@ class Module extends Admin
                 // 创建模块前台API分组
                 $data_api = [];
                 $data_api['module'] = $data_db['name'];
-                $data_api['menu_layer'] = 'home';
-                $data_api['menu_type'] = 0;
+                $data_api['menuLayer'] = 'home';
+                $data_api['menuType'] = 0;
                 if (!$this->core_menu->where($data_api)->find()) {
                     $data_api['title'] = $data_db['title'];
                     $data_api['path'] = '/' . $module_name;
@@ -349,8 +349,8 @@ class Module extends Admin
                 if ($data_db['create_menu_group']) {
                     $data_api = [];
                     $data_api['module'] = $data_db['name'];
-                    $data_api['menu_layer'] = 'admin';
-                    $data_api['menu_type'] = 0;
+                    $data_api['menuLayer'] = 'admin';
+                    $data_api['menuType'] = 0;
                     $data_api['pmenu'] = '/_tab_content';
                     $ret_api = true;
                     if (!$this->core_menu->where($data_api)->find()) {
@@ -375,7 +375,7 @@ class Module extends Admin
         } else {
             // 构造动态页面数据
             $ibuilder_form = new \app\core\util\ibuilder\IbuilderForm();
-            $form_data = $ibuilder_form->init()
+            $formData = $ibuilder_form->init()
                 ->setFormMethod('post')
                 ->addFormItem('name', '模块名称', 'text', '', [
                     'placeholder' => '请输入模块名称',
@@ -437,7 +437,7 @@ class Module extends Admin
                 'code' => 200,
                 'msg' => '成功',
                 'data' => [
-                    'form_data' => $form_data
+                    'formData' => $formData
                 ]
             ]);
         }
@@ -504,7 +504,7 @@ class Module extends Admin
 
             // 构造动态页面数据
             $ibuilder_form = new \app\core\util\ibuilder\IbuilderForm();
-            $form_data = $ibuilder_form->init()
+            $formData = $ibuilder_form->init()
                 ->setFormMethod('put')
                 ->addFormItem('name', '模块名称', 'text', '', [
                     'placeholder' => '请输入模块名称',
@@ -562,7 +562,7 @@ class Module extends Admin
                 'code' => 200,
                 'msg' => '成功',
                 'data' => [
-                    'form_data' => $form_data
+                    'formData' => $formData
                 ]
             ]);
         }

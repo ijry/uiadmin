@@ -42,8 +42,8 @@
 
 {block name="main"}
     <div class="ibuilder-form">
-      <el-form ref="ref" :model="form_data.form_values" label-width="80px">
-        {foreach $form_data['form_items'] as $key=>$vo}
+      <el-form ref="ref" :model="formData.formValues" label-width="80px">
+        {foreach $formData['formItems'] as $key=>$vo}
           {switch $vo['type']}
               {case divider}
                 <el-divider></el-divider>
@@ -55,54 +55,54 @@
               {/case}
               {case text}
                 <el-form-item label="{$vo.title}">
-                  <el-input v-model="form_data.form_values.{$vo.name}" placeholder="{$vo.extra.placeholder}" clearable></el-input>
+                  <el-input v-model="formData.formValues.{$vo.name}" placeholder="{$vo.extra.placeholder}" clearable></el-input>
                 </el-form-item>
               {/case}
               {case password}
                 <el-form-item label="{$vo.title}">
-                  <el-input v-model="form_data.form_values.{$vo.name}" placeholder="{$vo.extra.placeholder}" clearable show-password></el-input>
+                  <el-input v-model="formData.formValues.{$vo.name}" placeholder="{$vo.extra.placeholder}" clearable show-password></el-input>
                 </el-form-item>
               {/case}
               {case url}
                 <el-form-item label="{$vo.title}">
-                  <el-input v-model="form_data.form_values.{$vo.name}" placeholder="{$vo.extra.placeholder}" clearable></el-input>
+                  <el-input v-model="formData.formValues.{$vo.name}" placeholder="{$vo.extra.placeholder}" clearable></el-input>
                 </el-form-item>
               {/case}
               {case email}
                 <el-form-item label="{$vo.title}">
-                  <el-input v-model="form_data.form_values.{$vo.name}" placeholder="{$vo.extra.placeholder}" clearable></el-input>
+                  <el-input v-model="formData.formValues.{$vo.name}" placeholder="{$vo.extra.placeholder}" clearable></el-input>
                 </el-form-item>
               {/case}
               {case number}
                 <el-form-item label="{$vo.title}">
-                  <el-input v-model="form_data.form_values.{$vo.name}" placeholder="{$vo.extra.placeholder}" clearable></el-input>
+                  <el-input v-model="formData.formValues.{$vo.name}" placeholder="{$vo.extra.placeholder}" clearable></el-input>
                 </el-form-item>
               {/case}
               {case digit}
                 <el-form-item label="{$vo.title}">
-                  <el-input v-model="form_data.form_values.{$vo.name}" placeholder="{$vo.extra.placeholder}" clearable></el-input>
+                  <el-input v-model="formData.formValues.{$vo.name}" placeholder="{$vo.extra.placeholder}" clearable></el-input>
                 </el-form-item>
               {/case}
               {case tel}
                 <el-form-item label="{$vo.title}">
-                  <el-input v-model="form_data.form_values.{$vo.name}" placeholder="{$vo.extra.placeholder}" clearable></el-input>
+                  <el-input v-model="formData.formValues.{$vo.name}" placeholder="{$vo.extra.placeholder}" clearable></el-input>
                 </el-form-item>
               {/case}
               {case textarea}
                 <el-form-item label="{$vo.title}">
-                  <el-input type="textarea" v-model="form_data.form_values.{$vo.name}" placeholder="{$vo.extra.placeholder}" clearable></el-input>
+                  <el-input type="textarea" v-model="formData.formValues.{$vo.name}" placeholder="{$vo.extra.placeholder}" clearable></el-input>
                 </el-form-item>
               {/case}
               {case array}
                 <el-form-item label="{$vo.title}">
-                  <el-input type="textarea" v-model="form_data.form_values.{$vo.name}" placeholder="{$vo.extra.placeholder}" clearable></el-input>
+                  <el-input type="textarea" v-model="formData.formValues.{$vo.name}" placeholder="{$vo.extra.placeholder}" clearable></el-input>
                 </el-form-item>
               {/case}
               {case select}
                 <el-form-item label="{$vo.title}">
-                  <el-select v-model="form_data.form_values.{$vo.name}" placeholder="{$vo.extra.placeholder}">
+                  <el-select v-model="formData.formValues.{$vo.name}" placeholder="{$vo.extra.placeholder}">
                       <el-option
-                        v-for="(item1,key1,index1) in form_data.form_items[{$key}].extra.options"
+                        v-for="(item1,key1,index1) in formData.formItems[{$key}].extra.options"
                         :key="index1"
                         :label="item1.title"
                         :value="item1.value">
@@ -112,9 +112,9 @@
               {/case}
               {case radio}
                 <el-form-item label="{$vo.title}">
-                  <el-radio-group v-model="form_data.form_values.{$vo.name}">
+                  <el-radio-group v-model="formData.formValues.{$vo.name}">
                     <el-radio
-                      v-for="(item1,key1,index1) in form_data.form_items[{$key}].extra.options"
+                      v-for="(item1,key1,index1) in formData.formItems[{$key}].extra.options"
                       :key="index1"
                       :label="item1.value">
                       {{item1.title}}
@@ -124,9 +124,9 @@
               {/case}
               {case checkbox}
                 <el-form-item label="{$vo.title}">
-                  <el-checkbox-group v-model="form_data.form_values.{$vo.name}">
+                  <el-checkbox-group v-model="formData.formValues.{$vo.name}">
                     <el-checkbox
-                      v-for="(item1,key1,index1) in form_data.form_items[{$key}].extra.options"
+                      v-for="(item1,key1,index1) in formData.formItems[{$key}].extra.options"
                       :key="index1"
                       :label="item1.title">
                     </el-checkbox>
@@ -136,7 +136,7 @@
               {case switch}
                 <el-form-item label="{$vo.title}">
                   <el-switch
-                    v-model="form_data.form_values.{$vo.name}"
+                    v-model="formData.formValues.{$vo.name}"
                     active-text="{$vo1.options[0].title}"
                     inactive-text="{$vo1.options[1].title}">
                   </el-switch>
@@ -144,40 +144,40 @@
               {/case}
               {case slider}
                 <el-form-item label="{$vo.title}">
-                  <el-slider v-model="form_data.form_values.{$vo.name}"></el-slider>
+                  <el-slider v-model="formData.formValues.{$vo.name}"></el-slider>
                 </el-form-item>
               {/case}
               {case datepicker}
                 <el-form-item label="{$vo.title}">
-                  <el-date-picker type="date" placeholder="选择日期" v-model="form_data.form_values.{$vo.name}""></el-date-picker>
+                  <el-date-picker type="date" placeholder="选择日期" v-model="formData.formValues.{$vo.name}""></el-date-picker>
                 </el-form-item>
               {/case}
               {case timepicker}
                 <el-form-item label="{$vo.title}">
-                  <el-time-picker placeholder="选择时间" v-model="form_data.form_values.{$vo.name}""></el-time-picker>
+                  <el-time-picker placeholder="选择时间" v-model="formData.formValues.{$vo.name}""></el-time-picker>
                 </el-form-item>
               {/case}
               {case datetimepicker}
                 <el-form-item label="{$vo.title}">
-                  <el-date-picker type="datetime" placeholder="选择日期时间" v-model="form_data.form_values.{$vo.name}""></el-date-picker>
+                  <el-date-picker type="datetime" placeholder="选择日期时间" v-model="formData.formValues.{$vo.name}""></el-date-picker>
                 </el-form-item>
               {/case}
               {case rate}
                 <el-form-item label="{$vo.title}">
-                  <el-rate v-model="form_data.form_values.{$vo.name}"></el-rate>
+                  <el-rate v-model="formData.formValues.{$vo.name}"></el-rate>
                 </el-form-item>
               {/case}
               {case cascader}
                 <el-form-item label="{$vo.title}">
                   <el-cascader
-                    :options="form_data.form_items[{$key}].extra.options"
-                    v-model="form_data.form_values.{$vo.name}">
+                    :options="formData.formItems[{$key}].extra.options"
+                    v-model="formData.formValues.{$vo.name}">
                   </el-cascader>
                 </el-form-item>
               {/case}
               {case colorpicker}
                 <el-form-item label="{$vo.title}">
-                  <el-color-picker v-model="form_data.form_values.{$vo.name}"></el-color-picker>
+                  <el-color-picker v-model="formData.formValues.{$vo.name}"></el-color-picker>
                 </el-form-item>
               {/case}
               {case image}
@@ -188,10 +188,10 @@
                     :show-file-list="false"
                     :on-success="handleUploadSuccess"
                     :before-upload="beforeUpload">
-                    <img v-if="form_data.form_values.{$vo.name}" :src="form_data.form_values.{$vo.name}" class="image">
+                    <img v-if="formData.formValues.{$vo.name}" :src="formData.formValues.{$vo.name}" class="image">
                     <i v-else class="el-icon-plus image-uploader-icon"></i>
                   </el-upload>
-                  <el-input v-model="form_data.form_values.{$vo.name}" placeholder="{$vo.extra.placeholder}" clearable></el-input>
+                  <el-input v-model="formData.formValues.{$vo.name}" placeholder="{$vo.extra.placeholder}" clearable></el-input>
                 </el-form-item>
               {/case}
               {case images}
@@ -233,7 +233,7 @@
                 return {
                     {include file="core@admin/public:data" /},
                     loading: false,
-                    form_data: <?php echo json_encode($form_data); ?>
+                    formData: <?php echo json_encode($formData); ?>
                 }
             },
             methods: {
@@ -249,8 +249,8 @@
                   // 提交数据
                   let res = await util.request({
                       url: '/v1/<?php echo(request()->path()); ?>',
-                      method: this.form_data.form_method,
-                      data: this.form_data.form_values
+                      method: this.formData.formMethod,
+                      data: this.formData.formValues
                   });
                   if (res.code == '200') {
                       this.$message({

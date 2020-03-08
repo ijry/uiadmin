@@ -55,17 +55,17 @@ class Admin extends Common
             }
 
             // 常规权限验证
-            $admin_auth_list = Db::name('core_role')
+            $adminAuth_list = Db::name('core_role')
                 ->where('status', 1)
                 ->where('name', 'in', $role_list)
-                ->column('admin_auth');
+                ->column('adminAuth');
             // 合并权限列表
-            $admin_auth_list = explode(',', implode(',', $admin_auth_list));
+            $adminAuth_list = explode(',', implode(',', $adminAuth_list));
             // 获取当前pathinfo
             $path_api = ltrim(Request::path(), 'api');
             $path_api = explode('/', $path_api);
             // dump($path_api);
-            foreach ($admin_auth_list as $val) {
+            foreach ($adminAuth_list as $val) {
                 $val = explode('/', $val);
                 //dump($val);
                 if ($val[1] == $path_api[1]

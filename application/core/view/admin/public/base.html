@@ -154,7 +154,7 @@
                         {core:menu_list id="vo0"}
                             <?php if(isset($vo0['children'])): ?>
                                 {volist name="vo0.children" id="vo"}
-                                    <?php if($vo['menu_type'] == 0): ?>
+                                    <?php if($vo['menuType'] == 0): ?>
                                         <el-submenu index="0-{$key}">
                                             <template slot="title">
                                             <i class="el-icon-folder-opened"></i>
@@ -162,9 +162,9 @@
                                             </template>
                                             <?php if(isset($vo['children'])): ?>
                                                 {volist name="vo.children" id="vo1"}
-                                                    <?php if($vo1['menu_type'] == 1): ?>
+                                                    <?php if($vo1['menuType'] == 1): ?>
                                                         <el-menu-item index="1-{$key}">
-                                                            <a href="<?php echo request()->root(); ?>/admin{$vo1['path']}{$vo1.api_params}.html">{$vo1.title}</a>
+                                                            <a href="<?php echo request()->root(); ?>/admin{$vo1['path']}{$vo1.apiParams}.html">{$vo1.title}</a>
                                                         </el-menu-item>
                                                     <?php endif; ?>
                                                 {/volist}

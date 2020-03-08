@@ -22,11 +22,11 @@
 {block name="main"}
     <div class="ibuilder-list">
       <div class="top-button-list">
-        {foreach $list_data['top_button_list'] as $key0=>$vo0}
-          <?php if($vo0['page_data']['modal_type'] == 'confirm'): ?>
+        {foreach $listData['topButtonList'] as $key0=>$vo0}
+          <?php if($vo0['pageData']['modalType'] == 'confirm'): ?>
             <el-button
               @click="right_button_modal('{$key0}', scope)"
-              class="top-button form_method"
+              class="top-button formMethod"
               size="medium">
               {$vo0.title}
             </el-button>
@@ -34,30 +34,30 @@
             <el-button
               class="top-button"
               size="medium">
-              <a :href="'<?php echo request()->root(); ?>/admin/{$vo0.page_data.path}' + '.html'">{$vo0.title}</a>
+              <a :href="'<?php echo request()->root(); ?>/admin/{$vo0.pageData.path}' + '.html'">{$vo0.title}</a>
             </el-button>
           <?php endif; ?>
         {/foreach}
       </div>
       <el-table
-        :data="list_data.data_list"
+        :data="listData.dataList"
         style="width: 100%;margin-bottom: 20px;"
         border
         fit
         row-key="title">
-        {foreach $list_data['columns'] as $key=>$vo}
-          <?php if(isset($vo['template']) && $vo['template'] == 'right_button_list'): ?>
+        {foreach $listData['columns'] as $key=>$vo}
+          <?php if(isset($vo['template']) && $vo['template'] == 'rightButtonList'): ?>
             <el-table-column
               prop="{$vo.key}"
               label="{$vo.title}"
               :sortable="false"
               width="{$vo.width}">
               <template slot-scope="scope">
-                {foreach $list_data['right_button_list'] as $key1=>$vo1}
-                  <?php if($vo1['page_data']['modal_type'] == 'confirm'): ?>
+                {foreach $listData['rightButtonList'] as $key1=>$vo1}
+                  <?php if($vo1['pageData']['modalType'] == 'confirm'): ?>
                     <el-button
                       @click="right_button_modal('{$key1}', scope)"
-                      class="right-button form_method"
+                      class="right-button formMethod"
                       size="mini">
                       {$vo1.title}
                     </el-button>
@@ -65,12 +65,12 @@
                     <el-button
                       class="right-button"
                       size="mini">
-                      <?php if(isset($vo1['page_data']['api_suffix'][0])): ?>
-                        <a :href="'<?php echo request()->root(); ?>/admin/{$vo1.page_data.path}/' + scope.row.{$vo1.page_data.api_suffix[0]} + '.html'">
+                      <?php if(isset($vo1['pageData']['apiSuffix'][0])): ?>
+                        <a :href="'<?php echo request()->root(); ?>/admin/{$vo1.pageData.path}/' + scope.row.{$vo1.pageData.apiSuffix[0]} + '.html'">
                           {$vo1.title}
                         </a>
                       <?php else: ?>
-                        <a :href="'<?php echo request()->root(); ?>/admin/{$vo1.page_data.path}' + '.html'">
+                        <a :href="'<?php echo request()->root(); ?>/admin/{$vo1.pageData.path}' + '.html'">
                           {$vo1.title}
                         </a>
                       <?php endif; ?>
@@ -99,31 +99,31 @@
             data: function() {
                 return {
                     {include file="core@admin/public:data" /},
-                    list_data: <?php echo json_encode($list_data); ?>
+                    listData: <?php echo json_encode($listData); ?>
                 }
             },
             methods: {
                 {include file="core@admin/public:methods" /},
                 right_button_modal(key, scope) {
-                  let button_data = this.list_data.right_button_list[key];
-                  var api_suffix = '';
-                  if (this.list_data.right_button_list[key].page_data.api_suffix) {
-                      let asd = this.list_data.right_button_list[key].page_data.api_suffix;
+                  let button_data = this.listData.rightButtonList[key];
+                  var apiSuffix = '';
+                  if (this.listData.rightButtonList[key].pageData.apiSuffix) {
+                      let asd = this.listData.rightButtonList[key].pageData.apiSuffix;
                       for(let v of asd) {
-                          api_suffix = api_suffix + '/' + scope.row[v];
+                          apiSuffix = apiSuffix + '/' + scope.row[v];
                       };
                   } else {
-                      api_suffix = '/' + scope.row.id;
+                      apiSuffix = '/' + scope.row.id;
                   }
-                  this.$confirm(button_data.page_data.content, button_data.page_data.title, {
+                  this.$confirm(button_data.pageData.content, button_data.pageData.title, {
                     dangerouslyUseHTMLString: true,
-                    confirmButtonText: button_data.page_data.okText,
-                    cancelButtonText: button_data.page_data.cancelText,
+                    confirmButtonText: button_data.pageData.okText,
+                    cancelButtonText: button_data.pageData.cancelText,
                     type: 'warning'
                   }).then( async () => {
                     let res = await util.request({
-                        url: button_data.page_data.api + api_suffix,
-                        method: button_data.page_data.form_method
+                        url: button_data.pageData.api + apiSuffix,
+                        method: button_data.pageData.formMethod
                     });
                     if (res.code=='200') {
                         this.$message({

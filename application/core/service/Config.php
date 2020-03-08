@@ -39,7 +39,7 @@ class Config extends Model
             throw new \Exception('未指定cloud_id', 0);
         }
         $module_config = $this->getValueByModule($module_name);
-        if (isset($module_config['is_open']) && $module_config['is_open'] != 1) {
+        if (isset($module_config['isOpen']) && $module_config['isOpen'] != 1) {
             throw new \Exception($module_name . '未开启', 0);
         }
         return $module_config;
@@ -53,10 +53,10 @@ class Config extends Model
      */
     public function getListByModule($module_name)
     {
-        $data_list = $this->core_config
+        $dataList = $this->core_config
             ->where('module', '=', $module_name)
             ->select();
-        return $data_list;
+        return $dataList;
     }
 
     /**
@@ -68,55 +68,55 @@ class Config extends Model
     public function getValueByModule($module_name, $con = [])
     {
         // 查看是否存在配置分组
-        $config_cate = $this->core_config
+        $configCate = $this->core_config
             ->where('module', '=', $module_name)
-            ->where('name', '=', 'config_cate')
+            ->where('name', '=', 'configCate')
             ->find();
-        if ($config_cate) {
-            $config_cate_value = parse_attr($config_cate['value']);
+        if ($configCate) {
+            $configCate_value = parse_attr($configCate['value']);
         }
 
         // 查询所有模块
         $con = array_merge($con, [['module', '=', $module_name]]);
-        $data_list = $this->core_config
-            ->field('config_cate,config_type,name,value')
+        $dataList = $this->core_config
+            ->field('configCate,configType,name,value')
             ->where($con)
             ->select();
         $return = [];
 
         // 如果配置分组大于2个说明有同名的平级配置，这里将结果返回为二维数组。
-        if (isset($config_cate_value)) {
-            foreach ($data_list as $key => &$value) {
-                if ($value['config_type'] == 'array') {
-                    if ($value['config_cate'] == 'basic') {
+        if (isset($configCate_value)) {
+            foreach ($dataList as $key => &$value) {
+                if ($value['configType'] == 'array') {
+                    if ($value['configCate'] == 'basic') {
                         $return[$value['name']] = parse_attr($value['value']);
                     } else {
-                        $return[$value['config_cate']][$value['name']] = parse_attr($value['value']);
+                        $return[$value['configCate']][$value['name']] = parse_attr($value['value']);
                     }
-                } else if (in_array($value['config_type'], ['images', 'files'])) {
+                } else if (in_array($value['configType'], ['images', 'files'])) {
                     if ($value['value'] == '') {
                         $value['value'] = [];
                     } else {
                         $value['value'] = json_decode($value['value'], true);
                     }
-                    if ($value['config_cate'] == 'basic') {
+                    if ($value['configCate'] == 'basic') {
                         $return[$value['name']] = $value['value'];
                     } else {
-                        $return[$value['config_cate']][$value['name']] = $value['value'];
+                        $return[$value['configCate']][$value['name']] = $value['value'];
                     }
                 } else {
-                    if ($value['config_cate'] == 'basic') {
+                    if ($value['configCate'] == 'basic') {
                         $return[$value['name']] = $value['value'];
                     } else {
-                        $return[$value['config_cate']][$value['name']] = $value['value'];
+                        $return[$value['configCate']][$value['name']] = $value['value'];
                     }
                 }
             }
         } else {
-            foreach ($data_list as $key => &$value) {
-                if ($value['config_type'] == 'array') {
+            foreach ($dataList as $key => &$value) {
+                if ($value['configType'] == 'array') {
                     $return[$value['name']] = parse_attr($value['value']);
-                } else if (in_array($value['config_type'], ['images', 'files'])) {
+                } else if (in_array($value['configType'], ['images', 'files'])) {
                     if ($value['value'] == '') {
                         $value['value'] = [];
                     } else {

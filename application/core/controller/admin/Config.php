@@ -45,38 +45,38 @@ class Config extends Admin
     public function lists()
     {
         // 用户列表
-        $data_list = $this->core_config
+        $dataList = $this->core_config
             ->order('module asc')
             ->select()->toArray();
 
         // 构造动态页面数据
         $ibuilder_list = new \app\core\util\ibuilder\IbuilderList();
-        $list_data = $ibuilder_list->init()
+        $listData = $ibuilder_list->init()
             ->addTopButton('add', '添加', ['api' => '/v1/admin/core/config/add'])
             ->addRightButton('edit', '修改', ['api' => '/v1/admin/core/config/edit', 'title' => '修改配置信息'])
             ->addColumn('id' , 'ID', ['width' => '50px'])
             ->addColumn('name', '名称', ['width' => '100px'])
             ->addColumn('title', '标题', ['width' => '100px'])
-            ->addColumn('config_cate', '分组', ['width' => '80px'])
-            ->addColumn('config_type', '配置类型', ['width' => '80px'])
+            ->addColumn('configCate', '分组', ['width' => '80px'])
+            ->addColumn('configType', '配置类型', ['width' => '80px'])
             ->addColumn('placeholder', 'placeholder', ['width' => '150px'])
             ->addColumn('tip', '说明', ['width' => '200px'])
-            ->addColumn('is_system', '系统', ['width' => '50px'])
-            ->addColumn('is_dev', '开发者', ['width' => '80px'])
+            ->addColumn('isSystem', '系统', ['width' => '50px'])
+            ->addColumn('isDev', '开发者', ['width' => '80px'])
             ->addColumn('sortnum', '排序', ['width' => '50px'])
             ->addColumn('status', '状态', ['width' => '50px'])
-            ->addColumn('right_button_list', '操作', [
+            ->addColumn('rightButtonList', '操作', [
                 'minWidth' => '50px',
                 'type' => 'template',
-                'template' => 'right_button_list'
+                'template' => 'rightButtonList'
             ])
-            ->setDataList($data_list)
+            ->setDataList($dataList)
             ->getData();
 
         // 返回数据
         return $this->return([
             'code' => 200, 'msg' => '成功', 'data' => [
-                'list_data' => $list_data
+                'listData' => $listData
             ]
         ]);
     }
@@ -116,8 +116,8 @@ class Config extends Admin
             }
         } else {
             // 获取分组信息
-            $config_cate = $this->core_config
-                ->where('name', '=', 'config_cate')
+            $configCate = $this->core_config
+                ->where('name', '=', 'configCate')
                 ->find();
 
             // 获取所有配置
@@ -135,7 +135,7 @@ class Config extends Admin
                     $ibuilder_form->addFormItem(
                         $val['name'],
                         $val['title'],
-                        $val['config_type'],
+                        $val['configType'],
                         $val['value'],
                         [
                             'tip' => $val['tip'],
@@ -145,14 +145,14 @@ class Config extends Admin
                     );
                 }
             $ibuilder_form->setFormValues();
-            $form_data = $ibuilder_form->getData();
+            $formData = $ibuilder_form->getData();
 
             // 返回数据
             return $this->return([
                 'code' => 200,
                 'msg' => '成功',
                 'data' => [
-                    'form_data' => $form_data
+                    'formData' => $formData
                 ]
             ]);
         }
@@ -169,16 +169,16 @@ class Config extends Admin
         if (request()->isPost()) {
             // 数据验证
             $validate = Validate::make([
-                'config_cate'  => 'require',
+                'configCate'  => 'require',
                 'name' => 'require',
                 'title' => 'require',
-                'config_type' => 'require'
+                'configType' => 'require'
             ],
             [
-                'config_cate.require' => '配置分组必须',
+                'configCate.require' => '配置分组必须',
                 'name.require' => '配置名称必须',
                 'title.require' => '配置标题必须',
-                'config_type.require' => '配置类型必须'
+                'configType.require' => '配置类型必须'
             ]);
             $data = input('post.');
             if (!$validate->check($data)) {
@@ -190,7 +190,7 @@ class Config extends Admin
             if (count($data_db) <= 0 ) {
                 return $this->return(['code' => 0, 'msg' => '无数据提交', 'data' => []]);
             }
-            $data_db['is_system'] = 0;
+            $data_db['isSystem'] = 0;
             $data_db['status']   = 1;
 
             // 存储数据
@@ -213,21 +213,21 @@ class Config extends Admin
             }
 
             // 获取分组信息
-            $config_cate = $this->core_config
-                ->where('name', 'config_cate')
+            $configCate = $this->core_config
+                ->where('name', 'configCate')
                 ->find();
 
             // 构造动态页面数据
             $ibuilder_form = new \app\core\util\ibuilder\IbuilderForm();
-            $form_data = $ibuilder_form->init()
+            $formData = $ibuilder_form->init()
                 ->setFormMethod('post')
                 ->addFormItem('module', '模块', 'select', '', [
                     'placeholder' => '请选择模块',
                     'tip' => '模块是一个可分享使用的最小功能包',
                     'options' => $module_list_select
                 ])
-                ->addFormItem('config_cate', '配置分组', 'radio', '', [
-                    'options' => parse_attr($config_cate['value'])
+                ->addFormItem('configCate', '配置分组', 'radio', '', [
+                    'options' => parse_attr($configCate['value'])
                 ])
                 ->addFormItem('name', '配置名称', 'text', '', [
                     'placeholder' => '请输入英文',
@@ -237,7 +237,7 @@ class Config extends Admin
                     'placeholder' => '请输入配置标题',
                     'tip' => '配置标题'
                 ])
-                ->addFormItem('config_type', '配置类型', 'select', '', [
+                ->addFormItem('configType', '配置类型', 'select', '', [
                     'placeholder' => '请选择表单类型',
                     'tip' => '表单类型',
                     'options' => $ibuilder_form->form_type
@@ -258,12 +258,12 @@ class Config extends Admin
                     'placeholder' => '请输入配置额外项目',
                     'tip' => '请输入配置额外项目'
                 ])
-                // ->addFormItem('is_system', '是否系统', 'radio', 1, [
+                // ->addFormItem('isSystem', '是否系统', 'radio', 1, [
                 //     'placeholder' => '请选择是否系统配置',
                 //     'tip' => '系统配置一般不允许删除等风险操作',
                 //     'options' => ['1' => '是', '0' => '否']
                 // ])
-                ->addFormItem('is_dev', '是否开发者', 'radio', 1, [
+                ->addFormItem('isDev', '是否开发者', 'radio', 1, [
                     'placeholder' => '请选择是否开发者配置',
                     'tip' => '开发者意味着主要是给开发者编辑的配置',
                     'options' => ['1' => '是', '0' => '否']
@@ -272,7 +272,7 @@ class Config extends Admin
                     'placeholder' => '请输入排序',
                     'tip' => '请输入排序'
                 ])
-                ->addFormRule('config_cate', [
+                ->addFormRule('configCate', [
                     ['required' => true, 'type' => 'string', 'message' => '请选择分组', 'trigger' => 'change'],
                 ])
                 ->addFormRule('name', [
@@ -281,7 +281,7 @@ class Config extends Admin
                 ->addFormRule('title', [
                     ['required' => true, 'message' => '请填写配置标题', 'trigger' => 'change'],
                 ])
-                ->addFormRule('config_type', [
+                ->addFormRule('configType', [
                     ['required' => true, 'type' => 'string', 'message' => '请选择配置类型', 'trigger' => 'change'],
                 ])
                 ->setFormValues()
@@ -292,7 +292,7 @@ class Config extends Admin
                 'code' => 200,
                 'msg' => '成功',
                 'data' => [
-                    'form_data' => $form_data
+                    'formData' => $formData
                 ]
             ]);
         }
@@ -308,16 +308,16 @@ class Config extends Admin
     {
         if (request()->isPut()) {
             $validate = Validate::make([
-                'config_cate'  => 'require',
+                'configCate'  => 'require',
                 'name' => 'require',
                 'title' => 'require',
-                'config_type' => 'require'
+                'configType' => 'require'
             ],
             [
-                'config_cate.require' => '配置分组必须',
+                'configCate.require' => '配置分组必须',
                 'name.require' => '配置名称必须',
                 'title.require' => '配置标题必须',
-                'config_type.require' => '配置类型必须'
+                'configType.require' => '配置类型必须'
             ]);
             $data = input('post.');
             if (!$validate->check($data)) {
@@ -355,21 +355,21 @@ class Config extends Admin
             }
 
             // 获取分组信息
-            $config_cate = $this->core_config
-                ->where('name', 'config_cate')
+            $configCate = $this->core_config
+                ->where('name', 'configCate')
                 ->find();
 
             // 构造动态页面数据
             $ibuilder_form = new \app\core\util\ibuilder\IbuilderForm();
-            $form_data = $ibuilder_form->init()
+            $formData = $ibuilder_form->init()
                 ->setFormMethod('put')
                 ->addFormItem('module', '模块', 'select', '', [
                     'placeholder' => '请选择模块',
                     'tip' => '模块是一个可分享使用的最小功能包',
                     'options' => $module_list_select
                 ])
-                ->addFormItem('config_cate', '配置分组', 'radio', '', [
-                    'options' => parse_attr($config_cate['value'])
+                ->addFormItem('configCate', '配置分组', 'radio', '', [
+                    'options' => parse_attr($configCate['value'])
                 ])
                 ->addFormItem('name', '配置名称', 'text', '', [
                     'placeholder' => '请输入英文',
@@ -379,7 +379,7 @@ class Config extends Admin
                     'placeholder' => '请输入配置标题',
                     'tip' => '配置标题'
                 ])
-                ->addFormItem('config_type', '配置类型', 'select', '', [
+                ->addFormItem('configType', '配置类型', 'select', '', [
                     'placeholder' => '请选择表单类型',
                     'tip' => '表单类型',
                     'options' => $ibuilder_form->form_type
@@ -400,12 +400,12 @@ class Config extends Admin
                     'placeholder' => '请输入配置额外项目',
                     'tip' => '请输入配置额外项目'
                 ])
-                // ->addFormItem('is_system', '是否系统', 'radio', 1, [
+                // ->addFormItem('isSystem', '是否系统', 'radio', 1, [
                 //     'placeholder' => '请选择是否系统配置',
                 //     'tip' => '系统配置一般不允许删除等风险操作',
                 //     'options' => ['1' => '是', '0' => '否']
                 // ])
-                ->addFormItem('is_dev', '是否开发者', 'radio', 1, [
+                ->addFormItem('isDev', '是否开发者', 'radio', 1, [
                     'placeholder' => '请选择是否开发者配置',
                     'tip' => '开发者意味着主要是给开发者编辑的配置',
                     'options' => ['1' => '是', '0' => '否']
@@ -414,7 +414,7 @@ class Config extends Admin
                     'placeholder' => '请输入排序',
                     'tip' => '请输入排序'
                 ])
-                ->addFormRule('config_cate', [
+                ->addFormRule('configCate', [
                     ['required' => true, 'type' => 'string', 'message' => '请选择分组', 'trigger' => 'change'],
                 ])
                 ->addFormRule('name', [
@@ -423,7 +423,7 @@ class Config extends Admin
                 ->addFormRule('title', [
                     ['required' => true, 'message' => '请填写配置标题', 'trigger' => 'change'],
                 ])
-                ->addFormRule('config_type', [
+                ->addFormRule('configType', [
                     ['required' => true, 'type' => 'string', 'message' => '请选择配置类型', 'trigger' => 'change'],
                 ])
                 ->setFormValues($info)
@@ -434,7 +434,7 @@ class Config extends Admin
                 'code' => 200,
                 'msg' => '成功',
                 'data' => [
-                    'form_data' => $form_data
+                    'formData' => $formData
                 ]
             ]);
         }
@@ -451,7 +451,7 @@ class Config extends Admin
         $info = $this->core_config
             ->where(['id' => $id])
             ->find();
-        if ($info['is_system']) {
+        if ($info['isSystem']) {
             return $this->return(['code' => 0, 'msg' => '系统级别不允许删除', 'data' => []]);
         }
 

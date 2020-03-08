@@ -28,6 +28,6 @@ class Post extends Common
 
     // 软删除
     use SoftDelete;
-    protected $deleteTime = 'delete_time';
+    protected $deleteTime = 'deleteTime';
     protected $defaultSoftDelete = 0;
 }

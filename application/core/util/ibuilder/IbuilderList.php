@@ -29,28 +29,28 @@ class IbuilderList {
      */
     public function init() {
         $this->data = [
-            'alert_list' => [
+            'alertList' => [
                 'top' => [],
                 'bottom' => []
             ],
-            'data_list' => [],
-            'data_list_params' => [
-                'expand_key' => 'title',
-                'is_fold' => true,
-                'table_name' => ''
+            'dataList' => [],
+            'dataListParams' => [
+                'expandKey' => 'title',
+                'isFold' => true,
+                'tableName' => ''
             ],
-            'top_button_list' => [],
-            'right_button_list' => [],
-            'right_button_list_modal' => [],
+            'topButtonList' => [],
+            'rightButtonList' => [],
+            'rightButtonListModal' => [],
             'columns' => [],
-            'data_page' => [
-                'total_count' => 0,
+            'dataPage' => [
+                'totalCount' => 0,
                 'limit' => 0,
                 'page' => 0
             ],
-            'filter_items' => [],
-            'filter_values' => [],
-            'right_button_length' => 0
+            'filterItems' => [],
+            'filterValues' => [],
+            'rightButtonLength' => 0
         ];
         return $this;
     }
@@ -59,31 +59,31 @@ class IbuilderList {
      * 添加顶部按钮
      * @author jry <ijry@qq.com>
      */
-    public function addTopButton($name, $title, $page_data = [], $style = []) {
+    public function addTopButton($name, $title, $pageData = [], $style = []) {
         $btn['title'] = $title;
-        $btn['page_data'] = [
-            'page_type' => isset($page_data['page_type']) ? $page_data['page_type'] : 'modal',
-            'modal_type' => isset($page_data['modal_type']) ? $page_data['modal_type'] : 'form',
-            'form_method' => isset($page_data['form_method']) ? $page_data['form_method'] : 'delete',
+        $btn['pageData'] = [
+            'pageType' => isset($pageData['pageType']) ? $pageData['pageType'] : 'modal',
+            'modalType' => isset($pageData['modalType']) ? $pageData['modalType'] : 'form',
+            'formMethod' => isset($pageData['formMethod']) ? $pageData['formMethod'] : 'delete',
             'show' => false,
-            'path' => isset($page_data['path']) ? $page_data['path'] : '',
-            'api' => $page_data['api'],
-            'api_blank' => '',
-            'api_suffix' => isset($page_data['api_suffix']) ? $page_data['api_suffix'] : [],
-            'api_params' => isset($page_data['api_params']) ? $page_data['api_params'] : '',
-            'query_suffix' => isset($page_data['query_suffix']) ? $page_data['query_suffix'] : [],  // 参数变量
-            'query_params' => isset($page_data['query_params']) ? $page_data['query_params'] : [],  // 参数实际值
-            'title' => isset($page_data['title']) ? $page_data['title'] : $title,
-            'content' => isset($page_data['content']) ? $page_data['content'] : '',
-            'okText' => isset($page_data['okText']) ? $page_data['okText'] : '',
-            'cancelText' => isset($page_data['cancelText']) ? $page_data['cancelText'] : '',
-            'width' => isset($page_data['width']) ? $page_data['width'] : '800',
+            'path' => isset($pageData['path']) ? $pageData['path'] : '',
+            'api' => $pageData['api'],
+            'apiBlank' => '',
+            'apiSuffix' => isset($pageData['apiSuffix']) ? $pageData['apiSuffix'] : [],
+            'apiParams' => isset($pageData['apiParams']) ? $pageData['apiParams'] : '',
+            'querySuffix' => isset($pageData['querySuffix']) ? $pageData['querySuffix'] : [],  // 参数变量
+            'queryParams' => isset($pageData['queryParams']) ? $pageData['queryParams'] : [],  // 参数实际值
+            'title' => isset($pageData['title']) ? $pageData['title'] : $title,
+            'content' => isset($pageData['content']) ? $pageData['content'] : '',
+            'okText' => isset($pageData['okText']) ? $pageData['okText'] : '',
+            'cancelText' => isset($pageData['cancelText']) ? $pageData['cancelText'] : '',
+            'width' => isset($pageData['width']) ? $pageData['width'] : '800',
             'loading' => false,
             'draggable' => false,
             'scrollable' => true,
         ];
-        if ($btn['page_data']['path'] == '') {
-            $btn['page_data']['path'] = ltrim($btn['page_data']['api'], '/v1/admin');
+        if ($btn['pageData']['path'] == '') {
+            $btn['pageData']['path'] = ltrim($btn['pageData']['api'], '/v1/admin');
         }
         $btn['style'] = [
             'type' => isset($style['type']) ? $style['type'] : 'default',
@@ -91,7 +91,7 @@ class IbuilderList {
             'shape' => isset($style['shape']) ? $style['shape'] : 'square',
             'icon' => isset($style['icon']) ? $style['icon'] : '',
         ];
-        $this->data['top_button_list'][$name] = $btn;
+        $this->data['topButtonList'][$name] = $btn;
         return $this;
     }
 
@@ -99,10 +99,10 @@ class IbuilderList {
      * 添加右侧按钮
      * @author jry <ijry@qq.com>
      */
-    public function addRightButton($name, $title, $page_data = [], $style = []) {
-        $btn = $this->getRightButton($name, $title, $page_data, $style);
-        $this->data['right_button_length'] += 18 * mb_strwidth($btn['title']);
-        $this->data['right_button_list'][$name] = $btn;
+    public function addRightButton($name, $title, $pageData = [], $style = []) {
+        $btn = $this->getRightButton($name, $title, $pageData, $style);
+        $this->data['rightButtonLength'] += 18 * mb_strwidth($btn['title']);
+        $this->data['rightButtonList'][$name] = $btn;
         return $this;
     }
 
@@ -110,34 +110,34 @@ class IbuilderList {
      * 构造右侧按钮
      * @author jry <ijry@qq.com>
      */
-    public function getRightButton($name, $title, $page_data = [], $style = []) {
+    public function getRightButton($name, $title, $pageData = [], $style = []) {
         $btn = [];
         $btn['title'] = $title;
-        $btn['page_data'] = [
-            'page_type' => isset($page_data['page_type']) ? $page_data['page_type'] : 'modal',
-            'modal_type' => isset($page_data['modal_type']) ? $page_data['modal_type'] : 'form',
-            'form_method' => isset($page_data['form_method']) ? $page_data['form_method'] : 'delete',
+        $btn['pageData'] = [
+            'pageType' => isset($pageData['pageType']) ? $pageData['pageType'] : 'modal',
+            'modalType' => isset($pageData['modalType']) ? $pageData['modalType'] : 'form',
+            'formMethod' => isset($pageData['formMethod']) ? $pageData['formMethod'] : 'delete',
             'show' => false,
-            'path' => isset($page_data['path']) ? $page_data['path'] : '',
-            'api' => $page_data['api'],
-            'api_blank' => '',
-            'api_suffix' => isset($page_data['api_suffix']) ? $page_data['api_suffix'] : ['id'],  // 参数变量
-            'api_params' => isset($page_data['api_params']) ? $page_data['api_params'] : '',  // 参数实际值
-            'query_suffix' => isset($page_data['query_suffix']) ? $page_data['query_suffix'] : [],  // 参数变量
-            'query_params' => isset($page_data['query_params']) ? $page_data['query_params'] : [],  // 参数实际值
-            'title' => isset($page_data['title']) ? $page_data['title'] : $title,
-            'height' => isset($page_data['height']) ? $page_data['height'] : 'auto',
-            'content' => isset($page_data['content']) ? $page_data['content'] : '',
-            'okText' => isset($page_data['okText']) ? $page_data['okText'] : '',
-            'cancelText' => isset($page_data['cancelText']) ? $page_data['cancelText'] : '',
-            'width' => isset($page_data['width']) ? $page_data['width'] : '1000',
-            'no_refresh' => isset($page_data['no_refresh']) ? $page_data['no_refresh'] : false,
+            'path' => isset($pageData['path']) ? $pageData['path'] : '',
+            'api' => $pageData['api'],
+            'apiBlank' => '',
+            'apiSuffix' => isset($pageData['apiSuffix']) ? $pageData['apiSuffix'] : ['id'],  // 参数变量
+            'apiParams' => isset($pageData['apiParams']) ? $pageData['apiParams'] : '',  // 参数实际值
+            'querySuffix' => isset($pageData['querySuffix']) ? $pageData['querySuffix'] : [],  // 参数变量
+            'queryParams' => isset($pageData['queryParams']) ? $pageData['queryParams'] : [],  // 参数实际值
+            'title' => isset($pageData['title']) ? $pageData['title'] : $title,
+            'height' => isset($pageData['height']) ? $pageData['height'] : 'auto',
+            'content' => isset($pageData['content']) ? $pageData['content'] : '',
+            'okText' => isset($pageData['okText']) ? $pageData['okText'] : '',
+            'cancelText' => isset($pageData['cancelText']) ? $pageData['cancelText'] : '',
+            'width' => isset($pageData['width']) ? $pageData['width'] : '1000',
+            'noRefresh' => isset($pageData['noRefresh']) ? $pageData['noRefresh'] : false,
             'loading' => false,
             'draggable' => false,
             'scrollable' => true,
         ];
-        if ($btn['page_data']['path'] == '') {
-            $btn['page_data']['path'] = ltrim($btn['page_data']['api'], '/v1');
+        if ($btn['pageData']['path'] == '') {
+            $btn['pageData']['path'] = ltrim($btn['pageData']['api'], '/v1');
         }
         $btn['style'] = [
             'type' => isset($style['type']) ? $style['type'] : 'default',
@@ -170,10 +170,10 @@ class IbuilderList {
         }
         if (isset($data['template'])) {
             $column['template'] = $column['slot'] = $data['template'];
-            if ($data['template'] == 'right_button_list') {
+            if ($data['template'] == 'rightButtonList') {
                 $column['width'] = '';
                 if ($column['minWidth']) {
-                    $column['width'] = (rtrim($column['minWidth'], 'px') + $this->data['right_button_length']) . 'px';
+                    $column['width'] = (rtrim($column['minWidth'], 'px') + $this->data['rightButtonLength']) . 'px';
                 }
             }
         }
@@ -200,8 +200,8 @@ class IbuilderList {
      * 设置列表数据
      * @author jry <ijry@qq.com>
      */
-    public function setDataList($data_list) {
-        $this->data['data_list'] = $data_list;
+    public function setDataList($dataList) {
+        $this->data['dataList'] = $dataList;
         return $this;
     }
 
@@ -209,9 +209,9 @@ class IbuilderList {
      * 设置分页
      * @author jry <ijry@qq.com>
      */
-    public function setDataPage($total_count, $limit = 10, $page = 1) {
-        $this->data['data_page'] = [
-            'total_count' => $total_count,
+    public function setDataPage($totalCount, $limit = 10, $page = 1) {
+        $this->data['dataPage'] = [
+            'totalCount' => $totalCount,
             'limit' => $limit,
             'page' => $page
         ];
@@ -222,8 +222,8 @@ class IbuilderList {
      * 设置展开字段
      * @author jry <ijry@qq.com>
      */
-    public function setExpandKey($expand_key) {
-        $this->data['data_list_params']['expand_key'] = $expand_key;
+    public function setExpandKey($expandKey) {
+        $this->data['dataListParams']['expandKey'] = $expandKey;
         return $this;
     }
 
@@ -231,8 +231,8 @@ class IbuilderList {
      * 设置默认展开
      * @author jry <ijry@qq.com>
      */
-    public function setIsFold($is_fold) {
-        $this->data['data_list_params']['is_fold'] = $is_fold;
+    public function setIsFold($isFold) {
+        $this->data['dataListParams']['isFold'] = $isFold;
         return $this;
     }
 
@@ -240,8 +240,8 @@ class IbuilderList {
      * 设置数据表名
      * @author jry <ijry@qq.com>
      */
-    public function setTableName($table_name) {
-        $this->data['data_list_params']['table_name'] = $table_name;
+    public function setTableName($tableName) {
+        $this->data['dataListParams']['tableName'] = $tableName;
         return $this;
     }
 
@@ -279,7 +279,7 @@ class IbuilderList {
             }
         }
         $item['extra'] = $extra;
-        $this->data['filter_items'][] = $item;
+        $this->data['filterItems'][] = $item;
         return $this;
     }
 
@@ -288,28 +288,28 @@ class IbuilderList {
      * @author jry <ijry@qq.com>
      */
     public function getData() {
-        foreach ($this->data['filter_items'] as $key => &$val) {
-            $this->data['filter_values'][$val['name']] = $val['value'];
+        foreach ($this->data['filterItems'] as $key => &$val) {
+            $this->data['filterValues'][$val['name']] = $val['value'];
             if (is_numeric($val['value']) && in_array($val['type'], ['radio', 'switch'])) {
-                $this->data['filter_values'][$val['name']] = $val['value'] = (int)$this->data['filter_values'][$val['name']];
+                $this->data['filterValues'][$val['name']] = $val['value'] = (int)$this->data['filterValues'][$val['name']];
             }
-            if ($this->data['filter_values'][$val['name']] == '' && in_array($val['type'], ['checkbox', 'tags', 'images', 'files'])) {
-                $this->data['filter_values'][$val['name']] = $val['value'] = [];
+            if ($this->data['filterValues'][$val['name']] == '' && in_array($val['type'], ['checkbox', 'tags', 'images', 'files'])) {
+                $this->data['filterValues'][$val['name']] = $val['value'] = [];
             }
         }
 
         // 处理每一行不同的右侧按钮
-        foreach ($this->data['data_list'] as $key => &$value) {
-            if (isset($value['right_button_list'])) {
+        foreach ($this->data['dataList'] as $key => &$value) {
+            if (isset($value['rightButtonList'])) {
                 $btns = [];
-                foreach ($value['right_button_list'] as $key1 => $value1) {
-                    $btn = $this->getRightButton($value1['name'], $value1['title'], $value1['page_data'], $value1['style']);
+                foreach ($value['rightButtonList'] as $key1 => $value1) {
+                    $btn = $this->getRightButton($value1['name'], $value1['title'], $value1['pageData'], $value1['style']);
                     $btns[$value1['name']] = $btn;
-                    if (!isset($this->data['right_button_list_modal'][$value1['name']])) {
-                        $this->data['right_button_list_modal'][$value1['name']] = $btn;
+                    if (!isset($this->data['rightButtonListModal'][$value1['name']])) {
+                        $this->data['rightButtonListModal'][$value1['name']] = $btn;
                     }
                 }
-                $value['right_button_list'] = $btns;
+                $value['rightButtonList'] = $btns;
                 unset($btns);
             }
         }

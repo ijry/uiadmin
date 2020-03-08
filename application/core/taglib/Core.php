@@ -34,9 +34,9 @@ class Core extends TagLib {
         $id = $tag['id'];
         $parse = '<?php ';
         $parse .= '$core_menu = new \app\core\model\Menu();';
-        $parse .= '$_data_list = $core_menu->where(\'menu_layer\', \'=\', "admin")->order(\'sortnum asc\')->select()->toArray();';
+        $parse .= '$_dataList = $core_menu->where(\'menuLayer\', \'=\', "admin")->order(\'sortnum asc\')->select()->toArray();';
         $parse .= '$tree      = new \app\core\util\Tree();';
-        $parse .= '$__LIST__ = $tree->list2tree($_data_list, \'path\', \'pmenu\', \'children\', 0, false);';
+        $parse .= '$__LIST__ = $tree->list2tree($_dataList, \'path\', \'pmenu\', \'children\', 0, false);';
         $parse .= ' ?>';
         $parse .= '{volist name="__LIST__" id="' . $id . '"}';
         $parse .= $content;

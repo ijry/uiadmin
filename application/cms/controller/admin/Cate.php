@@ -42,18 +42,18 @@ class Cate extends Admin
     public function trees()
     {
         // 列表
-        $data_list = $this->cms_cate->select()->toArray();
+        $dataList = $this->cms_cate->select()->toArray();
         $tree      = new Tree();
-        $data_tree = $tree->list2tree($data_list);
+        $dataTree = $tree->list2tree($dataList);
 
         // 构造动态页面数据
         $ibuilder_list = new \app\core\util\ibuilder\IbuilderList();
-        $list_data = $ibuilder_list->init()
+        $listData = $ibuilder_list->init()
             ->addTopButton('add', '添加', ['api' => '/v1/admin/cms/cate/add'])
             ->addRightButton('member', '文章管理', [
-                'modal_type' => 'list',
+                'modalType' => 'list',
                 'api' => '/v1/admin/cms/post/lists',
-                'api_suffix' => ['id'],
+                'apiSuffix' => ['id'],
                 'width' => '900',
                 'title' => '文章列表'
             ])
@@ -61,7 +61,7 @@ class Cate extends Admin
             ->addRightButton('delete', '删除', [
                 'api' => '/v1/admin/cms/cate/delete',
                 'title' => '确认要删除该分类吗？',
-                'modal_type' => 'confirm',
+                'modalType' => 'confirm',
                 'width' => '600',
                 'okText' => '确认删除',
                 'cancelText' => '取消操作',
@@ -70,19 +70,19 @@ class Cate extends Admin
             ->addColumn('id' , 'ID', ['width' => '50px'])
             ->addColumn('title', '分类名称', ['minWidth' => '100px'])
             ->addColumn('sortnum', '排序', ['width' => '50px'])
-            ->addColumn('right_button_list', '操作', [
+            ->addColumn('rightButtonList', '操作', [
                 'minWidth' => '50px',
                 'type' => 'template',
-                'template' => 'right_button_list'
+                'template' => 'rightButtonList'
             ])
-            ->setDataList($data_tree)
+            ->setDataList($dataTree)
             ->getData();
 
         // 返回数据
         return $this->return(
             [
                 'code' => 200, 'msg' => '成功', 'data' => [
-                    'list_data' => $list_data
+                    'listData' => $listData
                 ]
             ]
         );
@@ -128,11 +128,11 @@ class Cate extends Admin
             }
         } else {
             // 获树状列表
-            $cate_list = $this->cms_cate
+            $cateList = $this->cms_cate
                 ->order('sortnum asc')
                 ->select()->toArray();
             $tree      = new Tree();
-            $cate_tree = $tree->array2tree($cate_list, 'title', 'id', 'pid', 0, false);
+            $cate_tree = $tree->array2tree($cateList, 'title', 'id', 'pid', 0, false);
             $cate_tree_select = [];
             foreach ($cate_tree as $key1 => $val1) {
                 $cate_tree_select[$key1]['title'] = $val1['title_show'];
@@ -141,7 +141,7 @@ class Cate extends Admin
 
             // 构造动态页面数据
             $ibuilder_form = new \app\core\util\ibuilder\IbuilderForm();
-            $form_data = $ibuilder_form->init()
+            $formData = $ibuilder_form->init()
                 ->setFormMethod('post')
                 ->addFormItem('pid', '上级', 'select', 0, [
                     'options' => $cate_tree_select
@@ -162,7 +162,7 @@ class Cate extends Admin
                     'code' => 200,
                     'msg' => '成功',
                     'data' => [
-                        'form_data' => $form_data
+                        'formData' => $formData
                     ]
                 ]
             );
@@ -212,11 +212,11 @@ class Cate extends Admin
                 ->find();
 
             // 获树状列表
-            $cate_list = $this->cms_cate
+            $cateList = $this->cms_cate
                 ->order('sortnum asc')
                 ->select()->toArray();
             $tree      = new Tree();
-            $cate_tree = $tree->array2tree($cate_list, 'title', 'id', 'pid', 0, false);
+            $cate_tree = $tree->array2tree($cateList, 'title', 'id', 'pid', 0, false);
             $cate_tree_select = [];
             foreach ($cate_tree as $key1 => $val1) {
                 $cate_tree_select[$key1]['title'] = $val1['title_show'];
@@ -224,7 +224,7 @@ class Cate extends Admin
 
             //构造动态页面数据
             $ibuilder_form = new \app\core\util\ibuilder\IbuilderForm();
-            $form_data = $ibuilder_form->init()
+            $formData = $ibuilder_form->init()
                 ->setFormMethod('put')
                ->addFormItem('pid', '上级', 'select', 0, [
                     'tip' => '上级分类',
@@ -245,7 +245,7 @@ class Cate extends Admin
                 'code' => 200,
                 'msg' => '成功',
                 'data' => [
-                    'form_data' => $form_data
+                    'formData' => $formData
                 ]
             ]);
         }

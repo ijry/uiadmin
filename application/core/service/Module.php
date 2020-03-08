@@ -35,7 +35,7 @@ class Module extends Model
     public function export($id, $mysql_conn)
     {
         $info = $this->core_module
-            ->field('name,title,description,developer,website,version,build,has_taglib,has_command')
+            ->field('name,title,description,developer,website,version,build,hasTaglib,hasCommand')
             ->where(['id' => $id])
             ->find()->toArray();;
         if (!$info) {
@@ -46,18 +46,18 @@ class Module extends Model
         }
 
         // 导出基本信息
-        $expot_info = [];
-        $expot_info['info'] = $info;
+        $expotInfo = [];
+        $expotInfo['info'] = $info;
 
         // 导出配置
-        $expot_info['config'] = $this->core_config
-            ->field('module,config_cate,name,title,config_type,default,placeholder,tip,options,is_system,is_dev,sortnum,status')
+        $expotInfo['config'] = $this->core_config
+            ->field('module,configCate,name,title,configType,default,placeholder,tip,options,isSystem,isDev,sortnum,status')
             ->where('module', '=', $info['name'])
             ->select()->toArray();
 
         // 导出API
-        $expot_info['api'] = $this->core_menu
-            ->field('module,icon,path,pmenu,title,tip,menu_layer,menu_type,route_type,api_prefix,api_suffix,api_params,api_method,api_ext,doc,is_hide')
+        $expotInfo['api'] = $this->core_menu
+            ->field('module,icon,path,pmenu,title,tip,menuLayer,menuType,routeType,apiPrefix,apiSuffix,apiParams,apiMethod,apiExt,doc,isHide')
             ->where('module', '=', $info['name'])
             ->select()->toArray();
         $database = config('database.database');
@@ -69,7 +69,7 @@ class Module extends Model
         $tables = array();
         while ($row = mysqli_fetch_array($table_result)) {
             if ($row[0] == config('database.prefix') . $info['name'] || \think\helper\Str::startsWith($row[0], config('database.prefix') . $info['name'] . '_')) {
-                $tables[]['table_name'] = $row[0];
+                $tables[]['tableName'] = $row[0];
             }
         }
         // 循环取得所有表的备注及表中列消息
@@ -77,33 +77,33 @@ class Module extends Model
             $install_config = include env('app_path') . $info['name'] . '/install/install.php';
         }
         foreach ($tables as $k => $v) {
-            $sql = 'show create table ' . $v['table_name'];
+            $sql = 'show create table ' . $v['tableName'];
             $table_result = mysqli_query($mysql_conn, $sql);
             while ($t = mysqli_fetch_array($table_result)) {
                 $t[1] = preg_replace('/AUTO\_INCREMENT=\d*\ /i', "", $t[1]);
                 $tmp = explode("\n", $t[1]);
-                $tables[$k]['table_create'] = $tmp;
+                $tables[$k]['tableCreate'] = $tmp;
             }
 
             // 获取表数据
             $limit = 1000;
-            $table_name_array = explode('_', $v['table_name']);
-            unset($table_name_array[0]);
-            $table_name_no_prefix = implode('_', $table_name_array);
-            if (isset($install_config['export']['table']['row_limit'][$table_name_no_prefix])) {
-                $limit = $install_config['export']['table']['row_limit'][$table_name_no_prefix];
+            $tableName_array = explode('_', $v['tableName']);
+            unset($tableName_array[0]);
+            $tableName_no_prefix = implode('_', $tableName_array);
+            if (isset($install_config['export']['table']['rowLimit'][$tableName_no_prefix])) {
+                $limit = $install_config['export']['table']['rowLimit'][$tableName_no_prefix];
             }
             if ($limit > 0) {
-                $tables[$k]['table_rows'] = Db::table($v['table_name'])->limit($limit)->select();
+                $tables[$k]['tableRows'] = Db::table($v['tableName'])->limit($limit)->select();
             } else {
-                $tables[$k]['table_rows'] = [];
+                $tables[$k]['tableRows'] = [];
             }
         }
-        $expot_info['tables'] = $tables;
+        $expotInfo['tables'] = $tables;
 
         // 写入文件
-        // dump($expot_info);
-        file_put_contents(env('app_path') . $info['name'] .'/install/install.json', json_encode($expot_info, JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES|JSON_PRETTY_PRINT));
+        // dump($expotInfo);
+        file_put_contents(env('app_path') . $info['name'] .'/install/install.json', json_encode($expotInfo, JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES|JSON_PRETTY_PRINT));
     }
 
     /**
@@ -130,13 +130,13 @@ class Module extends Model
      */
     public function getChildList($name)
     {
-        $data_list = $this->core_module
+        $dataList = $this->core_module
             ->where('pname', '=', $name)
             ->select()
             ->toArray();
-        foreach ($data_list as $key => &$value) {
+        foreach ($dataList as $key => &$value) {
             $value['value'] = $value['name'];
         }
-        return $data_list;
+        return $dataList;
     }
 }

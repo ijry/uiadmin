@@ -32,11 +32,11 @@ class Index extends Home
      */
     public function api()
     {
-        $api_base = request()->domain() . request()->baseFile() . '/api/';
+        $apiBase = request()->domain() . request()->baseFile() . '/api/';
         $config_service = new \app\core\service\Config();
-        $site_info = $config_service->getValueByModule('core', [['is_dev', '=', 0]]);
-        if (isset($site_info['admin2step'])) {
-            $site_info['admin2step']['login'] = explode('|', $site_info['admin2step']['login']); 
+        $siteInfo = $config_service->getValueByModule('core', [['isDev', '=', 0]]);
+        if (isset($siteInfo['admin2step'])) {
+            $siteInfo['admin2step']['login'] = explode('|', $siteInfo['admin2step']['login']); 
         }
 
         // 返回
@@ -45,15 +45,15 @@ class Index extends Home
             'name'     => 'UniAdmin',
             'version' => '0.1.0',
             'api' => [
-                'api_base' => $api_base,
-                'api_login' => '/v1/admin/core/user/login',
-                'api_admin' => '/v1/admin/core/index/index',
-                'api_menu_trees' => '/v1/admin/core/menu/trees',
-                'api_menu_lists' => '/v1/admin/core/menu/lists',
-                'api_config' => '/v1/core/index/config?module=core',
-                'api_user_info' => '/v1/core/user/info'
+                'apiBase' => $apiBase,
+                'apiLogin' => '/v1/admin/core/user/login',
+                'apiAdmin' => '/v1/admin/core/index/index',
+                'apiMenuTrees' => '/v1/admin/core/menu/trees',
+                'apiMenuLists' => '/v1/admin/core/menu/lists',
+                'apiConfig' => '/v1/core/index/config?module=core',
+                'apiUserInfo' => '/v1/core/user/info'
             ],
-            'site_info' => $site_info
+            'siteInfo' => $siteInfo
         ]]);
     }
 
@@ -66,16 +66,16 @@ class Index extends Home
     public function config($module = 'core')
     {
         // 获取配置列表
-        $data_list = Db::name('core_config')
-            ->field('config_cate,config_type,name,value')
-            ->where('is_dev', '=', 0) // 只允许非开发者配置，因为开发者配置很可能包含appkey等敏感数据
+        $dataList = Db::name('core_config')
+            ->field('configCate,configType,name,value')
+            ->where('isDev', '=', 0) // 只允许非开发者配置，因为开发者配置很可能包含appkey等敏感数据
             ->where('module', '=', $module)
             ->select();
         $return = [];
-        foreach ($data_list as $key => &$value) {
-            if ($value['config_type'] == 'array') {
+        foreach ($dataList as $key => &$value) {
+            if ($value['configType'] == 'array') {
                 $config_list[$value['name']] = parse_attr($value['value']);
-            } else if (in_array($value['config_type'], ['images', 'files'])) {
+            } else if (in_array($value['configType'], ['images', 'files'])) {
                 if ($value['value'] == '') {
                     $value['value'] = [];
                 } else {

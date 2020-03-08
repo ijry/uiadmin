@@ -1,4 +1,4 @@
-{extend name="$ibuilder_base" /}
+{extend name="$ibuilderBase" /}
 
 {block name="style"}
     <style type="text/css" media="screen">
@@ -41,7 +41,7 @@
 {block name="banner"}
     <div class="main-banner">
         <div class="content">
-            <h1 class="title">{$cate_info.title}</h1>
+            <h1 class="title">{$cateInfo.title}</h1>
             <p class="description"></p>
             <p class="info"></p>
         </div>
@@ -52,7 +52,7 @@
     <div class="container flex" style="align-items: flex-start;padding-top: 20px;">
         <el-main style="padding-right: 20px !important;">
             <div class="post-list">
-                {volist name="data_list" id="vo"}
+                {volist name="dataList" id="vo"}
                     <a class="post-item flex" href="{:url('cms/post/info', ['id' => $vo['id']])}">
                         <div class="cover" style="">
                             <img src="{$vo.cover}" alt="{$vo.title}">
@@ -65,8 +65,8 @@
                                 {$vo.description}
                             </div>
                             <div class="info">
-                                <span>{$vo.post_time|time_format}</span>
-                                <span>{$vo.view_count}</span>
+                                <span>{$vo.postTime|time_format}</span>
+                                <span>{$vo.viewCount}</span>
                             </div>
                         </div>
                     </a>

@@ -21,7 +21,7 @@ return [
     // 导出配置
     'export' => [
         'table' => [
-            'row_limit' => [
+            'rowLimit' => [
                 'core_config' => 0,
                 'core_menu' => 0,
                 'core_module' => 1,

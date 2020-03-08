@@ -42,46 +42,46 @@ class Index extends Admin
         $server_software = explode(' ', $_SERVER['SERVER_SOFTWARE']);
         $mysql_info = \think\Db::query('SELECT VERSION() as mysql_version');
         $config_service = new \app\core\service\Config();
-        $config_core = $config_service->getValueByModule('core', [['is_dev', '=', 0]]);
+        $configCore = $config_service->getValueByModule('core', [['isDev', '=', 0]]);
 
         // 统计数据
         $user_model = new \app\core\model\User();
-        $user_total_count = $user_model->where('cloud_alias', 0)->count();
+        $user_totalCount = $user_model->where('cloudAlias', 0)->count();
         $user_today_count = $user_model
-            ->where('cloud_alias', '=', 0)
-            ->whereTime('register_time', 'today')
+            ->where('cloudAlias', '=', 0)
+            ->whereTime('registerTime', 'today')
             ->count();
         $user_week_count = $user_model
-            ->where('cloud_alias', '=', 0)
-            ->whereTime('register_time', 'week')
+            ->where('cloudAlias', '=', 0)
+            ->whereTime('registerTime', 'week')
             ->count();
         $user_month_count = $user_model
-            ->where('cloud_alias', '=', 0)
-            ->whereTime('register_time', 'month')
+            ->where('cloudAlias', '=', 0)
+            ->whereTime('registerTime', 'month')
             ->count();
         $module_service = new \app\core\service\Module();
         if ($module_service->isExist('pay')) {
             $order_model = new \app\pay\model\Order();
-            $pay_total_count = $order_model
-                ->where('cloud_alias', 0)
-                ->where('pay_time', '>', 0)
-                ->sum('total_money');
+            $pay_totalCount = $order_model
+                ->where('cloudAlias', 0)
+                ->where('payTime', '>', 0)
+                ->sum('totalMoney');
             $pay_today_count = $order_model
-                ->where('cloud_alias', '=', 0)
-                ->where('pay_time', '>', 0)
-                ->whereTime('pay_time', 'today')
-                ->sum('total_money');
+                ->where('cloudAlias', '=', 0)
+                ->where('payTime', '>', 0)
+                ->whereTime('payTime', 'today')
+                ->sum('totalMoney');
         }
 
         // 首页自定义
-        $data_list = [
+        $dataList = [
             [
                 'span' => 24,
                 'type' => 'count',
                 'content' => [
                     [
                         'item' => ['icon' => 'ivu-icon ivu-icon-md-contacts', 'bgColor' => '#2db7f5', 'title' => ''],
-                        'current' => ['value' => $user_total_count, 'suffix' => ''],
+                        'current' => ['value' => $user_totalCount, 'suffix' => ''],
                         'content' => ['value' => '注册用户']
                     ],
                     [
@@ -91,8 +91,8 @@ class Index extends Admin
                     ],
                     [
                         'item' => ['icon' => 'ivu-icon ivu-icon-md-clock', 'bgColor' => '#ff9900', 'title' => ''],
-                        'current' => ['value' => isset($pay_total_count) ? $pay_total_count : $user_week_count, 'suffix' => ''],
-                        'content' => ['value' => isset($pay_total_count) ? '总消费' : '本周新增']
+                        'current' => ['value' => isset($pay_totalCount) ? $pay_totalCount : $user_week_count, 'suffix' => ''],
+                        'content' => ['value' => isset($pay_totalCount) ? '总消费' : '本周新增']
                     ],
                     [
                         'item' => ['icon' => 'ivu-icon ivu-icon-ios-paper-plane', 'bgColor' => '#ed4014', 'title' => ''],
@@ -160,22 +160,22 @@ class Index extends Admin
                     [
                         'type'  => 'text',
                         'title' => '项目名称',
-                        'value' => $config_core['title']
+                        'value' => $configCore['title']
                     ],
                     [
                         'type'  => 'text',
                         'title' => '项目口号',
-                        'value' => $config_core['slogan']
+                        'value' => $configCore['slogan']
                     ],
                     [
                         'type'  => 'text',
                         'title' => '项目简介',
-                        'value' => $config_core['description']
+                        'value' => $configCore['description']
                     ],
                     [
                         'type'  => 'text',
                         'title' => 'ICP备案号',
-                        'value' => $config_core['icp']
+                        'value' => $configCore['icp']
                     ]
                 ]
             ]
@@ -183,7 +183,7 @@ class Index extends Admin
 
         // 返回数据
         return $this->return(['code' => 200, 'msg' => '成功', 'data' => [
-            'data_list' => $data_list
+            'dataList' => $dataList
         ]]);
     }
 
@@ -201,9 +201,9 @@ class Index extends Admin
         if (is_array($status)) {
             $status = implode(',', $status);
         }
-        $key_val = input('post.key_val');
+        $keyVal = input('post.keyVal');
         $ret = Db::name($table)
-            ->where('id', '=' ,$key_val)
+            ->where('id', '=' ,$keyVal)
             ->update([$field => $status]);
         if ($ret) {
             return $this->return(['code' => 200, 'msg' => '修改成功', 'data' => []]);

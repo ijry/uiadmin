@@ -148,15 +148,15 @@ class Install extends Home
 
             // 导入数据表
             foreach ($module_insall['tables'] as $key => $value) {
-                if (isset($value['table_create'])) {
-                    $value['table_create'] = implode("", $value['table_create']);
-                    if (false === $db_instance->execute($value['table_create'])) {
-                        throw new \Exception($value['table_name'] . "创建出错", 0);
+                if (isset($value['tableCreate'])) {
+                    $value['tableCreate'] = implode("", $value['tableCreate']);
+                    if (false === $db_instance->execute($value['tableCreate'])) {
+                        throw new \Exception($value['tableName'] . "创建出错", 0);
                     }
                 }
-                if (isset($value['table_rows']) && count($value['table_rows']) > 0) {
-                    if (false === $db_instance->table($value['table_name'])->insertAll($value['table_rows'])) {
-                        throw new \Exception($value['table_name'] . "添加记录出错", 0);
+                if (isset($value['tableRows']) && count($value['tableRows']) > 0) {
+                    if (false === $db_instance->table($value['tableName'])->insertAll($value['tableRows'])) {
+                        throw new \Exception($value['tableName'] . "添加记录出错", 0);
                     }
                 }
             }
@@ -180,7 +180,7 @@ class Install extends Home
                 'avatar' => '',
                 'status' => 1,
                 'roles' => implode(',', ['super_admin']),
-                'register_time' => time()
+                'registerTime' => time()
             ]);
         } catch (\Exception $e) {
             echo($e);

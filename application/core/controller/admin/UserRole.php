@@ -44,47 +44,47 @@ class UserRole extends Admin
     public function lists($name)
     {
         //成员列表
-        $data_list = $this->core_user
+        $dataList = $this->core_user
             ->where('', 'EXP', Db::raw("FIND_IN_SET('$name', roles)"))
             ->select()->toArray();
-        foreach ($data_list as $key => &$val) {
-            $val['role_name'] = $name;
+        foreach ($dataList as $key => &$val) {
+            $val['roleName'] = $name;
         }
 
         //构造动态页面数据
         $ibuilder_list = new \app\core\util\ibuilder\IbuilderList();
-        $list_data = $ibuilder_list->init()
+        $listData = $ibuilder_list->init()
             ->addTopButton('add', '添加成员', ['api' => '/v1/admin/core/user_role/add/' . $name])
             ->addRightButton('delete', '删除', [
                 'api' => '/v1/admin/core/user_role/delete',
-                'api_suffix' => ['id', 'role_name'],
+                'apiSuffix' => ['id', 'roleName'],
                 'title' => '确认要删除该成员吗？',
-                'modal_type' => 'confirm',
+                'modalType' => 'confirm',
                 'width' => '600',
                 'okText' => '确认删除',
                 'cancelText' => '取消操作',
                 'content' => '<p>删除后该用户将无法操作系统后台</p>',
             ])
             ->addColumn('id' , 'ID', ['width' => '50px'])
-            ->addColumn('role_name', '角色', ['width' => '100px'])
+            ->addColumn('roleName', '角色', ['width' => '100px'])
             ->addColumn('nickname', '昵称', ['width' => '120px'])
             ->addColumn('username', '用户名', ['width' => '120px'])
             ->addColumn('mobile', '手机号', ['width' => '120px'])
             ->addColumn('email', '邮箱', ['width' => '120px'])
             ->addColumn('sortnum', '排序', ['width' => '50px'])
-            ->addColumn('right_button_list', '操作', [
+            ->addColumn('rightButtonList', '操作', [
                 'minWidth' => '50px',
                 'type' => 'template',
-                'template' => 'right_button_list'
+                'template' => 'rightButtonList'
             ])
-            ->setDataList($data_list)
+            ->setDataList($dataList)
             ->getData();
 
         //返回数据
         return $this->return(
             [
                 'code' => 200, 'msg' => '成功', 'data' => [
-                    'list_data' => $list_data
+                    'listData' => $listData
                 ]
             ]
         );
@@ -102,11 +102,11 @@ class UserRole extends Admin
             // 数据验证
             $validate = Validate::make([
                 'uid'  => 'number',
-                'role_name' => 'require'
+                'roleName' => 'require'
             ],
             [
                 'uid.number' => 'pid必须数字',
-                'role_name.require' => '角色名称必须',
+                'roleName.require' => '角色名称必须',
             ]);
             $data = input('post.');
             if (!$validate->check($data)) {
@@ -114,17 +114,17 @@ class UserRole extends Admin
             }
 
             // 数据构造
-            $user_info  = $this->core_user->where('id', $data['uid'])->find();
-            if ($user_info['roles']) {
-                $user_info['roles'] = explode(',', $user_info['roles']);
-                $user_info['roles'] = array_unique(array_merge($user_info['roles'], [$data['role_name']]));
+            $userInfo  = $this->core_user->where('id', $data['uid'])->find();
+            if ($userInfo['roles']) {
+                $userInfo['roles'] = explode(',', $userInfo['roles']);
+                $userInfo['roles'] = array_unique(array_merge($userInfo['roles'], [$data['roleName']]));
             } else {
-                $user_info['roles'] = [$data['role_name']];
+                $userInfo['roles'] = [$data['roleName']];
             }
 
             // 存储数据
             $ret = $this->core_user->save(
-                ['roles' => implode(',', $user_info['roles'])],
+                ['roles' => implode(',', $userInfo['roles'])],
                 ['id' => $data['uid']]
             );
             if ($ret) {
@@ -135,9 +135,9 @@ class UserRole extends Admin
         } else {
             //构造动态页面数据
             $ibuilder_form = new \app\core\util\ibuilder\IbuilderForm();
-            $form_data = $ibuilder_form->init()
+            $formData = $ibuilder_form->init()
                 ->setFormMethod('put')
-                ->addFormItem('role_name', '角色名称', 'text', $name, [
+                ->addFormItem('roleName', '角色名称', 'text', $name, [
                     'placeholder' => '请输入角色名称',
                     'tip' => '角色名称',
                     'readonly' => true
@@ -146,7 +146,7 @@ class UserRole extends Admin
                     'placeholder' => '请输入uid',
                     'tip' => 'uid是用户唯一标识可以在用户列表查到'
                 ])
-                ->addFormRule('role_name', [
+                ->addFormRule('roleName', [
                     ['required' => true, 'message' => '请输入角色名称', 'trigger' => 'change'],
                 ])
                 ->addFormRule('uid', [
@@ -161,7 +161,7 @@ class UserRole extends Admin
                     'code' => 200,
                     'msg' => '成功',
                     'data' => [
-                        'form_data' => $form_data
+                        'formData' => $formData
                     ]
                 ]
             );
@@ -179,17 +179,17 @@ class UserRole extends Admin
         if ($uid == 1) {
             return $this->return(['code' => 0,'msg' => '超级管理员不允许删除','data' => []]);
         }
-        $user_info  = $this->core_user->where('id', $uid)->find();
-        if ($user_info['roles']) {
-            $user_info['roles'] = explode(',', $user_info['roles']);
-            foreach ($user_info['roles'] as $key => $val) {
+        $userInfo  = $this->core_user->where('id', $uid)->find();
+        if ($userInfo['roles']) {
+            $userInfo['roles'] = explode(',', $userInfo['roles']);
+            foreach ($userInfo['roles'] as $key => $val) {
                 if ($val == $name) {
-                    unset($user_info['roles'][$key]);
+                    unset($userInfo['roles'][$key]);
                 }
             }
         }
         $ret = $this->core_user->save(
-            ['roles' => implode(',', $user_info['roles'])],
+            ['roles' => implode(',', $userInfo['roles'])],
             ['id' => $uid]
         );
         if ($ret) {

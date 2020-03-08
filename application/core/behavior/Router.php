@@ -97,12 +97,12 @@ class Router
             Route::rule('/admin$', 'core/admin.index/index'); // 后台首页访问路由
 
             // 设置URL模式
-            $url_model = Db::name('core_config')
+            $urlModel = Db::name('core_config')
                 ->removeOption('where')
                 ->where('module', '=' , 'core')
-                ->where('name', '=' , 'url_model')
+                ->where('name', '=' , 'urlModel')
                 ->value('value');
-            switch ($url_model) {
+            switch ($urlModel) {
                 case 'rewrite': //URL重写模式
                     \think\facade\Url::root(request()->rootUrl() . '');
                     break;
@@ -116,6 +116,57 @@ class Router
                     \think\facade\Url::root(request()->rootUrl() . '/index.php');
                     break;
             }
+
+            // 支持PWA
+            Route::get('/admin/manifest', function() {
+                $config_service = new \app\core\service\Config();
+                $config_core = $config_service->getValueByModule('core', [['isDev', '=', 0]]);
+                return json_encode([
+                    'name' => $config_core['title'] . '后台',
+                    'short_name' => $config_core['title'] . '后台',
+                    'theme_color' => '#ffffff',
+                    'background_color' => '#f1f1f1',
+                    'start_url' => '/xyadmin/',
+                    'display' => 'standalone',
+                    'icons' => [
+                        [
+                            'src' => $config_core['logoAdmin'],
+                            'sizes' => "192x192",
+                            "type" => "image/png"
+                        ],
+                        [
+                            'src' => $config_core['logoAdmin'],
+                            'sizes' => "512x512",
+                            "type" => "image/png"
+                        ]
+                    ]
+                ]);
+            })->ext('json');
+            // 支持service-worker
+            Route::get('/admin/service-worker', function(\think\Response $response) {
+                $sw = <<<EOF
+                self.addEventListener('install', (event) => {
+                    console.log('Version installing', event);
+                    event.waitUntil(
+                        caches.open("v1").then(
+                            // cache => cache.add("")
+                        )
+                    );
+                });
+                self.addEventListener('activate', (event) => {
+                    console.log('Version now ready to handle');
+                });
+                self.addEventListener("fetch", event => {
+                    const url = new URL(event.request.url);
+                    console.log('fetch', event.request);
+                });
+EOF;
+                return $response
+                    ->data($sw)
+                    ->code(200)
+                    ->contentType('application/javascript');
+            })->ext('js');
+
 
             // 调用云后台
             Route::get('/xyadmin$', request()->url(true) . '/');
@@ -132,46 +183,46 @@ class Router
             Route::get('/xyadmin/<name>', 'https://admin.jiangruyi.com/' . request()->pathinfo());
 
             // 计算后台API路由
-            $data_list = Db::name('core_menu')
+            $dataList = Db::name('core_menu')
                 ->removeOption('where')
-                ->where('menu_layer', '=' , 'admin')
-                ->where('menu_type', 'in' , '1,2,3')
+                ->where('menuLayer', '=' , 'admin')
+                ->where('menuType', 'in' , '1,2,3')
                 ->select();
-            foreach ($data_list as $key => $val) {
+            foreach ($dataList as $key => $val) {
                 $path = explode('/', $val['path']);
                 // 前后端不分离路由
                 Route::rule(
-                    '/admin' . $val['path'] . $val['api_suffix'],
+                    '/admin' . $val['path'] . $val['apiSuffix'],
                     $path[1] . '/admin.' . $path[2] . '/' . $path[3],
-                    $val['api_method']
+                    $val['apiMethod']
                 );
                 // 前后端分离路由
                 Route::rule(
-                    'api/' . $val['api_prefix'] . '/admin' . $val['path'] . $val['api_suffix'],
+                    'api/' . $val['apiPrefix'] . '/admin' . $val['path'] . $val['apiSuffix'],
                     $path[1] . '/admin.' . $path[2] . '/' . $path[3],
-                    $val['api_method']
+                    $val['apiMethod']
                 );
             }
 
             // 计算前台API路由
-            $data_list = Db::name('core_menu')
+            $dataList = Db::name('core_menu')
                 ->removeOption('where')
-                ->where('menu_layer', '=' , 'home')
-                ->where('menu_type', 'in' , '1,2,3')
+                ->where('menuLayer', '=' , 'home')
+                ->where('menuType', 'in' , '1,2,3')
                 ->select();
-            foreach ($data_list as $key => $val) {
+            foreach ($dataList as $key => $val) {
                 $path = explode('/', $val['path']);
                 // 前后端不分离路由
                 Route::rule(
-                    $val['path'] . $val['api_suffix'],
+                    $val['path'] . $val['apiSuffix'],
                     $path[1] . '/' . $path[2] . '/' . $path[3],
-                    $val['api_method']
+                    $val['apiMethod']
                 )->ext('html');
                 // 前后端分离路由
                 Route::rule(
-                    'api/' . $val['api_prefix'] . $val['path'] . $val['api_suffix'],
+                    'api/' . $val['apiPrefix'] . $val['path'] . $val['apiSuffix'],
                     $path[1] . '/' . $path[2] . '/' . $path[3],
-                    $val['api_method']
+                    $val['apiMethod']
                 );
             }
 

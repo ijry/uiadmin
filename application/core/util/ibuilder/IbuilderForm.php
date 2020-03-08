@@ -59,15 +59,15 @@ class IbuilderForm {
      */
     public function init() {
         $this->data = [
-            'alert_list' => [
+            'alertList' => [
                 'top' => [],
                 'bottom' => []
             ],
-            'form_method' => 'post',
-            'form_items' => [],
-            'form_values' => [],
-            'form_rules' => [],
-            'form_tabs' => [],
+            'formMethod' => 'post',
+            'formItems' => [],
+            'formValues' => [],
+            'formRules' => [],
+            'formTabs' => [],
         ];
         return $this;
     }
@@ -77,7 +77,7 @@ class IbuilderForm {
      * @author jry <ijry@qq.com>
      */
     public function setFormMethod($method = 'post') {
-        $this->data['form_method'] = $method;
+        $this->data['formMethod'] = $method;
         return $this;
     }
 
@@ -97,7 +97,7 @@ class IbuilderForm {
         $item['type'] = $type;
         $item['value'] = $value;
         $item['temp'] = ''; // 临时使用
-        $item['show_modal'] = false; // 显示弹窗
+        $item['showModal'] = false; // 显示弹窗
         $extra['placeholder'] = isset($extra['placeholder']) ? $extra['placeholder'] : '';
         $extra['tip'] = isset($extra['tip']) ? $extra['tip'] : '';
         $extra['position'] = isset($extra['position']) ? $extra['position'] : 'left';
@@ -120,10 +120,10 @@ class IbuilderForm {
                 }
             }
             // 文件大小限制
-            if (isset($extra['max_size'])) {
-                $extra['max_size'] = $extra['max_size'];
+            if (isset($extra['maxSize'])) {
+                $extra['maxSize'] = $extra['maxSize'];
             } else {
-                $extra['max_size'] = 512;
+                $extra['maxSize'] = 512;
             }
             $extra['driver'] = ''; // 默认上传驱动，不填默认本地上传
             $extra['data'] = [];
@@ -144,7 +144,7 @@ class IbuilderForm {
             }
         }
         $item['extra'] = $extra;
-        $this->data['form_items'][] = $item;
+        $this->data['formItems'][] = $item;
         return $this;
     }
 
@@ -153,7 +153,7 @@ class IbuilderForm {
      * @author jry <ijry@qq.com>
      */
     public function addFormRule($name, $rule){
-        $this->data['form_rules'][$name] = $rule;
+        $this->data['formRules'][$name] = $rule;
         return $this;
     }
 
@@ -162,16 +162,16 @@ class IbuilderForm {
      * @author jry <ijry@qq.com>
      */
     public function setFormValues($data = []) {
-        foreach ($this->data['form_items'] as $key => &$val) {
+        foreach ($this->data['formItems'] as $key => &$val) {
             if (isset($data[$val['name']])) {
                 $val['value'] = $data[$val['name']];
             }
             if (in_array($val['type'], ['static'])) {
                 continue;
             }
-            $this->data['form_values'][$val['name']] = '';
+            $this->data['formValues'][$val['name']] = '';
             if (isset($val['value'])) {
-                $this->data['form_values'][$val['name']] = $val['value'];
+                $this->data['formValues'][$val['name']] = $val['value'];
             }
         }
         return $this;

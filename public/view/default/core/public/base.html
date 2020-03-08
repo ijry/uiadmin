@@ -6,7 +6,7 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>{block name="title"}{$site_info.title}{/block}</title>
+    <title>{block name="title"}{$siteInfo.title}{/block}</title>
     <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
     <style type="text/css">
         body {
@@ -128,8 +128,8 @@
                     {block name="banner"}
                         <div class="main-banner">
                             <div class="content">
-                                <h1 class="title">{$site_info.title}</h1>
-                                <p class="description">{$site_info.slogan}</p>
+                                <h1 class="title">{$siteInfo.title}</h1>
+                                <p class="description">{$siteInfo.slogan}</p>
                                 <p class="info"></p>
                             </div>
                         </div>
@@ -145,10 +145,10 @@
                         <div class="container">
                             <div class="flex" style="justify-content: space-between;">
                                 <div>
-                                    {$site_info.copyright}
+                                    {$siteInfo.copyright}
                                 </div>
                                 <div style="text-align: right;">
-                                    <a target="_blank" href="http://www.beian.miit.gov.cn">{$site_info.icp}</a>
+                                    <a target="_blank" href="http://www.beian.miit.gov.cn">{$siteInfo.icp}</a>
                                 </div>
                             </Row>
                         </div>

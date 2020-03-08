@@ -46,22 +46,22 @@ class User extends Model
      * @author jry <598821125@qq.com>
      */
     public function getById($id) {
-        $user_info = $this->core_user
+        $userInfo = $this->core_user
             ->field('id,nickname,username,avatar')
             ->where('id', '=', $id)
             ->find();
-        $user_info['email'] = $this->core_identity
+        $userInfo['email'] = $this->core_identity
             ->field('identifier,verified')
-            ->where('uid', '=', $user_info['id'])
-            ->where('identity_type', '=', 2)
+            ->where('uid', '=', $userInfo['id'])
+            ->where('identityType', '=', 2)
             ->find();
-        $user_info['mobile'] = $this->core_identity
+        $userInfo['mobile'] = $this->core_identity
             ->field('identifier,verified')
-            ->where('uid', '=', $user_info['id'])
-            ->where('identity_type', '=', 1)
+            ->where('uid', '=', $userInfo['id'])
+            ->where('identityType', '=', 1)
             ->find();
-        $user_info['href'] = url("core/user/home", ["uid" => $user_info["id"]]);
-        return $user_info;
+        $userInfo['href'] = url("core/user/home", ["uid" => $userInfo["id"]]);
+        return $userInfo;
     }
 
     /**
@@ -70,36 +70,36 @@ class User extends Model
      *
      * @author jry <598821125@qq.com>
      */
-    public function login($user_info, $client = [])
+    public function login($userInfo, $client = [])
     {
         // 颁发登录凭证token
         $key = \think\helper\Str::random(64); //秘钥
-        $login_time = time();
-        $expire_time = $login_time + 8640000; //100天有效期
+        $loginTime = time();
+        $expireTime = $loginTime + 8640000; //100天有效期
         $token = [
-            'iss' => 'initamin.net',//签发者
-            'aud' => 'initamin.net',//面向的用户
-            'iat' => $login_time,//签发时间
-            'nbf' => $login_time,//在什么时候jwt开始生效
-            'exp' => $expire_time,//token 过期时间
+            'iss' => 'uniadmin',//签发者
+            'aud' => 'uniadmin',//面向的用户
+            'iat' => $loginTime,//签发时间
+            'nbf' => $loginTime,//在什么时候jwt开始生效
+            'exp' => $expireTime,//token 过期时间
             'data'=>[
-                'uid' => $user_info['id']//可以用户ID，可以自定义
+                'uid' => $userInfo['id']//可以用户ID，可以自定义
             ]
         ]; //Payload
         $jwt = JWT::encode($token, $key); //此处行进加密算法生成jwt
 
         // 存进数据库
         $data = [];
-        $data['uid'] = $user_info['id'];
+        $data['uid'] = $userInfo['id'];
         $data['key'] = $key;
         $data['token'] = $jwt;
-        $data['login_time'] = $login_time;
-        $data['expire_time'] = $expire_time;
+        $data['loginTime'] = $loginTime;
+        $data['expireTime'] = $expireTime;
         if ($client == []) {
             $client = ['type' => 0, 'name' => ''];
         }
-        $data['client_type'] = $client['type'];
-        $data['client_name'] = $client['name'];
+        $data['clientType'] = $client['type'];
+        $data['clientName'] = $client['name'];
         if ($this->core_login->insert($data)) {
             session('Authorization', 'Bearer ' . $jwt); // 支持session+jwt登录方式
             return $jwt;
@@ -138,7 +138,7 @@ class User extends Model
             if (!$info) {
                 throw new \Exception('token不存在', 401);
             }
-            if ($info['expire_time'] <= time()) {
+            if ($info['expireTime'] <= time()) {
                 throw new \Exception('登录过期请重新登录', 401);
             }
 

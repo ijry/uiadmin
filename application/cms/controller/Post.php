@@ -43,12 +43,12 @@ class Post extends Home
     public function my()
     {
         $login = $this->isLogin();
-        $data_list = $this->cms_post
+        $dataList = $this->cms_post
             ->where('uid', '=', $login['uid'])
             ->select()
             ->toArray();
         return $this->return(['code' => 200, 'msg' => '成功', 'data' => [
-            'data_list' =>$data_list
+            'dataList' =>$dataList
         ]]);
     }
 
@@ -61,22 +61,22 @@ class Post extends Home
     public function lists($cid)
     {
         // 分类信息
-        $cate_info = $this->cms_cate
+        $cateInfo = $this->cms_cate
             ->where('id', '=', $cid)
             ->where('status', '=', 1)
             ->find()
             ->toArray();
 
         // 文章列表
-        $data_list = $this->cms_post
+        $dataList = $this->cms_post
             ->where('cid', '=', $cid)
             ->where('status', '=', 1)
-            ->where('review_status', '=', 1)
+            ->where('reviewStatus', '=', 1)
             ->select()
             ->toArray();
         return $this->return(['code' => 200, 'msg' => '成功', 'data' => [
-            'cate_info' => $cate_info,
-            'data_list' =>$data_list
+            'cateInfo' => $cateInfo,
+            'dataList' =>$dataList
         ]]);
     }
 
@@ -91,7 +91,7 @@ class Post extends Home
         $info = $this->cms_post
             ->where('id', '=', $id)
             ->where('status', '=', 1)
-            ->where('review_status', '=', 1)
+            ->where('reviewStatus', '=', 1)
             ->find()
             ->toArray();
         return $this->return(['code' => 200, 'msg' => '成功', 'data' => [

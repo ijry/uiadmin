@@ -59,8 +59,8 @@ class User extends Home
         $login = parent::isLogin();
         try {
             $user_service = new \app\core\service\User();
-            $user_info = $user_service->getById($login['uid']);
-            return $this->return(['code' => 200, 'msg' => '用户信息', 'data' => ['user_info' => $user_info]]);
+            $userInfo = $user_service->getById($login['uid']);
+            return $this->return(['code' => 200, 'msg' => '用户信息', 'data' => ['userInfo' => $userInfo]]);
         } catch(\Exception $e) {
             return $this->return(['code' => 0, 'msg' => $e->getMessage()]);
         }
@@ -91,76 +91,76 @@ class User extends Home
             //匹配登录方式
             if (preg_match("/^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/", $account)) {// 邮箱登录
                 $map = [];
-                $map['identity_type'] = 2;
+                $map['identityType'] = 2;
                 $map['identifier'] = $account;
-                $user_identity_info = $this->core_identity
+                $userIdentityInfo = $this->core_identity
                     ->where($map)
                     ->find();
-                if (!$user_identity_info) {
+                if (!$userIdentityInfo) {
                     return $this->return(['code' => 0, 'msg' => '邮箱不存在']);
                 }
-                if ($user_identity_info['verified'] !== 1) {
+                if ($userIdentityInfo['verified'] !== 1) {
                     return $this->return(['code' => 0, 'msg' => '邮箱未通过验证']);
                 }
-                $user_info = $this->core_user
-                    ->where(['id' => $user_identity_info['uid']])
+                $userInfo = $this->core_user
+                    ->where(['id' => $userIdentityInfo['uid']])
                     ->find();
-                if (!$user_info) {
+                if (!$userInfo) {
                     return $this->return(['code' => 0, 'msg' => '用户不存在']);
                 }
-                if ($user_info['status'] !== 1) {
+                if ($userInfo['status'] !== 1) {
                     return $this->return(['code' => 0, 'msg' => '账号状态异常']);
                 }
             } elseif (preg_match("/^1\d{10}$/", $account)) { // 手机号登录
                 $map = [];
-                $map['identity_type'] = 1;
+                $map['identityType'] = 1;
                 $map['identifier'] = $account;
-                $user_identity_info = $this->core_identity
+                $userIdentityInfo = $this->core_identity
                     ->where($map)
                     ->find();
-                if (!$user_identity_info) {
+                if (!$userIdentityInfo) {
                     return $this->return(['code' => 0, 'msg' => '手机号不存在']);
                 }
-                if ($user_identity_info['verified'] !== 1) {
+                if ($userIdentityInfo['verified'] !== 1) {
                     return $this->return(['code' => 0, 'msg' => '手机号未通过验证']);
                 }
-                $user_info = $this->core_user->where(['id' => $user_identity_info['uid']])->find();
-                if (!$user_info) {
+                $userInfo = $this->core_user->where(['id' => $userIdentityInfo['uid']])->find();
+                if (!$userInfo) {
                     return $this->return(['code' => 0, 'msg' => '用户不存在']);
                 }
-                if ($user_info['status'] !== 1) {
+                if ($userInfo['status'] !== 1) {
                     return $this->return(['code' => 0, 'msg' => '账号状态异常']);
                 }
             } else { // 用户名登录
                 $map = [];
                 $map['username'] = $account;
-                $user_info = $this->core_user
+                $userInfo = $this->core_user
                     ->where($map)
                     ->find();
-                if (!$user_info) {
+                if (!$userInfo) {
                     return $this->return(['code' => 0, 'msg' => '用户名不存在']);
                 }
-                if ($user_info['status'] !== 1) {
+                if ($userInfo['status'] !== 1) {
                     return $this->return(['code' => 0, 'msg' => '账号状态异常']);
                 }
             }
-            if ($user_info['password'] !== user_md5($password, $user_info['key'])) {
+            if ($userInfo['password'] !== user_md5($password, $userInfo['key'])) {
                 return $this->return(['code' => 0, 'msg' => '密码错误']);
             }
 
             // 记录登录状态
             try {
                 $user_service = new \app\core\service\User();
-                $jwt = $user_service->login($user_info, input('post.client'));
+                $jwt = $user_service->login($userInfo, input('post.client'));
             } catch(\Exception $e) {
                 return $this->return(['code' => 0, 'msg' => '登录失败:' . $e->getMessage()]);
             }
             if ($jwt) {
-                unset($user_info['key']);
-                unset($user_info['password']);
+                unset($userInfo['key']);
+                unset($userInfo['password']);
                 return $this->return(['code' => 200, 'msg' => '登陆成功', 'data' => [
                     'token' => 'Bearer ' . $jwt,
-                    'user_info' => $user_info
+                    'userInfo' => $userInfo
                 ]]);
             } else {
                 return $this->return(['code' => 0, 'msg' => '添加失败', 'data' => []]);

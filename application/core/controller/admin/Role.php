@@ -47,21 +47,21 @@ class Role extends Admin
     public function trees()
     {
         //角色列表
-        $data_list = $this->core_role->select()->toArray();
+        $dataList = $this->core_role->select()->toArray();
         $tree      = new Tree();
-        $data_tree = $tree->list2tree($data_list);
+        $dataTree = $tree->list2tree($dataList);
 
         //构造动态页面数据
         $ibuilder_list = new \app\core\util\ibuilder\IbuilderList();
-        $list_data = $ibuilder_list->init()
+        $listData = $ibuilder_list->init()
             ->addTopButton('add', '添加角色', [
                 'api' => '/v1/admin/core/role/add',
                 'width' => '1000'
             ])
             ->addRightButton('member', '成员', [
-                'modal_type' => 'list',
+                'modalType' => 'list',
                 'api' => '/v1/admin/core/user_role/lists',
-                'api_suffix' => ['name'],
+                'apiSuffix' => ['name'],
                 'width' => '900',
                 'title' => '角色成员'
             ])
@@ -73,7 +73,7 @@ class Role extends Admin
             ->addRightButton('delete', '删除', [
                 'api' => '/v1/admin/core/role/delete',
                 'title' => '确认要删除该角色吗？',
-                'modal_type' => 'confirm',
+                'modalType' => 'confirm',
                 'width' => '600',
                 'okText' => '确认删除',
                 'cancelText' => '取消操作',
@@ -82,19 +82,19 @@ class Role extends Admin
             ->addColumn('id' , 'ID', ['width' => '50px'])
             ->addColumn('title', '部门', ['width' => '350px'])
             ->addColumn('sortnum', '排序', ['width' => '50px'])
-            ->addColumn('right_button_list', '操作', [
+            ->addColumn('rightButtonList', '操作', [
                 'minWidth' => '50px',
                 'type' => 'template',
-                'template' => 'right_button_list'
+                'template' => 'rightButtonList'
             ])
-            ->setDataList($data_tree)
+            ->setDataList($dataTree)
             ->getData();
 
         //返回数据
         return $this->return(
             [
                 'code' => 200, 'msg' => '成功', 'data' => [
-                    'list_data' => $list_data
+                    'listData' => $listData
                 ]
             ]
         );
@@ -132,8 +132,8 @@ class Role extends Admin
             }
             $data_db['status'] = 1;
             $data_db['sortnum'] = isset($data_db['sortnum']) ? $data_db['sortnum'] : 0;
-            $data_db['admin_auth'] = isset($data_db['admin_auth']) ? implode(',', $data_db['admin_auth']) : ''; //后台权限
-            $data_db['api_auth'] = isset($data_db['api_auth']) ? implode(',', $data_db['api_auth']) : ''; //接口权限
+            $data_db['adminAuth'] = isset($data_db['adminAuth']) ? implode(',', $data_db['adminAuth']) : ''; //后台权限
+            $data_db['apiAuth'] = isset($data_db['apiAuth']) ? implode(',', $data_db['apiAuth']) : ''; //接口权限
 
             // 存储数据
             $ret = $this->core_role->save($data_db);
@@ -144,17 +144,17 @@ class Role extends Admin
             }
         } else {
             //获取后台权限接口
-            $data_list = $this->core_menu
-                ->where('menu_layer', '=', 'admin')
+            $dataList = $this->core_menu
+                ->where('menuLayer', '=', 'admin')
                 ->order('sortnum asc')
                 ->select()->toArray();
-            foreach ($data_list as $key => &$val) {
-                if ($val['menu_type'] > 0) {
-                    $val['admin_auth'] = '/' . $val['api_prefix'] . '/admin' . $val['path'];
+            foreach ($dataList as $key => &$val) {
+                if ($val['menuType'] > 0) {
+                    $val['adminAuth'] = '/' . $val['apiPrefix'] . '/admin' . $val['path'];
                 }
             }
             $tree      = new Tree();
-            $menu_tree = $tree->list2tree($data_list, 'path', 'pmenu', 'children', 0, false);
+            $menu_tree = $tree->list2tree($dataList, 'path', 'pmenu', 'children', 0, false);
 
             //获取角色基于标题的树状列表
             $role_list = $this->core_role
@@ -170,7 +170,7 @@ class Role extends Admin
 
             //构造动态页面数据
             $ibuilder_form = new \app\core\util\ibuilder\IbuilderForm();
-            $form_data = $ibuilder_form->init()
+            $formData = $ibuilder_form->init()
                 ->setFormMethod('post')
                 ->addFormItem('pid', '上级', 'select', 0, [
                     'tip' => '选择上级后会限制权限范围不大于上级',
@@ -187,17 +187,17 @@ class Role extends Admin
                     'tip' => '角色名称也可以理解为部门名称',
                     'position' => 'bottom'
                 ])
-                ->addFormItem('admin_auth', '后台权限', 'checkboxtree', '',
+                ->addFormItem('adminAuth', '后台权限', 'checkboxtree', '',
                      [
                     'tip' => '勾选角色权限',
                     'columns' => [
                         ['title' => '菜单(接口)', 'key' => 'title', 'minWidth' => '150px'],
                         ['title' => '说明', 'key' => 'tip'],
-                        ['title' => '接口', 'key' => 'admin_auth'],
-                        ['title' => '类型', 'key' => 'menu_type', 'width' => '40px']
+                        ['title' => '接口', 'key' => 'adminAuth'],
+                        ['title' => '类型', 'key' => 'menuType', 'width' => '40px']
                     ],
                     'data' => $menu_tree,
-                    'expand_key' => 'title',
+                    'expandKey' => 'title',
                     'position' => 'bottom'
                 ])
                 ->addFormRule('name', [
@@ -215,7 +215,7 @@ class Role extends Admin
                     'code' => 200,
                     'msg' => '成功',
                     'data' => [
-                        'form_data' => $form_data
+                        'formData' => $formData
                     ]
                 ]
             );
@@ -256,11 +256,11 @@ class Role extends Admin
             if (count($data_db) <= 0 ) {
                 return $this->return(['code' => 0, 'msg' => '无数据提交', 'data' => []]);
             }
-            if (isset($data_db['admin_auth']) && is_array($data_db['admin_auth'])) {
-                $data_db['admin_auth'] = implode(',', $data_db['admin_auth']);
+            if (isset($data_db['adminAuth']) && is_array($data_db['adminAuth'])) {
+                $data_db['adminAuth'] = implode(',', $data_db['adminAuth']);
             }
-            if (isset($data_db['api_auth']) && is_array($data_db['api_auth'])) {
-                $data_db['api_auth'] = implode(',', $data_db['api_auth']);
+            if (isset($data_db['apiAuth']) && is_array($data_db['apiAuth'])) {
+                $data_db['apiAuth'] = implode(',', $data_db['apiAuth']);
             }
 
             // 存储数据
@@ -275,24 +275,24 @@ class Role extends Admin
             $info = $this->core_role
                 ->where('id', $id)
                 ->find();
-            $info['admin_auth'] = explode(',', $info['admin_auth']);
+            $info['adminAuth'] = explode(',', $info['adminAuth']);
 
             //获取后台权限接口
-            $data_list = $this->core_menu
-                ->where('menu_layer', '=', 'admin')
+            $dataList = $this->core_menu
+                ->where('menuLayer', '=', 'admin')
                 ->order('sortnum asc')
                 ->select()->toArray();
-            foreach ($data_list as $key => &$val) {
-                if ($val['menu_type'] > 0) {
-                    $val['admin_auth'] = '/' . $val['api_prefix'] . '/admin' . $val['path'];
+            foreach ($dataList as $key => &$val) {
+                if ($val['menuType'] > 0) {
+                    $val['adminAuth'] = '/' . $val['apiPrefix'] . '/admin' . $val['path'];
                     //超级管理员拥有所有权限
-                    if (in_array($val['admin_auth'], $info['admin_auth']) || $id == 1) {
+                    if (in_array($val['adminAuth'], $info['adminAuth']) || $id == 1) {
                         $val['_isChecked'] = true;
                     }
                 }
             }
             $tree      = new Tree();
-            $menu_tree = $tree->list2tree($data_list, 'path', 'pmenu', 'children', 0, false);
+            $menu_tree = $tree->list2tree($dataList, 'path', 'pmenu', 'children', 0, false);
 
             //获取角色基于标题的树状列表
             $role_list = $this->core_role
@@ -308,7 +308,7 @@ class Role extends Admin
 
             //构造动态页面数据
             $ibuilder_form = new \app\core\util\ibuilder\IbuilderForm();
-            $form_data = $ibuilder_form->init()
+            $formData = $ibuilder_form->init()
                 ->setFormMethod('put')
                ->addFormItem('pid', '上级', 'select', 0, [
                     'tip' => '选择上级后会限制权限范围不大于上级',
@@ -325,14 +325,14 @@ class Role extends Admin
                     'tip' => '角色名称也可以理解为部门名称',
                     'position' => 'bottom'
                 ])
-                ->addFormItem('admin_auth', '后台权限', 'checkboxtree', '',
+                ->addFormItem('adminAuth', '后台权限', 'checkboxtree', '',
                      [
                     'tip' => '勾选角色权限',
                     'columns' => [
                         ['title' => '菜单(接口)', 'key' => 'title', 'minWidth' => '150px'],
                         ['title' => '说明', 'key' => 'tip'],
-                        ['title' => '接口', 'key' => 'admin_auth'],
-                        ['title' => '类型', 'key' => 'menu_type', 'width' => '40px']
+                        ['title' => '接口', 'key' => 'adminAuth'],
+                        ['title' => '类型', 'key' => 'menuType', 'width' => '40px']
                     ],
                     'data' => $menu_tree,
                     'expand-key' => 'title',
@@ -353,7 +353,7 @@ class Role extends Admin
                 'code' => 200,
                 'msg' => '成功',
                 'data' => [
-                    'form_data' => $form_data
+                    'formData' => $formData
                 ]
             ]);
         }

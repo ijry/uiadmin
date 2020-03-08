@@ -71,15 +71,15 @@ class Common extends Controller
                     }
                 }
                 if (is_file(env('root_path') . '.env')) {
-                    $data_list = Db::name('core_config')
-                        ->field('config_cate,config_type,name,value')
+                    $dataList = Db::name('core_config')
+                        ->field('configCate,configType,name,value')
                         ->where('module', 'core')
                         ->select();
                     $return = [];
-                    foreach ($data_list as $key => &$value) {
-                        if ($value['config_type'] == 'array') {
+                    foreach ($dataList as $key => &$value) {
+                        if ($value['configType'] == 'array') {
                             $return[$value['name']] = parse_attr($value['value']);
-                        } else if (in_array($value['config_type'], ['images', 'files'])) {
+                        } else if (in_array($value['configType'], ['images', 'files'])) {
                             if ($value['value'] == '') {
                                 $value['value'] = [];
                             } else {
@@ -92,10 +92,10 @@ class Common extends Controller
                     }
                     // 首页地址
                     $return['homepage'] = request()->rootUrl();
-                    $data['data']['config_core'] = $data['data']['site_info'] = $return;
+                    $data['data']['configCore'] = $data['data']['siteInfo'] = $return;
                 }
-                if (!isset($data['data']['ibuilder_base'])) {
-                    $data['data']['ibuilder_base'] = 'core@public/base';
+                if (!isset($data['data']['ibuilderBase'])) {
+                    $data['data']['ibuilderBase'] = 'core@public/base';
                 }
                 $template = '';
                 if (isset($data['data']['template'])) {
@@ -103,31 +103,31 @@ class Common extends Controller
                 }
                 $data = key2camel($data);
                 $this->assign($data['data']);
-                if (isset($data['data']['list_data'])) {
+                if (isset($data['data']['listData'])) {
                     return $this->fetch('core@admin/ibuilder/list');
-                } else if(isset($data['data']['form_data'])) {
+                } else if(isset($data['data']['formData'])) {
                     return $this->fetch('core@admin/ibuilder/form');
                 } else {
                     if (is_file(env('root_path') . '.env')
                         && !\think\helper\Str::startsWith(request()->path(), 'admin/')
                         && request()->path() != 'core/install/step5') {
                         // 模板全局根目录
-                        $view_base = env('root_path') . 'public/view/' . $data['data']['config_core']['theme'] . '/';
+                        $view_base = env('root_path') . 'public/view/' . $data['data']['configCore']['theme'] . '/';
                         $this->view->config('view_base', $view_base);
 
                         // 设置模板字符替换变量
                         $tpl_replace_string = config('template.tpl_replace_string');
                         $tpl_replace_string_add = [];
                         $tpl_replace_string_add['__CSS__'] = request()->rootUrl() . '/view/'
-                            . $data['data']['config_core']['theme'] . '/core/public/css';
+                            . $data['data']['configCore']['theme'] . '/core/public/css';
                         $tpl_replace_string_add['__JS__'] = request()->rootUrl() . '/view/'
-                            . $data['data']['config_core']['theme'] . '/core/public/js';
+                            . $data['data']['configCore']['theme'] . '/core/public/js';
                         $tpl_replace_string_add['__IMG__'] = request()->rootUrl() . '/view/'
-                            . $data['data']['config_core']['theme'] . '/core/public/img';
+                            . $data['data']['configCore']['theme'] . '/core/public/img';
                         $tpl_replace_string_add['__LIBS__'] = request()->rootUrl() . '/view/'
-                            . $data['data']['config_core']['theme'] . '/core/public/libs';
+                            . $data['data']['configCore']['theme'] . '/core/public/libs';
                         $tpl_replace_string_add['__FONTS__'] = request()->rootUrl() . '/view/'
-                            . $data['data']['config_core']['theme'] . '/core/public/fonts';
+                            . $data['data']['configCore']['theme'] . '/core/public/fonts';
                         $tpl_replace_string = array_merge($tpl_replace_string, $tpl_replace_string_add);
                         $this->view->config('tpl_replace_string', $tpl_replace_string);
                     }
