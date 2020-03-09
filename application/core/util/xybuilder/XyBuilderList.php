@@ -14,11 +14,11 @@
 namespace app\core\util\ibuilder;
 
 /**
- * IbuilderList动态列表
+ * XyBuilderList动态列表
  *
  * @author jry <ijry@qq.com>
  */
-class IbuilderList {
+class XyBuilderList {
 
     // 数据
     private $data;

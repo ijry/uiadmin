@@ -155,8 +155,8 @@ class User extends Admin
         $dataList = $tree->list2tree($dataList);
 
         //构造动态页面数据
-        $ibuilder_list = new \app\core\util\ibuilder\IbuilderList();
-        $listData = $ibuilder_list->init()
+        $xyBuilderList = new \app\core\util\xybuilder\XyBuilderList();
+        $listData = $xyBuilderList->init()
             ->addTopButton('add', '添加用户', ['api' => '/v1/admin/core/user/add'])
             ->addRightButton('edit', '修改', ['api' => '/v1/admin/core/user/edit', 'title' => '修改用户信息'])
             ->addRightButton('delete', '删除', [
@@ -240,8 +240,8 @@ class User extends Admin
             }
         } else {
             //构造动态页面数据
-            $ibuilder_form = new \app\core\util\ibuilder\IbuilderForm();
-            $formData = $ibuilder_form->init()
+            $xyBuilderForm = new \app\core\util\xybuilder\XyBuilderForm();
+            $formData = $xyBuilderForm->init()
                 ->setFormMethod('post')
                 ->addFormItem('nickname', '昵称', 'text', '', [
                     'placeholder' => '请输入昵称',
@@ -327,8 +327,8 @@ class User extends Admin
                 ->find();
 
             //构造动态页面数据
-            $ibuilder_form = new \app\core\util\ibuilder\IbuilderForm();
-            $formData = $ibuilder_form->init()
+            $xyBuilderForm = new \app\core\util\xybuilder\XyBuilderForm();
+            $formData = $xyBuilderForm->init()
                 ->setFormMethod('put')
                 ->addFormItem('nickname', '昵称', 'text', $info['nickname'], [
                     'placeholder' => '请输入昵称',

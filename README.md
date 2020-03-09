@@ -21,7 +21,7 @@ UniAdmin后台本着高内聚低耦合的原则， 模块作为UniAdmin的最小
 
 ### iBuilder动态页面构建
 
-UniAdmin首创自主研发了基于前后端分离的 页面自动生成技术，目前支持ibuilder_list和 ibuilder_form，前者自动生成列表后者自动 生成表单，二者结合可以完成90%以上的 后台功能需求。
+UniAdmin首创自主研发了基于前后端分离的 页面自动生成技术，目前支持xyBuilderList和 xyBuilderForm，前者自动生成列表后者自动 生成表单，二者结合可以完成90%以上的 后台功能需求。
 
 ## 多平台支持
 

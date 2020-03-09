@@ -52,8 +52,8 @@ class UserRole extends Admin
         }
 
         //构造动态页面数据
-        $ibuilder_list = new \app\core\util\ibuilder\IbuilderList();
-        $listData = $ibuilder_list->init()
+        $xyBuilderList = new \app\core\util\xybuilder\XyBuilderList();
+        $listData = $xyBuilderList->init()
             ->addTopButton('add', '添加成员', ['api' => '/v1/admin/core/user_role/add/' . $name])
             ->addRightButton('delete', '删除', [
                 'api' => '/v1/admin/core/user_role/delete',
@@ -134,8 +134,8 @@ class UserRole extends Admin
             }
         } else {
             //构造动态页面数据
-            $ibuilder_form = new \app\core\util\ibuilder\IbuilderForm();
-            $formData = $ibuilder_form->init()
+            $xyBuilderForm = new \app\core\util\xybuilder\XyBuilderForm();
+            $formData = $xyBuilderForm->init()
                 ->setFormMethod('put')
                 ->addFormItem('roleName', '角色名称', 'text', $name, [
                     'placeholder' => '请输入角色名称',

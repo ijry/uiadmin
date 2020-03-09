@@ -93,11 +93,11 @@ class Api extends Admin
             }
 
             // 构造动态页面数据
-            $ibuilder_form = new \app\core\util\ibuilder\IbuilderForm();
-            $ibuilder_form->init()
+            $xyBuilderForm = new \app\core\util\xybuilder\XyBuilderForm();
+            $xyBuilderForm->init()
                 ->setFormMethod('put');
             foreach ($doc_info as $key => $value) {
-                $ibuilder_form->addFormItem($key . '_method', '请求地址', 'static', $key . '：/' . $info['apiPrefix'] . $entry .$info['path'] . $info['apiSuffix'])
+                $xyBuilderForm->addFormItem($key . '_method', '请求地址', 'static', $key . '：/' . $info['apiPrefix'] . $entry .$info['path'] . $info['apiSuffix'])
                     ->addFormItem($key . '_description', '接口说明', 'text', $doc_info[$key]['description'])
                     ->addFormItem($key . '_params', '请求参数', 'formlist', $doc_info[$key]['params'], [
                         'options' => [
@@ -110,7 +110,7 @@ class Api extends Admin
                     ])
                     ->addFormItem($key . '_divider', '', 'divider', '');
             }
-            $formData = $ibuilder_form->setFormValues()
+            $formData = $xyBuilderForm->setFormValues()
                 ->getData();
 
             //返回数据
@@ -145,8 +145,8 @@ class Api extends Admin
         $menu_tree = $tree->list2tree($dataList, 'path', 'pmenu', 'children', 0, false);
 
         //构造动态页面数据
-        $ibuilder_list = new \app\core\util\ibuilder\IbuilderList();
-        $listData = $ibuilder_list->init()
+        $xyBuilderList = new \app\core\util\xybuilder\XyBuilderList();
+        $listData = $xyBuilderList->init()
             ->addTopButton('add', '添加', ['api' => '/v1/admin/core/api/add'])
             ->addRightButton('doc', '文档', ['api' => '/v1/admin/core/api/doc', 'width' => '1000', 'title' => 'API文档编辑', 'apiSuffix' =>['id']])
             ->addRightButton('edit', '修改', ['api' => '/v1/admin/core/api/edit', 'title' => '修改API'])
@@ -247,8 +247,8 @@ class Api extends Admin
             }
 
             //构造动态页面数据
-            $ibuilder_form = new \app\core\util\ibuilder\IbuilderForm();
-            $formData = $ibuilder_form->init()
+            $xyBuilderForm = new \app\core\util\xybuilder\XyBuilderForm();
+            $formData = $xyBuilderForm->init()
                 ->setFormMethod('post')
                 ->addFormItem('module', '模块', 'select', '', [
                     'placeholder' => '请选择模块',
@@ -428,8 +428,8 @@ class Api extends Admin
             }
 
             //构造动态页面数据
-            $ibuilder_form = new \app\core\util\ibuilder\IbuilderForm();
-            $formData = $ibuilder_form->init()
+            $xyBuilderForm = new \app\core\util\xybuilder\XyBuilderForm();
+            $formData = $xyBuilderForm->init()
                 ->setFormMethod('put')
                 ->addFormItem('module', '模块', 'select', '', [
                     'placeholder' => '请选择模块',

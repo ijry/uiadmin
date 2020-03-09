@@ -51,8 +51,8 @@ class Post extends Admin
         $dataTree = $tree->list2tree($dataList);
 
         // 构造动态页面数据
-        $ibuilder_list = new \app\core\util\ibuilder\IbuilderList();
-        $listData = $ibuilder_list->init()
+        $xyBuilderList = new \app\core\util\xybuilder\XyBuilderList();
+        $listData = $xyBuilderList->init()
             ->addTopButton('add', '添加', ['api' => '/v1/admin/cms/post/add/' . $cid])
             ->addRightButton('edit', '修改', ['api' => '/v1/admin/cms/post/edit', 'title' => '修改'])
             ->addRightButton('delete', '删除', [
@@ -138,8 +138,8 @@ class Post extends Admin
             }
 
             // 构造动态页面数据
-            $ibuilder_form = new \app\core\util\ibuilder\IbuilderForm();
-            $formData = $ibuilder_form->init()
+            $xyBuilderForm = new \app\core\util\xybuilder\XyBuilderForm();
+            $formData = $xyBuilderForm->init()
                 ->setFormMethod('post')
                 ->addFormItem('cid', '上级', 'select', $cid, [
                     'options' => $cate_tree_select
@@ -224,8 +224,8 @@ class Post extends Admin
             }
 
             //构造动态页面数据
-            $ibuilder_form = new \app\core\util\ibuilder\IbuilderForm();
-            $formData = $ibuilder_form->init()
+            $xyBuilderForm = new \app\core\util\xybuilder\XyBuilderForm();
+            $formData = $xyBuilderForm->init()
                 ->setFormMethod('put')
                ->addFormItem('cid', '分类', 'select', 0, [
                     'tip' => '分类',

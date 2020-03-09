@@ -52,8 +52,8 @@ class Role extends Admin
         $dataTree = $tree->list2tree($dataList);
 
         //构造动态页面数据
-        $ibuilder_list = new \app\core\util\ibuilder\IbuilderList();
-        $listData = $ibuilder_list->init()
+        $xyBuilderList = new \app\core\util\xybuilder\XyBuilderList();
+        $listData = $xyBuilderList->init()
             ->addTopButton('add', '添加角色', [
                 'api' => '/v1/admin/core/role/add',
                 'width' => '1000'
@@ -169,8 +169,8 @@ class Role extends Admin
             }
 
             //构造动态页面数据
-            $ibuilder_form = new \app\core\util\ibuilder\IbuilderForm();
-            $formData = $ibuilder_form->init()
+            $xyBuilderForm = new \app\core\util\xybuilder\XyBuilderForm();
+            $formData = $xyBuilderForm->init()
                 ->setFormMethod('post')
                 ->addFormItem('pid', '上级', 'select', 0, [
                     'tip' => '选择上级后会限制权限范围不大于上级',
@@ -307,8 +307,8 @@ class Role extends Admin
             }
 
             //构造动态页面数据
-            $ibuilder_form = new \app\core\util\ibuilder\IbuilderForm();
-            $formData = $ibuilder_form->init()
+            $xyBuilderForm = new \app\core\util\xybuilder\XyBuilderForm();
+            $formData = $xyBuilderForm->init()
                 ->setFormMethod('put')
                ->addFormItem('pid', '上级', 'select', 0, [
                     'tip' => '选择上级后会限制权限范围不大于上级',

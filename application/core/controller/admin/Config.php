@@ -50,8 +50,8 @@ class Config extends Admin
             ->select()->toArray();
 
         // 构造动态页面数据
-        $ibuilder_list = new \app\core\util\ibuilder\IbuilderList();
-        $listData = $ibuilder_list->init()
+        $xyBuilderList = new \app\core\util\xybuilder\XyBuilderList();
+        $listData = $xyBuilderList->init()
             ->addTopButton('add', '添加', ['api' => '/v1/admin/core/config/add'])
             ->addRightButton('edit', '修改', ['api' => '/v1/admin/core/config/edit', 'title' => '修改配置信息'])
             ->addColumn('id' , 'ID', ['width' => '50px'])
@@ -128,11 +128,11 @@ class Config extends Admin
                 ->select()->toArray();
 
             // 构造动态页面数据
-            $ibuilder_form = new \app\core\util\ibuilder\IbuilderForm();
-            $ibuilder_form->init()
+            $xyBuilderForm = new \app\core\util\xybuilder\XyBuilderForm();
+            $xyBuilderForm->init()
                 ->setFormMethod('put');
                 foreach ($config_list as $key => $val) {
-                    $ibuilder_form->addFormItem(
+                    $xyBuilderForm->addFormItem(
                         $val['name'],
                         $val['title'],
                         $val['configType'],
@@ -144,8 +144,8 @@ class Config extends Admin
                         ]
                     );
                 }
-            $ibuilder_form->setFormValues();
-            $formData = $ibuilder_form->getData();
+            $xyBuilderForm->setFormValues();
+            $formData = $xyBuilderForm->getData();
 
             // 返回数据
             return $this->return([
@@ -218,8 +218,8 @@ class Config extends Admin
                 ->find();
 
             // 构造动态页面数据
-            $ibuilder_form = new \app\core\util\ibuilder\IbuilderForm();
-            $formData = $ibuilder_form->init()
+            $xyBuilderForm = new \app\core\util\xybuilder\XyBuilderForm();
+            $formData = $xyBuilderForm->init()
                 ->setFormMethod('post')
                 ->addFormItem('module', '模块', 'select', '', [
                     'placeholder' => '请选择模块',
@@ -240,7 +240,7 @@ class Config extends Admin
                 ->addFormItem('configType', '配置类型', 'select', '', [
                     'placeholder' => '请选择表单类型',
                     'tip' => '表单类型',
-                    'options' => $ibuilder_form->form_type
+                    'options' => $xyBuilderForm->form_type
                 ])
                 ->addFormItem('value', '默认值', 'textarea', '', [
                     'placeholder' => '请输入配置默认值',
@@ -360,8 +360,8 @@ class Config extends Admin
                 ->find();
 
             // 构造动态页面数据
-            $ibuilder_form = new \app\core\util\ibuilder\IbuilderForm();
-            $formData = $ibuilder_form->init()
+            $xyBuilderForm = new \app\core\util\xybuilder\XyBuilderForm();
+            $formData = $xyBuilderForm->init()
                 ->setFormMethod('put')
                 ->addFormItem('module', '模块', 'select', '', [
                     'placeholder' => '请选择模块',
@@ -382,7 +382,7 @@ class Config extends Admin
                 ->addFormItem('configType', '配置类型', 'select', '', [
                     'placeholder' => '请选择表单类型',
                     'tip' => '表单类型',
-                    'options' => $ibuilder_form->form_type
+                    'options' => $xyBuilderForm->form_type
                 ])
                 ->addFormItem('value', '默认值', 'textarea', '', [
                     'placeholder' => '请输入配置默认值',

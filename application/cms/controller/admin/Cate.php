@@ -47,8 +47,8 @@ class Cate extends Admin
         $dataTree = $tree->list2tree($dataList);
 
         // 构造动态页面数据
-        $ibuilder_list = new \app\core\util\ibuilder\IbuilderList();
-        $listData = $ibuilder_list->init()
+        $xyBuilderList = new \app\core\util\xybuilder\XyBuilderList();
+        $listData = $xyBuilderList->init()
             ->addTopButton('add', '添加', ['api' => '/v1/admin/cms/cate/add'])
             ->addRightButton('member', '文章管理', [
                 'modalType' => 'list',
@@ -140,8 +140,8 @@ class Cate extends Admin
             }
 
             // 构造动态页面数据
-            $ibuilder_form = new \app\core\util\ibuilder\IbuilderForm();
-            $formData = $ibuilder_form->init()
+            $xyBuilderForm = new \app\core\util\xybuilder\XyBuilderForm();
+            $formData = $xyBuilderForm->init()
                 ->setFormMethod('post')
                 ->addFormItem('pid', '上级', 'select', 0, [
                     'options' => $cate_tree_select
@@ -223,8 +223,8 @@ class Cate extends Admin
             }
 
             //构造动态页面数据
-            $ibuilder_form = new \app\core\util\ibuilder\IbuilderForm();
-            $formData = $ibuilder_form->init()
+            $xyBuilderForm = new \app\core\util\xybuilder\XyBuilderForm();
+            $formData = $xyBuilderForm->init()
                 ->setFormMethod('put')
                ->addFormItem('pid', '上级', 'select', 0, [
                     'tip' => '上级分类',

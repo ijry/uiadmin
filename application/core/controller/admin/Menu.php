@@ -58,8 +58,8 @@ class Menu extends Admin
         $menu_tree = $tree->list2tree($dataList, 'path', 'pmenu', 'children', 0, false);
 
         // 构造动态页面数据
-        $ibuilder_list = new \app\core\util\ibuilder\IbuilderList();
-        $listData = $ibuilder_list->init()
+        $xyBuilderList = new \app\core\util\xybuilder\XyBuilderList();
+        $listData = $xyBuilderList->init()
             ->addTopButton('add', '添加菜单', ['api' => '/v1/admin/core/menu/add'])
             ->addRightButton('doc', '文档', ['api' => '/v1/admin/core/api/doc', 'width' => '1000', 'title' => 'API文档编辑', 'apiSuffix' =>['id']])
             ->addRightButton('edit', '修改', ['api' => '/v1/admin/core/menu/edit', 'title' => '修改菜单'])
@@ -163,8 +163,8 @@ class Menu extends Admin
             }
 
             // 构造动态页面数据
-            $ibuilder_form = new \app\core\util\ibuilder\IbuilderForm();
-            $formData = $ibuilder_form->init()
+            $xyBuilderForm = new \app\core\util\xybuilder\XyBuilderForm();
+            $formData = $xyBuilderForm->init()
                 ->setFormMethod('post')
                 ->addFormItem('module', '模块', 'select', '', [
                     'placeholder' => '请选择模块',
@@ -361,8 +361,8 @@ class Menu extends Admin
             }
 
             // 构造动态页面数据
-            $ibuilder_form = new \app\core\util\ibuilder\IbuilderForm();
-            $formData = $ibuilder_form->init()
+            $xyBuilderForm = new \app\core\util\xybuilder\XyBuilderForm();
+            $formData = $xyBuilderForm->init()
                 ->setFormMethod('put')
                 ->addFormItem('module', '模块', 'select', '', [
                     'placeholder' => '请选择模块',

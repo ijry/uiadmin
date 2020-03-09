@@ -14,11 +14,11 @@
 namespace app\core\util\ibuilder;
 
 /**
- * IbuilderForm动态表单
+ * XyBuilderForm动态表单
  *
  * @author jry <ijry@qq.com>
  */
-class IbuilderForm {
+class XyBuilderForm {
 
     // 数据
     private $data;

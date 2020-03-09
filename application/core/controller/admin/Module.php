@@ -224,8 +224,8 @@ class Module extends Admin
         $dataList = $tree->list2tree($dataList);
 
         // 构造动态页面数据
-        $ibuilder_list = new \app\core\util\ibuilder\IbuilderList();
-        $listData = $ibuilder_list->init()
+        $xyBuilderList = new \app\core\util\xybuilder\XyBuilderList();
+        $listData = $xyBuilderList->init()
             ->addTopButton('add', '创建新模块', ['api' => '/v1/admin/core/module/add'])
             ->addColumn('id' , 'ID', ['width' => '50px'])
             ->addColumn('name', '名称', ['width' => '120px'])
@@ -374,8 +374,8 @@ class Module extends Admin
             }
         } else {
             // 构造动态页面数据
-            $ibuilder_form = new \app\core\util\ibuilder\IbuilderForm();
-            $formData = $ibuilder_form->init()
+            $xyBuilderForm = new \app\core\util\xybuilder\XyBuilderForm();
+            $formData = $xyBuilderForm->init()
                 ->setFormMethod('post')
                 ->addFormItem('name', '模块名称', 'text', '', [
                     'placeholder' => '请输入模块名称',
@@ -503,8 +503,8 @@ class Module extends Admin
                 ->find();
 
             // 构造动态页面数据
-            $ibuilder_form = new \app\core\util\ibuilder\IbuilderForm();
-            $formData = $ibuilder_form->init()
+            $xyBuilderForm = new \app\core\util\xybuilder\XyBuilderForm();
+            $formData = $xyBuilderForm->init()
                 ->setFormMethod('put')
                 ->addFormItem('name', '模块名称', 'text', '', [
                     'placeholder' => '请输入模块名称',
