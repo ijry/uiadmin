@@ -11,7 +11,7 @@
  * +----------------------------------------------------------------------
 */
 
-namespace app\core\util\ibuilder;
+namespace app\core\util\xybuilder;
 
 /**
  * XyBuilderForm动态表单

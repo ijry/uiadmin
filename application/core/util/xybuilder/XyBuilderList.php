@@ -11,7 +11,7 @@
  * +----------------------------------------------------------------------
 */
 
-namespace app\core\util\ibuilder;
+namespace app\core\util\xybuilder;
 
 /**
  * XyBuilderList动态列表
