@@ -46,7 +46,7 @@ class Index extends Admin
 
         // 统计数据
         $user_model = new \app\core\model\User();
-        $user_totalCount = $user_model->where('cloudAlias', 0)->count();
+        $user_total = $user_model->where('cloudAlias', 0)->count();
         $user_today_count = $user_model
             ->where('cloudAlias', '=', 0)
             ->whereTime('registerTime', 'today')
@@ -62,7 +62,7 @@ class Index extends Admin
         $module_service = new \app\core\service\Module();
         if ($module_service->isExist('pay')) {
             $order_model = new \app\pay\model\Order();
-            $pay_totalCount = $order_model
+            $pay_total = $order_model
                 ->where('cloudAlias', 0)
                 ->where('payTime', '>', 0)
                 ->sum('totalMoney');
@@ -81,7 +81,7 @@ class Index extends Admin
                 'content' => [
                     [
                         'item' => ['icon' => 'ivu-icon ivu-icon-md-contacts', 'bgColor' => '#2db7f5', 'title' => ''],
-                        'current' => ['value' => $user_totalCount, 'suffix' => ''],
+                        'current' => ['value' => $user_total, 'suffix' => ''],
                         'content' => ['value' => '注册用户']
                     ],
                     [
@@ -91,8 +91,8 @@ class Index extends Admin
                     ],
                     [
                         'item' => ['icon' => 'ivu-icon ivu-icon-md-clock', 'bgColor' => '#ff9900', 'title' => ''],
-                        'current' => ['value' => isset($pay_totalCount) ? $pay_totalCount : $user_week_count, 'suffix' => ''],
-                        'content' => ['value' => isset($pay_totalCount) ? '总消费' : '本周新增']
+                        'current' => ['value' => isset($pay_total) ? $pay_total : $user_week_count, 'suffix' => ''],
+                        'content' => ['value' => isset($pay_total) ? '总消费' : '本周新增']
                     ],
                     [
                         'item' => ['icon' => 'ivu-icon ivu-icon-ios-paper-plane', 'bgColor' => '#ed4014', 'title' => ''],

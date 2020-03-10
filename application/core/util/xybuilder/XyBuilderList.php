@@ -44,7 +44,7 @@ class XyBuilderList {
             'rightButtonListModal' => [],
             'columns' => [],
             'dataPage' => [
-                'totalCount' => 0,
+                'total' => 0,
                 'limit' => 0,
                 'page' => 0
             ],
@@ -209,9 +209,9 @@ class XyBuilderList {
      * 设置分页
      * @author jry <ijry@qq.com>
      */
-    public function setDataPage($totalCount, $limit = 10, $page = 1) {
+    public function setDataPage($total, $limit = 10, $page = 1) {
         $this->data['dataPage'] = [
-            'totalCount' => $totalCount,
+            'total' => $total,
             'limit' => $limit,
             'page' => $page
         ];
