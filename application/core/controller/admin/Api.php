@@ -86,7 +86,7 @@ class Api extends Admin
                     ];
                 }
             }
-            if ($info['menuType'] == 5) {
+            if ($info['menuLayer'] == 'admin') {
                 $entry = '';
             } else {
                 $entry = '/admin';
@@ -101,11 +101,11 @@ class Api extends Admin
                     ->addFormItem($key . '_description', '接口说明', 'text', $doc_info[$key]['description'])
                     ->addFormItem($key . '_params', '请求参数', 'formlist', $doc_info[$key]['params'], [
                         'options' => [
-                            ['title' => '是否必须', 'value' => 'require', 'span' => 2],
-                            ['title' => '参数名', 'value' => 'name', 'span' => 4],
-                            ['title' => '参数标题', 'value' => 'title', 'span' => 4],
-                            ['title' => '说明', 'value' => 'description', 'span' => 8],
-                            ['title' => '示例', 'value' => 'example', 'span' => 4]
+                            ['title' => '是否必须', 'key' => 'require', 'span' => 2],
+                            ['title' => '参数名', 'key' => 'name', 'span' => 4],
+                            ['title' => '参数标题', 'key' => 'title', 'span' => 4],
+                            ['title' => '说明', 'key' => 'description', 'span' => 8],
+                            ['title' => '示例', 'key' => 'example', 'span' => 4]
                         ]
                     ])
                     ->addFormItem($key . '_divider', '', 'divider', '');

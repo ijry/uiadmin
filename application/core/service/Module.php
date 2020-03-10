@@ -51,7 +51,7 @@ class Module extends Model
 
         // 导出配置
         $expotInfo['config'] = $this->core_config
-            ->field('module,configCate,name,title,configType,default,placeholder,tip,options,isSystem,isDev,sortnum,status')
+            ->field('module,configCate,name,title,configType,defaultValue,placeholder,tip,options,isSystem,isDev,sortnum,status')
             ->where('module', '=', $info['name'])
             ->select()->toArray();
 
