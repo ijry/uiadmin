@@ -163,7 +163,7 @@ class Install extends Home
 
             // 导入配置
             foreach($module_insall['config'] as $key => &$val) {
-                $val['value'] = $val['default'];
+                $val['value'] = $val['defaultValue'];
             }
             $db_instance->table('xy_core_config')->insertAll($module_insall['config']);
             // 导入菜单及API
