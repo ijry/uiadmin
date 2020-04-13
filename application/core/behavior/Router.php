@@ -91,7 +91,7 @@ class Router
             if ($module_service->isExist('cms')) {
                 Route::rule('/', 'cms/index/index'); // 首页访问路由
             } else {
-                Route::rule('/', request()->rootUrl() . '/api/.html'); // 首页访问路由
+                Route::rule('/', request()->rootUrl() . '/api.html'); // 首页访问路由
             }
             Route::rule('/api$', 'core/index/api'); // API访问路由
             Route::rule('/admin$', 'core/admin.index/index'); // 后台首页访问路由

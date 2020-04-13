@@ -107,7 +107,7 @@ class Common extends Controller
                     return $this->fetch('core@admin/ibuilder/form');
                 } else {
                     if (is_file(env('root_path') . '.env')
-                        && !\think\helper\Str::startsWith(request()->path(), 'admin/')
+                        && !\think\helper\Str::startsWith(request()->path(), 'admin')
                         && request()->path() != 'core/install/step5') {
                         // 模板全局根目录
                         $view_base = env('root_path') . 'public/view/' . $data['data']['configCore']['theme'] . '/';
