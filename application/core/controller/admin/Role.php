@@ -154,7 +154,7 @@ class Role extends Admin
                 }
             }
             $tree      = new Tree();
-            $menu_tree = $tree->list2tree($dataList, 'path', 'pmenu', 'children', 0, false);
+            $menuTree = $tree->list2tree($dataList, 'path', 'pmenu', 'children', 0, false);
 
             //获取角色基于标题的树状列表
             $role_list = $this->core_role
@@ -196,7 +196,7 @@ class Role extends Admin
                         ['title' => '接口', 'key' => 'adminAuth'],
                         ['title' => '类型', 'key' => 'menuType', 'width' => '40px']
                     ],
-                    'data' => $menu_tree,
+                    'data' => $menuTree,
                     'expandKey' => 'title',
                     'position' => 'bottom'
                 ])
@@ -292,7 +292,7 @@ class Role extends Admin
                 }
             }
             $tree      = new Tree();
-            $menu_tree = $tree->list2tree($dataList, 'path', 'pmenu', 'children', 0, false);
+            $menuTree = $tree->list2tree($dataList, 'path', 'pmenu', 'children', 0, false);
 
             //获取角色基于标题的树状列表
             $role_list = $this->core_role
@@ -334,7 +334,7 @@ class Role extends Admin
                         ['title' => '接口', 'key' => 'adminAuth'],
                         ['title' => '类型', 'key' => 'menuType', 'width' => '40px']
                     ],
-                    'data' => $menu_tree,
+                    'data' => $menuTree,
                     'expand-key' => 'title',
                     'position' => 'bottom'
                 ])

@@ -142,7 +142,7 @@ class Api extends Admin
             $val['api'] = '/' . $val['apiPrefix'] . $val['path'] . $val['apiSuffix'];
         }
         $tree      = new Tree();
-        $menu_tree = $tree->list2tree($dataList, 'path', 'pmenu', 'children', 0, false);
+        $menuTree = $tree->list2tree($dataList, 'path', 'pmenu', 'children', 0, false);
 
         //构造动态页面数据
         $xyBuilderList = new \app\core\util\xybuilder\XyBuilderList();
@@ -170,7 +170,7 @@ class Api extends Admin
                 'type' => 'template',
                 'template' => 'rightButtonList'
             ])
-            ->setDataList($menu_tree)
+            ->setDataList($menuTree)
             ->getData();
 
         //返回数据
@@ -239,11 +239,11 @@ class Api extends Admin
                 ->order('sortnum asc')
                 ->select()->toArray();
             $tree      = new Tree();
-            $menu_tree = $tree->array2tree($menu_list, 'title', 'path', 'pmenu', 0, false);
-            $menu_tree_select = [];
-            foreach ($menu_tree as $key1 => $val1) {
-                $menu_tree_select[$key1]['title'] = $val1['title_show'];
-                $menu_tree_select[$key1]['value'] = $val1['path'];
+            $menuTree = $tree->array2tree($menu_list, 'title', 'path', 'pmenu', 0, false);
+            $menuTree_select = [];
+            foreach ($menuTree as $key1 => $val1) {
+                $menuTree_select[$key1]['title'] = $val1['title_show'];
+                $menuTree_select[$key1]['value'] = $val1['path'];
             }
 
             //构造动态页面数据
@@ -258,7 +258,7 @@ class Api extends Admin
                 ->addFormItem('pmenu', '上级菜单', 'select', '', [
                     'placeholder' => '请选择上级菜单',
                     'tip' => '请选择上级菜单',
-                    'options' => $menu_tree_select
+                    'options' => $menuTree_select
                 ])
                 ->addFormItem('title', '菜单标题', 'text', '', [
                     'placeholder' => '请输入菜单标题',
@@ -420,11 +420,11 @@ class Api extends Admin
                 ->order('sortnum asc')
                 ->select()->toArray();
             $tree      = new Tree();
-            $menu_tree = $tree->array2tree($menu_list, 'title', 'path', 'pmenu', 0, false);
-            $menu_tree_select = [];
-            foreach ($menu_tree as $key => $val) {
-                $menu_tree_select[$key]['title'] = $val['title_show'];
-                $menu_tree_select[$key]['value'] = $val['path'];
+            $menuTree = $tree->array2tree($menu_list, 'title', 'path', 'pmenu', 0, false);
+            $menuTree_select = [];
+            foreach ($menuTree as $key => $val) {
+                $menuTree_select[$key]['title'] = $val['title_show'];
+                $menuTree_select[$key]['value'] = $val['path'];
             }
 
             //构造动态页面数据
@@ -439,7 +439,7 @@ class Api extends Admin
                 ->addFormItem('pmenu', '上级菜单', 'select', '', [
                     'placeholder' => '请选择上级菜单',
                     'tip' => '请选择上级菜单',
-                    'options' => $menu_tree_select
+                    'options' => $menuTree_select
                 ])
                 ->addFormItem('title', '菜单标题', 'text', '', [
                     'placeholder' => '请输入菜单标题',
