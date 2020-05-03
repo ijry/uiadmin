@@ -7,8 +7,8 @@
         "website": "https://jiangruyi.com",
         "version": "0.2.0",
         "build": "build_20190508",
-        "hasTaglib": "0",
-        "hasCommand": "0"
+        "hasTaglib": 0,
+        "hasCommand": 0
     },
     "config": [],
     "api": [
@@ -20,7 +20,7 @@
             "title": "内容管理",
             "tip": "",
             "menuLayer": "admin",
-            "menuType": "0",
+            "menuType": 0,
             "routeType": "",
             "apiPrefix": "",
             "apiSuffix": "",
@@ -28,7 +28,7 @@
             "apiMethod": "",
             "apiExt": "",
             "doc": null,
-            "isHide": "0"
+            "isHide": 0
         },
         {
             "module": "cms",
@@ -38,7 +38,7 @@
             "title": "分类管理",
             "tip": "",
             "menuLayer": "admin",
-            "menuType": "1",
+            "menuType": 1,
             "routeType": "list",
             "apiPrefix": "v1",
             "apiSuffix": "",
@@ -46,7 +46,7 @@
             "apiMethod": "GET",
             "apiExt": "",
             "doc": null,
-            "isHide": "0"
+            "isHide": 0
         },
         {
             "module": "cms",
@@ -56,7 +56,7 @@
             "title": "文章管理",
             "tip": "",
             "menuLayer": "admin",
-            "menuType": "2",
+            "menuType": 2,
             "routeType": "list",
             "apiPrefix": "v1",
             "apiSuffix": "/:cate_id",
@@ -64,7 +64,7 @@
             "apiMethod": "GET",
             "apiExt": "",
             "doc": null,
-            "isHide": "0"
+            "isHide": 0
         },
         {
             "module": "cms",
@@ -74,7 +74,7 @@
             "title": "添加分类",
             "tip": "",
             "menuLayer": "admin",
-            "menuType": "2",
+            "menuType": 2,
             "routeType": "form",
             "apiPrefix": "v1",
             "apiSuffix": "",
@@ -82,7 +82,7 @@
             "apiMethod": "POST|GET",
             "apiExt": "",
             "doc": null,
-            "isHide": "0"
+            "isHide": 0
         },
         {
             "module": "cms",
@@ -92,7 +92,7 @@
             "title": "修改分类",
             "tip": "",
             "menuLayer": "admin",
-            "menuType": "2",
+            "menuType": 2,
             "routeType": "form",
             "apiPrefix": "v1",
             "apiSuffix": "/:id",
@@ -100,7 +100,7 @@
             "apiMethod": "PUT|GET",
             "apiExt": "",
             "doc": null,
-            "isHide": "0"
+            "isHide": 0
         },
         {
             "module": "cms",
@@ -110,7 +110,7 @@
             "title": "添加文章",
             "tip": "",
             "menuLayer": "admin",
-            "menuType": "2",
+            "menuType": 2,
             "routeType": "form",
             "apiPrefix": "v1",
             "apiSuffix": "/:cid",
@@ -118,7 +118,7 @@
             "apiMethod": "POST|GET",
             "apiExt": "",
             "doc": null,
-            "isHide": "0"
+            "isHide": 0
         },
         {
             "module": "cms",
@@ -128,7 +128,7 @@
             "title": "修改文章",
             "tip": "",
             "menuLayer": "admin",
-            "menuType": "2",
+            "menuType": 2,
             "routeType": "form",
             "apiPrefix": "v1",
             "apiSuffix": "/:id",
@@ -136,7 +136,7 @@
             "apiMethod": "PUT|GET",
             "apiExt": "",
             "doc": null,
-            "isHide": "0"
+            "isHide": 0
         },
         {
             "module": "cms",
@@ -146,7 +146,7 @@
             "title": "文章列表",
             "tip": "",
             "menuLayer": "home",
-            "menuType": "3",
+            "menuType": 3,
             "routeType": "route",
             "apiPrefix": "v1",
             "apiSuffix": "/:cid",
@@ -154,7 +154,7 @@
             "apiMethod": "GET",
             "apiExt": "",
             "doc": null,
-            "isHide": "0"
+            "isHide": 0
         },
         {
             "module": "cms",
@@ -164,7 +164,7 @@
             "title": "文章详情",
             "tip": "",
             "menuLayer": "home",
-            "menuType": "3",
+            "menuType": 3,
             "routeType": "route",
             "apiPrefix": "v1",
             "apiSuffix": "/:id",
@@ -172,7 +172,7 @@
             "apiMethod": "GET",
             "apiExt": "",
             "doc": null,
-            "isHide": "0"
+            "isHide": 0
         },
         {
             "module": "cms",
@@ -182,7 +182,7 @@
             "title": "我的文章",
             "tip": "",
             "menuLayer": "home",
-            "menuType": "3",
+            "menuType": 3,
             "routeType": "route",
             "apiPrefix": "v1",
             "apiSuffix": "",
@@ -190,7 +190,7 @@
             "apiMethod": "GET",
             "apiExt": "",
             "doc": null,
-            "isHide": "0"
+            "isHide": 0
         },
         {
             "module": "cms",
@@ -200,7 +200,7 @@
             "title": "核心",
             "tip": "",
             "menuLayer": "home",
-            "menuType": "0",
+            "menuType": 0,
             "routeType": "",
             "apiPrefix": "",
             "apiSuffix": "",
@@ -208,7 +208,7 @@
             "apiMethod": "",
             "apiExt": "",
             "doc": null,
-            "isHide": "0"
+            "isHide": 0
         },
         {
             "module": "cms",
@@ -218,7 +218,7 @@
             "title": "CMS",
             "tip": "",
             "menuLayer": "home",
-            "menuType": "0",
+            "menuType": 0,
             "routeType": "",
             "apiPrefix": "",
             "apiSuffix": "",
@@ -226,7 +226,7 @@
             "apiMethod": "",
             "apiExt": "",
             "doc": null,
-            "isHide": "0"
+            "isHide": 0
         }
     ],
     "tables": [
@@ -236,7 +236,7 @@
                 "CREATE TABLE `xy_cms_cate` (",
                 "  `id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT 'ID',",
                 "  `pid` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '上级分类',",
-                "  `cateType` longtext COMMENT '分类类型0列表1单页2路由',",
+                "  `cateType` int(11) DEFAULT '0' COMMENT '分类类型0列表1单页2路由',",
                 "  `title` varchar(128) NOT NULL DEFAULT '' COMMENT '标题',",
                 "  `description` varchar(128) NOT NULL DEFAULT '' COMMENT '简介',",
                 "  `cover` varchar(256) NOT NULL DEFAULT '' COMMENT '封面图',",
@@ -244,9 +244,9 @@
                 "  `content` longtext COMMENT '单页类型时的内容',",
                 "  `sortnum` int(11) NOT NULL DEFAULT '0' COMMENT '排序',",
                 "  `status` int(3) NOT NULL DEFAULT '0' COMMENT '状态1正常0禁用',",
-                "  `isHide` longtext COMMENT '是否隐藏',",
-                "  `createTime` longtext COMMENT '创建时间',",
-                "  `deleteTime` longtext COMMENT '删除时间',",
+                "  `isHide` tinyint(11) NOT NULL DEFAULT '0' COMMENT '是否隐藏',",
+                "  `createTime` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '创建时间',",
+                "  `deleteTime` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '删除时间',",
                 "  PRIMARY KEY (`id`)",
                 ") ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='CMS分类表'"
             ],
@@ -254,7 +254,7 @@
                 {
                     "id": 2,
                     "pid": 0,
-                    "cateType": "0",
+                    "cateType": 0,
                     "title": "产品",
                     "description": "",
                     "cover": "",
@@ -262,14 +262,14 @@
                     "content": null,
                     "sortnum": 0,
                     "status": 1,
-                    "isHide": "0",
-                    "createTime": "0",
-                    "deleteTime": "0"
+                    "isHide": 0,
+                    "createTime": 0,
+                    "deleteTime": 0
                 },
                 {
                     "id": 3,
                     "pid": 0,
-                    "cateType": "0",
+                    "cateType": 0,
                     "title": "案例",
                     "description": "",
                     "cover": "",
@@ -277,14 +277,14 @@
                     "content": null,
                     "sortnum": 0,
                     "status": 1,
-                    "isHide": "0",
-                    "createTime": "0",
-                    "deleteTime": "0"
+                    "isHide": 0,
+                    "createTime": 0,
+                    "deleteTime": 0
                 },
                 {
                     "id": 4,
                     "pid": 0,
-                    "cateType": "0",
+                    "cateType": 0,
                     "title": "新闻",
                     "description": "",
                     "cover": "",
@@ -292,14 +292,14 @@
                     "content": null,
                     "sortnum": 0,
                     "status": 1,
-                    "isHide": "0",
-                    "createTime": "0",
-                    "deleteTime": "0"
+                    "isHide": 0,
+                    "createTime": 0,
+                    "deleteTime": 0
                 },
                 {
                     "id": 5,
                     "pid": 0,
-                    "cateType": "0",
+                    "cateType": 0,
                     "title": "关于",
                     "description": "",
                     "cover": "",
@@ -307,9 +307,9 @@
                     "content": null,
                     "sortnum": 0,
                     "status": 1,
-                    "isHide": "0",
-                    "createTime": "0",
-                    "deleteTime": "0"
+                    "isHide": 0,
+                    "createTime": 0,
+                    "deleteTime": 0
                 }
             ]
         },
@@ -324,12 +324,12 @@
                 "  `description` varchar(128) NOT NULL DEFAULT '' COMMENT '简介',",
                 "  `content` longtext NOT NULL COMMENT '内容',",
                 "  `cover` varchar(256) NOT NULL DEFAULT '' COMMENT '封面图',",
-                "  `postTime` longtext COMMENT '发布时间',",
-                "  `viewCount` longtext COMMENT '阅读数量',",
-                "  `commentCount` longtext COMMENT '回复数量',",
+                "  `postTime` int(11) unsigned NOT NULL COMMENT '发布时间',",
+                "  `viewCount` int(11) unsigned NOT NULL COMMENT '阅读数量',",
+                "  `commentCount` int(11) unsigned NOT NULL COMMENT '回复数量',",
                 "  `status` int(1) NOT NULL DEFAULT '0' COMMENT '状态1禁用1正常',",
-                "  `reviewStatus` longtext COMMENT '审核状态0待审核1通过-1拒绝',",
-                "  `deleteTime` longtext COMMENT '删除时间',",
+                "  `reviewStatus` int(1) NOT NULL DEFAULT '0' COMMENT '审核状态0待审核1通过-1拒绝',",
+                "  `deleteTime` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '删除时间',",
                 "  PRIMARY KEY (`id`)",
                 ") ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='文章发布表'"
             ],
@@ -342,12 +342,12 @@
                     "description": "UniAdmin是一套渐进式模块化开源后台(目前基于ThinkPHP5.1+Vue2)，采用前后端分离技术，数据交互采用json格式，功能低耦合高内聚；核心模块支持系统设置、权限管理、用户管理、菜单管理、API管理等功能",
                     "content": "<p><span style=\"color: #323232; font-family: 'Century Gothic', 'Microsoft yahei'; font-size: 16px; background-color: #ffffff;\">InitAdmin是一套渐进式模块化开源后台(目前基于ThinkPHP5.1+Vue2)，采用前后端分离技术，数据交互采用json格式，功能低耦合高内聚；核心模块支持系统设置、权限管理、用户管理、菜单管理、API管理等功能，后期上线模块商城将打造类似composer、npm的开放式插件市场；同时我们将打造一套兼容性的API标准，从ThinkPHP5.1+Vue2开始，逐步覆盖larval、spring-boot、django、yii、koa、react等多语言框架。</span><br style=\"color: #323232; font-family: 'Century Gothic', 'Microsoft yahei'; font-size: 16px; background-color: #ffffff;\" /><br style=\"color: #323232; font-family: 'Century Gothic', 'Microsoft yahei'; font-size: 16px; background-color: #ffffff;\" /><span style=\"color: #323232; font-family: 'Century Gothic', 'Microsoft yahei'; font-size: 16px; background-color: #ffffff;\">官方网站：&nbsp;</span><a style=\"color: #72b939; text-decoration-line: none; font-family: 'Century Gothic', 'Microsoft yahei'; font-size: 16px; background-color: #ffffff;\" href=\"https://initadmin.net/\">https://initadmin.net</a></p>",
                     "cover": "https://s2.ax1x.com/2019/12/17/QIxiKP.png",
-                    "postTime": "1557205908",
-                    "viewCount": "0",
-                    "commentCount": "0",
+                    "postTime": 1557205908,
+                    "viewCount": 0,
+                    "commentCount": 0,
                     "status": 1,
-                    "reviewStatus": "1",
-                    "deleteTime": "0"
+                    "reviewStatus": 1,
+                    "deleteTime": 0
                 },
                 {
                     "id": 4,
@@ -357,12 +357,12 @@
                     "description": "UniAdmin是一套渐进式模块化开源后台(目前基于ThinkPHP5.1+Vue2)，采用前后端分离技术，数据交互采用json格式，功能低耦合高内聚；核心模块支持系统设置、权限管理、用户管理、菜单管理、API管理等功能",
                     "content": "<p><span style=\"color: #323232; font-family: 'Century Gothic', 'Microsoft yahei'; font-size: 16px; background-color: #ffffff;\">InitAdmin是一套渐进式模块化开源后台(目前基于ThinkPHP5.1+Vue2)，采用前后端分离技术，数据交互采用json格式，功能低耦合高内聚；核心模块支持系统设置、权限管理、用户管理、菜单管理、API管理等功能，后期上线模块商城将打造类似composer、npm的开放式插件市场；同时我们将打造一套兼容性的API标准，从ThinkPHP5.1+Vue2开始，逐步覆盖larval、spring-boot、django、yii、koa、react等多语言框架。</span><br style=\"color: #323232; font-family: 'Century Gothic', 'Microsoft yahei'; font-size: 16px; background-color: #ffffff;\" /><br style=\"color: #323232; font-family: 'Century Gothic', 'Microsoft yahei'; font-size: 16px; background-color: #ffffff;\" /><span style=\"color: #323232; font-family: 'Century Gothic', 'Microsoft yahei'; font-size: 16px; background-color: #ffffff;\">官方网站：&nbsp;</span><a style=\"color: #72b939; text-decoration-line: none; font-family: 'Century Gothic', 'Microsoft yahei'; font-size: 16px; background-color: #ffffff;\" href=\"https://initadmin.net/\">https://initadmin.net</a></p>",
                     "cover": "https://s2.ax1x.com/2019/12/17/QIxiKP.png",
-                    "postTime": "1557205908",
-                    "viewCount": "0",
-                    "commentCount": "0",
+                    "postTime": 1557205908,
+                    "viewCount": 0,
+                    "commentCount": 0,
                     "status": 1,
-                    "reviewStatus": "1",
-                    "deleteTime": "0"
+                    "reviewStatus": 1,
+                    "deleteTime": 0
                 },
                 {
                     "id": 5,
@@ -372,12 +372,12 @@
                     "description": "UniAdmin是一套渐进式模块化开源后台(目前基于ThinkPHP5.1+Vue2)，采用前后端分离技术，数据交互采用json格式，功能低耦合高内聚；核心模块支持系统设置、权限管理、用户管理、菜单管理、API管理等功能",
                     "content": "<p><span style=\"color: #323232; font-family: 'Century Gothic', 'Microsoft yahei'; font-size: 16px; background-color: #ffffff;\">InitAdmin是一套渐进式模块化开源后台(目前基于ThinkPHP5.1+Vue2)，采用前后端分离技术，数据交互采用json格式，功能低耦合高内聚；核心模块支持系统设置、权限管理、用户管理、菜单管理、API管理等功能，后期上线模块商城将打造类似composer、npm的开放式插件市场；同时我们将打造一套兼容性的API标准，从ThinkPHP5.1+Vue2开始，逐步覆盖larval、spring-boot、django、yii、koa、react等多语言框架。</span><br style=\"color: #323232; font-family: 'Century Gothic', 'Microsoft yahei'; font-size: 16px; background-color: #ffffff;\" /><br style=\"color: #323232; font-family: 'Century Gothic', 'Microsoft yahei'; font-size: 16px; background-color: #ffffff;\" /><span style=\"color: #323232; font-family: 'Century Gothic', 'Microsoft yahei'; font-size: 16px; background-color: #ffffff;\">官方网站：&nbsp;</span><a style=\"color: #72b939; text-decoration-line: none; font-family: 'Century Gothic', 'Microsoft yahei'; font-size: 16px; background-color: #ffffff;\" href=\"https://initadmin.net/\">https://initadmin.net</a></p>",
                     "cover": "https://s2.ax1x.com/2019/12/17/QIxiKP.png",
-                    "postTime": "1557205908",
-                    "viewCount": "0",
-                    "commentCount": "0",
+                    "postTime": 1557205908,
+                    "viewCount": 0,
+                    "commentCount": 0,
                     "status": 1,
-                    "reviewStatus": "1",
-                    "deleteTime": "0"
+                    "reviewStatus": 1,
+                    "deleteTime": 0
                 },
                 {
                     "id": 6,
@@ -387,12 +387,12 @@
                     "description": "UniAdmin是一套渐进式模块化开源后台(目前基于ThinkPHP5.1+Vue2)，采用前后端分离技术，数据交互采用json格式，功能低耦合高内聚；核心模块支持系统设置、权限管理、用户管理、菜单管理、API管理等功能",
                     "content": "<p><span style=\"color: #323232; font-family: 'Century Gothic', 'Microsoft yahei'; font-size: 16px; background-color: #ffffff;\">InitAdmin是一套渐进式模块化开源后台(目前基于ThinkPHP5.1+Vue2)，采用前后端分离技术，数据交互采用json格式，功能低耦合高内聚；核心模块支持系统设置、权限管理、用户管理、菜单管理、API管理等功能，后期上线模块商城将打造类似composer、npm的开放式插件市场；同时我们将打造一套兼容性的API标准，从ThinkPHP5.1+Vue2开始，逐步覆盖larval、spring-boot、django、yii、koa、react等多语言框架。</span><br style=\"color: #323232; font-family: 'Century Gothic', 'Microsoft yahei'; font-size: 16px; background-color: #ffffff;\" /><br style=\"color: #323232; font-family: 'Century Gothic', 'Microsoft yahei'; font-size: 16px; background-color: #ffffff;\" /><span style=\"color: #323232; font-family: 'Century Gothic', 'Microsoft yahei'; font-size: 16px; background-color: #ffffff;\">官方网站：&nbsp;</span><a style=\"color: #72b939; text-decoration-line: none; font-family: 'Century Gothic', 'Microsoft yahei'; font-size: 16px; background-color: #ffffff;\" href=\"https://initadmin.net/\">https://initadmin.net</a></p>",
                     "cover": "https://s2.ax1x.com/2019/12/17/QIxiKP.png",
-                    "postTime": "1557205908",
-                    "viewCount": "0",
-                    "commentCount": "0",
+                    "postTime": 1557205908,
+                    "viewCount": 0,
+                    "commentCount": 0,
                     "status": 1,
-                    "reviewStatus": "1",
-                    "deleteTime": "0"
+                    "reviewStatus": 1,
+                    "deleteTime": 0
                 },
                 {
                     "id": 7,
@@ -402,12 +402,12 @@
                     "description": "UniAdmin是一套渐进式模块化开源后台(目前基于ThinkPHP5.1+Vue2)，采用前后端分离技术，数据交互采用json格式，功能低耦合高内聚；核心模块支持系统设置、权限管理、用户管理、菜单管理、API管理等功能",
                     "content": "<p><span style=\"color: #323232; font-family: 'Century Gothic', 'Microsoft yahei'; font-size: 16px; background-color: #ffffff;\">InitAdmin是一套渐进式模块化开源后台(目前基于ThinkPHP5.1+Vue2)，采用前后端分离技术，数据交互采用json格式，功能低耦合高内聚；核心模块支持系统设置、权限管理、用户管理、菜单管理、API管理等功能，后期上线模块商城将打造类似composer、npm的开放式插件市场；同时我们将打造一套兼容性的API标准，从ThinkPHP5.1+Vue2开始，逐步覆盖larval、spring-boot、django、yii、koa、react等多语言框架。</span><br style=\"color: #323232; font-family: 'Century Gothic', 'Microsoft yahei'; font-size: 16px; background-color: #ffffff;\" /><br style=\"color: #323232; font-family: 'Century Gothic', 'Microsoft yahei'; font-size: 16px; background-color: #ffffff;\" /><span style=\"color: #323232; font-family: 'Century Gothic', 'Microsoft yahei'; font-size: 16px; background-color: #ffffff;\">官方网站：&nbsp;</span><a style=\"color: #72b939; text-decoration-line: none; font-family: 'Century Gothic', 'Microsoft yahei'; font-size: 16px; background-color: #ffffff;\" href=\"https://initadmin.net/\">https://initadmin.net</a></p>",
                     "cover": "https://s2.ax1x.com/2019/12/17/QIxiKP.png",
-                    "postTime": "1557205908",
-                    "viewCount": "0",
-                    "commentCount": "0",
+                    "postTime": 1557205908,
+                    "viewCount": 0,
+                    "commentCount": 0,
                     "status": 1,
-                    "reviewStatus": "1",
-                    "deleteTime": "0"
+                    "reviewStatus": 1,
+                    "deleteTime": 0
                 },
                 {
                     "id": 8,
@@ -417,12 +417,12 @@
                     "description": "UniAdmin是一套渐进式模块化开源后台(目前基于ThinkPHP5.1+Vue2)，采用前后端分离技术，数据交互采用json格式，功能低耦合高内聚；核心模块支持系统设置、权限管理、用户管理、菜单管理、API管理等功能",
                     "content": "<p><span style=\"color: #323232; font-family: 'Century Gothic', 'Microsoft yahei'; font-size: 16px; background-color: #ffffff;\">InitAdmin是一套渐进式模块化开源后台(目前基于ThinkPHP5.1+Vue2)，采用前后端分离技术，数据交互采用json格式，功能低耦合高内聚；核心模块支持系统设置、权限管理、用户管理、菜单管理、API管理等功能，后期上线模块商城将打造类似composer、npm的开放式插件市场；同时我们将打造一套兼容性的API标准，从ThinkPHP5.1+Vue2开始，逐步覆盖larval、spring-boot、django、yii、koa、react等多语言框架。</span><br style=\"color: #323232; font-family: 'Century Gothic', 'Microsoft yahei'; font-size: 16px; background-color: #ffffff;\" /><br style=\"color: #323232; font-family: 'Century Gothic', 'Microsoft yahei'; font-size: 16px; background-color: #ffffff;\" /><span style=\"color: #323232; font-family: 'Century Gothic', 'Microsoft yahei'; font-size: 16px; background-color: #ffffff;\">官方网站：&nbsp;</span><a style=\"color: #72b939; text-decoration-line: none; font-family: 'Century Gothic', 'Microsoft yahei'; font-size: 16px; background-color: #ffffff;\" href=\"https://initadmin.net/\">https://initadmin.net</a></p>",
                     "cover": "https://s2.ax1x.com/2019/12/17/QIxiKP.png",
-                    "postTime": "1557205908",
-                    "viewCount": "0",
-                    "commentCount": "0",
+                    "postTime": 1557205908,
+                    "viewCount": 0,
+                    "commentCount": 0,
                     "status": 1,
-                    "reviewStatus": "1",
-                    "deleteTime": "0"
+                    "reviewStatus": 1,
+                    "deleteTime": 0
                 },
                 {
                     "id": 9,
@@ -432,12 +432,12 @@
                     "description": "UniAdmin是一套渐进式模块化开源后台(目前基于ThinkPHP5.1+Vue2)，采用前后端分离技术，数据交互采用json格式，功能低耦合高内聚；核心模块支持系统设置、权限管理、用户管理、菜单管理、API管理等功能",
                     "content": "<p><span style=\"color: #323232; font-family: 'Century Gothic', 'Microsoft yahei'; font-size: 16px; background-color: #ffffff;\">InitAdmin是一套渐进式模块化开源后台(目前基于ThinkPHP5.1+Vue2)，采用前后端分离技术，数据交互采用json格式，功能低耦合高内聚；核心模块支持系统设置、权限管理、用户管理、菜单管理、API管理等功能，后期上线模块商城将打造类似composer、npm的开放式插件市场；同时我们将打造一套兼容性的API标准，从ThinkPHP5.1+Vue2开始，逐步覆盖larval、spring-boot、django、yii、koa、react等多语言框架。</span><br style=\"color: #323232; font-family: 'Century Gothic', 'Microsoft yahei'; font-size: 16px; background-color: #ffffff;\" /><br style=\"color: #323232; font-family: 'Century Gothic', 'Microsoft yahei'; font-size: 16px; background-color: #ffffff;\" /><span style=\"color: #323232; font-family: 'Century Gothic', 'Microsoft yahei'; font-size: 16px; background-color: #ffffff;\">官方网站：&nbsp;</span><a style=\"color: #72b939; text-decoration-line: none; font-family: 'Century Gothic', 'Microsoft yahei'; font-size: 16px; background-color: #ffffff;\" href=\"https://initadmin.net/\">https://initadmin.net</a></p>",
                     "cover": "https://s2.ax1x.com/2019/12/17/QIxiKP.png",
-                    "postTime": "1557205908",
-                    "viewCount": "0",
-                    "commentCount": "0",
+                    "postTime": 1557205908,
+                    "viewCount": 0,
+                    "commentCount": 0,
                     "status": 1,
-                    "reviewStatus": "1",
-                    "deleteTime": "0"
+                    "reviewStatus": 1,
+                    "deleteTime": 0
                 }
             ]
         }

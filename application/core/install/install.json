@@ -7,8 +7,8 @@
         "website": "https://uniadmin.jiangruyi.com",
         "version": "0.2.0",
         "build": "build_20191217",
-        "hasTaglib": "0",
-        "hasCommand": "0"
+        "hasTaglib": 0,
+        "hasCommand": 0
     },
     "config": [
         {
@@ -21,8 +21,8 @@
             "placeholder": "请输入配置分组信息",
             "tip": "请输入配置分组信息",
             "options": "",
-            "isSystem": "1",
-            "isDev": "0",
+            "isSystem": 1,
+            "isDev": 0,
             "sortnum": 7,
             "status": 1
         },
@@ -36,8 +36,8 @@
             "placeholder": "请输入项目名称",
             "tip": "请输入项目名称",
             "options": "",
-            "isSystem": "1",
-            "isDev": "0",
+            "isSystem": 1,
+            "isDev": 0,
             "sortnum": 1,
             "status": 1
         },
@@ -51,8 +51,8 @@
             "placeholder": "请上传系统logo",
             "tip": "请上传系统logo",
             "options": "",
-            "isSystem": "1",
-            "isDev": "0",
+            "isSystem": 1,
+            "isDev": 0,
             "sortnum": 3,
             "status": 1
         },
@@ -66,8 +66,8 @@
             "placeholder": "请上传ICO图标",
             "tip": "请上传ICO图标",
             "options": "",
-            "isSystem": "1",
-            "isDev": "0",
+            "isSystem": 1,
+            "isDev": 0,
             "sortnum": 4,
             "status": 1
         },
@@ -81,8 +81,8 @@
             "placeholder": "请输入您的项目口号",
             "tip": "请输入您的项目口号",
             "options": "",
-            "isSystem": "1",
-            "isDev": "0",
+            "isSystem": 1,
+            "isDev": 0,
             "sortnum": 2,
             "status": 1
         },
@@ -96,8 +96,8 @@
             "placeholder": "请输入您的版权信息",
             "tip": "请输入您的版权信息",
             "options": "",
-            "isSystem": "1",
-            "isDev": "0",
+            "isSystem": 1,
+            "isDev": 0,
             "sortnum": 5,
             "status": 1
         },
@@ -111,8 +111,8 @@
             "placeholder": "请输入您的域名备案号",
             "tip": "请输入您的域名备案号",
             "options": "",
-            "isSystem": "1",
-            "isDev": "0",
+            "isSystem": 1,
+            "isDev": 0,
             "sortnum": 6,
             "status": 1
         },
@@ -126,8 +126,8 @@
             "placeholder": "主题",
             "tip": "主题",
             "options": "",
-            "isSystem": "1",
-            "isDev": "0",
+            "isSystem": 1,
+            "isDev": 0,
             "sortnum": 6,
             "status": 1
         },
@@ -141,8 +141,8 @@
             "placeholder": "URL模式",
             "tip": "URL模式",
             "options": "rewrite:URL重写模式\npathinfo:PATHINFO模式\ncompatible:兼容模式",
-            "isSystem": "1",
-            "isDev": "0",
+            "isSystem": 1,
+            "isDev": 0,
             "sortnum": 6,
             "status": 1
         },
@@ -156,8 +156,8 @@
             "placeholder": "请输入您的SEO描述",
             "tip": "请输入您的SEO描述",
             "options": "",
-            "isSystem": "1",
-            "isDev": "0",
+            "isSystem": 1,
+            "isDev": 0,
             "sortnum": 5,
             "status": 1
         },
@@ -171,8 +171,8 @@
             "placeholder": "请上传系统logo",
             "tip": "请上传系统logo",
             "options": "",
-            "isSystem": "1",
-            "isDev": "0",
+            "isSystem": 1,
+            "isDev": 0,
             "sortnum": 3,
             "status": 1
         }
@@ -186,7 +186,7 @@
             "title": "开发",
             "tip": "一般是开发者采用得到的工具",
             "menuLayer": "admin",
-            "menuType": "0",
+            "menuType": 0,
             "routeType": "",
             "apiPrefix": "",
             "apiSuffix": "",
@@ -194,7 +194,7 @@
             "apiMethod": "",
             "apiExt": "",
             "doc": null,
-            "isHide": "0"
+            "isHide": 0
         },
         {
             "module": "core",
@@ -204,7 +204,7 @@
             "title": "菜单列表",
             "tip": "管理后台左侧的菜单导航",
             "menuLayer": "admin",
-            "menuType": "3",
+            "menuType": 3,
             "routeType": "list",
             "apiPrefix": "v1",
             "apiSuffix": "",
@@ -212,7 +212,7 @@
             "apiMethod": "GET",
             "apiExt": "",
             "doc": null,
-            "isHide": "0"
+            "isHide": 0
         },
         {
             "module": "core",
@@ -222,7 +222,7 @@
             "title": "权限管理",
             "tip": "管理系统角色及权限",
             "menuLayer": "admin",
-            "menuType": "1",
+            "menuType": 1,
             "routeType": "list",
             "apiPrefix": "v1",
             "apiSuffix": "",
@@ -230,7 +230,7 @@
             "apiMethod": "GET",
             "apiExt": "",
             "doc": null,
-            "isHide": "0"
+            "isHide": 0
         },
         {
             "module": "core",
@@ -240,7 +240,7 @@
             "title": "用户列表",
             "tip": "系统注册用户列表",
             "menuLayer": "admin",
-            "menuType": "1",
+            "menuType": 1,
             "routeType": "list",
             "apiPrefix": "v1",
             "apiSuffix": "",
@@ -248,7 +248,7 @@
             "apiMethod": "GET",
             "apiExt": "",
             "doc": null,
-            "isHide": "0"
+            "isHide": 0
         },
         {
             "module": "core",
@@ -258,7 +258,7 @@
             "title": "修改用户",
             "tip": "修改用户信息",
             "menuLayer": "admin",
-            "menuType": "2",
+            "menuType": 2,
             "routeType": "form",
             "apiPrefix": "v1",
             "apiSuffix": "/:id",
@@ -266,7 +266,7 @@
             "apiMethod": "GET|PUT",
             "apiExt": "",
             "doc": null,
-            "isHide": "0"
+            "isHide": 0
         },
         {
             "module": "core",
@@ -276,7 +276,7 @@
             "title": "删除用户",
             "tip": "软删除用户",
             "menuLayer": "admin",
-            "menuType": "2",
+            "menuType": 2,
             "routeType": "",
             "apiPrefix": "v1",
             "apiSuffix": "/:id",
@@ -284,7 +284,7 @@
             "apiMethod": "DELETE",
             "apiExt": "",
             "doc": null,
-            "isHide": "0"
+            "isHide": 0
         },
         {
             "module": "core",
@@ -294,7 +294,7 @@
             "title": "添加用户",
             "tip": "添加用户",
             "menuLayer": "admin",
-            "menuType": "2",
+            "menuType": 2,
             "routeType": "form",
             "apiPrefix": "v1",
             "apiSuffix": "",
@@ -302,7 +302,7 @@
             "apiMethod": "GET|POST",
             "apiExt": "",
             "doc": null,
-            "isHide": "0"
+            "isHide": 0
         },
         {
             "module": "core",
@@ -312,7 +312,7 @@
             "title": "设置管理",
             "tip": "系统常用设置",
             "menuLayer": "admin",
-            "menuType": "1",
+            "menuType": 1,
             "routeType": "list",
             "apiPrefix": "v1",
             "apiSuffix": "",
@@ -320,7 +320,7 @@
             "apiMethod": "GET",
             "apiExt": "",
             "doc": null,
-            "isHide": "0"
+            "isHide": 0
         },
         {
             "module": "core",
@@ -330,7 +330,7 @@
             "title": "系统",
             "tip": "核心系统相关功能",
             "menuLayer": "admin",
-            "menuType": "0",
+            "menuType": 0,
             "routeType": "",
             "apiPrefix": "",
             "apiSuffix": "",
@@ -338,7 +338,7 @@
             "apiMethod": "",
             "apiExt": "",
             "doc": null,
-            "isHide": "0"
+            "isHide": 0
         },
         {
             "module": "core",
@@ -348,7 +348,7 @@
             "title": "菜单管理",
             "tip": "管理系统后台左侧菜单",
             "menuLayer": "admin",
-            "menuType": "1",
+            "menuType": 1,
             "routeType": "list",
             "apiPrefix": "v1",
             "apiSuffix": "",
@@ -356,7 +356,7 @@
             "apiMethod": "GET",
             "apiExt": "",
             "doc": null,
-            "isHide": "0"
+            "isHide": 0
         },
         {
             "module": "core",
@@ -366,7 +366,7 @@
             "title": "修改角色",
             "tip": "修改角色信息及权限",
             "menuLayer": "admin",
-            "menuType": "2",
+            "menuType": 2,
             "routeType": "form",
             "apiPrefix": "v1",
             "apiSuffix": "/:id",
@@ -374,7 +374,7 @@
             "apiMethod": "GET|PUT",
             "apiExt": "",
             "doc": null,
-            "isHide": "0"
+            "isHide": 0
         },
         {
             "module": "core",
@@ -384,7 +384,7 @@
             "title": "删除角色",
             "tip": "删除角色",
             "menuLayer": "admin",
-            "menuType": "2",
+            "menuType": 2,
             "routeType": "",
             "apiPrefix": "v1",
             "apiSuffix": "/:id",
@@ -392,7 +392,7 @@
             "apiMethod": "DELETE",
             "apiExt": "",
             "doc": null,
-            "isHide": "0"
+            "isHide": 0
         },
         {
             "module": "core",
@@ -402,7 +402,7 @@
             "title": "添加角色",
             "tip": "添加角色",
             "menuLayer": "admin",
-            "menuType": "2",
+            "menuType": 2,
             "routeType": "form",
             "apiPrefix": "v1",
             "apiSuffix": "",
@@ -410,7 +410,7 @@
             "apiMethod": "GET|POST",
             "apiExt": "",
             "doc": null,
-            "isHide": "0"
+            "isHide": 0
         },
         {
             "module": "core",
@@ -420,7 +420,7 @@
             "title": "角色成员",
             "tip": "管理角色成员",
             "menuLayer": "admin",
-            "menuType": "2",
+            "menuType": 2,
             "routeType": "list",
             "apiPrefix": "v1",
             "apiSuffix": "/:name",
@@ -428,7 +428,7 @@
             "apiMethod": "GET",
             "apiExt": "",
             "doc": null,
-            "isHide": "0"
+            "isHide": 0
         },
         {
             "module": "core",
@@ -438,7 +438,7 @@
             "title": "添加角色成员",
             "tip": "添加一个新角色成员",
             "menuLayer": "admin",
-            "menuType": "2",
+            "menuType": 2,
             "routeType": "form",
             "apiPrefix": "v1",
             "apiSuffix": "/:name",
@@ -446,7 +446,7 @@
             "apiMethod": "GET|POST",
             "apiExt": "",
             "doc": null,
-            "isHide": "0"
+            "isHide": 0
         },
         {
             "module": "core",
@@ -456,7 +456,7 @@
             "title": "删除角色成员",
             "tip": "删除一个角色成员",
             "menuLayer": "admin",
-            "menuType": "2",
+            "menuType": 2,
             "routeType": "",
             "apiPrefix": "v1",
             "apiSuffix": "/:uid/:name",
@@ -464,7 +464,7 @@
             "apiMethod": "DELETE",
             "apiExt": "",
             "doc": null,
-            "isHide": "0"
+            "isHide": 0
         },
         {
             "module": "core",
@@ -474,7 +474,7 @@
             "title": "清空缓存",
             "tip": "清空服务器端缓存",
             "menuLayer": "admin",
-            "menuType": "3",
+            "menuType": 3,
             "routeType": "",
             "apiPrefix": "v1",
             "apiSuffix": "",
@@ -482,7 +482,7 @@
             "apiMethod": "DELETE",
             "apiExt": "",
             "doc": null,
-            "isHide": "0"
+            "isHide": 0
         },
         {
             "module": "core",
@@ -492,7 +492,7 @@
             "title": "添加菜单",
             "tip": "添加后台菜单(接口)",
             "menuLayer": "admin",
-            "menuType": "2",
+            "menuType": 2,
             "routeType": "form",
             "apiPrefix": "v1",
             "apiSuffix": "",
@@ -500,7 +500,7 @@
             "apiMethod": "GET|POST",
             "apiExt": "",
             "doc": null,
-            "isHide": "0"
+            "isHide": 0
         },
         {
             "module": "core",
@@ -510,7 +510,7 @@
             "title": "修改菜单",
             "tip": "修改后台菜单(接口)",
             "menuLayer": "admin",
-            "menuType": "2",
+            "menuType": 2,
             "routeType": "form",
             "apiPrefix": "v1",
             "apiSuffix": "/:id",
@@ -518,7 +518,7 @@
             "apiMethod": "GET|PUT",
             "apiExt": "",
             "doc": null,
-            "isHide": "0"
+            "isHide": 0
         },
         {
             "module": "core",
@@ -528,7 +528,7 @@
             "title": "删除菜单",
             "tip": "删除后台菜单(接口)",
             "menuLayer": "admin",
-            "menuType": "2",
+            "menuType": 2,
             "routeType": "",
             "apiPrefix": "v1",
             "apiSuffix": "/:id",
@@ -536,7 +536,7 @@
             "apiMethod": "DELETE",
             "apiExt": "",
             "doc": null,
-            "isHide": "0"
+            "isHide": 0
         },
         {
             "module": "core",
@@ -546,7 +546,7 @@
             "title": "检查更新",
             "tip": "检查新版本",
             "menuLayer": "admin",
-            "menuType": "3",
+            "menuType": 3,
             "routeType": "",
             "apiPrefix": "v1",
             "apiSuffix": "",
@@ -554,7 +554,7 @@
             "apiMethod": "GET",
             "apiExt": "",
             "doc": null,
-            "isHide": "0"
+            "isHide": 0
         },
         {
             "module": "core",
@@ -564,7 +564,7 @@
             "title": "模块管理",
             "tip": "管理系统安装的功能模块",
             "menuLayer": "admin",
-            "menuType": "1",
+            "menuType": 1,
             "routeType": "list",
             "apiPrefix": "v1",
             "apiSuffix": "",
@@ -572,7 +572,7 @@
             "apiMethod": "GET",
             "apiExt": "",
             "doc": null,
-            "isHide": "0"
+            "isHide": 0
         },
         {
             "module": "core",
@@ -582,7 +582,7 @@
             "title": "创建模块",
             "tip": "创建一个新模块",
             "menuLayer": "admin",
-            "menuType": "2",
+            "menuType": 2,
             "routeType": "form",
             "apiPrefix": "v1",
             "apiSuffix": "",
@@ -590,7 +590,7 @@
             "apiMethod": "GET|POST",
             "apiExt": "",
             "doc": null,
-            "isHide": "0"
+            "isHide": 0
         },
         {
             "module": "core",
@@ -600,7 +600,7 @@
             "title": "修改模块",
             "tip": "修改模块信息",
             "menuLayer": "admin",
-            "menuType": "2",
+            "menuType": 2,
             "routeType": "form",
             "apiPrefix": "v1",
             "apiSuffix": "/:id",
@@ -608,7 +608,7 @@
             "apiMethod": "GET|PUT",
             "apiExt": "",
             "doc": null,
-            "isHide": "0"
+            "isHide": 0
         },
         {
             "module": "core",
@@ -618,7 +618,7 @@
             "title": "导出模块",
             "tip": "导出模块信息便于分享模块",
             "menuLayer": "admin",
-            "menuType": "2",
+            "menuType": 2,
             "routeType": "from",
             "apiPrefix": "v1",
             "apiSuffix": "/:id",
@@ -626,7 +626,7 @@
             "apiMethod": "GET",
             "apiExt": "",
             "doc": null,
-            "isHide": "0"
+            "isHide": 0
         },
         {
             "module": "core",
@@ -636,7 +636,7 @@
             "title": "增加配置",
             "tip": "增加系统配置",
             "menuLayer": "admin",
-            "menuType": "2",
+            "menuType": 2,
             "routeType": "form",
             "apiPrefix": "v1",
             "apiSuffix": "",
@@ -644,7 +644,7 @@
             "apiMethod": "GET|POST",
             "apiExt": "",
             "doc": null,
-            "isHide": "0"
+            "isHide": 0
         },
         {
             "module": "core",
@@ -654,7 +654,7 @@
             "title": "修改配置",
             "tip": "修改系统配置",
             "menuLayer": "admin",
-            "menuType": "2",
+            "menuType": 2,
             "routeType": "form",
             "apiPrefix": "v1",
             "apiSuffix": "/:id",
@@ -662,7 +662,7 @@
             "apiMethod": "GET|PUT",
             "apiExt": "",
             "doc": null,
-            "isHide": "0"
+            "isHide": 0
         },
         {
             "module": "core",
@@ -672,7 +672,7 @@
             "title": "系统设置",
             "tip": "批量修改系统配置的值",
             "menuLayer": "admin",
-            "menuType": "1",
+            "menuType": 1,
             "routeType": "form",
             "apiPrefix": "v1",
             "apiSuffix": "/:module",
@@ -680,7 +680,7 @@
             "apiMethod": "GET|PUT",
             "apiExt": "",
             "doc": null,
-            "isHide": "0"
+            "isHide": 0
         },
         {
             "module": "core",
@@ -690,7 +690,7 @@
             "title": "用户登录",
             "tip": "用户登录",
             "menuLayer": "home",
-            "menuType": "3",
+            "menuType": 3,
             "routeType": "",
             "apiPrefix": "v1",
             "apiSuffix": "",
@@ -698,7 +698,7 @@
             "apiMethod": "GET|POST",
             "apiExt": "",
             "doc": "{\"POST\":{\"description\":\"使用凭证登录系统\",\"params\":[{\"description\":\"支持多种身份验证方式\",\"require\":\"0\",\"name\":\"identity_type\",\"title\":\"验证方式\",\"example\":\"0\"},{\"require\":\"1\",\"name\":\"identifier\",\"title\":\"账号\",\"description\":\"用户名，邮箱，手机号\",\"example\":\"admin@qq.com\"},{\"name\":\"credential\",\"require\":\"1\",\"title\":\"凭证\",\"description\":\"密码\",\"example\":\"qwe123\"}],\"divider\":\"\"}}",
-            "isHide": "0"
+            "isHide": 0
         },
         {
             "module": "core",
@@ -708,7 +708,7 @@
             "title": "添加前台API",
             "tip": "添加前台API接口",
             "menuLayer": "admin",
-            "menuType": "2",
+            "menuType": 2,
             "routeType": "form",
             "apiPrefix": "v1",
             "apiSuffix": "",
@@ -716,7 +716,7 @@
             "apiMethod": "GET|POST",
             "apiExt": "",
             "doc": null,
-            "isHide": "0"
+            "isHide": 0
         },
         {
             "module": "core",
@@ -726,7 +726,7 @@
             "title": "删除前台API",
             "tip": "删除后前台API接口",
             "menuLayer": "admin",
-            "menuType": "2",
+            "menuType": 2,
             "routeType": "",
             "apiPrefix": "v1",
             "apiSuffix": "/:id",
@@ -734,7 +734,7 @@
             "apiMethod": "DELETE",
             "apiExt": "",
             "doc": null,
-            "isHide": "0"
+            "isHide": 0
         },
         {
             "module": "core",
@@ -744,7 +744,7 @@
             "title": "修改前台API",
             "tip": "修改前台API接口",
             "menuLayer": "admin",
-            "menuType": "2",
+            "menuType": 2,
             "routeType": "form",
             "apiPrefix": "v1",
             "apiSuffix": "/:id",
@@ -752,7 +752,7 @@
             "apiMethod": "GET|PUT",
             "apiExt": "",
             "doc": null,
-            "isHide": "0"
+            "isHide": 0
         },
         {
             "module": "core",
@@ -762,7 +762,7 @@
             "title": "API管理",
             "tip": "管理前台API",
             "menuLayer": "admin",
-            "menuType": "1",
+            "menuType": 1,
             "routeType": "list",
             "apiPrefix": "v1",
             "apiSuffix": "",
@@ -770,7 +770,7 @@
             "apiMethod": "GET",
             "apiExt": "",
             "doc": null,
-            "isHide": "0"
+            "isHide": 0
         },
         {
             "module": "core",
@@ -780,7 +780,7 @@
             "title": "检查登录状态",
             "tip": "检查用户是否真的登录",
             "menuLayer": "home",
-            "menuType": "3",
+            "menuType": 3,
             "routeType": "route",
             "apiPrefix": "v1",
             "apiSuffix": "",
@@ -788,7 +788,7 @@
             "apiMethod": "GET",
             "apiExt": "",
             "doc": null,
-            "isHide": "0"
+            "isHide": 0
         },
         {
             "module": "core",
@@ -798,7 +798,7 @@
             "title": "获取用户信息",
             "tip": "获取登录的用户信息",
             "menuLayer": "home",
-            "menuType": "3",
+            "menuType": 3,
             "routeType": "route",
             "apiPrefix": "v1",
             "apiSuffix": "",
@@ -806,7 +806,7 @@
             "apiMethod": "GET",
             "apiExt": "",
             "doc": null,
-            "isHide": "0"
+            "isHide": 0
         },
         {
             "module": "core",
@@ -816,7 +816,7 @@
             "title": "修改API文档",
             "tip": "修改API接口文档",
             "menuLayer": "admin",
-            "menuType": "2",
+            "menuType": 2,
             "routeType": "form",
             "apiPrefix": "v1",
             "apiSuffix": "/:id",
@@ -824,7 +824,7 @@
             "apiMethod": "GET|PUT",
             "apiExt": "",
             "doc": null,
-            "isHide": "0"
+            "isHide": 0
         },
         {
             "module": "core",
@@ -834,7 +834,7 @@
             "title": "注销登录",
             "tip": "",
             "menuLayer": "home",
-            "menuType": "3",
+            "menuType": 3,
             "routeType": "route",
             "apiPrefix": "v1",
             "apiSuffix": "",
@@ -842,7 +842,7 @@
             "apiMethod": "DELETE",
             "apiExt": "",
             "doc": null,
-            "isHide": "0"
+            "isHide": 0
         },
         {
             "module": "core",
@@ -852,7 +852,7 @@
             "title": "重置密码",
             "tip": "",
             "menuLayer": "home",
-            "menuType": "3",
+            "menuType": 3,
             "routeType": "route",
             "apiPrefix": "v1",
             "apiSuffix": "",
@@ -860,7 +860,7 @@
             "apiMethod": "PUT",
             "apiExt": "",
             "doc": null,
-            "isHide": "0"
+            "isHide": 0
         },
         {
             "module": "core",
@@ -870,7 +870,7 @@
             "title": "后台登录",
             "tip": "后台登录",
             "menuLayer": "admin",
-            "menuType": "3",
+            "menuType": 3,
             "routeType": "",
             "apiPrefix": "v1",
             "apiSuffix": "",
@@ -878,7 +878,7 @@
             "apiMethod": "GET|POST",
             "apiExt": "",
             "doc": "{\"POST\":{\"description\":\"使用凭证登录系统\",\"params\":[{\"description\":\"支持多种身份验证方式\",\"require\":\"0\",\"name\":\"identity_type\",\"title\":\"验证方式\",\"example\":\"0\"},{\"require\":\"1\",\"name\":\"identifier\",\"title\":\"账号\",\"description\":\"用户名，邮箱，手机号\",\"example\":\"admin@qq.com\"},{\"name\":\"credential\",\"require\":\"1\",\"title\":\"凭证\",\"description\":\"密码\",\"example\":\"qwe123\"}],\"divider\":\"\"}}",
-            "isHide": "0"
+            "isHide": 0
         },
         {
             "module": "core",
@@ -888,7 +888,7 @@
             "title": "安装步骤1",
             "tip": "",
             "menuLayer": "home",
-            "menuType": "3",
+            "menuType": 3,
             "routeType": "",
             "apiPrefix": "v1",
             "apiSuffix": "",
@@ -896,7 +896,7 @@
             "apiMethod": "GET|POST",
             "apiExt": "",
             "doc": "",
-            "isHide": "0"
+            "isHide": 0
         },
         {
             "module": "core",
@@ -906,7 +906,7 @@
             "title": "安装步骤2",
             "tip": "",
             "menuLayer": "home",
-            "menuType": "3",
+            "menuType": 3,
             "routeType": "",
             "apiPrefix": "v1",
             "apiSuffix": "",
@@ -914,7 +914,7 @@
             "apiMethod": "GET|POST",
             "apiExt": "",
             "doc": "",
-            "isHide": "0"
+            "isHide": 0
         },
         {
             "module": "core",
@@ -924,7 +924,7 @@
             "title": "安装步骤3",
             "tip": "",
             "menuLayer": "home",
-            "menuType": "3",
+            "menuType": 3,
             "routeType": "",
             "apiPrefix": "v1",
             "apiSuffix": "",
@@ -932,7 +932,7 @@
             "apiMethod": "GET|POST",
             "apiExt": "",
             "doc": "",
-            "isHide": "0"
+            "isHide": 0
         },
         {
             "module": "core",
@@ -942,7 +942,7 @@
             "title": "安装步骤4",
             "tip": "",
             "menuLayer": "home",
-            "menuType": "3",
+            "menuType": 3,
             "routeType": "",
             "apiPrefix": "v1",
             "apiSuffix": "",
@@ -950,7 +950,7 @@
             "apiMethod": "GET|POST",
             "apiExt": "",
             "doc": "",
-            "isHide": "0"
+            "isHide": 0
         },
         {
             "module": "core",
@@ -960,7 +960,7 @@
             "title": "安装步骤5",
             "tip": "",
             "menuLayer": "home",
-            "menuType": "3",
+            "menuType": 3,
             "routeType": "",
             "apiPrefix": "v1",
             "apiSuffix": "",
@@ -968,7 +968,7 @@
             "apiMethod": "GET|POST",
             "apiExt": "",
             "doc": "",
-            "isHide": "0"
+            "isHide": 0
         },
         {
             "module": "core",
@@ -978,7 +978,7 @@
             "title": "核心配置",
             "tip": "获取核心模块配置",
             "menuLayer": "home",
-            "menuType": "3",
+            "menuType": 3,
             "routeType": "",
             "apiPrefix": "v1",
             "apiSuffix": "",
@@ -986,7 +986,7 @@
             "apiMethod": "GET",
             "apiExt": "",
             "doc": null,
-            "isHide": "0"
+            "isHide": 0
         },
         {
             "module": "core",
@@ -996,7 +996,7 @@
             "title": "后台首页",
             "tip": "",
             "menuLayer": "admin",
-            "menuType": "3",
+            "menuType": 3,
             "routeType": "route",
             "apiPrefix": "v1",
             "apiSuffix": "",
@@ -1004,7 +1004,7 @@
             "apiMethod": "GET",
             "apiExt": "",
             "doc": null,
-            "isHide": "0"
+            "isHide": 0
         },
         {
             "module": "core",
@@ -1014,7 +1014,7 @@
             "title": "设置状态",
             "tip": "设置状态",
             "menuLayer": "admin",
-            "menuType": "3",
+            "menuType": 3,
             "routeType": "",
             "apiPrefix": "v1",
             "apiSuffix": "",
@@ -1022,7 +1022,7 @@
             "apiMethod": "PUT",
             "apiExt": "",
             "doc": null,
-            "isHide": "0"
+            "isHide": 0
         },
         {
             "module": "core",
@@ -1032,7 +1032,7 @@
             "title": "导入模块",
             "tip": "导入模块信息",
             "menuLayer": "admin",
-            "menuType": "2",
+            "menuType": 2,
             "routeType": "from",
             "apiPrefix": "v1",
             "apiSuffix": "/:name",
@@ -1040,7 +1040,7 @@
             "apiMethod": "POST",
             "apiExt": "",
             "doc": null,
-            "isHide": "0"
+            "isHide": 0
         },
         {
             "module": "core",
@@ -1050,7 +1050,7 @@
             "title": "导出模块",
             "tip": "导出模块信息",
             "menuLayer": "admin",
-            "menuType": "2",
+            "menuType": 2,
             "routeType": "from",
             "apiPrefix": "v1",
             "apiSuffix": "/:id",
@@ -1058,7 +1058,7 @@
             "apiMethod": "POST",
             "apiExt": "",
             "doc": null,
-            "isHide": "0"
+            "isHide": 0
         },
         {
             "module": "core",
@@ -1068,7 +1068,7 @@
             "title": "文件上传",
             "tip": "",
             "menuLayer": "home",
-            "menuType": "3",
+            "menuType": 3,
             "routeType": "route",
             "apiPrefix": "v1",
             "apiSuffix": "",
@@ -1076,7 +1076,7 @@
             "apiMethod": "POST",
             "apiExt": "",
             "doc": null,
-            "isHide": "0"
+            "isHide": 0
         },
         {
             "module": "core",
@@ -1086,7 +1086,7 @@
             "title": "系统",
             "tip": "系统TAB",
             "menuLayer": "admin",
-            "menuType": "-1",
+            "menuType": -1,
             "routeType": "",
             "apiPrefix": "v1",
             "apiSuffix": "",
@@ -1094,7 +1094,7 @@
             "apiMethod": "",
             "apiExt": "",
             "doc": "",
-            "isHide": "0"
+            "isHide": 0
         },
         {
             "module": "core",
@@ -1104,7 +1104,7 @@
             "title": "用户",
             "tip": "用户TAB",
             "menuLayer": "admin",
-            "menuType": "-1",
+            "menuType": -1,
             "routeType": "",
             "apiPrefix": "v1",
             "apiSuffix": "",
@@ -1112,7 +1112,7 @@
             "apiMethod": "",
             "apiExt": "",
             "doc": "",
-            "isHide": "0"
+            "isHide": 0
         },
         {
             "module": "core",
@@ -1122,7 +1122,7 @@
             "title": "内容",
             "tip": "内容TAB",
             "menuLayer": "admin",
-            "menuType": "-1",
+            "menuType": -1,
             "routeType": "",
             "apiPrefix": "v1",
             "apiSuffix": "",
@@ -1130,7 +1130,7 @@
             "apiMethod": "",
             "apiExt": "",
             "doc": "",
-            "isHide": "0"
+            "isHide": 0
         },
         {
             "module": "core",
@@ -1140,7 +1140,7 @@
             "title": "财务",
             "tip": "财务TAB",
             "menuLayer": "admin",
-            "menuType": "-1",
+            "menuType": -1,
             "routeType": "",
             "apiPrefix": "v1",
             "apiSuffix": "",
@@ -1148,7 +1148,7 @@
             "apiMethod": "",
             "apiExt": "",
             "doc": "",
-            "isHide": "0"
+            "isHide": 0
         },
         {
             "module": "core",
@@ -1158,7 +1158,7 @@
             "title": "用户管理",
             "tip": "",
             "menuLayer": "admin",
-            "menuType": "0",
+            "menuType": 0,
             "routeType": "",
             "apiPrefix": "",
             "apiSuffix": "",
@@ -1166,7 +1166,7 @@
             "apiMethod": "",
             "apiExt": "",
             "doc": null,
-            "isHide": "0"
+            "isHide": 0
         },
         {
             "module": "core",
@@ -1176,7 +1176,7 @@
             "title": "管理后台",
             "tip": "后台根节点",
             "menuLayer": "admin",
-            "menuType": "-1",
+            "menuType": -1,
             "routeType": "",
             "apiPrefix": "",
             "apiSuffix": "",
@@ -1184,7 +1184,7 @@
             "apiMethod": "",
             "apiExt": "",
             "doc": null,
-            "isHide": "0"
+            "isHide": 0
         },
         {
             "module": "core",
@@ -1194,7 +1194,7 @@
             "title": "前台",
             "tip": "前台根节点",
             "menuLayer": "home",
-            "menuType": "-1",
+            "menuType": -1,
             "routeType": "",
             "apiPrefix": "",
             "apiSuffix": "",
@@ -1202,7 +1202,7 @@
             "apiMethod": "",
             "apiExt": "",
             "doc": null,
-            "isHide": "0"
+            "isHide": 0
         }
     ],
     "tables": [
@@ -1215,18 +1215,18 @@
                 "  `configCate` longtext COMMENT '配置分组',",
                 "  `name` varchar(32) NOT NULL DEFAULT '' COMMENT '配置名称',",
                 "  `title` varchar(32) NOT NULL DEFAULT '' COMMENT '配置标题',",
-                "  `configType` longtext COMMENT '配置类型',",
+                "  `configType` varchar(64) NOT NULL DEFAULT '' COMMENT '配置类型',",
                 "  `value` text COMMENT '配置值',",
                 "  `defaultValue` text COMMENT '默认值',",
                 "  `testValue` text COMMENT '开发模式测试值',",
                 "  `placeholder` varchar(100) NOT NULL DEFAULT '' COMMENT '说明',",
                 "  `tip` varchar(100) NOT NULL DEFAULT '' COMMENT '配置说明',",
                 "  `options` varchar(256) NOT NULL DEFAULT '' COMMENT '配置额外值',",
-                "  `isSystem` longtext COMMENT '是否系统配置',",
-                "  `isDev` longtext COMMENT '是否开发模式才显示',",
+                "  `isSystem` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '是否系统配置',",
+                "  `isDev` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '是否开发模式才显示',",
                 "  `sortnum` tinyint(4) unsigned NOT NULL DEFAULT '0' COMMENT '排序',",
                 "  `status` tinyint(4) NOT NULL DEFAULT '0' COMMENT '状态',",
-                "  `deleteTime` longtext COMMENT '删除时间',",
+                "  `deleteTime` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '删除时间',",
                 "  PRIMARY KEY (`id`)",
                 ") ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='系统配置表'"
             ],
@@ -1238,13 +1238,13 @@
                 "CREATE TABLE `xy_core_identity` (",
                 "  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID',",
                 "  `uid` int(11) NOT NULL DEFAULT '0' COMMENT 'UID',",
-                "  `identityType` longtext COMMENT '账号类型',",
-                "  `identityGroup` longtext COMMENT '账号分组',",
+                "  `identityType` varchar(63) NOT NULL DEFAULT '' COMMENT '账号类型',",
+                "  `identityGroup` varchar(128) NOT NULL DEFAULT '' COMMENT '账号分组',",
                 "  `identifier` varchar(128) NOT NULL DEFAULT '' COMMENT '帐号/openid',",
                 "  `verified` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '是否已验证',",
-                "  `isOauth2` longtext COMMENT '是否OAuth2登录',",
-                "  `createTime` longtext COMMENT '创建时间',",
-                "  `deleteTime` longtext COMMENT '删除时间',",
+                "  `isOauth2` int(1) unsigned NOT NULL DEFAULT '0' COMMENT '是否OAuth2登录',",
+                "  `createTime` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '创建时间',",
+                "  `deleteTime` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '删除时间',",
                 "  PRIMARY KEY (`id`)",
                 ") ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户登陆凭证信息表'"
             ],
@@ -1258,10 +1258,10 @@
                 "  `key` varchar(256) NOT NULL DEFAULT '' COMMENT '加密key',",
                 "  `token` text NOT NULL COMMENT '登录token',",
                 "  `refreshToken` text COMMENT '刷新token',",
-                "  `loginTime` longtext COMMENT '登录时间',",
-                "  `expireTime` longtext COMMENT '过期时间',",
-                "  `clientType` longtext COMMENT '客户端类型1pc2wap3app',",
-                "  `clientName` longtext COMMENT '设备名称'",
+                "  `loginTime` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '登录时间',",
+                "  `expireTime` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '过期时间',",
+                "  `clientType` int(3) NOT NULL COMMENT '客户端类型1pc2wap3app',",
+                "  `clientName` varchar(128) NOT NULL COMMENT '设备名称'",
                 ") ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户登录信息表'"
             ],
             "tableRows": []
@@ -1277,19 +1277,19 @@
                 "  `pmenu` varchar(255) NOT NULL DEFAULT '' COMMENT '父菜单',",
                 "  `title` varchar(255) NOT NULL DEFAULT '' COMMENT '菜单标题',",
                 "  `tip` varchar(255) NOT NULL DEFAULT '' COMMENT '提示',",
-                "  `menuLayer` longtext COMMENT '菜单分层',",
-                "  `menuType` longtext COMMENT '菜单类型1导航2按钮3仅接口',",
-                "  `routeType` longtext COMMENT '路由类型',",
-                "  `apiPrefix` longtext COMMENT '接口前缀',",
-                "  `apiSuffix` longtext COMMENT '接口后缀',",
-                "  `apiParams` longtext COMMENT '接口参数',",
-                "  `apiMethod` longtext COMMENT '接口请求方法',",
-                "  `apiExt` longtext COMMENT '接口后缀',",
+                "  `menuLayer` varchar(32) DEFAULT NULL COMMENT '菜单分层',",
+                "  `menuType` tinyint(3) DEFAULT '0' COMMENT '菜单类型1导航2按钮3仅接口',",
+                "  `routeType` varchar(32) DEFAULT NULL COMMENT '路由类型',",
+                "  `apiPrefix` varchar(255) DEFAULT NULL COMMENT '接口前缀',",
+                "  `apiSuffix` varchar(255) DEFAULT NULL COMMENT '接口后缀',",
+                "  `apiParams` varchar(255) DEFAULT NULL COMMENT '接口参数',",
+                "  `apiMethod` varchar(255) DEFAULT NULL COMMENT '接口请求方法',",
+                "  `apiExt` varchar(255) DEFAULT NULL COMMENT '接口后缀',",
                 "  `doc` longtext COMMENT '接口文档',",
-                "  `isHide` longtext COMMENT '是否隐藏',",
+                "  `isHide` int(1) unsigned DEFAULT '0' COMMENT '是否隐藏',",
                 "  `status` tinyint(1) NOT NULL DEFAULT '1' COMMENT '状态',",
                 "  `sortnum` int(11) NOT NULL DEFAULT '0' COMMENT '排序',",
-                "  `deleteTime` longtext COMMENT '删除时间',",
+                "  `deleteTime` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '删除时间',",
                 "  PRIMARY KEY (`id`)",
                 ") ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='后台菜单表'"
             ],
@@ -1308,10 +1308,10 @@
                 "  `version` varchar(255) NOT NULL DEFAULT '' COMMENT '版本号',",
                 "  `build` varchar(255) NOT NULL DEFAULT '' COMMENT 'build版本',",
                 "  `status` tinyint(1) NOT NULL DEFAULT '0' COMMENT '状态',",
-                "  `hasTaglib` longtext COMMENT '是否有模版标签',",
-                "  `hasCommand` longtext COMMENT '是否有命令行',",
+                "  `hasTaglib` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否有模版标签',",
+                "  `hasCommand` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否有命令行',",
                 "  `sortnum` int(11) NOT NULL DEFAULT '0' COMMENT '排序',",
-                "  `deleteTime` longtext COMMENT '删除时间',",
+                "  `deleteTime` int(11) NOT NULL DEFAULT '0' COMMENT '删除时间',",
                 "  PRIMARY KEY (`id`),",
                 "  UNIQUE KEY `name` (`name`)",
                 ") ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='后台模块表'"
@@ -1327,10 +1327,10 @@
                     "version": "0.2.0",
                     "build": "build_20191217",
                     "status": 1,
-                    "hasTaglib": "0",
-                    "hasCommand": "0",
+                    "hasTaglib": 0,
+                    "hasCommand": 0,
                     "sortnum": 1,
-                    "deleteTime": "0"
+                    "deleteTime": 0
                 }
             ]
         },
@@ -1340,13 +1340,13 @@
                 "CREATE TABLE `xy_core_role` (",
                 "  `id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT 'ID',",
                 "  `pid` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '上级',",
-                "  `name` varchar(255) NOT NULL COMMENT '角色名称',",
+                "  `name` varchar(255) NOT NULL DEFAULT '' COMMENT '角色名称',",
                 "  `title` varchar(255) NOT NULL DEFAULT '' COMMENT '角色标题',",
                 "  `adminAuth` longtext COMMENT '后台权限',",
                 "  `apiAuth` longtext COMMENT '接口权限',",
                 "  `sortnum` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '排序',",
                 "  `status` tinyint(1) NOT NULL DEFAULT '0' COMMENT '状态',",
-                "  `deleteTime` longtext COMMENT '删除时间',",
+                "  `deleteTime` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '删除时间',",
                 "  PRIMARY KEY (`id`)",
                 ") ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户角色表'"
             ],
@@ -1360,7 +1360,7 @@
                     "apiAuth": "",
                     "sortnum": 0,
                     "status": 1,
-                    "deleteTime": "0"
+                    "deleteTime": 0
                 },
                 {
                     "id": 2,
@@ -1371,7 +1371,7 @@
                     "apiAuth": "",
                     "sortnum": 0,
                     "status": 1,
-                    "deleteTime": "0"
+                    "deleteTime": 0
                 },
                 {
                     "id": 3,
@@ -1382,7 +1382,7 @@
                     "apiAuth": null,
                     "sortnum": 0,
                     "status": 1,
-                    "deleteTime": "0"
+                    "deleteTime": 0
                 }
             ]
         },
@@ -1399,10 +1399,10 @@
                 "  `extendInfo` text COMMENT '用户扩展信息',",
                 "  `status` tinyint(3) NOT NULL DEFAULT '0' COMMENT '状态,1正常,0待审核,-1禁用',",
                 "  `roles` varchar(256) NOT NULL DEFAULT '' COMMENT '用户拥有的角色',",
-                "  `registerTime` longtext COMMENT '用户注册时间',",
-                "  `deleteTime` longtext COMMENT '删除时间',",
-                "  `cloudAlias` longtext COMMENT '云应用别名ID',",
-                "  `cloudId` longtext COMMENT '云应用ID',",
+                "  `registerTime` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '用户注册时间',",
+                "  `deleteTime` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '删除时间',",
+                "  `cloudAlias` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '云应用别名ID',",
+                "  `cloudId` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '云应用ID',",
                 "  PRIMARY KEY (`id`)",
                 ") ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户帐号信息表'"
             ],
