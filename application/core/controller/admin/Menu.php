@@ -60,7 +60,9 @@ class Menu extends Admin
         // 获取站点信息
         $configService = new \app\core\service\Config();
         $siteInfo = $configService->getValueByModule('core');
-        $siteInfo['domains'] = explode(',', $siteInfo['domains']);
+        if (isset($siteInfo['domains'])) {
+            $siteInfo['domains'] = explode(',', $siteInfo['domains']);
+        }
         $menuTree[0] = array_merge($menuTree[0], $siteInfo);
 
         // 构造动态页面数据
