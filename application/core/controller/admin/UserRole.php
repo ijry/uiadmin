@@ -136,7 +136,7 @@ class UserRole extends Admin
             //构造动态页面数据
             $xyBuilderForm = new \app\core\util\xybuilder\XyBuilderForm();
             $formData = $xyBuilderForm->init()
-                ->setFormMethod('put')
+                ->setFormMethod('post')
                 ->addFormItem('roleName', '角色名称', 'text', $name, [
                     'placeholder' => '请输入角色名称',
                     'tip' => '角色名称',

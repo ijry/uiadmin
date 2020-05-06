@@ -18,6 +18,8 @@ use think\Validate;
 use think\facade\Request;
 use app\core\controller\common\Admin;
 use app\core\util\Tree;
+use app\core\model\User as coreUserModel;
+use app\core\model\Role as coreRoleModel;
 
 /**
  * 菜单管理
@@ -44,12 +46,32 @@ class Menu extends Admin
      */
     public function trees()
     {
+        $login = $this->isLogin();
+        $roles = explode(',' , coreUserModel::where('id', $login['uid'])
+            ->value('roles'));
+        $adminAuth_list = coreRoleModel::where('name', 'in', $roles)
+            ->column('adminAuth');
+        $adminAuth = [];
+        foreach ($adminAuth_list as $k => $v) {
+            $v = explode(',', $v);
+            $adminAuth = $adminAuth + $v;
+        }
+        $adminAuth = array_unique($adminAuth);
+
         // 获取列表
         $dataList = $this->core_menu
             ->where('menuLayer', '=', 'admin')
             ->order('sortnum asc')
             ->select()->toArray();
         foreach ($dataList as $key => &$val) {
+            if (!in_array('super_admin', $roles) && !in_array('/' . $val['apiPrefix'] . '/' . $val['menuLayer'] . $val['path'], $adminAuth)) {
+                unset($dataList[$key]);
+                continue;
+            }
+            if ($roles == ['super_admin'] && \think\helper\Str::contains($val['path'], '.')) {
+                unset($dataList[$key]);
+                continue;
+            }
             if ($val['menuType'] > 0 && $val['menuType'] < 4) {
                 $val['adminApi'] = '/' . $val['apiPrefix'] . '/admin' . $val['path'] . $val['apiSuffix'];
             }
