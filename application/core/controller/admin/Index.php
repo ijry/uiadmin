@@ -138,17 +138,17 @@ class Index extends Admin
                     [
                         'type'  => 'text',
                         'title' => '接口框架',
-                        'value' => 'XYCms系统 (v0.2.0)'
+                        'value' => 'UniAdmin (v0.2.0)'
                     ],
                     [
                         'type'  => 'text',
                         'title' => '后台框架',
-                        'value' => 'XYAdmin云后台 (v0.2.0)'
+                        'value' => 'XYAdmin (v0.2.0)'
                     ],
                     [
                         'type'  => 'text',
                         'title' => '官方网站',
-                        'value' => 'https://jiangruyi.com(ijry@qq.com)'
+                        'value' => 'https://uniadmin.jiangruyi.com(ijry@qq.com)'
                     ]
                 ]
             ],
