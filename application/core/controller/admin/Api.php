@@ -537,11 +537,11 @@ class Api extends Admin
     {
         // 子菜单检测
         $info = $this->core_menu
-            ->where('menuType', '=', 5)
+            ->where('menuLayer', '=', 'home')
             ->where('id', '=', $id)
             ->find();
         $exist = $this->core_menu
-            ->where('menuType', '=', 5)
+            ->where('menuLayer', '=', 'home')
             ->where('pmenu', '=', $info['path'])
             ->count();
         if ($exist > 0) {
@@ -549,7 +549,7 @@ class Api extends Admin
         }
 
         $ret = $this->core_menu
-            ->where('menuType', '=', 5)
+            ->where('menuLayer', '=', 'home')
             ->where('id', '=', $id)
             ->find()
             ->delete();
