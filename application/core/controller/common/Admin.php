@@ -24,6 +24,8 @@ use app\core\controller\common\Common;
  */
 class Admin extends Common
 {
+    protected $login,$cloudAlias = 0,$cloudId = 0;
+
     protected function initialize()
     {
         // initialize
@@ -35,7 +37,7 @@ class Admin extends Common
         }
 
         // 登录验证
-        $ret = $this->isLogin();
+        $ret = parent::isLogin();
         if ($ret['code'] != 200) {
             echo json_encode($ret);
             exit;
@@ -79,6 +81,22 @@ class Admin extends Common
             return json(['code' => 0, 'msg' => '无此接口权限', 'data' => []]);
         } else {
             return json(['code' => 0, 'msg' => '无后台权限', 'data' => []]);
+        }
+    }
+
+    /**
+     * 是否登录
+     *
+     * @author jry <ijry@qq.com>
+     */
+    protected function isLogin($redirect = 0) {
+        // 登录验证
+        $ret = parent::isLogin();
+        if ($ret['code'] != 200) {
+            echo json_encode($ret);
+            exit;
+        } else {
+            return (Array)$ret['data']['data'];
         }
     }
 }
