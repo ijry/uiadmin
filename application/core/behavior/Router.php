@@ -180,7 +180,6 @@ EOF;
                     ->cacheControl("max-age=$seconds_to_cache")
                     ->contentType('text/html');
             });
-            Route::get('/xyadmin/<name>', 'https://admin.jiangruyi.com/' . request()->pathinfo());
 
             // 计算后台API路由
             $dataList = Db::name('core_menu')
