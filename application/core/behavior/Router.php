@@ -167,14 +167,22 @@ EOF;
                     ->contentType('application/javascript');
             })->ext('js');
 
-
             // 调用云后台
+            // 目前不支持修改后台入口，下个版本即将支持
             Route::get('/xyadmin$', request()->url(true) . '/');
             Route::get('/xyadmin/$', function (\think\Request $request, \think\Response $response) {
                 $seconds_to_cache = 86400 * 30;
                 $ts = gmdate("D, d M Y H:i:s", time() + $seconds_to_cache) . " GMT";
+                $ch= curl_init();
+                curl_setopt($ch, CURLOPT_URL, 'https://admin.jiangruyi.com/xyadmin/?version=0.2.0'); // 支持调用不同版本便于官方升级不影响老项目
+                curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+                curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 10);
+                curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // 信任任何证
+                curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0); // 表示不检查证书
+                $xyadminIndex = curl_exec($ch);
+                curl_close($ch);
                 return $response
-                    ->data(file_get_contents('http://admin.jiangruyi.com/' . $request->pathinfo()))
+                    ->data($xyadminIndex ? $xyadminIndex : '调用云后台出错') 
                     ->code(200)
                     ->expires($ts)
                     ->cacheControl("max-age=$seconds_to_cache")
