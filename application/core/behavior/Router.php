@@ -91,10 +91,10 @@ class Router
             if ($module_service->isExist('cms')) {
                 Route::rule('/', 'cms/index/index'); // 首页访问路由
             } else {
-                Route::rule('/', request()->rootUrl() . '/api.html'); // 首页访问路由
+                Route::rule('/', request()->rootUrl() . '/xyadmin/api.html'); // 首页访问路由
             }
-            Route::rule('/api$', 'core/index/api'); // API访问路由
-            Route::rule('/admin$', 'core/admin.index/index'); // 后台首页访问路由
+            Route::rule('/xyadmin/api$', 'core/index/api'); // API访问路由
+            //Route::rule('/uniadmin$', 'core/admin.index/index'); // 后台首页访问路由
 
             // 设置URL模式
             $urlModel = Db::name('core_config')
@@ -168,13 +168,12 @@ EOF;
             })->ext('js');
 
             // 调用云后台
-            // 目前不支持修改后台入口，下个版本即将支持
             Route::get('/xyadmin$', request()->url(true) . '/');
             Route::get('/xyadmin/$', function (\think\Request $request, \think\Response $response) {
                 $seconds_to_cache = 86400 * 30;
                 $ts = gmdate("D, d M Y H:i:s", time() + $seconds_to_cache) . " GMT";
                 $ch= curl_init();
-                curl_setopt($ch, CURLOPT_URL, 'https://admin.jiangruyi.com/xyadmin/?version=0.2.0'); // 支持调用不同版本便于官方升级不影响老项目
+                curl_setopt($ch, CURLOPT_URL, 'https://admin.jiangruyi.com/xyadmin/?version=0.2.1'); // 支持调用不同版本便于官方升级不影响老项目
                 curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
                 curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 10);
                 curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // 信任任何证

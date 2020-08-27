@@ -41,10 +41,10 @@ class Common extends Controller
      * @return \think\Response
      * @author jry <ijry@qq.com>
      */
-    protected function return($data)
+    protected function return($data, $json = false)
     {
         // 判断pathinfo中是否以api/开头来判断时API请求还是页面请求
-        if (\think\helper\Str::startsWith(request()->pathinfo(), 'api')) {
+        if ($json || \think\helper\Str::startsWith(request()->pathinfo(), 'api')) {
             if (\think\helper\Str::contains(request()->pathinfo(), '.html')) {
                 dump($data);
             } else {

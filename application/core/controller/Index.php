@@ -54,7 +54,7 @@ class Index extends Home
                 'apiUserInfo' => '/v1/core/user/info'
             ],
             'siteInfo' => $siteInfo
-        ]]);
+        ]], true);
     }
 
     /**
