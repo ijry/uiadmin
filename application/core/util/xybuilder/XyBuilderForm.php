@@ -100,7 +100,7 @@ class XyBuilderForm {
         $item['showModal'] = false; // 显示弹窗
         $extra['placeholder'] = isset($extra['placeholder']) ? $extra['placeholder'] : '';
         $extra['tip'] = isset($extra['tip']) ? $extra['tip'] : '';
-        $extra['position'] = isset($extra['position']) ? $extra['position'] : 'left';
+        $extra['position'] = isset($extra['position']) ? $extra['position'] : '';
         // 上传
         if (in_array($item['type'], ['image', 'images', 'file', 'files', 'html', 'tinymce', 'markdown'])) {
             // 上传接口
