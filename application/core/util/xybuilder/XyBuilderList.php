@@ -60,6 +60,7 @@ class XyBuilderList {
      * @author jry <ijry@qq.com>
      */
     public function addTopButton($name, $title, $pageData = [], $style = []) {
+        $btn['name'] = $name;
         $btn['title'] = $title;
         $btn['pageData'] = [
             'pageType' => isset($pageData['pageType']) ? $pageData['pageType'] : 'modal',
@@ -91,7 +92,7 @@ class XyBuilderList {
             'shape' => isset($style['shape']) ? $style['shape'] : 'square',
             'icon' => isset($style['icon']) ? $style['icon'] : '',
         ];
-        $this->data['topButtonList'][$name] = $btn;
+        $this->data['topButtonList'][] = $btn;
         return $this;
     }
 
@@ -102,7 +103,7 @@ class XyBuilderList {
     public function addRightButton($name, $title, $pageData = [], $style = []) {
         $btn = $this->getRightButton($name, $title, $pageData, $style);
         $this->data['rightButtonLength'] += 18 * mb_strwidth($btn['title']);
-        $this->data['rightButtonList'][$name] = $btn;
+        $this->data['rightButtonList'][] = $btn;
         return $this;
     }
 
@@ -112,6 +113,7 @@ class XyBuilderList {
      */
     public function getRightButton($name, $title, $pageData = [], $style = []) {
         $btn = [];
+        $btn['name'] = $name;
         $btn['title'] = $title;
         $btn['pageData'] = [
             'pageType' => isset($pageData['pageType']) ? $pageData['pageType'] : 'modal',
@@ -304,9 +306,15 @@ class XyBuilderList {
                 $btns = [];
                 foreach ($value['rightButtonList'] as $key1 => $value1) {
                     $btn = $this->getRightButton($value1['name'], $value1['title'], $value1['pageData'], $value1['style']);
-                    $btns[$value1['name']] = $btn;
-                    if (!isset($this->data['rightButtonListModal'][$value1['name']])) {
-                        $this->data['rightButtonListModal'][$value1['name']] = $btn;
+                    $btns[] = $btn;
+                    $exist = false;
+                    foreach ($this->data['rightButtonListModal'] as $key2 => $value2) {
+                        if ($value2['name'] == $value1['name']) {
+                            $exist = true;
+                        }
+                    }
+                    if (!$exist) {
+                        $this->data['rightButtonListModal'][] = $btn;
                     }
                 }
                 $value['rightButtonList'] = $btns;

@@ -43,7 +43,8 @@ class Index extends Home
         return $this->return(['code' => 200, 'msg' => '成功', 'data' => [
             'lang' => 'php',
             'name'     => 'UniAdmin',
-            'version' => '0.2.0',
+            'title' => $siteInfo['title'],
+            'version' => '0.2.1',
             'api' => [
                 'apiBase' => $apiBase,
                 'apiLogin' => '/v1/admin/core/user/login',
