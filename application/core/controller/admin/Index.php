@@ -138,12 +138,12 @@ class Index extends Admin
                     [
                         'type'  => 'text',
                         'title' => '接口框架',
-                        'value' => 'UniAdmin (v0.2.0)'
+                        'value' => 'UniAdmin (v' . config('app.app_version') . ')'
                     ],
                     [
                         'type'  => 'text',
                         'title' => '后台框架',
-                        'value' => 'XYAdmin (v0.2.0)'
+                        'value' => 'CloudAdmin (v' . config('app.admin_version') . ')'
                     ],
                     [
                         'type'  => 'text',

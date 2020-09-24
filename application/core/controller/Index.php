@@ -44,7 +44,7 @@ class Index extends Home
             'lang' => 'php',
             'name'     => 'UniAdmin',
             'title' => $siteInfo['title'],
-            'version' => '0.2.1',
+            'version' => config('app.app_version'),
             'api' => [
                 'apiBase' => $apiBase,
                 'apiLogin' => '/v1/admin/core/user/login',

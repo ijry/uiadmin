@@ -173,7 +173,7 @@ EOF;
                 $seconds_to_cache = 86400 * 30;
                 $ts = gmdate("D, d M Y H:i:s", time() + $seconds_to_cache) . " GMT";
                 $ch= curl_init();
-                curl_setopt($ch, CURLOPT_URL, 'https://admin.jiangruyi.com/xyadmin/?version=0.2.1'); // 支持调用不同版本便于官方升级不影响老项目
+                curl_setopt($ch, CURLOPT_URL, 'https://admin.jiangruyi.com/xyadmin/?version=' . config('app.admin_version')); // 支持调用不同版本便于官方升级不影响老项目
                 curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
                 curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 10);
                 curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // 信任任何证
