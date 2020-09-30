@@ -96,6 +96,13 @@ class Router
             Route::rule('/xyadmin/api$', 'core/index/api'); // API访问路由
             //Route::rule('/uniadmin$', 'core/admin.index/index'); // 后台首页访问路由
 
+            $configService = new \app\core\service\Config();
+            $siteInfo = $configService->getValueByModule('core');
+            // 支持logo和favicon
+            Route::get('/logo', $siteInfo['logo'])->ext('png');
+            Route::get('/logoAdmin', $siteInfo['logoAdmin'])->ext('png');
+            Route::get('/favicon', $siteInfo['favicon'])->ext('ico');
+
             // 设置URL模式
             $urlModel = Db::name('core_config')
                 ->removeOption('where')
