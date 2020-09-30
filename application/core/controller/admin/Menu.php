@@ -259,6 +259,7 @@ class Menu extends Admin
                     'tip' => '系统内容了动态页面技术，可以自动生成后台前端页面',
                     'options' => [
                         ['title' => 'Vue路由', 'value' => 'route',],
+                        ['title' => '自定义Vue组件', 'value' => 'remote'],
                         ['title' => 'iBuilder动态列表', 'value' => 'list',],
                         ['title' => 'iBuilder动态表单', 'value' => 'form',]
                     ]
@@ -457,6 +458,7 @@ class Menu extends Admin
                     'tip' => '系统内容了动态页面技术，可以自动生成后台前端页面',
                     'options' => [
                         ['title' => 'Vue路由', 'value' => 'route',],
+                        ['title' => '自定义Vue组件', 'value' => 'remote'],
                         ['title' => 'iBuilder动态列表', 'value' => 'list',],
                         ['title' => 'iBuilder动态表单', 'value' => 'form',]
                     ]

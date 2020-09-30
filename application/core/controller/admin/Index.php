@@ -42,7 +42,7 @@ class Index extends Admin
         $server_software = explode(' ', $_SERVER['SERVER_SOFTWARE']);
         $mysql_info = \think\Db::query('SELECT VERSION() as mysql_version');
         $config_service = new \app\core\service\Config();
-        $configCore = $config_service->getValueByModule('core', [['isDev', '=', 0]]);
+        $configCore = $config_service->getValueByModule('core', []);
 
         // 统计数据
         $user_model = new \app\core\model\User();
