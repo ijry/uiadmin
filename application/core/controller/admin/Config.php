@@ -140,7 +140,8 @@ class Config extends Admin
                         [
                             'tip' => $val['tip'],
                             'placeholder' => $val['placeholder'],
-                            'options' => parse_attr($val['options'])
+                            'options' => parse_attr($val['options']),
+                            'isDev' => $val['isDev']
                         ]
                     );
                 }
