@@ -175,6 +175,21 @@
             "isDev": 0,
             "sortnum": 3,
             "status": 1
+        },
+        {
+            "module": "core",
+            "configCate": "basic",
+            "name": "logoAdmin",
+            "title": "后台logo",
+            "configType": "image",
+            "defaultValue": null,
+            "placeholder": "请上传后台logo",
+            "tip": "请上传后台logo",
+            "options": "",
+            "isSystem": 1,
+            "isDev": 0,
+            "sortnum": 3,
+            "status": 1
         }
     ],
     "api": [
