@@ -23,6 +23,7 @@ class XyBuilderForm {
     // 数据
     private $data;
     public $form_type = [
+        'hidden' => '隐藏元素',
         'text' => '单行文本',
         'password' => '密码',
         'url' => 'URL网址',
