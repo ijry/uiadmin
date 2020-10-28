@@ -135,7 +135,7 @@ class XyBuilderForm {
                 foreach ($extra['options'] as $key => $val) {
                     if (!is_array($val)) {
                         $tmp['title'] = $val;
-                        $tmp['value'] = $key;
+                        $tmp['value'] = $key . ''; // 转换成字符串，防止本来是数字，但是存在2,3形式再explode后变成字符串类属性导致不匹配
                         $options[] = $tmp;
                     } else {
                         $options[] = $val;
