@@ -154,11 +154,11 @@ class XyBuilderList {
      */
     public function addColumn($name, $title, $data = []) {
         $column = [
-            'name' => $key,
+            'name' => $name,
             'title' => $title,
+            'extra' => [
             'width' => '100px',
             'minWidth' => '',
-            'extra' => [
                 'options' => []
             ]
         ];
