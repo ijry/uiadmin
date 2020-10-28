@@ -157,19 +157,16 @@ class XyBuilderList {
             'name' => $name,
             'title' => $title,
             'extra' => [
-            'width' => '100px',
-            'minWidth' => '',
+                'width' => '100px',
+                'minWidth' => '',
                 'options' => []
             ]
         ];
-        if (isset($data['width'])) {
-            $column['width'] = $data['width'];
-        }
         if (isset($data['type'])) {
-            $column['type'] = $data['type'];
+            $data['type'] = $data['type'];
         }
         if (isset($data['template'])) {
-            $column['type'] = $data['template'];
+            $data['type'] = $data['template'];
         }
         if (isset($data['options'])) {
             $options = [];
@@ -183,9 +180,10 @@ class XyBuilderList {
                         $options[$key] = $val;
                     }
                 }
-                $column['extra']['options'] = $options;
+                $data['extra']['options'] = $options;
             }
         }
+        $column['extra'] = $data;
         $this->data['columns'][] = $column;
         return $this;
     }
