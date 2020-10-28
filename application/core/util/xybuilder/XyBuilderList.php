@@ -49,8 +49,7 @@ class XyBuilderList {
                 'page' => 0
             ],
             'filterItems' => [],
-            'filterValues' => [],
-            'rightButtonLength' => 0
+            'filterValues' => []
         ];
         return $this;
     }
@@ -102,7 +101,6 @@ class XyBuilderList {
      */
     public function addRightButton($name, $title, $pageData = [], $style = []) {
         $btn = $this->getRightButton($name, $title, $pageData, $style);
-        $this->data['rightButtonLength'] += 18 * mb_strwidth($btn['title']);
         $this->data['rightButtonList'][] = $btn;
         return $this;
     }
@@ -154,9 +152,9 @@ class XyBuilderList {
      * 添加表格列
      * @author jry <ijry@qq.com>
      */
-    public function addColumn($key, $title, $data = []) {
+    public function addColumn($name, $title, $data = []) {
         $column = [
-            'key' => $key,
+            'name' => $key,
             'title' => $title,
             'width' => '100px',
             'minWidth' => '',
@@ -171,13 +169,7 @@ class XyBuilderList {
             $column['type'] = $data['type'];
         }
         if (isset($data['template'])) {
-            $column['template'] = $column['slot'] = $data['template'];
-            if ($data['template'] == 'rightButtonList') {
-                $column['width'] = '';
-                if ($column['minWidth']) {
-                    $column['width'] = (rtrim($column['minWidth'], 'px') + $this->data['rightButtonLength']) . 'px';
-                }
-            }
+            $column['type'] = $data['template'];
         }
         if (isset($data['options'])) {
             $options = [];
