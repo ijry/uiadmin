@@ -339,7 +339,7 @@
         },
         {
             "module": "core",
-            "icon": "md-cog",
+            "icon": "xyicon-settings",
             "path": "/core",
             "pmenu": "/_tab_system",
             "title": "系统",
@@ -1095,7 +1095,7 @@
         },
         {
             "module": "core",
-            "icon": "md-cog",
+            "icon": "xyicon-settings",
             "path": "/_tab_system",
             "pmenu": "/_root_admin",
             "title": "系统",
@@ -1113,7 +1113,7 @@
         },
         {
             "module": "core",
-            "icon": "md-contact",
+            "icon": "xyicon-my-o",
             "path": "/_tab_user",
             "pmenu": "/_root_admin",
             "title": "用户",
@@ -1131,7 +1131,7 @@
         },
         {
             "module": "core",
-            "icon": "md-reorder",
+            "icon": "xyicon-plane-o",
             "path": "/_tab_content",
             "pmenu": "/_root_admin",
             "title": "内容",
@@ -1149,7 +1149,7 @@
         },
         {
             "module": "core",
-            "icon": "md-card",
+            "icon": "xyicon-card",
             "path": "/_tab_money",
             "pmenu": "/_root_admin",
             "title": "财务",
