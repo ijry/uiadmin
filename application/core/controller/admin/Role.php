@@ -187,17 +187,17 @@ class Role extends Admin
                     'tip' => '角色名称也可以理解为部门名称',
                     'position' => 'bottom'
                 ])
-                ->addFormItem('adminAuth', '后台权限', 'checkboxtree', '',
+                ->addFormItem('adminAuth', '后台权限', 'checkboxtree', [],
                      [
                     'tip' => '勾选角色权限',
                     'columns' => [
-                        ['title' => '菜单(接口)', 'key' => 'title', 'minWidth' => '150px'],
-                        ['title' => '说明', 'key' => 'tip'],
-                        ['title' => '接口', 'key' => 'adminAuth'],
-                        ['title' => '类型', 'key' => 'menuType', 'width' => '40px']
+                        ['title' => '菜单(接口)', 'name' => 'title', 'minWidth' => '150px'],
+                        ['title' => '接口', 'name' => 'adminAuth'],
+                        ['title' => '类型', 'name' => 'menuType', 'width' => '40px'],
+                        ['title' => '说明', 'name' => 'tip'],
                     ],
                     'data' => $menuTree,
-                    'expandKey' => 'title',
+                    'nodeKey' => 'adminAuth',
                     'position' => 'bottom'
                 ])
                 ->addFormRule('name', [
@@ -283,13 +283,14 @@ class Role extends Admin
                 ->order('sortnum asc')
                 ->select()->toArray();
             foreach ($dataList as $key => &$val) {
-                if ($val['menuType'] > 0) {
-                    $val['adminAuth'] = '/' . $val['apiPrefix'] . '/admin' . $val['path'];
-                    //超级管理员拥有所有权限
-                    if (in_array($val['adminAuth'], $info['adminAuth']) || $id == 1) {
-                        $val['_isChecked'] = true;
-                    }
+                $val['adminAuth'] = '/' . $val['apiPrefix'] . '/admin' . $val['path'];
+                // 超级管理员拥有所有权限
+                if ($id == 1) {
+                    $all[] = $val['adminAuth'];
                 }
+            }
+            if ($id == 1) {
+                $info['adminAuth'] = $all;
             }
             $tree      = new Tree();
             $menuTree = $tree->list2tree($dataList, 'path', 'pmenu', 'children', 0, false);
@@ -325,17 +326,17 @@ class Role extends Admin
                     'tip' => '角色名称也可以理解为部门名称',
                     'position' => 'bottom'
                 ])
-                ->addFormItem('adminAuth', '后台权限', 'checkboxtree', '',
+                ->addFormItem('adminAuth', '后台权限', 'checkboxtree', [],
                      [
                     'tip' => '勾选角色权限',
                     'columns' => [
-                        ['title' => '菜单(接口)', 'key' => 'title', 'minWidth' => '150px'],
-                        ['title' => '说明', 'key' => 'tip'],
-                        ['title' => '接口', 'key' => 'adminAuth'],
-                        ['title' => '类型', 'key' => 'menuType', 'width' => '40px']
+                        ['title' => '菜单(接口)', 'name' => 'title', 'minWidth' => '150px'],
+                        ['title' => '接口', 'name' => 'adminAuth'],
+                        ['title' => '类型', 'name' => 'menuType', 'width' => '40px'],
+                        ['title' => '说明', 'name' => 'tip'],
                     ],
                     'data' => $menuTree,
-                    'expand-key' => 'title',
+                    'nodeKey' => 'adminAuth',
                     'position' => 'bottom'
                 ])
                 ->addFormItem('sortnum', '排序', 'text', '')

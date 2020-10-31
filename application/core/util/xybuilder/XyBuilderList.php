@@ -37,7 +37,9 @@ class XyBuilderList {
             'dataListParams' => [
                 'expandKey' => 'title',
                 'isFold' => true,
-                'tableName' => ''
+                'tableName' => '',
+                'selectable' => true,
+                'selectType' => 'checkbox'
             ],
             'topButtonList' => [],
             'rightButtonList' => [],
