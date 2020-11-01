@@ -105,7 +105,7 @@ class UserRole extends Admin
                 'roleName' => 'require'
             ],
             [
-                'uid.number' => 'pid必须数字',
+                'uid.number' => 'uid必须数字',
                 'roleName.require' => '角色名称必须',
             ]);
             $data = input('post.');
@@ -133,6 +133,12 @@ class UserRole extends Admin
                 return $this->return(['code' => 0, 'msg' => '添加角色成员失败:' . $this->core_user->getError(), 'data' => []]);
             }
         } else {
+            $xyBuilderList = new \app\core\util\xybuilder\XyBuilderList();
+            $pageData = $xyBuilderList->getRightButton('uid', '用户列表', [
+                'modalType' => 'list',
+                'api' => '/v1/admin/core/user/lists',
+                'width' => '1100'
+            ]);
             //构造动态页面数据
             $xyBuilderForm = new \app\core\util\xybuilder\XyBuilderForm();
             $formData = $xyBuilderForm->init()
@@ -142,9 +148,10 @@ class UserRole extends Admin
                     'tip' => '角色名称',
                     'readonly' => true
                 ])
-                ->addFormItem('uid', 'UID', 'text', '', [
-                    'placeholder' => '请输入uid',
-                    'tip' => 'uid是用户唯一标识可以在用户列表查到'
+                ->addFormItem('uid', '选择用户', 'selectlist', 0 ,[
+                    'placeholder' => '联系人',
+                    'tip' => 'uid是用户唯一标识可以在用户列表查到',
+                    'pageData' => $pageData['pageData']
                 ])
                 ->addFormRule('roleName', [
                     ['required' => true, 'message' => '请输入角色名称', 'trigger' => 'change'],
