@@ -87,6 +87,7 @@ class Role extends Admin
                 'type' => 'template',
                 'template' => 'rightButtonList'
             ])
+            ->setConfig('listExpandAll', true)
             ->setDataList($dataTree)
             ->getData();
 

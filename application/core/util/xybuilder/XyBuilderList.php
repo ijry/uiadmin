@@ -36,7 +36,6 @@ class XyBuilderList {
             'dataList' => [],
             'dataListParams' => [
                 'expandKey' => 'title',
-                'isFold' => true,
                 'tableName' => '',
                 'selectable' => true,
                 'selectType' => 'checkbox'
@@ -51,8 +50,22 @@ class XyBuilderList {
                 'page' => 0
             ],
             'filterItems' => [],
-            'filterValues' => []
+            'filterValues' => [],
+            'countList' => [],
+            'config' => [
+                'listExpandAll' => false,
+                'modalDefaultWidth' => '800px',
+            ]
         ];
+        return $this;
+    }
+
+    /**
+     * 设置配置
+     * @author jry <ijry@qq.com>
+     */
+    public function setConfig($name, $value) {
+        $this->data['config'][$name] = $value;
         return $this;
     }
 
@@ -218,15 +231,6 @@ class XyBuilderList {
      */
     public function setExpandKey($expandKey) {
         $this->data['dataListParams']['expandKey'] = $expandKey;
-        return $this;
-    }
-
-    /**
-     * 设置默认展开
-     * @author jry <ijry@qq.com>
-     */
-    public function setIsFold($isFold) {
-        $this->data['dataListParams']['isFold'] = $isFold;
         return $this;
     }
 
