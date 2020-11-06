@@ -164,16 +164,13 @@ class XyBuilderForm {
      */
     public function setFormValues($data = []) {
         foreach ($this->data['formItems'] as $key => &$val) {
-            if (isset($data[$val['name']])) {
-                $val['value'] = $data[$val['name']];
-            }
             if (in_array($val['type'], ['static'])) {
                 continue;
             }
-            $this->data['formValues'][$val['name']] = '';
-            if (isset($val['value'])) {
-                $this->data['formValues'][$val['name']] = $val['value'];
+            if (isset($data[$val['name']])) {
+                $val['value'] = $data[$val['name']];
             }
+            $this->data['formValues'][$val['name']] = $val['value'];
         }
         return $this;
     }
