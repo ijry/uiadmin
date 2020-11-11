@@ -181,6 +181,7 @@ class Menu extends Admin
 
             // 获取菜单基于标题的树状列表
             $menu_list = $this->core_menu
+                ->where('menuLayer', '=', 'admin')
                 ->where('menuType', '<', 4)
                 ->order('sortnum asc')
                 ->select()->toArray();
@@ -380,6 +381,7 @@ class Menu extends Admin
 
             // 获取菜单基于标题的树状列表
             $menu_list = $this->core_menu
+                ->where('menuLayer', '=', 'admin')
                 ->where('menuType', '<', 4)
                 ->order('sortnum asc')
                 ->select()->toArray();

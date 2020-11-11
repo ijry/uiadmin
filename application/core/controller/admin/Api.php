@@ -235,7 +235,7 @@ class Api extends Admin
 
             //获取菜单基于标题的树状列表
             $menu_list = $this->core_menu
-                ->where('menuType', '=', 5)
+                ->where('menuLayer', '=', 'home')
                 ->order('sortnum asc')
                 ->select()->toArray();
             $tree      = new Tree();
@@ -415,7 +415,7 @@ class Api extends Admin
 
             //获取菜单基于标题的树状列表
             $menu_list = $this->core_menu
-                ->where('menuType', '=', 5)
+                ->where('menuLayer', '=', 'home')
                 ->where('id', '<>', $id)
                 ->order('sortnum asc')
                 ->select()->toArray();
