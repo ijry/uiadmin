@@ -34,7 +34,7 @@ class User extends Model
      * 获取用户列表
      * @return array
      *
-     * @author jry <598821125@qq.com>
+     * @author jry <ijry@qq.com>
      */
     public function getList($map = [], $page = 1, $limit = 10) {
     }
@@ -43,7 +43,7 @@ class User extends Model
      * 通过ID获取用户
      * @return array
      *
-     * @author jry <598821125@qq.com>
+     * @author jry <ijry@qq.com>
      */
     public function getById($id) {
         $userInfo = $this->core_user
@@ -68,7 +68,7 @@ class User extends Model
      * 登录
      * @return mixed
      *
-     * @author jry <598821125@qq.com>
+     * @author jry <ijry@qq.com>
      */
     public function login($userInfo, $client = [])
     {
@@ -112,7 +112,7 @@ class User extends Model
      * @param  string $jwt Token
      * @return mixed
      *
-     * @author jry <598821125@qq.com>
+     * @author jry <ijry@qq.com>
      */
     public function isLogin($token)
     {

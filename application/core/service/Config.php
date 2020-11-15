@@ -1,15 +1,14 @@
 <?php
 /**
  * +----------------------------------------------------------------------
- * | xyapi [ 渐进式云接口 ]
+ * | UniAdmin [ 渐进式模块化通用后台 ]
  * +----------------------------------------------------------------------
- * | Copyright (c) 2018-2020 http://jiangruyi.com All rights reserved.
+ * | Copyright (c) 2018-2020 http://uniadmin.jiangruyi.com All rights reserved.
  * +----------------------------------------------------------------------
- * | Author: jry <598821125@qq.com>
+ * | Licensed ( http://www.apache.org/licenses/LICENSE-2.0 )
  * +----------------------------------------------------------------------
- * | 版权申明：此源码不是一个自由软件，是jry推出的私有源码，严禁在未经许可的情况下
- * | 拷贝、复制、传播、使用此源码的任意代码，如有违反，请立即删除，否则您将面临承担相应
- * | 法律责任的风险。如果需要取得官方授权，请联系官方QQ598821125。
+ * | Author: jry <ijry@qq.com>
+ * +----------------------------------------------------------------------
 */
 
 namespace app\core\service;
@@ -31,7 +30,7 @@ class Config extends Model
      * 获取配置
      * @return array
      *
-     * @author jry <598821125@qq.com>
+     * @author jry <ijry@qq.com>
      */
     public function getSettings($module_name)
     {
@@ -49,7 +48,7 @@ class Config extends Model
      * 获取模块配置
      * @return array
      *
-     * @author jry <598821125@qq.com>
+     * @author jry <ijry@qq.com>
      */
     public function getListByModule($module_name)
     {
@@ -63,7 +62,7 @@ class Config extends Model
      * 获取模块配置
      * @return array
      *
-     * @author jry <598821125@qq.com>
+     * @author jry <ijry@qq.com>
      */
     public function getValueByModule($module_name, $con = [])
     {

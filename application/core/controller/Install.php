@@ -286,7 +286,7 @@ class Install extends Home
     /**
      * 系统环境检测
      * @return array 系统环境数据
-     * @author jry <598821125@qq.com>
+     * @author jry <ijry@qq.com>
      */
     private function check_env()
     {
@@ -355,7 +355,7 @@ class Install extends Home
     /**
      * 目录，文件读写检测
      * @return array 检测数据
-     * @author jry <598821125@qq.com>
+     * @author jry <ijry@qq.com>
      */
     private function check_dirfile()
     {

@@ -49,7 +49,7 @@ function key2camel($array) {
  * 登录检查
  * @param  string $str 要加密的字符串
  * @return string
- * @author jry <598821125@qq.com>
+ * @author jry <ijry@qq.com>
  */
 function is_login()
 {
@@ -71,7 +71,7 @@ function is_login()
  * 系统非常规MD5加密方法
  * @param  string $str 要加密的字符串
  * @return string
- * @author jry <598821125@qq.com>
+ * @author jry <ijry@qq.com>
  */
 function user_md5($str, $auth_key)
 {
@@ -81,7 +81,7 @@ function user_md5($str, $auth_key)
 /**
  * 毫秒时间戳
  * @return int
- * @author jry <598821125@qq.com>
+ * @author jry <ijry@qq.com>
  */
 function micro_time()
 {
@@ -93,7 +93,7 @@ function micro_time()
  * 时间戳格式化
  * @param int $time
  * @return string 完整的时间显示
- * @author jry <598821125@qq.com>
+ * @author jry <ijry@qq.com>
  */
 function time_format($time = null, $format = 'Y-m-d H:i')
 {
