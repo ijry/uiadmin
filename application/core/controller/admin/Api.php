@@ -159,7 +159,7 @@ class Api extends Admin
                 'cancelText' => '取消操作',
                 'content' => '<p>删除菜单不可恢复</p>',
             ])
-            ->addColumn('id' , 'ID', ['width' => '50px'])
+            ->addColumn('id' , 'ID', ['width' => '150px'])
             ->addColumn('module', '所属模块', ['width' => '80px'])
             ->addColumn('title', '菜单标题', ['width' => '200px'])
             ->addColumn('apiMethod', '请求方法', ['width' => '100px'])

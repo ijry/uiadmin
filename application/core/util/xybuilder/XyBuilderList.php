@@ -101,8 +101,8 @@ class XyBuilderList {
             $btn['pageData']['path'] = ltrim($btn['pageData']['api'], '/v1/admin');
         }
         $btn['style'] = [
-            'type' => isset($style['type']) ? $style['type'] : 'default',
-            'size' => isset($style['size']) ? $style['size'] : 'default',
+            'type' => isset($style['type']) ? $style['type'] : 'medium',
+            'size' => isset($style['size']) ? $style['size'] : 'medium',
             'shape' => isset($style['shape']) ? $style['shape'] : 'square',
             'icon' => isset($style['icon']) ? $style['icon'] : '',
         ];
