@@ -88,11 +88,7 @@ class Router
         } else {
             // 内置路由
             $module_service = new \app\core\service\Module();
-            if ($module_service->isExist('cms')) {
-                Route::rule('/', 'cms/index/index'); // 首页访问路由
-            } else {
-                Route::rule('/', request()->rootUrl() . '/xyadmin/api.html'); // 首页访问路由
-            }
+            Route::rule('/', 'core/index/index'); // 首页访问路由
             Route::rule('/xyadmin/api$', 'core/index/api'); // API访问路由
             //Route::rule('/uniadmin$', 'core/admin.index/index'); // 后台首页访问路由
 

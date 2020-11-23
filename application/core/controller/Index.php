@@ -25,6 +25,23 @@ use app\core\controller\common\Home;
 class Index extends Home
 {
     /**
+     * 首页
+     *
+     * @return \think\Response
+     * @author jry <ijry@qq.com>
+     */
+    public function index()
+    {
+        // 返回数据
+        return $this->return([
+            'code' => 200,
+            'msg'  => '成功',
+            'data' => [
+            ]
+        ]);
+    }
+
+    /**
      * API对接
      *
      * @return \think\Response
@@ -75,16 +92,16 @@ class Index extends Home
         $return = [];
         foreach ($dataList as $key => &$value) {
             if ($value['configType'] == 'array') {
-                $config_list[$value['name']] = parse_attr($value['value']);
+                $configList[$value['name']] = parse_attr($value['value']);
             } else if (in_array($value['configType'], ['images', 'files'])) {
                 if ($value['value'] == '') {
                     $value['value'] = [];
                 } else {
                     $value['value'] = json_decode($value['value'], true);
                 }
-                $config_list[$value['name']] = $value['value'];
+                $configList[$value['name']] = $value['value'];
             } else {
-                $config_list[$value['name']] = $value['value'];
+                $configList[$value['name']] = $value['value'];
             }
         }
 
@@ -93,7 +110,7 @@ class Index extends Home
             'code' => 200,
             'msg'  => '成功',
             'data' => [
-                'config_list' => $config_list
+                'configList' => $configList
             ]
         ]);
     }
