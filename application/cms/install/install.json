@@ -59,7 +59,7 @@
             "menuType": 2,
             "routeType": "list",
             "apiPrefix": "v1",
-            "apiSuffix": "/:cate_id",
+            "apiSuffix": "/:cid",
             "apiParams": "",
             "apiMethod": "GET",
             "apiExt": "",
