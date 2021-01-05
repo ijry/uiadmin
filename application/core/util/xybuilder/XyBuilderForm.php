@@ -102,6 +102,7 @@ class XyBuilderForm {
         $extra['placeholder'] = isset($extra['placeholder']) ? $extra['placeholder'] : '';
         $extra['tip'] = isset($extra['tip']) ? $extra['tip'] : '';
         $extra['position'] = isset($extra['position']) ? $extra['position'] : '';
+        $extra['hide'] = isset($extra['hide']) ? $extra['hide'] : false; // 默认显示便于制作基于字段值的联动关系
         // 上传
         if (in_array($item['type'], ['image', 'images', 'file', 'files', 'html', 'tinymce', 'markdown'])) {
             // 上传接口
