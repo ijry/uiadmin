@@ -89,7 +89,7 @@
         </el-table>
     </div>
     <div class="flex" style="margin-top: 30px;justify-content: flex-end;">
-        <el-button type="info" style="margin-right: 25px;"><a href="{:url('core/install/step1')}">上一步</a></el-button>
+        <el-button type="info" @click="location.href='{:url(\'core/install/step1\')}'">上一步</el-button></a>
         <el-button type="primary" @click="next">下一步</el-button>
     </div>
 {/block}

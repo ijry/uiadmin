@@ -25,6 +25,6 @@
     </div>
     <div class="flex" style="margin-top: 30px;justify-content: flex-end;">
         <el-button type="text" style="margin-right: 25px;">不同意</el-button>
-        <el-button type="primary"><a href="{:url('core/install/step2')}">同意协议并下一步</a></el-button>
+        <el-button type="primary" @click="location.href='{:url(\'core/install/step2\')}'">同意协议并下一步</el-button></a>
     </div>
 {/block}
