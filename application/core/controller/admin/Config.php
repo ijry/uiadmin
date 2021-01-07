@@ -255,7 +255,7 @@ class Config extends Admin
                     'placeholder' => '请输入配置说明',
                     'tip' => '请输入配置说明'
                 ])
-                ->addFormItem('extra', '额外项目', 'textarea', '', [
+                ->addFormItem('options', '额外项目', 'textarea', '', [
                     'placeholder' => '请输入配置额外项目',
                     'tip' => '请输入配置额外项目'
                 ])
@@ -397,7 +397,7 @@ class Config extends Admin
                     'placeholder' => '请输入配置说明',
                     'tip' => '请输入配置说明'
                 ])
-                ->addFormItem('extra', '额外项目', 'textarea', '', [
+                ->addFormItem('options', '额外项目', 'textarea', '', [
                     'placeholder' => '请输入配置额外项目',
                     'tip' => '请输入配置额外项目'
                 ])
