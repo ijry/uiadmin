@@ -15,8 +15,8 @@
 return [
     // 应用名称
     'app_name'               => 'uniadmin',
-    'app_version'            => '0.4.0',
-    'admin_version'          => '0.4.0',
+    'app_version'            => '1.0.0',
+    'admin_version'          => '1.0.0',
     // 应用地址
     'app_host'               => 'uniadmin.jiangruyi.com',
     // 应用调试模式

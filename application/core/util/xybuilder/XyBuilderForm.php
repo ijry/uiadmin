@@ -66,9 +66,22 @@ class XyBuilderForm {
             ],
             'formMethod' => 'post',
             'formItems' => [],
-            'formValues' => [],
+            'itemValues' => [], // 原值
+            'formValues' => [], // 构造值（1.0.0后由前端实现不再需要由后端构造）
             'formRules' => [],
             'formTabs' => [],
+            'config' => [
+                'continue' => false, // 显示继续添加
+                'itemDefaultPosition' => '',
+                'submitButtonTitle' => '确认',
+                'submitCancelTitle' => '取消',
+                'footerButtonLength' => '120px',
+                'labelPosition' => 'left',
+                'labelWidth' => '100px',
+                'defaultUploadDriver' => '',
+                'defaultUploadAction' => request()->root(true) . '/api/v1/core/index/upload/',
+                'defaultUploadMaxSize' => 512
+            ]
         ];
         return $this;
     }
@@ -97,54 +110,6 @@ class XyBuilderForm {
         $item['title'] = $title;
         $item['type'] = $type;
         $item['value'] = $value;
-        $item['temp'] = ''; // 临时使用
-        $item['showModal'] = false; // 显示弹窗
-        $extra['placeholder'] = isset($extra['placeholder']) ? $extra['placeholder'] : '';
-        $extra['tip'] = isset($extra['tip']) ? $extra['tip'] : '';
-        $extra['position'] = isset($extra['position']) ? $extra['position'] : '';
-        $extra['hide'] = isset($extra['hide']) ? $extra['hide'] : false; // 默认显示便于制作基于字段值的联动关系
-        // 上传
-        if (in_array($item['type'], ['image', 'images', 'file', 'files', 'html', 'tinymce', 'markdown'])) {
-            // 上传接口
-            if (isset($extra['action'])) {
-                $extra['action'] = $extra['action'];
-            } else {
-                $extra['action'] = request()->root(true) . '/api/v1/core/index/upload/';
-            }
-            // 文件格式
-            if (isset($extra['format'])) {
-                $extra['format'] = $extra['format'];
-            } else {
-                if (in_array($item['type'], ['image', 'images'])) {
-                    $extra['format'] = ['jpg','jpeg','png','gif','ico'];
-                } else {
-                    $extra['format'] = ['jpg','jpeg','png','gif','ico', 'swf', 'flv', 'mp3', 'wav', 'wma', 'wmv', 'mid', 'avi', 'mpg', 'asf', 'rm', 'rmvb', 'mp4', 'doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx', 'pdf', 'wps', 'txt', 'zip', 'rar', 'gz', 'bz2', '7z', 'ipa', 'apk', 'dmg', 'iso', 'pem', 'p12', 'wgt'];
-                }
-            }
-            // 文件大小限制
-            if (isset($extra['maxSize'])) {
-                $extra['maxSize'] = $extra['maxSize'];
-            } else {
-                $extra['maxSize'] = 512;
-            }
-            $extra['driver'] = ''; // 默认上传驱动，不填默认本地上传
-            $extra['data'] = [];
-        }
-        if (isset($extra['options'])) {
-            $options = [];
-            if (is_array($extra['options'])) {
-                foreach ($extra['options'] as $key => $val) {
-                    if (!is_array($val)) {
-                        $tmp['title'] = $val;
-                        $tmp['value'] = $key;
-                        $options[] = $tmp;
-                    } else {
-                        $options[] = $val;
-                    }
-                }
-                $extra['options'] = $options;
-            }
-        }
         $item['extra'] = $extra;
         $this->data['formItems'][] = $item;
         return $this;
@@ -164,15 +129,7 @@ class XyBuilderForm {
      * @author jry <ijry@qq.com>
      */
     public function setFormValues($data = []) {
-        foreach ($this->data['formItems'] as $key => &$val) {
-            if (in_array($val['type'], ['static'])) {
-                continue;
-            }
-            if (isset($data[$val['name']])) {
-                $val['value'] = $data[$val['name']];
-            }
-            $this->data['formValues'][$val['name']] = $val['value'];
-        }
+        $this->data['itemValues'] = $data;
         return $this;
     }
 

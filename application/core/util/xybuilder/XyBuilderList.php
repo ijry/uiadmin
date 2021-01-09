@@ -185,22 +185,7 @@ class XyBuilderList {
         if (isset($data['template'])) {
             $data['type'] = $data['template'];
         }
-        if (isset($data['options'])) {
-            $options = [];
-            if (is_array($data['options'])) {
-                foreach ($data['options'] as $key => $val) {
-                    if (!is_array($val)) {
-                        $tmp['title'] = $val;
-                        $tmp['value'] = $key;
-                        $options[] = $tmp;
-                    } else {
-                        $options[$key] = $val;
-                    }
-                }
-                $data['extra']['options'] = $options;
-            }
-        }
-        $column['extra'] = $data;
+        $column['extra'] = array_merge($column['extra'], $data);
         $this->data['columns'][] = $column;
         return $this;
     }
@@ -260,24 +245,6 @@ class XyBuilderList {
         $item['title'] = $title;
         $item['type'] = $type;
         $item['value'] = $value;
-        $extra['placeholder'] = isset($extra['placeholder']) ? $extra['placeholder'] : '';
-        $extra['tip'] = isset($extra['tip']) ? $extra['tip'] : '';
-        $extra['position'] = isset($extra['position']) ? $extra['position'] : 'left';
-        if (isset($extra['options']) && is_array($extra['options'])) {
-            $options = [];
-            if (is_array($extra['options'])) {
-                foreach ($extra['options'] as $key => $val) {
-                    if (!is_array($val)) {
-                        $tmp['title'] = $val;
-                        $tmp['value'] = $key;
-                        $options[] = $tmp;
-                    } else {
-                        $options[] = $val;
-                    }
-                }
-                $extra['options'] = $options;
-            }
-        }
         $item['extra'] = $extra;
         $this->data['filterItems'][] = $item;
         return $this;
@@ -288,16 +255,6 @@ class XyBuilderList {
      * @author jry <ijry@qq.com>
      */
     public function getData() {
-        foreach ($this->data['filterItems'] as $key => &$val) {
-            $this->data['filterValues'][$val['name']] = $val['value'];
-            if (is_numeric($val['value']) && in_array($val['type'], ['radio', 'switch'])) {
-                $this->data['filterValues'][$val['name']] = $val['value'] = (int)$this->data['filterValues'][$val['name']];
-            }
-            if ($this->data['filterValues'][$val['name']] == '' && in_array($val['type'], ['checkbox', 'tags', 'images', 'files'])) {
-                $this->data['filterValues'][$val['name']] = $val['value'] = [];
-            }
-        }
-
         // 处理每一行不同的右侧按钮
         foreach ($this->data['dataList'] as $key => &$value) {
             if (isset($value['rightButtonList'])) {
