@@ -522,7 +522,25 @@ class Menu extends Admin
             ->where('menuLayer', '=', 'admin')
             ->select();
         foreach ($dataList as $key => &$val) {
-            $val['api'] = $val['apiPrefix'] . '/admin' . $val['path'];
+            switch ($val['routeType']) {
+                case 'iframe':
+                    if (\think\helper\Str::startsWith($val['apiSuffix'], 'http')) {
+                        $val['api'] = $val['apiSuffix'];
+                    } else {
+                        $val['api'] = request()->domain() . request()->rootUrl() . '/' . $val['apiSuffix'];
+                    }
+                    break;
+                case 'remote':
+                    if (\think\helper\Str::startsWith($val['apiSuffix'], 'http')) {
+                        $val['api'] = $val['apiSuffix'];
+                    } else {
+                        $val['api'] = request()->domain() . request()->rootUrl() . '/' . $val['apiSuffix'];
+                    }
+                    break;
+                default:
+                    $val['api'] = $val['apiPrefix'] . '/' . $val['menuLayer'] . $val['path'];
+                    break;
+            }
         }
         return $this->return(['code' => 200, 'msg' => '成功', 'data' => ['dataList' => $dataList]]);
     }
