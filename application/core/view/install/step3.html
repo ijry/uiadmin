@@ -29,7 +29,7 @@
           </el-select>
         </el-form-item>
         <el-form-item label="数据库服务器">
-          <el-input v-model="formValues.hostname" placeholder="数据库服务器，数据库服务器IP，一般为127.0.0.1" clearable></el-input>
+          <el-input v-model="formValues.hostname" placeholder="数据库服务器，数据库服务器IP，一般为localhost或127.0.0.1" clearable></el-input>
         </el-form-item>
         <el-form-item label="数据库端口">
           <el-input v-model="formValues.hostport" placeholder="数据库端口，mysql一般为3306" clearable></el-input>
@@ -66,7 +66,7 @@
             return {
               formValues: {
                 type: 'mysql',
-                hostname: '127.0.0.1',
+                hostname: 'localhost',
                 hostport: '3306',
                 database: 'uniadmin_{$rand}',
                 cover: 1,
