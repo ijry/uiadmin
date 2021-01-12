@@ -77,36 +77,11 @@ class XyBuilderList {
         $btn['name'] = $name;
         $btn['title'] = $title;
         $btn['pageData'] = [
-            'pageType' => isset($pageData['pageType']) ? $pageData['pageType'] : 'modal',
-            'modalType' => isset($pageData['modalType']) ? $pageData['modalType'] : 'form',
-            'formMethod' => isset($pageData['formMethod']) ? $pageData['formMethod'] : 'delete',
-            'show' => false,
-            'path' => isset($pageData['path']) ? $pageData['path'] : '',
-            'api' => $pageData['api'],
-            'apiBlank' => '',
-            'apiSuffix' => isset($pageData['apiSuffix']) ? $pageData['apiSuffix'] : [],
-            'apiParams' => isset($pageData['apiParams']) ? $pageData['apiParams'] : '',
-            'querySuffix' => isset($pageData['querySuffix']) ? $pageData['querySuffix'] : [],  // 参数变量
-            'queryParams' => isset($pageData['queryParams']) ? $pageData['queryParams'] : [],  // 参数实际值
-            'title' => isset($pageData['title']) ? $pageData['title'] : $title,
-            'content' => isset($pageData['content']) ? $pageData['content'] : '',
-            'okText' => isset($pageData['okText']) ? $pageData['okText'] : '',
-            'cancelText' => isset($pageData['cancelText']) ? $pageData['cancelText'] : '',
-            'width' => isset($pageData['width']) ? $pageData['width'] : '800',
-            'modalClosable' => isset($pageData['modalClosable']) ? $pageData['modalClosable'] : true,
-            'loading' => false,
-            'draggable' => false,
-            'scrollable' => true,
+            'pageType' => 'modal', // 支持modal和page
+            'modalType' => 'form',
+            'modalClosable' => true,
         ];
-        if ($btn['pageData']['path'] == '') {
-            $btn['pageData']['path'] = ltrim($btn['pageData']['api'], '/v1/admin');
-        }
-        $btn['style'] = [
-            'type' => isset($style['type']) ? $style['type'] : 'medium',
-            'size' => isset($style['size']) ? $style['size'] : 'medium',
-            'shape' => isset($style['shape']) ? $style['shape'] : 'square',
-            'icon' => isset($style['icon']) ? $style['icon'] : '',
-        ];
+        $btn['pageData'] = array_merge($btn['pageData'], $pageData);
         $this->data['topButtonList'][] = $btn;
         return $this;
     }
@@ -130,38 +105,11 @@ class XyBuilderList {
         $btn['name'] = $name;
         $btn['title'] = $title;
         $btn['pageData'] = [
-            'pageType' => isset($pageData['pageType']) ? $pageData['pageType'] : 'modal',
-            'modalType' => isset($pageData['modalType']) ? $pageData['modalType'] : 'form',
-            'formMethod' => isset($pageData['formMethod']) ? $pageData['formMethod'] : 'delete',
-            'show' => false,
-            'path' => isset($pageData['path']) ? $pageData['path'] : '',
-            'api' => $pageData['api'],
-            'apiBlank' => '',
-            'apiSuffix' => isset($pageData['apiSuffix']) ? $pageData['apiSuffix'] : ['id'],  // 参数变量
-            'apiParams' => isset($pageData['apiParams']) ? $pageData['apiParams'] : '',  // 参数实际值
-            'querySuffix' => isset($pageData['querySuffix']) ? $pageData['querySuffix'] : [],  // 参数变量
-            'queryParams' => isset($pageData['queryParams']) ? $pageData['queryParams'] : [],  // 参数实际值
-            'title' => isset($pageData['title']) ? $pageData['title'] : $title,
-            'height' => isset($pageData['height']) ? $pageData['height'] : 'auto',
-            'content' => isset($pageData['content']) ? $pageData['content'] : '',
-            'okText' => isset($pageData['okText']) ? $pageData['okText'] : '',
-            'cancelText' => isset($pageData['cancelText']) ? $pageData['cancelText'] : '',
-            'width' => isset($pageData['width']) ? $pageData['width'] : '1000',
-            'noRefresh' => isset($pageData['noRefresh']) ? $pageData['noRefresh'] : false,
-            'modalClosable' => isset($pageData['modalClosable']) ? $pageData['modalClosable'] : true,
-            'loading' => false,
-            'draggable' => false,
-            'scrollable' => true,
+            'pageType' => 'modal', // 支持modal和page
+            'modalType' => 'form',
+            'modalClosable' => true,
         ];
-        if ($btn['pageData']['path'] == '') {
-            $btn['pageData']['path'] = ltrim($btn['pageData']['api'], '/v1');
-        }
-        $btn['style'] = [
-            'type' => isset($style['type']) ? $style['type'] : 'default',
-            'size' => isset($style['size']) ? $style['size'] : 'small',
-            'shape' => isset($style['shape']) ? $style['shape'] : 'default',
-            'icon' => isset($style['icon']) ? $style['icon'] : '',
-        ];
+        $btn['pageData'] = array_merge($btn['pageData'], $pageData);
         return $btn;
     }
 
@@ -255,27 +203,6 @@ class XyBuilderList {
      * @author jry <ijry@qq.com>
      */
     public function getData() {
-        // 处理每一行不同的右侧按钮
-        foreach ($this->data['dataList'] as $key => &$value) {
-            if (isset($value['rightButtonList'])) {
-                $btns = [];
-                foreach ($value['rightButtonList'] as $key1 => $value1) {
-                    $btn = $this->getRightButton($value1['name'], $value1['title'], $value1['pageData'], $value1['style']);
-                    $btns[] = $btn;
-                    $exist = false;
-                    foreach ($this->data['rightButtonListModal'] as $key2 => $value2) {
-                        if ($value2['name'] == $value1['name']) {
-                            $exist = true;
-                        }
-                    }
-                    if (!$exist) {
-                        $this->data['rightButtonListModal'][] = $btn;
-                    }
-                }
-                $value['rightButtonList'] = $btns;
-                unset($btns);
-            }
-        }
         return $this->data;
     }
 }
