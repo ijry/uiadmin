@@ -122,16 +122,18 @@ class XyBuilderList {
             'name' => $name,
             'title' => $title,
             'extra' => [
-                'width' => '100px',
+                'type' => '',
+                'width' => '',
                 'minWidth' => '',
-                'options' => []
+                'show' => true,
+                'loading' => false,
+                'options' => [],
+                'extend' => []
             ]
         ];
-        if (isset($data['type'])) {
-            $data['type'] = $data['type'];
-        }
         if (isset($data['template'])) {
             $data['type'] = $data['template'];
+            unset($data['template']);
         }
         $column['extra'] = array_merge($column['extra'], $data);
         $this->data['columns'][] = $column;
