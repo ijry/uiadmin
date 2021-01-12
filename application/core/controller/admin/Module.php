@@ -152,70 +152,86 @@ class Module extends Admin
                 }
             }
         }
-
-        foreach ($dataList as $key => &$value1) {
+        $preRightButtonList = [];
+        $preRightButtonList[] = [
+            'name' => 'install',
+            'title' => '安装',
+            'pageData' => [
+                'formMethod' => 'post',
+                'api' => '/v1/admin/dev/module/import',
+                'title' => '确认要安装该模块吗？',
+                'apiSuffix' => ['name'],
+                'modalType' => 'confirm',
+                'width' => '600',
+                'okText' => '立即安装',
+                'cancelText' => '取消安装',
+                'content' => '<p>安装模块后您将可以使用该模块的功能</p>',
+            ],
+            'style' => ['size' => 'small', 'type' => 'success']
+        ];
+        $preRightButtonList[] = [
+            'name' => 'config',
+            'title' => '配置',
+            'pageData' => [
+                'pageType' => 'modal',
+                'modalType' => 'list',
+                'api' => '/v1/admin/dev/config/lists',
+                'width' => '1000',
+                'apiSuffix' => ['name'],
+                'title' => '模块配置管理'
+            ],
+            'style' => ['size' => 'small']
+        ];
+        $preRightButtonList[] = [
+            'name' => 'api',
+            'title' => 'API接口',
+            'pageData' => [
+                'modalType' => 'list',
+                'api' => '/v1/admin/dev/api/trees',
+                'width' => '1200',
+                'apiSuffix' => ['name'],
+                'title' => '模块前台API接口管理'
+            ],
+            'style' => ['size' => 'small']
+        ];
+        $preRightButtonList[] = [
+            'name' => 'edit',
+            'title' => '修改',
+            'pageData' => [
+                'pageType' => 'modal',
+                'modalType' => 'form',
+                'api' => '/v1/admin/dev/module/edit',
+                'width' => '1000',
+                'title' => '修改模块信息'
+            ],
+            'style' => ['size' => 'small']
+        ];
+        $preRightButtonList[] = [
+            'name' => 'export',
+            'title' => '导出',
+            'pageData' => [
+                'api' => '/v1/admin/dev/module/export',
+                'title' => '确认要导出模块吗？',
+                'modalType' => 'confirm',
+                'formMethod' => 'post',
+                'width' => '600',
+                'noRefresh' => true,
+                'okText' => '确认导出',
+                'cancelText' => '取消操作',
+                'content' => '<p><p>导出的模块可以分发给别人使用</p><p>将会导出模块基本信息、配置信息、API信息、模块数据表等信息。</p></p>',
+            ],
+            'style' => ['size' => 'small']
+        ];
+        foreach ($dataList as $key => &$value) {
             // 兼容接口文档Tree组件异步加载需要
-            $value1['loading'] = false;
-            $value1['children'] = [];
+            $value['loading'] = false;
+            $value['children'] = [];
+
             // 右侧按钮
-            $value1['rightButtonList'] = [];
-            if (!$value1['id']) {
-                $value1['rightButtonList'][] = [
-                    'name' => 'info',
-                    'title' => '安装',
-                    'pageData' => [
-                        'formMethod' => 'post',
-                        'api' => '/v1/admin/core/module/import',
-                        'title' => '确认要安装该模块吗？',
-                        'apiSuffix' => ['name'],
-                        'modalType' => 'confirm',
-                        'width' => '600',
-                        'okText' => '立即安装',
-                        'cancelText' => '取消安装',
-                        'content' => '<p>安装模块后您将可以使用该模块的功能</p>',
-                    ],
-                    'style' => ['size' => 'small', 'type' => 'success']
-                ];
+            if (!$value['id']) {
+                $value['rightButtonList'] = ['install'];
             } else {
-                $value1['rightButtonList'][] = [
-                    'name' => 'config',
-                    'title' => '设置',
-                    'pageData' => [
-                        'modalType' => 'form',
-                        'api' => '/v1/admin/core/config/saveBatch/',
-                        'width' => '1000',
-                        'apiSuffix' => ['name'],
-                        'title' => '配置'
-                    ],
-                    'style' => ['size' => 'small', 'type' => 'primary']
-                ];
-                $value1['rightButtonList'][] = [
-                    'name' => 'edit',
-                    'title' => '修改',
-                    'pageData' => [
-                        'modalType' => 'form',
-                        'api' => '/v1/admin/core/module/edit',
-                        'width' => '1000',
-                        'title' => '修改模块信息'
-                    ],
-                    'style' => ['size' => 'small']
-                ];
-                $value1['rightButtonList'][] = [
-                    'name' => 'export',
-                    'title' => '导出',
-                    'pageData' => [
-                        'api' => '/v1/admin/core/module/export',
-                        'title' => '确认要导出模块吗？',
-                        'modalType' => 'confirm',
-                        'formMethod' => 'post',
-                        'width' => '600',
-                        'noRefresh' => true,
-                        'okText' => '确认导出',
-                        'cancelText' => '取消操作',
-                        'content' => '<p><p>导出的模块可以分发给别人使用</p><p>将会导出模块基本信息、配置信息、API信息、模块数据表等信息。</p></p>',
-                    ],
-                    'style' => ['size' => 'small']
-                ];
+                $value['rightButtonList'] = ['config', 'api', 'edit', 'export'];
             }
         }
 
@@ -227,6 +243,7 @@ class Module extends Admin
         $xyBuilderList = new \app\core\util\xybuilder\XyBuilderList();
         $listData = $xyBuilderList->init()
             ->addTopButton('add', '创建新模块', ['api' => '/v1/admin/core/module/add'])
+            ->addRightButtons($preRightButtonList)
             ->addColumn('id' , 'ID', ['width' => '50px'])
             ->addColumn('name', '名称', ['width' => '120px'])
             ->addColumn('title', '标题', ['width' => '120px'])

@@ -114,6 +114,39 @@ class XyBuilderList {
     }
 
     /**
+     * 批量添加顶部按钮
+     * @author jry <ijry@qq.com>
+     */
+    public function addTopButtons($buttons){
+        foreach ($buttons as $key => $value) {
+            $this->addTopButton($value['name'], $value['title'], $value['pageData'], $value['style']);
+        }
+        return $this;
+    }
+
+    /**
+     * 批量添加右侧按钮
+     * @author jry <ijry@qq.com>
+     */
+    public function addRightButtons($buttons){
+        foreach ($buttons as $key => $value) {
+            $this->addRightButton($value['name'], $value['title'], $value['pageData'], $value['style']);
+        }
+        return $this;
+    }
+
+    /**
+     * 批量添加表格列
+     * @author jry <ijry@qq.com>
+     */
+    public function addColums($columns){
+        foreach ($columns as $key => $value) {
+            $this->addColumn($value['key'], $value['title'], $value['data']);
+        }
+        return $this;
+    }
+
+    /**
      * 添加表格列
      * @author jry <ijry@qq.com>
      */

@@ -62,6 +62,7 @@ class Index extends Home
             'name'     => 'UniAdmin',
             'title' => $siteInfo['title'],
             'version' => config('app.app_version'),
+            'domainRoot' => request()->domain() . request()->rootUrl(), // 主要给远程组件和iframe用
             'api' => [
                 'apiBase' => $apiBase,
                 'apiLogin' => '/v1/admin/core/user/login',

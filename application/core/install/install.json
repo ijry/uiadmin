@@ -1300,6 +1300,7 @@
                 "  `apiParams` varchar(255) DEFAULT NULL COMMENT '接口参数',",
                 "  `apiMethod` varchar(255) DEFAULT NULL COMMENT '接口请求方法',",
                 "  `apiExt` varchar(255) DEFAULT NULL COMMENT '接口后缀',",
+                "  `outUrl` varchar(255) NOT NULL COMMENT '外链地址或者远程组件地址',",
                 "  `doc` longtext COMMENT '接口文档',",
                 "  `isHide` int(1) unsigned DEFAULT '0' COMMENT '是否隐藏',",
                 "  `status` tinyint(1) NOT NULL DEFAULT '1' COMMENT '状态',",
