@@ -1,4 +1,4 @@
-# UniAdmin
+# UniAdmin - 渐进式模块化后台
 
 [![Build Status](https://travis-ci.org/ijry/initadmin.svg?branch=master)](https://travis-ci.org/ijry/initadmin)
 ![Downloads](https://img.shields.io/badge/downloads-1K-brightgreen.svg)
@@ -32,9 +32,27 @@ UniAdmin诞生在移动互联网后半场，面多各种 流量入口，UniAdmin
 UniAdmin后台将打造统一的后台框架体系， 后端横跨php、java、python、node、.net 等等语言，前端将支持vue、react、angular 语言，多个语言支持通过统一的API标准兼容， 同时UniAdmin将从tp5+vue版本做起，先建立 API标准及示例，后期吸收优秀的志愿者加入 不同语言是实现开发
 
 ## 资源
+官方网站：https://uniadmin.jiangruyi.com  
+成功案例：https://uniadmin.jiangruyi.com/case  
+插件市场：https://uniadmin.jiangruyi.com/ext  
 
-官方网站：https://uniadmin.jiangruyi.com
+## 解决问题
+文档手册：https://www.kancloud.cn/ijry/initadmin/971730  
+安装手册：https://www.kancloud.cn/ijry/initadmin/964968  
+交流社区：https://uniadmin.jiangruyi.com/ask  
+或者通过下面的QQ群进行提问
+
+## 开源地址
+码云仓库：https://gitee.com/jry/uniadmin  
+github：https://github.com/ijry/uniadmin  
+
+
+## 在线演示（该账号密码仅用于演示）
+后台演示：https://uniadmin.jiangruyi.com/admin/  
+登录账号：jry  
+登录密码：Windows9  
 
 # QQ群
-欢迎加群一起讨论框架选型、功能实现、架构等等
+欢迎加群一起讨论框架选型、功能实现、架构等等  
+QQ群：275346949  
 点击链接加入群聊【QQ群1】：https://jq.qq.com/?_wv=1027&k=5sxKFMc
