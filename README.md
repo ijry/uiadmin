@@ -1,4 +1,4 @@
-# UniAdmin
+# UniAdmin - 渐进式模块化后台
 
 [![Build Status](https://travis-ci.org/ijry/initadmin.svg?branch=master)](https://travis-ci.org/ijry/initadmin)
 ![Downloads](https://img.shields.io/badge/downloads-1K-brightgreen.svg)
@@ -34,7 +34,20 @@ UniAdmin后台将打造统一的后台框架体系， 后端横跨php、java、p
 ## 资源
 
 官方网站：https://uniadmin.jiangruyi.com
+文档手册：https://www.kancloud.cn/ijry/initadmin/971730
+安装手册：https://www.kancloud.cn/ijry/initadmin/964968
+码云仓库：https://gitee.com/jry/uniadmin
+github：https://github.com/ijry/uniadmin
+成功案例：https://uniadmin.jiangruyi.com/case
+交流社区：https://uniadmin.jiangruyi.com/ask
+插件市场：https://uniadmin.jiangruyi.com/ext
+
+## 在线演示（该账号密码仅用于演示）
+后台演示：https://uniadmin.jiangruyi.com/admin/
+登录账号：jry
+登录密码：Windows9
 
 # QQ群
 欢迎加群一起讨论框架选型、功能实现、架构等等
+QQ群：275346949
 点击链接加入群聊【QQ群1】：https://jq.qq.com/?_wv=1027&k=5sxKFMc

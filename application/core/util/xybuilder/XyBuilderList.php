@@ -54,7 +54,7 @@ class XyBuilderList {
             'countList' => [],
             'config' => [
                 'listExpandAll' => false,
-                'modalDefaultWidth' => '800px',
+                'modalDefaultWidth' => '1000px',
             ]
         ];
         return $this;
@@ -79,7 +79,9 @@ class XyBuilderList {
         $btn['pageData'] = [
             'pageType' => 'modal', // 支持modal和page
             'modalType' => 'form',
-            'modalClosable' => true,
+            'modalClosable' => false,
+            'width'         => '1000px',
+            'height'        => '60vh'
         ];
         $btn['pageData'] = array_merge($btn['pageData'], $pageData);
         $this->data['topButtonList'][] = $btn;
@@ -107,7 +109,9 @@ class XyBuilderList {
         $btn['pageData'] = [
             'pageType' => 'modal', // 支持modal和page
             'modalType' => 'form',
-            'modalClosable' => true,
+            'modalClosable' => false,
+            'width'         => '1000px',
+            'height'        => '60vh',
         ];
         $btn['pageData'] = array_merge($btn['pageData'], $pageData);
         return $btn;
