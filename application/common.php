@@ -10,7 +10,18 @@
  * | Author: jry <ijry@qq.com>
  * +----------------------------------------------------------------------
 */
-
+/**
+ * 调试打印函数
+ *
+ * @param [type] $str
+ * @return void
+ */
+function p($str)
+{
+    echo '<pre>';
+    print_r($str);exit;
+    echo '</pre>';
+}
 // 获取UUID
 function get_uuid() {
     $uuid1_object = \Ramsey\Uuid\Uuid::uuid1();

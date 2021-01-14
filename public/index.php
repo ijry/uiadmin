@@ -24,15 +24,27 @@ header("Access-Control-Allow-Headers: Content-Type,Authorization,CloudId,Eid");
 /**
  * 在检测到option请求的时候就停止继续执行
  */
-if($_SERVER['REQUEST_METHOD'] == 'OPTIONS'){
+if($_SERVER['REQUEST_METHOD'] == 'OPTIONS')
+{
     exit;
 }
 
 // 判断thinkphp存在
-if (!is_dir('../thinkphp')) {
+if (!is_dir("../thinkphp"))
+{
     echo '请先执行composer install安装依赖！';
     exit;
 }
+/**
+ * 检测目录是否拥有写入权限
+ * linux系统下可能会出现权限无法运行TP框架
+ */
+if (!is_writable("../runtime"))
+{
+    echo "确保根目录 runtime 具有写入权限";
+    exit;
+}
+
 
 // 加载基础文件
 require __DIR__ . '/../thinkphp/base.php';

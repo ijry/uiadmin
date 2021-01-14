@@ -299,7 +299,7 @@ class Install extends Home
             ),
             '1'    => array(
                 'title'   => 'PHP版本',
-                'limit'   => '5.6+',
+                'limit'   => '7.0+',
                 'current' => PHP_VERSION,
                 'icon'    => 'el-icon-check text-success',
             ),
@@ -324,7 +324,8 @@ class Install extends Home
         );
 
         // PHP环境检测
-        if ($items['1']['current'] < 5.4) {
+        if ($items['1']['current'] < (float)$items['1']['limit'])
+        {
             $items['1']['icon'] = 'el-icon-close text-danger';
             session('error', true);
         }
@@ -341,7 +342,8 @@ class Install extends Home
         unset($tmp);
 
         // 磁盘空间检测
-        if (function_exists('disk_free_space')) {
+        if (function_exists('disk_free_space'))
+        {
             $disk_size                = floor(disk_free_space('./') / (1024 * 1024)) . 'M';
             $items['4']['current'] = $disk_size . 'MB';
             if ($disk_size < 200) {
@@ -359,26 +361,32 @@ class Install extends Home
      */
     private function check_dirfile()
     {
-        $items = array(
-            '0' => array(
-                'type'  => 'dir',
-                'path'  => env('root_path') . 'runtime',
-                'current' => '可写',
-                'icon'  => 'el-icon-check text-success',
-            ),
-            '1' => array(
-                'type'  => 'dir',
-                'path'  => env('root_path') . 'public',
-                'current' => '可写',
-                'icon'  => 'el-icon-check text-success',
-            ),
-            '2' => array(
-                'type'  => 'dir',
-                'path'  => env('root_path') . 'public/static/uploads',
-                'current' => '可写',
-                'icon'  => 'el-icon-check text-success',
-            )
-        );
+        $items = [
+            [
+                'type'          => 'dir',
+                'path'          => env('root_path') . 'runtime',
+                'current'       => '可写',
+                'icon'          => 'el-icon-check text-success',
+            ],
+            [
+                'type'          => 'dir',
+                'path'          => env('root_path') . 'public',
+                'current'       => '可写',
+                'icon'          => 'el-icon-check text-success',
+            ],
+            [
+                'type'          => 'dir',
+                'path'          => env('root_path') . 'public/static',
+                'current'       => '可写',
+                'icon'          => 'el-icon-check text-success',
+            ],
+            [
+                'type'          => 'dir',
+                'path'          => env('root_path') . 'vendor',
+                'current'       => '可写',
+                'icon'          => 'el-icon-check text-success',
+            ]
+        ];
 
         foreach ($items as &$val) {
             $path = $val['path'];
