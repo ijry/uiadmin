@@ -14,17 +14,6 @@
 // [ 应用入口文件 ]
 namespace think;
 
-// 预设Uni官方自写常量（方便后续调用）
-defined('UNI_WEB_PATH') ? '' : define('UNI_WEB_PATH',dirname(str_replace("\\",'/',__DIR__)));
-defined('UNI_WEB_APP') ? '' : define('UNI_WEB_APP',UNI_WEB_PATH.'/application');
-defined('UNI_WEB_CONF') ? '' : define('UNI_WEB_CONF',UNI_WEB_PATH.'/config');
-defined('UNI_WEB_EXTEND') ? '' : define('UNI_WEB_EXTEND',UNI_WEB_PATH.'/extend');
-defined('UNI_WEB_PUBLIC') ? '' : define('UNI_WEB_PUBLIC',UNI_WEB_PATH.'/public');
-defined('UNI_WEB_ROUTE') ? '' : define('UNI_WEB_ROUTE',UNI_WEB_PATH.'/route');
-defined('UNI_WEB_RUNTIME') ? '' : define('UNI_WEB_RUNTIME',UNI_WEB_PATH.'/runtime');
-defined('UNI_WEB_TP') ? '' : define('UNI_WEB_TP',UNI_WEB_PATH.'/thinkphp');
-defined('UNI_WEB_VENDOR') ? '' : define('UNI_WEB_VENDOR',UNI_WEB_PATH.'/vendor');
-
 // 请求头
 header("Content-type: text/html; charset=utf-8");
 $origin = $_SERVER['HTTP_ORIGIN'] ?? '*';
@@ -41,7 +30,7 @@ if($_SERVER['REQUEST_METHOD'] == 'OPTIONS')
 }
 
 // 判断thinkphp存在
-if (!is_dir(UNI_WEB_TP))
+if (!is_dir("../thinkphp"))
 {
     echo '请先执行composer install安装依赖！';
     exit;
@@ -50,7 +39,7 @@ if (!is_dir(UNI_WEB_TP))
  * 检测目录是否拥有写入权限
  * linux系统下可能会出现权限无法运行TP框架
  */
-if (!is_writable(UNI_WEB_RUNTIME))
+if (!is_writable("../runtime"))
 {
     echo "确保根目录 runtime 具有写入权限";
     exit;
