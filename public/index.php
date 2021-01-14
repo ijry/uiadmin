@@ -50,27 +50,10 @@ if (!is_dir(UNI_WEB_TP))
  * 检测目录是否拥有写入权限
  * linux系统下可能会出现权限无法运行TP框架
  */
-function check_dir_write()
+if (!is_writable(UNI_WEB_RUNTIME))
 {
-    $dirList = [
-        UNI_WEB_RUNTIME,
-        UNI_WEB_PUBLIC,
-        UNI_WEB_VENDOR,
-    ];
-    foreach ($dirList as $key => $dir)
-    {
-        if (is_writable($dir))
-        {
-            return true;
-        }else{
-            return basename($dir);
-        }
-    }
-}
-$noDirName = check_dir_write();
-if (check_dir_write() !== true)
-{
-    echo "确保根目录【{$noDirName}】具有写入权限";exit;
+    echo "确保根目录 runtime 具有写入权限";
+    exit;
 }
 
 
