@@ -33,13 +33,19 @@ UniAdmin后台将打造统一的后台框架体系， 后端横跨php、java、p
 
 ## 资源
 官方网站：https://uniadmin.jiangruyi.com  
+成功案例：https://uniadmin.jiangruyi.com/case  
+插件市场：https://uniadmin.jiangruyi.com/ext  
+
+## 解决问题
 文档手册：https://www.kancloud.cn/ijry/initadmin/971730  
 安装手册：https://www.kancloud.cn/ijry/initadmin/964968  
+交流社区：https://uniadmin.jiangruyi.com/ask  
+或者通过下面的QQ群进行提问
+
+## 开源地址
 码云仓库：https://gitee.com/jry/uniadmin  
 github：https://github.com/ijry/uniadmin  
-成功案例：https://uniadmin.jiangruyi.com/case  
-交流社区：https://uniadmin.jiangruyi.com/ask  
-插件市场：https://uniadmin.jiangruyi.com/ext  
+
 
 ## 在线演示（该账号密码仅用于演示）
 后台演示：https://uniadmin.jiangruyi.com/admin/  
