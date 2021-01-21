@@ -77,6 +77,7 @@ class XyBuilderList {
         $btn['name'] = $name;
         $btn['title'] = $title;
         $btn['pageData'] = [
+            'show' => false,
             'pageType' => 'modal', // 支持modal和page
             'modalType' => 'form',
             'modalClosable' => false,
@@ -107,6 +108,7 @@ class XyBuilderList {
         $btn['name'] = $name;
         $btn['title'] = $title;
         $btn['pageData'] = [
+            'show' => false,
             'pageType' => 'modal', // 支持modal和page
             'modalType' => 'form',
             'modalClosable' => false,
