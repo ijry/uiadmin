@@ -158,7 +158,7 @@ class Module extends Admin
             'title' => '安装',
             'pageData' => [
                 'formMethod' => 'post',
-                'api' => '/v1/admin/dev/module/import',
+                'api' => '/v1/admin/core/module/import',
                 'title' => '确认要安装该模块吗？',
                 'apiSuffix' => ['name'],
                 'modalType' => 'confirm',
@@ -171,46 +171,32 @@ class Module extends Admin
         ];
         $preRightButtonList[] = [
             'name' => 'config',
-            'title' => '配置',
+            'title' => '设置',
             'pageData' => [
-                'pageType' => 'modal',
-                'modalType' => 'list',
-                'api' => '/v1/admin/dev/config/lists',
+                'modalType' => 'form',
+                'api' => '/v1/admin/core/config/saveBatch/',
                 'width' => '1000',
                 'apiSuffix' => ['name'],
-                'title' => '模块配置管理'
+                'title' => '配置'
             ],
-            'style' => ['size' => 'small']
-        ];
-        $preRightButtonList[] = [
-            'name' => 'api',
-            'title' => 'API接口',
-            'pageData' => [
-                'modalType' => 'list',
-                'api' => '/v1/admin/dev/api/trees',
-                'width' => '1200',
-                'apiSuffix' => ['name'],
-                'title' => '模块前台API接口管理'
-            ],
-            'style' => ['size' => 'small']
+            'style' => ['size' => 'small', 'type' => 'primary']
         ];
         $preRightButtonList[] = [
             'name' => 'edit',
             'title' => '修改',
             'pageData' => [
-                'pageType' => 'modal',
                 'modalType' => 'form',
-                'api' => '/v1/admin/dev/module/edit',
+                'api' => '/v1/admin/core/module/edit',
                 'width' => '1000',
                 'title' => '修改模块信息'
             ],
             'style' => ['size' => 'small']
         ];
-        $preRightButtonList[] = [
+        $value1['rightButtonList'][] = [
             'name' => 'export',
             'title' => '导出',
             'pageData' => [
-                'api' => '/v1/admin/dev/module/export',
+                'api' => '/v1/admin/core/module/export',
                 'title' => '确认要导出模块吗？',
                 'modalType' => 'confirm',
                 'formMethod' => 'post',
