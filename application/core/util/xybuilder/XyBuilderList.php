@@ -85,6 +85,7 @@ class XyBuilderList {
             'height'        => '60vh'
         ];
         $btn['pageData'] = array_merge($btn['pageData'], $pageData);
+        $btn['style'] = $style;
         $this->data['topButtonList'][] = $btn;
         return $this;
     }
@@ -116,6 +117,7 @@ class XyBuilderList {
             'height'        => '60vh',
         ];
         $btn['pageData'] = array_merge($btn['pageData'], $pageData);
+        $btn['style'] = $style;
         return $btn;
     }
 
