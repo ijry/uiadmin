@@ -22,7 +22,8 @@
         "firebase/php-jwt": "^5.0",
         "topthink/think-image": "^1.0",
         "topthink/think-migration": "^2.0",
-        "guzzlehttp/guzzle": "^6.3"
+        "guzzlehttp/guzzle": "^6.3",
+        "topthink/think-installer": "^2.0"
     },
     "autoload": {
         "psr-4": {
@@ -38,7 +39,7 @@
     "repositories": {
         "packagist": {
             "type": "composer",
-            "url": "https://packagist.phpcomposer.com"
+            "url": "https://mirrors.aliyun.com/composer/"
         }
     }
 }
