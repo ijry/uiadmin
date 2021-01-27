@@ -74,7 +74,7 @@ class XyBuilderForm {
                 'continue' => false, // 显示继续添加
                 'itemDefaultPosition' => '',
                 'submitButtonTitle' => '确认',
-                'submitCancelTitle' => '取消',
+                'cancelButtonTitle' => '取消',
                 'footerButtonLength' => '120px',
                 'labelPosition' => 'left',
                 'labelWidth' => '100px',
@@ -83,6 +83,15 @@ class XyBuilderForm {
                 'defaultUploadMaxSize' => 512
             ]
         ];
+        return $this;
+    }
+
+    /**
+     * 设置配置
+     * @author jry <ijry@qq.com>
+     */
+    public function setConfig($name, $value) {
+        $this->data['config'][$name] = $value;
         return $this;
     }
 
