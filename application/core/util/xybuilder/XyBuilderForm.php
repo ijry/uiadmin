@@ -115,6 +115,7 @@ class XyBuilderForm {
         $value = '' ,
         $extra = []
     ) {
+        $item = [];
         $item['name'] = $name;
         $item['title'] = $title;
         $item['type'] = $type;

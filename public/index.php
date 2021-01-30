@@ -16,7 +16,7 @@ namespace think;
 
 // 请求头
 header("Content-type: text/html; charset=utf-8");
-$origin = $_SERVER['HTTP_ORIGIN'] ?? '*';
+$origin = $_SERVER['HTTP_ORIGIN'] ? $origin = $_SERVER['HTTP_ORIGIN'] : '*';
 header('Access-Control-Allow-Origin: ' . $origin);
 header("Access-Control-Allow-Methods: POST, GET, OPTIONS, PUT, DELETE");
 header("Access-Control-Allow-Headers: Content-Type,Authorization,CloudId,Eid");
@@ -26,6 +26,7 @@ header("Access-Control-Allow-Headers: Content-Type,Authorization,CloudId,Eid");
  */
 if($_SERVER['REQUEST_METHOD'] == 'OPTIONS')
 {
+    echo '11';
     exit;
 }
 
