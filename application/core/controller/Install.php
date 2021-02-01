@@ -134,7 +134,7 @@ class Install extends Home
         session('error', null);
         session('install', null);
         session('error_msg', null);
-        echo $this->return(['code' => 200, 'msg' => '正在安装']);
+        $this->return(['code' => 200, 'msg' => '正在安装']);
 
         try {
             // 连接数据库
