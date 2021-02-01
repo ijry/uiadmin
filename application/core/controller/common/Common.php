@@ -29,10 +29,6 @@ class Common extends Controller
     {
         // initialize
         parent::initialize();
-
-        if (is_file(env('root_path') . 'vendor/vendor/autoload.php')) {
-            require_once env('root_path') . 'vendor/vendor/autoload.php';
-        }
     }
 
     /**

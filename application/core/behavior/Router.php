@@ -235,6 +235,11 @@ EOF;
                 );
             }
 
+            // 引入composer2
+            if (is_file(env('root_path') . 'vendor2/autoload.php')) {
+                require_once env('root_path') . 'vendor2/autoload.php';
+            }
+
             // 模板标签
             config('template.taglib_pre_load', 'app\core\taglib\Core,app\cms\taglib\Cms');
         }
