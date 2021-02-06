@@ -188,27 +188,13 @@ class Index extends Admin
     }
 
     /**
-     * 设置状态字段
+     * 快速修改字段值
      *
-     * @return \think\Response
      * @author jry <ijry@qq.com>
      */
-    public function setStatus()
-    {
-        $table = input('post.table');
-        $field = input('post.field');
-        $status = input('post.status');
-        if (is_array($status)) {
-            $status = implode(',', $status);
-        }
-        $keyVal = input('post.keyVal');
-        $ret = Db::name($table)
-            ->where('id', '=' ,$keyVal)
-            ->update([$field => $status]);
-        if ($ret) {
-            return $this->return(['code' => 200, 'msg' => '修改成功', 'data' => []]);
-        }
-        return $this->return(['code' => 0, 'msg' => '修改失败', 'data' => []]);
+    public function editField() {
+        // todo安全限制
+        return parent::editField();
     }
 
     /**

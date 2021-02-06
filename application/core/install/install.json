@@ -1024,10 +1024,10 @@
         {
             "module": "core",
             "icon": "",
-            "path": "/core/index/setStatus",
+            "path": "/core/index/editField",
             "pmenu": "/core",
-            "title": "设置状态",
-            "tip": "设置状态",
+            "title": "修改字段值",
+            "tip": "快速修改字段值",
             "menuLayer": "admin",
             "menuType": 3,
             "routeType": "",

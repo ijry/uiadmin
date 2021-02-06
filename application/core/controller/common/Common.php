@@ -152,4 +152,29 @@ class Common extends Controller
             return ['code' => $e->getCode(), 'msg' => $e->getMessage(), 'data' => ['redirect' => $redirect]];
         }
     }
+
+    /**
+     * 快速修改字段值
+     * 其它子控制器可以继承此方法，并做一定要做一些安全限制，必须只允许修改哪些字段防止安全问题。
+     *
+     * @return \think\Response
+     * @author jry <ijry@qq.com>
+     */
+    protected function editField()
+    {
+        $table = input('post.table');
+        $field = input('post.field');
+        $newval = input('post.newval');
+        if (is_array($newval)) {
+            $newval = implode(',', $newval);
+        }
+        $keyVal = input('post.id');
+        $ret = Db::name($table)
+            ->where('id', '=' ,$keyVal)
+            ->update([$field => $newval]);
+        if ($ret) {
+            return $this->return(['code' => 200, 'msg' => '修改成功', 'data' => []]);
+        }
+        return $this->return(['code' => 0, 'msg' => '修改失败', 'data' => []]);
+    }
 }
