@@ -199,18 +199,20 @@ EOF;
                 ->select();
             foreach ($dataList as $key => $val) {
                 $path = explode('/', $val['path']);
-                // 前后端不分离路由
-                Route::rule(
-                    '/admin' . $val['path'] . $val['apiSuffix'],
-                    $path[1] . '/admin.' . $path[2] . '/' . $path[3],
-                    $val['apiMethod']
-                );
-                // 前后端分离路由
-                Route::rule(
-                    'api/' . $val['apiPrefix'] . '/admin' . $val['path'] . $val['apiSuffix'],
-                    $path[1] . '/admin.' . $path[2] . '/' . $path[3],
-                    $val['apiMethod']
-                );
+                if (isset($path[3])) {
+                    // 前后端不分离路由
+                    Route::rule(
+                        '/admin' . $val['path'] . $val['apiSuffix'],
+                        $path[1] . '/admin.' . $path[2] . '/' . $path[3],
+                        $val['apiMethod']
+                    );
+                    // 前后端分离路由
+                    Route::rule(
+                        'api/' . $val['apiPrefix'] . '/admin' . $val['path'] . $val['apiSuffix'],
+                        $path[1] . '/admin.' . $path[2] . '/' . $path[3],
+                        $val['apiMethod']
+                    );
+                }
             }
 
             // 计算前台API路由
@@ -221,18 +223,20 @@ EOF;
                 ->select();
             foreach ($dataList as $key => $val) {
                 $path = explode('/', $val['path']);
-                // 前后端不分离路由
-                Route::rule(
-                    $val['path'] . $val['apiSuffix'],
-                    $path[1] . '/' . $path[2] . '/' . $path[3],
-                    $val['apiMethod']
-                )->ext('html');
-                // 前后端分离路由
-                Route::rule(
-                    'api/' . $val['apiPrefix'] . $val['path'] . $val['apiSuffix'],
-                    $path[1] . '/' . $path[2] . '/' . $path[3],
-                    $val['apiMethod']
-                );
+                if (isset($path[3])) {
+                    // 前后端不分离路由
+                    Route::rule(
+                        $val['path'] . $val['apiSuffix'],
+                        $path[1] . '/' . $path[2] . '/' . $path[3],
+                        $val['apiMethod']
+                    )->ext('html');
+                    // 前后端分离路由
+                    Route::rule(
+                        'api/' . $val['apiPrefix'] . $val['path'] . $val['apiSuffix'],
+                        $path[1] . '/' . $path[2] . '/' . $path[3],
+                        $val['apiMethod']
+                    );
+                }
             }
 
             // 引入composer2
