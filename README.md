@@ -37,8 +37,8 @@ UniAdmin后台将打造统一的后台框架体系， 后端横跨php、java、p
 插件市场：https://uniadmin.jiangruyi.com/ext  
 
 ## 解决问题
-文档手册：https://www.kancloud.cn/ijry/initadmin/971730  
-安装手册：https://www.kancloud.cn/ijry/initadmin/964968  
+文档手册：https://uniadmin.jiangruyi.com/docs/uniadmin
+安装手册：https://uniadmin.jiangruyi.com/docs/uniadmin?id=2
 交流社区：https://uniadmin.jiangruyi.com/ask  
 或者通过下面的QQ群进行提问
 
