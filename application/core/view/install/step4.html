@@ -35,6 +35,12 @@
           data: function() {
             return {}
           },
+          created() {
+            let res = await util.request({
+                url: '/v1/core/install/step4',
+                method: 'post'
+            });
+          },
           mounted() {
             let _this = this;
             setInterval(async function() {
