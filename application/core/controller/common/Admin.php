@@ -56,6 +56,16 @@ class Admin extends Common
                 return true;
             }
 
+            // 无需验证权限的接口，防止权限管理时未勾选导致菜单不显示
+            if (in_array(request()->path(),
+                ['api/v1/admin/core/index/cleanRuntime',
+                'api/v1/admin/core/index/index',
+                'api/v1/admin/core/menu/trees',
+                'api/v1/admin/core/menu/lists',
+                'api/v1/admin/core/user/login'])) {
+                return true;
+            }
+
             // 常规权限验证
             $adminAuth_list = Db::name('core_role')
                 ->where('status', 1)
