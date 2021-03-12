@@ -56,7 +56,7 @@ class Module extends Model
 
         // 导出API
         $expotInfo['api'] = $this->core_menu
-            ->field('module,icon,path,pmenu,title,tip,menuLayer,menuType,routeType,apiPrefix,apiSuffix,apiParams,apiMethod,apiExt,doc,isHide')
+            ->field('module,icon,path,pmenu,title,tip,menuLayer,menuType,routeType,apiPrefix,apiSuffix,apiParams,apiMethod,apiExt,doc,isHide,isDev')
             ->where('module', '=', $info['name'])
             ->select()->toArray();
         $database = config('database.database');
