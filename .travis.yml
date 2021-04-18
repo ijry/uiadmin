@@ -7,11 +7,11 @@ php:
 # Travis-CI Caching
 cache:
   directories:
-    - vendor/vendor/
+    - vendor/
 
 # S: Build Lifecycle
 install:
-  # - cd ./vendor
+  # - cd ./
   # - composer install --prefer-dist --optimize-autoloader --quiet
 
 # 构建

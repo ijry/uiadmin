@@ -1,0 +1,45 @@
+{
+    "name": "ijry/uniadmin",
+    "description": "the new thinkphp framework",
+    "type": "project",
+    "keywords": [
+        "framework",
+        "uniadmin",
+        "actionphp"
+    ],
+    "homepage": "https://uniadmin.jiangruyi.com",
+    "license": "Apache-2.0",
+    "authors": [
+        {
+            "name": "jry",
+            "email": "ijry@qq.com"
+        }
+    ],
+    "require": {
+        "php": ">=7.1",
+        "topthink/framework": "5.1.*",
+        "firebase/php-jwt": "dev-master",
+        "topthink/think-helper": "^1.0",
+        "topthink/think-image": "^1.0",
+        "guzzlehttp/guzzle": "^6.3",
+        "topthink/think-installer": "^2.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "app\\": "application"
+        }
+    },
+    "extra": {
+        "think-path": "thinkphp"
+    },
+    "config": {
+        "preferred-install": "dist",
+        "vendor-dir": "./vendor"
+    },
+    "repositories": {
+        "packagist": {
+            "type": "composer",
+            "url": "https://mirrors.aliyun.com/composer/"
+        }
+    }
+}
