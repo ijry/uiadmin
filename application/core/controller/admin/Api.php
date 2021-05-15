@@ -37,94 +37,6 @@ class Api extends Admin
     }
 
     /**
-     * 修改API文档
-     *
-     * @return \think\Response
-     * @author jry <ijry@qq.com>
-     */
-    public function doc($id)
-    {
-        if(request()->isPut()){
-            // 获取数据
-            $post_data = input('post.');
-
-            // 处理数据
-            $data = [];
-            foreach ($post_data as $key => $value) {
-                $key_ex = explode('_', $key);
-                $data[$key_ex[0]][$key_ex[1]] = $value;
-            }
-
-            // 存储数据
-            try{
-                $ret = $this->core_menu->save(['doc' => json_encode($data, JSON_UNESCAPED_UNICODE)], ['id' => $id]);
-            }catch(\Exception $e){
-                return $this->return(['code' => 0, 'msg' => '修改失败' . json_encode($e), 'data' => []]);
-            }
-            if ($ret) {
-                return $this->return(['code' => 200, 'msg' => '修改成功', 'data' => []]);
-            } else {
-                return $this->return(['code' => 0, 'msg' => '修改失败', 'data' => []]);
-            }
-        } else {
-            // 获取菜单信息
-            $info = $this->core_menu
-                ->where('id', $id)
-                ->find();
-            $info['doc'] = json_decode($info['doc'], true);
-            $info['apiMethod'] = explode('|', $info['apiMethod']);
-            $doc_info = [];
-            foreach ($info['apiMethod'] as $key => $value) {
-                if (isset($info['doc'][$value])) {
-                    $doc_info[$value] = $info['doc'][$value];
-                } else {
-                    $doc_info[$value] = [
-                        'description' => '',
-                        'params' => [
-                            0 => ['description' => '']
-                        ]
-                    ];
-                }
-            }
-            if ($info['menuLayer'] == 'admin') {
-                $entry = '';
-            } else {
-                $entry = '/admin';
-            }
-
-            // 构造动态页面数据
-            $xyBuilderForm = new \app\core\util\xybuilder\XyBuilderForm();
-            $xyBuilderForm->init()
-                ->setFormMethod('put');
-            foreach ($doc_info as $key => $value) {
-                $xyBuilderForm->addFormItem($key . '_method', '请求地址', 'static', $key . '：/' . $info['apiPrefix'] . $entry .$info['path'] . $info['apiSuffix'])
-                    ->addFormItem($key . '_description', '接口说明', 'text', $doc_info[$key]['description'])
-                    ->addFormItem($key . '_params', '请求参数', 'formlist', $doc_info[$key]['params'], [
-                        'options' => [
-                            ['title' => '是否必须', 'key' => 'require', 'span' => 2],
-                            ['title' => '参数名', 'key' => 'name', 'span' => 4],
-                            ['title' => '参数标题', 'key' => 'title', 'span' => 4],
-                            ['title' => '说明', 'key' => 'description', 'span' => 8],
-                            ['title' => '示例', 'key' => 'example', 'span' => 4]
-                        ]
-                    ])
-                    ->addFormItem($key . '_divider', '', 'divider', '');
-            }
-            $formData = $xyBuilderForm->setFormValues()
-                ->getData();
-
-            //返回数据
-            return $this->return([
-                'code' => 200,
-                'msg' => '成功',
-                'data' => [
-                    'formData' => $formData
-                ]
-            ]);
-        }
-    }
-
-    /**
      * API树
      *
      * @return \think\Response
@@ -148,7 +60,6 @@ class Api extends Admin
         $xyBuilderList = new \app\core\util\xybuilder\XyBuilderList();
         $listData = $xyBuilderList->init()
             ->addTopButton('add', '添加', ['api' => '/v1/admin/core/api/add'])
-            ->addRightButton('doc', '文档', ['api' => '/v1/admin/core/api/doc', 'width' => '1000', 'title' => 'API文档编辑', 'apiSuffix' =>['id']])
             ->addRightButton('edit', '修改', ['api' => '/v1/admin/core/api/edit', 'title' => '修改API'])
             ->addRightButton('delete', '删除', [
                 'api' => '/v1/admin/core/api/delete',

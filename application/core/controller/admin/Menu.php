@@ -91,7 +91,6 @@ class Menu extends Admin
         $xyBuilderList = new \app\core\util\xybuilder\XyBuilderList();
         $listData = $xyBuilderList->init()
             ->addTopButton('add', '添加菜单', ['api' => '/v1/admin/core/menu/add'])
-            ->addRightButton('doc', '文档', ['api' => '/v1/admin/core/api/doc', 'width' => '1000', 'title' => 'API文档编辑', 'apiSuffix' =>['id']])
             ->addRightButton('edit', '修改', ['api' => '/v1/admin/core/menu/edit', 'title' => '修改菜单'])
             ->addRightButton('delete', '删除', [
                 'api' => '/v1/admin/core/menu/delete',
