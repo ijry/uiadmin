@@ -14,14 +14,16 @@
     },
     "autoload": {
         "psr-4": {
-            "uniadmin\\": "src/"
+            "uniadmin\\core\\": "core/src/"
         }
     },
     "extra": {
         "think": {
             "services": [
+                "uniadmin\\core\\MyService"
             ],
             "config":{
+                "uniadmin": "core/src/config.php"
             }
         }
     }
