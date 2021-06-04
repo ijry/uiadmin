@@ -20,6 +20,7 @@ use think\Request;
  */
 class User
 {
+    // 登录
     public function login($account, $password) {
         $userLists = config('uniadmin.user.lists');
         foreach ($userLists as $key => $value) {
@@ -31,6 +32,23 @@ class User
                 } else {
                     throw new \Exception("密码错误", 0);
                 }
+            }
+        }
+        throw new \Exception("用户不存在", 0);
+    }
+
+    // 获取用户信息
+    public function getById($uid) {
+        $userLists = config('uniadmin.user.lists');
+        foreach ($userLists as $key => $value) {
+            if ($value['id'] == $uid) {
+                return [
+                    'id' => $value['id'],
+                    'nickname' => $value['nickname'],
+                    'username' => $value['username'],
+                    'avatar' => $value['avatar'],
+                    'roles' => $value['roles'],
+                ]
             }
         }
         throw new \Exception("用户不存在", 0);

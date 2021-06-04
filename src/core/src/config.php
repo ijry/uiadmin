@@ -5,7 +5,11 @@
 
 return [
     // 系统信息
-    'name' => "UniAdmin后台",      // 系统名称
+    'version' => "1.2.0",          // 版本
+    'title' => "UniAdmin后台",     // 系统名称
+    'slogan' => "",               // 口号
+    'description' => "",          // 简介
+    'icp' => "",                  // ICP备案号
     'logo' => "",                 // 系统logo方形
     'logoTitle' => "",            // 系统logo带标题
     'apiPrefix' => '/api',        // api接口通用前缀
