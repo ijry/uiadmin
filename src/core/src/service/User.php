@@ -48,7 +48,7 @@ class User
                     'username' => $value['username'],
                     'avatar' => $value['avatar'],
                     'roles' => $value['roles'],
-                ]
+                ];
             }
         }
         throw new \Exception("用户不存在", 0);

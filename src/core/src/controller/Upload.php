@@ -47,7 +47,7 @@ class Upload
             }
             fwrite($fd, $content); // 将切块合并到一个文件上
         }
-        return json_encode([
+        return json([
             'code' => 200,
             'msg' => '上传成功',
             'data' => [
@@ -87,7 +87,7 @@ class Upload
 
             if ($savename) {
                 // 成功上传后 获取上传信息
-                return json_encode([
+                return json([
                     'code' => 200,
                     'msg' => '上传成功',
                     'data' => [
@@ -98,7 +98,7 @@ class Upload
                 ]);
             } else {
                 // 返回数据
-                return json_encode([
+                return json([
                     'code' => 0,
                     'msg'  => '上传出错',
                     'data' => [
@@ -110,7 +110,7 @@ class Upload
             }
         } catch (\Exception $e) {
             // 返回数据
-            return json_encode([
+            return json([
                 'code' => 0,
                 'msg'  => $e->getMessage(),
                 'data' => [

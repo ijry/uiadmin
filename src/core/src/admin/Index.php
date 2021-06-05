@@ -14,11 +14,11 @@ namespace uniadmin\core\admin;
 use think\Request;
 
 /**
- * 核心控制器
+ * 默认控制器
  *
  * @author jry <ijry@qq.com>
  */
-class Core
+class Index
 {
 
     /**
@@ -33,7 +33,7 @@ class Core
         $apiBase = request()->scheme() . '://' . $_SERVER['HTTP_HOST']  . request()->rootUrl() . config("uniadmin.apiPrefix");
 
         // 返回
-        return json_encode(['code' => 200, 'msg' => '成功', 'data' => [
+        return json(['code' => 200, 'msg' => '成功', 'data' => [
             'lang' => 'php',
             'framework' => 'thinkphp6.0',
             'name' => "UniAdmin",
@@ -51,11 +51,11 @@ class Core
                 'apiUserInfo' => '/v1/core/user/info'
             ],
             'siteInfo' => [
-                'title' => config("uniadmin.name"),
+                'title' => config("uniadmin.title"),
                 'logo' => config("uniadmin.logo"),
                 'logoTitle' => config("uniadmin.logoTitle")
             ]
-        ]], true);
+        ]]);
     }
 
     /**
@@ -179,7 +179,7 @@ class Core
         ];
 
         // 返回数据
-        return json_encode(['code' => 200, 'msg' => '成功', 'data' => [
+        return json(['code' => 200, 'msg' => '成功', 'data' => [
             'dataList' => $dataList
         ]]);
     }

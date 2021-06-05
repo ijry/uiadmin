@@ -27,7 +27,7 @@ class Menu
         $dataList = $service->getByUser(session('userInfo.id'), session('userInfo.roles'));
 
         // 返回数据
-        return json_encode([
+        return json([
             'code' => 200,
             'msg'  => '成功',
             'data' => [

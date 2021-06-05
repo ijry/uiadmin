@@ -14,7 +14,7 @@
     },
     "autoload": {
         "psr-4": {
-            "uniadmin\\core\\": "core/src/"
+            "uniadmin\\core\\": "src/core/src/"
         }
     },
     "extra": {
@@ -23,7 +23,7 @@
                 "uniadmin\\core\\MyService"
             ],
             "config":{
-                "uniadmin": "core/src/config.php"
+                "uniadmin": "src/core/src/config.php"
             }
         }
     }

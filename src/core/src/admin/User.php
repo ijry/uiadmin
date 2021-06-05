@@ -36,21 +36,22 @@ class User
             $userService = new $class();
             $userInfo = $userService->login($account, $password);
 
+            session_start();
             $sessionId = session_id();
             session('userInfo', $userInfo);
             if (!$sessionId) {
                 // 返回数据
-                return json_encode([
+                return json([
                     'code' => 0,
                     'msg'  => "获取sessionid失败",
                     'data' => []
                 ]);
             }
-            $token = "Bearer " + $sessionId;
+            $token = "Bearer " . $sessionId;
             // 可以开启tp6的session驱动解决分布式需求
         } catch (\Exception $e) {
             // 返回数据
-            return json_encode([
+            return json([
                 'code' => 0,
                 'msg'  => $e->getMessage(),
                 'data' => []
@@ -59,7 +60,7 @@ class User
         
 
         // 返回数据
-        return json_encode([
+        return json([
             'code' => 200,
             'msg'  => '成功',
             'data' => [
@@ -83,7 +84,7 @@ class User
         $userInfo = $userService->getById(session('userInfo.id'));
 
         // 返回数据
-        return json_encode([
+        return json([
             'code' => 200,
             'msg'  => '成功',
             'data' => [

@@ -9,7 +9,7 @@
  * +----------------------------------------------------------------------
 */
 
-namespace uniadmin\core\controller;
+namespace uniadmin\core\service;
 
 use think\Request;
 
@@ -30,6 +30,7 @@ class Menu
     {
         // todo根据用户角色获取菜单
         $menuListJson = file_get_contents(config_path() . 'menu.json');
-        return json_decode($menuListJson, true); 
+        $menuList = json_decode($menuListJson, true);
+        return $menuList['menu']; 
     }
 }
