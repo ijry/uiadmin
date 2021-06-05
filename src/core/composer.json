@@ -23,7 +23,8 @@
                 "uniadmin\\core\\MyService"
             ],
             "config":{
-                "uniadmin": "src/config.php"
+                "uniadmin": "src/config.php",
+                "menu": "src/menu.json"
             }
         }
     }
