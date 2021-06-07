@@ -1,7 +1,14 @@
 
 ![UniAdmin](https://vkceyugu.cdn.bspapp.com/VKCEYUGU-f12e1180-fce8-465f-a4cd-9f2da88ca0e6/ba0c3585-fa80-4277-9ea2-46b08a23a4bf.png)
 
-# UniAdmin(ThinkPHP6.0版本)
+# 安装
+
+注意一定要dev-mian,其它0.x,1.0分支是老版本不是基于composer的包。
+```
+composer require uniadmin/uniadmin dev-main
+```
+
+## UniAdmin(ThinkPHP6.0版本)
 UniAdmin是一套零前端代码通用后台，采用前后端分离技术，数据交互采用json格式；通过后端Builder不需要一行前端代码就能构建一个vue+element的现代化后台；同时我们打造一了套兼容性的API标准，从ThinkPHP6.0、SpringBoot、.NET5开始，逐步覆盖Go、Node.jS等多语言框架。
 
 ## 特性
