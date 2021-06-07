@@ -10,7 +10,8 @@
         }
     ],
     "require": {
-        "topthink/framework": "^6.0.0"
+        "topthink/framework": "^6.0.0",
+        "casbin/think-authz": "^1.2.2"
     },
     "autoload": {
         "psr-4": {
@@ -20,7 +21,8 @@
     "extra": {
         "think": {
             "services": [
-                "uniadmin\\core\\MyService"
+                "uniadmin\\core\\MyService",
+                "tauthz\\TauthzService"
             ],
             "config":{
                 "uniadmin": "src/core/src/config.php"
