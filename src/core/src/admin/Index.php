@@ -68,7 +68,7 @@ class Index
     {
         // 系统信心
         $server_software = explode(' ', $_SERVER['SERVER_SOFTWARE']);
-        $mysql_info = \think\facade\Db::query('SELECT VERSION() as mysql_version');
+        //$mysql_info = \think\facade\Db::query('SELECT VERSION() as mysql_version');
 
         // 首页自定义
         $dataList = [
@@ -121,7 +121,7 @@ class Index
                     [
                         'type'  => 'text',
                         'title' => '数据库信息',
-                        'value' => config('database.type') . ' ' .$mysql_info[0]['mysql_version']
+                        //'value' => config('database.type') . ' ' .$mysql_info[0]['mysql_version']
                     ],
                     [
                         'type'  => 'text',
