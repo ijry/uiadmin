@@ -9,7 +9,7 @@
  * +----------------------------------------------------------------------
 */
 
-namespace uniadmin\core\xybuilder;
+namespace uniadmin\core\util\xybuilder;
 
 /**
  * XYBuilderInfo动态信息
