@@ -18,7 +18,7 @@ use think\Request;
  *
  * @author jry <ijry@qq.com>
  */
-class Core
+class Core extends BaseHome
 {
     /**
      * 获取站点信息

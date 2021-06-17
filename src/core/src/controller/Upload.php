@@ -18,7 +18,7 @@ use think\Request;
  *
  * @author jry <ijry@qq.com>
  */
-class Upload
+class Upload extends BaseHome
 {
     /**
      * 分片上传合并上传
