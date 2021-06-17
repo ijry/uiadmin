@@ -34,9 +34,9 @@ class Core
             'msg'  => '成功',
             'data' => [
                 'siteInfo' => [
-                    'title' => config("uniadmin.title"),
-                    'logo' => config("uniadmin.logo"),
-                    'logoTitle' => config("uniadmin.logoTitle")
+                    'title' => config("uniadmin.site.title"),
+                    'logo' => config("uniadmin.site.logo"),
+                    'logoTitle' => config("uniadmin.site.logoTitle")
                 ]
             ]
         ]);

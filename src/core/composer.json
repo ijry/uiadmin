@@ -16,7 +16,10 @@
     "autoload": {
         "psr-4": {
             "uniadmin\\core\\": "src/"
-        }
+        },
+        "files":[
+            "src/core/src/function.php"
+        ] 
     },
     "extra": {
         "think": {

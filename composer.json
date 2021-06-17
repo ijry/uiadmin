@@ -15,8 +15,13 @@
     },
     "autoload": {
         "psr-4": {
-            "uniadmin\\core\\": "src/core/src/"
-        }
+            "uniadmin\\core\\": "src/core/src/",
+            "uniadmin\\auth\\": "src/auth/src/",
+            "uniadmin\\cms\\": "src/cms/src/"
+        },
+        "files":[
+            "src/core/src/function.php"
+        ] 
     },
     "extra": {
         "think": {

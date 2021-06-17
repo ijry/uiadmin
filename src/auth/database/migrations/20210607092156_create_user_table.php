@@ -34,6 +34,7 @@ class CreateUserTable extends Migrator
         ->addColumn('avatar', 'string',array('limit'  =>  512,'default'=>'','comment'=>'头像地址'))
         ->addColumn('username', 'string',array('limit'  =>  15,'default'=>'','comment'=>'用户名，登陆使用'))
         ->addColumn('password', 'string',array('limit'  =>  32,'default'=>md5('123456'),'comment'=>'用户密码加密后')) 
+        ->addColumn('roles', 'string',array('limit'  =>  512,'default'=>'','comment'=>'用户角色'))
         ->addColumn('last_login_ip', 'integer',array('limit'  =>  11,'default'=>0,'comment'=>'最后登录IP'))
         ->addColumn('last_login_time', 'datetime',array('default'=>0,'comment'=>'最后登录时间'))
         ->addColumn('create_time', 'datetime',array('default'=>0,'comment'=>'创建时间'))

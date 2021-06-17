@@ -9,7 +9,7 @@
  * +----------------------------------------------------------------------
 */
 
-namespace uniadmin\auth\admin;
+namespace uniadmin\core\admin;
 
 use think\Request;
 
@@ -22,20 +22,6 @@ class Menu
 {
     // 获取菜单
     public function trees() {
-        $class = config('uniadmin.menu.driver');
-        $service = new $class();
-        $dataList = $service->getByUser(session('userInfo.id'), session('userInfo.roles'));
-
-        // 返回数据
-        return json([
-            'code' => 200,
-            'msg'  => '成功',
-            'data' => [
-                'listData' => [
-                    'dataList' => $dataList
-                ],
-                'menu2routes' => true
-            ]
-        ]);
+        
     }
 }
