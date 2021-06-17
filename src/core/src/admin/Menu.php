@@ -24,7 +24,7 @@ class Menu
     public function trees() {
         $class = config('uniadmin.menu.driver');
         $service = new $class();
-        $dataList = $service->getByUser(session('userInfo.id'), session('userInfo.roles'));
+        $dataList = $service->getByUser(session('userInfo.roles'));
 
         // 返回数据
         return json([

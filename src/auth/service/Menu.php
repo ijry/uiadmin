@@ -24,14 +24,10 @@ class Menu
     /**
      * 获取菜单
      *
-
      * @author jry <ijry@qq.com>
      */
-    public function getByUser($uid, $userRoles)
+    public function getByUser($userRoles)
     {
-        // 获取用户角色
-        $roles = explode(',' , Db::name('auth_user')->where('id', $uid)
-            ->value('roles'));
         $adminAuthList = Db::name('auth_role')::where('name', 'in', $userRoles)
             ->column('admin_auth');
         $adminAuth = [];
@@ -42,18 +38,18 @@ class Menu
         $adminAuth = array_unique($adminAuth);
 
         // 获取列表
-        $dataList = $this->core_menu
+        $dataList = Db::name('auth_menu')
             ->where('menu_layer', '=', 'admin')
             ->where('menu_type', 'in', '-1,0,1,2') // 排除掉3纯接口
             ->order('sortnum asc,id asc')
-            ->select()->toArray();
+            ->select();
         // 下面的处理存粹是为了后台界面显示的
         foreach ($dataList as $key => &$val) {
-            if (!in_array('super_admin', $roles) && !in_array('/' . $val['api_prefix'] . '/' . $val['menu_layer'] . $val['path'], $adminAuth)) {
+            if (!in_array('super_admin', $userRoles) && !in_array('/' . $val['api_prefix'] . '/' . $val['menu_layer'] . $val['path'], $adminAuth)) {
                 unset($dataList[$key]);
                 continue;
             }
-            if ($roles == ['super_admin'] && \app\core\util\Str::contains($val['path'], '.')) {
+            if ($userRoles == ['super_admin'] && \app\core\util\Str::contains($val['path'], '.')) {
                 unset($dataList[$key]);
                 continue;
             }

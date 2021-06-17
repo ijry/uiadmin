@@ -26,7 +26,7 @@ class Menu
 
      * @author jry <ijry@qq.com>
      */
-    public function getByUser($uid, $userRoles)
+    public function getByUser($userRoles)
     {
         // todo根据用户角色获取菜单
         $menuListJson = file_get_contents(config_path() . 'menu.json');
