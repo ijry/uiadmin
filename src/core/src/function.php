@@ -1,6 +1,25 @@
 <?php
 // 应用公共文件
 
+
+function get_config($name){
+    $configs = [
+        'version' => '1.1.0',
+        'xyadmin' => [
+            'version' => '1.0.0'
+        ]
+    ];
+    $names = explode('.', $name);
+    switch (count($names)) {
+        case 1:
+            return $configs[$name[0]];
+            break;
+        case 2:
+            return $configs[$name[0]][$name[1]];
+            break;
+    }
+}
+
 /**
  * 把用户输入的文本转义（主要针对特殊符号和emoji表情）
  */

@@ -39,7 +39,7 @@ class Index
             'name' => "UniAdmin",
             'title' => config("uniadmin.site.title"),
             'stype' => '应用', // 菜单分组类型
-            'version' => config("uniadmin.version"),
+            'version' => get_config("version"),
             'domainRoot' => request()->scheme() . '://' . $_SERVER['HTTP_HOST'] . request()->rootUrl(), // 主要给远程组件和iframe用
             'api' => [
                 'apiBase' => $apiBase,
@@ -135,12 +135,12 @@ class Index
                     [
                         'type'  => 'text',
                         'title' => '接口框架',
-                        'value' => "UniAdmin" . ' (v' . config('uniadmin.version') . ')'
+                        'value' => "UniAdmin" . ' (v' . get_config('version') . ')'
                     ],
                     [
                         'type'  => 'text',
                         'title' => '后台框架',
-                        'value' => 'XYAdmin (v' . config('uniadmin.xyadmin.version') . ')'
+                        'value' => 'XYAdmin (v' . get_config('xyadmin.version') . ')'
                     ],
                     [
                         'type'  => 'text',
