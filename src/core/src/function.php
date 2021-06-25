@@ -12,10 +12,10 @@ function get_config($name){
     $names = explode('.', $name);
     switch (count($names)) {
         case 1:
-            return $configs[$name[0]];
+            return $configs[$names[0]];
             break;
         case 2:
-            return $configs[$name[0]][$name[1]];
+            return $configs[$names[0]][$names[1]];
             break;
     }
 }
