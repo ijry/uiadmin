@@ -33,8 +33,8 @@ class CreateRoleTable extends Migrator
         ->addColumn('label', 'string',array('limit'  =>  32,'default'=>'','comment'=>'角色标识'))
         ->addColumn('name', 'string',array('limit'  =>  32,'default'=>'','comment'=>'角色名称'))
         ->addColumn('policys', 'text',array('default'=>'','comment'=>'角色的授权规则'))
-        ->addColumn('create_time', 'datetime',array('default'=>0,'comment'=>'创建时间'))
-        ->addColumn('update_time', 'datetime',array('default'=>0,'comment'=>'更新时间'))
+        ->addColumn('createTime', 'datetime',array('default'=>0,'comment'=>'创建时间'))
+        ->addColumn('updateTime', 'datetime',array('default'=>0,'comment'=>'更新时间'))
         ->addColumn('status', 'boolean',array('limit'  =>  1,'default'=>0,'comment'=>'删除状态，0已禁用1正常'))
         ->addIndex(array('label'), array('unique'  =>  true))
         ->create();

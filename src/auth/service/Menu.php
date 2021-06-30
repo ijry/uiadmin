@@ -29,7 +29,7 @@ class Menu
     public function getByUser($userRoles)
     {
         $adminAuthList = Db::name('auth_role')::where('name', 'in', $userRoles)
-            ->column('admin_auth');
+            ->column('adminAuth');
         $adminAuth = [];
         foreach ($adminAuthList as $k => $v) {
             $v = explode(',', $v);
@@ -39,13 +39,13 @@ class Menu
 
         // 获取列表
         $dataList = Db::name('auth_menu')
-            ->where('menu_layer', '=', 'admin')
-            ->where('menu_type', 'in', '-1,0,1,2') // 排除掉3纯接口
+            ->where('menuLayer', '=', 'admin')
+            ->where('menuType', 'in', '-1,0,1,2') // 排除掉3纯接口
             ->order('sortnum asc,id asc')
             ->select();
         // 下面的处理存粹是为了后台界面显示的
         foreach ($dataList as $key => &$val) {
-            if (!in_array('super_admin', $userRoles) && !in_array('/' . $val['api_prefix'] . '/' . $val['menu_layer'] . $val['path'], $adminAuth)) {
+            if (!in_array('super_admin', $userRoles) && !in_array('/' . $val['apiPrefix'] . '/' . $val['menuLayer'] . $val['path'], $adminAuth)) {
                 unset($dataList[$key]);
                 continue;
             }
