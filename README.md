@@ -11,7 +11,11 @@
 
 ![UniAdmin](https://vkceyugu.cdn.bspapp.com/VKCEYUGU-f12e1180-fce8-465f-a4cd-9f2da88ca0e6/ba0c3585-fa80-4277-9ea2-46b08a23a4bf.png)
 
+
 ## 简介
+
+既有传统混编的便捷，又兼具Vue的高效。UniAdmin不需要搞混编版本、分离版本。它用一套架构集合了所有优势，或者说它将传统混编后台的优势带入了Vue生态中，不用再纠结于选择用哪一种合适。能体验到无需node编译发布也能使用分离式后台。
+
 UniAdmin是一套渐进式模块化开源后台，采用前后端分离技术，数据交互采用json格式，功能低耦合高内聚；核心模块支持系统设置、权限管理、用户管理、菜单管理、API管理等功能，后期上线模块商城将打造类似composer、npm的开放式插件市场；同时我们将打造一套兼容性的API标准，从ThinkPHP5.1+Vue2开始，逐步吸引爱好者共同加入，以覆盖laravel、spring-boot、django、yii、koa、react等多语言框架。
 
 ## 特性
