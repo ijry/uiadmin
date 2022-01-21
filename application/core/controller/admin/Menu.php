@@ -118,7 +118,8 @@ class Menu extends Admin
 
         // 返回数据
         return $this->return(['code' => 200, 'msg' => '成功', 'data' => [
-            'listData' => $listData
+            'listData' => $listData,
+            'menu2routes' => true
         ]]);
     }
 
