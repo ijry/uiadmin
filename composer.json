@@ -1,5 +1,5 @@
 {
-    "name": "ijry/uniadmin",
+    "name": "ijry/uiadmin",
     "description": "the new thinkphp framework",
     "type": "project",
     "keywords": [
@@ -7,7 +7,7 @@
         "uniadmin",
         "actionphp"
     ],
-    "homepage": "https://uniadmin.jiangruyi.com",
+    "homepage": "https://uiadmin.jiangruyi.com",
     "license": "Apache-2.0",
     "authors": [
         {

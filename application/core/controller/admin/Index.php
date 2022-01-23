@@ -1,9 +1,9 @@
 <?php
 /**
  * +----------------------------------------------------------------------
- * | UniAdmin [ 渐进式模块化通用后台 ]
+ * | UiAdmin [ 渐进式模块化通用后台 ]
  * +----------------------------------------------------------------------
- * | Copyright (c) 2018-2020 http://uniadmin.jiangruyi.com All rights reserved.
+ * | Copyright (c) 2018-2022 http://uiadmin.jiangruyi.com All rights reserved.
  * +----------------------------------------------------------------------
  * | Licensed ( http://www.apache.org/licenses/LICENSE-2.0 )
  * +----------------------------------------------------------------------
@@ -138,7 +138,7 @@ class Index extends Admin
                     [
                         'type'  => 'text',
                         'title' => '接口框架',
-                        'value' => 'UniAdmin (v' . config('app.app_version') . ')'
+                        'value' => 'UiAdmin (v' . config('app.app_version') . ')'
                     ],
                     [
                         'type'  => 'text',
@@ -148,7 +148,7 @@ class Index extends Admin
                     [
                         'type'  => 'text',
                         'title' => '官方网站',
-                        'value' => 'https://uniadmin.jiangruyi.com(ijry@qq.com)'
+                        'value' => 'https://uiadmin.jiangruyi.com(ijry@qq.com)'
                     ]
                 ]
             ],

@@ -14,11 +14,11 @@
 // +----------------------------------------------------------------------
 return [
     // 应用名称
-    'app_name'               => 'uniadmin',
+    'app_name'               => 'uiadmin',
     'app_version'            => '1.0.0',
     'admin_version'          => '1.1.0',
     // 应用地址
-    'app_host'               => 'uniadmin.jiangruyi.com',
+    'app_host'               => 'uiadmin.jiangruyi.com',
     // 应用调试模式
     'app_debug'              => true,
     // 应用Trace

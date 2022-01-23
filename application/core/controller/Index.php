@@ -1,9 +1,9 @@
 <?php
 /**
  * +----------------------------------------------------------------------
- * | UniAdmin [ 渐进式模块化通用后台 ]
+ * | UiAdmin [ 渐进式模块化通用后台 ]
  * +----------------------------------------------------------------------
- * | Copyright (c) 2018-2020 http://uniadmin.jiangruyi.com All rights reserved.
+ * | Copyright (c) 2018-2022 http://uiadmin.jiangruyi.com All rights reserved.
  * +----------------------------------------------------------------------
  * | Licensed ( http://www.apache.org/licenses/LICENSE-2.0 )
  * +----------------------------------------------------------------------
@@ -59,7 +59,7 @@ class Index extends Home
         // 返回
         return $this->return(['code' => 200, 'msg' => '成功', 'data' => [
             'lang' => 'php',
-            'name'     => 'UniAdmin',
+            'name'     => 'UiAdmin',
             'title' => $siteInfo['title'],
             'version' => config('app.app_version'),
             'domainRoot' => request()->domain() . request()->rootUrl(), // 主要给远程组件和iframe用
