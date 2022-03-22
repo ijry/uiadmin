@@ -29,7 +29,7 @@ class User extends BaseHome
     public function info()
     {
         // 获取用户ID
-        $class = config('uniadmin.user.driver');
+        $class = config('uiadmin.user.driver');
         $userService = new $class();
         $userInfo = $userService->getById(session('userInfo.id'));
 

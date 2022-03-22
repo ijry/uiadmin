@@ -30,7 +30,7 @@ class Index
     public function api()
     {
         // 获取接口信息
-        $apiBase = request()->scheme() . '://' . $_SERVER['HTTP_HOST']  . request()->rootUrl() . config("uniadmin.apiPrefix");
+        $apiBase = request()->scheme() . '://' . $_SERVER['HTTP_HOST']  . request()->rootUrl() . config("uiadmin.site.apiPrefix");
 
         // 返回
         return json(['code' => 200, 'msg' => '成功', 'data' => [
@@ -157,22 +157,22 @@ class Index
                     [
                         'type'  => 'text',
                         'title' => '项目名称',
-                        'value' => config('uniadmin.site.title')
+                        'value' => config('uiadmin.site.title')
                     ],
                     [
                         'type'  => 'text',
                         'title' => '项目口号',
-                        'value' => config('uniadmin.site.slogan')
+                        'value' => config('uiadmin.site.slogan')
                     ],
                     [
                         'type'  => 'text',
                         'title' => '项目简介',
-                        'value' => config('uniadmin.site.description')
+                        'value' => config('uiadmin.site.description')
                     ],
                     [
                         'type'  => 'text',
                         'title' => 'ICP备案号',
-                        'value' => config('uniadmin.site.icp')
+                        'value' => config('uiadmin.site.icp')
                     ]
                 ]
             ]

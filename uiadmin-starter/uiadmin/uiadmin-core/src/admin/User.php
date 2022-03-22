@@ -32,7 +32,7 @@ class User
             $account = input('post.account');
             $password = input('post.password');
 
-            $class = config('uniadmin.user.driver');
+            $class = config('uiadmin.user.driver');
             $userService = new $class();
             $userInfo = $userService->login($account, $password);
 
@@ -79,7 +79,7 @@ class User
     public function info()
     {
         // 获取用户ID
-        $class = config('uniadmin.user.driver');
+        $class = config('uiadmin.user.driver');
         $userService = new $class();
         $userInfo = $userService->getById(session('userInfo.id'));
 

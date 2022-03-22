@@ -22,7 +22,7 @@ class User
 {
     // 登录
     public function login($account, $password) {
-        $userLists = config('uniadmin.user.lists');
+        $userLists = config('uiadmin.user.lists');
         foreach ($userLists as $key => $value) {
             if ($value['username'] == $account) {
                 // 判断密码
@@ -39,7 +39,7 @@ class User
 
     // 获取用户信息
     public function getById($uid) {
-        $userLists = config('uniadmin.user.lists');
+        $userLists = config('uiadmin.user.lists');
         foreach ($userLists as $key => $value) {
             if ($value['id'] == $uid) {
                 return [

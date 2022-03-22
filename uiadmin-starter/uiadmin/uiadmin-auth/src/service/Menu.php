@@ -58,7 +58,7 @@ class Menu
         $menuTree = $tree->list2tree($dataList, 'path', 'pmenu', 'children', 0, false);
 
         // 获取站点信息
-        $siteInfo = config('uniadmin.site');
+        $siteInfo = config('uiadmin.site');
         $menuTree[0] = array_merge($menuTree[0], $siteInfo);
 
         return $menuTree; 

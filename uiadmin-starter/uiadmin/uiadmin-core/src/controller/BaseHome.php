@@ -11,7 +11,7 @@
 
 namespace uiadmin\core\controller;
 
-use uniadmin\core\BaseController;
+use uiadmin\core\BaseController;
 use think\Request;
 
 /**

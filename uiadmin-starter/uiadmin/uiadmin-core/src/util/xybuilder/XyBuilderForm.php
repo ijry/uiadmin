@@ -94,7 +94,7 @@ class XyBuilderForm {
                 'footerButtonLength' => '120px',
                 'labelPosition' => 'left',
                 'labelWidth' => '100px',
-                'defaultUploadDriver' => config('uniadmin.upload.defaultUploadDriver'),
+                'defaultUploadDriver' => config('uiadmin.upload.defaultUploadDriver'),
                 'defaultUploadAction' => request()->scheme() . '://' . $_SERVER['HTTP_HOST'] . '/api/v1/upload/upload/',
                 'defaultUploadMaxSize' => 512
             ]

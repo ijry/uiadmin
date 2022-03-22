@@ -9,7 +9,7 @@
  * +----------------------------------------------------------------------
 */
 
-namespace uiadmin\auth\admin;
+namespace uiadmin\core\admin;
 
 use think\Request;
 
@@ -22,7 +22,7 @@ class Menu
 {
     // 获取菜单
     public function trees() {
-        $class = config('uniadmin.menu.driver');
+        $class = config('uiadmin.menu.driver');
         $service = new $class();
         $dataList = $service->getByUser(session('userInfo.roles'));
 

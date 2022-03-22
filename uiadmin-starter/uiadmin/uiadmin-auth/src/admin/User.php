@@ -15,8 +15,8 @@ namespace uiadmin\auth\admin;
 use think\facade\Db;
 use think\Validate;
 use think\facade\Request;
-use uniadmin\core\admin\BaseAdmin;
-use uniadmin\core\util\Tree;
+use uiadmin\core\admin\BaseAdmin;
+use uiadmin\core\util\Tree;
 
 /**
  * 用户管理
