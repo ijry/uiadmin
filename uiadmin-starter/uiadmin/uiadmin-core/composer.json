@@ -1,0 +1,34 @@
+{
+    "name": "uiadmin/uiadmin-core",
+    "description": "渐进式开源低代码零前端后台核心模块",
+    "type": "library",
+    "license": "Apache-2.0",
+    "authors": [
+        {
+            "name": "jry",
+            "email": "ijry@qq.com"
+        }
+    ],
+    "require": {
+        "topthink/framework": "^6.0.0",
+        "topthink/think-migration": "^3.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "uiadmin\\core\\": "src/"
+        },
+        "files":[
+            "src/function.php"
+        ] 
+    },
+    "extra": {
+        "think": {
+            "services": [
+                "uiadmin\\core\\MyService"
+            ],
+            "config":{
+                "uiadmin": "src/config.php"
+            }
+        }
+    }
+}

@@ -1,6 +1,6 @@
 {
-    "name": "uiadmin/uiadmin-core",
-    "description": "渐进式开源低代码零前端后台",
+    "name": "uiadmin/uiadmin-auth",
+    "description": "渐进式开源低代码零前端后台-用户与权限模块",
     "type": "library",
     "license": "Apache-2.0",
     "authors": [
@@ -11,24 +11,23 @@
     ],
     "require": {
         "topthink/framework": "^6.0.0",
-        "topthink/think-migration": "^3.0"
+        "topthink/think-migration": "^3.0",
+        "casbin/think-authz": "^1.2.2"
     },
     "autoload": {
         "psr-4": {
-            "uiadmin\\core\\": "src/"
+            "uiadmin\\auth\\": "src/"
         },
         "files":[
-            "src/core/src/function.php"
         ] 
     },
     "extra": {
         "think": {
             "services": [
-                "uiadmin\\core\\MyService"
+                "uiadmin\\auth\\MyService",
+                "tauthz\\TauthzService"
             ],
             "config":{
-                "uiadmin": "src/config.php",
-                "menu": "src/menu.json"
             }
         }
     }

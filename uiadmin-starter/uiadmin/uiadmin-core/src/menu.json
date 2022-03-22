@@ -1,0 +1,95 @@
+{
+    "menu": [
+        {
+            "title": "UiAdmin",
+            "logo": "",
+            "path": "/yiju",
+            "status": 1,
+            "children": [
+                {
+                    "title": "内容",
+                    "path": "/wuliu",
+                    "pmenu": "/yiju",
+                    "menuType": "-1",
+                    "menuLayer": "admin",
+                    "status": 1,
+                    "children": [
+                        {
+                            "path": "/cms",
+                            "pmenu": "/wuliu",
+                            "menuType": "0",
+                            "title": "内容管理",
+                            "menuLayer": "admin",
+                            "status": 1,
+                            "children": [
+                                {
+                                    "title": "分类管理",
+                                    "icon": "",
+                                    "path": "/cms/cate",
+                                    "pmenu": "/cms",
+                                    "tip": "",
+                                    "menuLayer": "admin",
+                                    "menuType": 1,
+                                    "routeType": "list",
+                                    "apiPrefix": "v1",
+                                    "apiSuffix": "",
+                                    "apiParams": "",
+                                    "apiMethod": "GET",
+                                    "apiExt": "",
+                                    "doc": null,
+                                    "isHide": 0,
+                                    "status": 1,
+                                    "sortnum": 0,
+                                    "deleteTime": 0,
+                                    "pathSuffix": ""
+                                },
+                                {
+                                    "title": "文章管理",
+                                    "icon": "",
+                                    "path": "/cms/article",
+                                    "pmenu": "/cms",
+                                    "tip": "",
+                                    "menuLayer": "admin",
+                                    "menuType": 1,
+                                    "routeType": "list",
+                                    "apiPrefix": "v1",
+                                    "apiSuffix": "",
+                                    "apiParams": "",
+                                    "apiMethod": "GET",
+                                    "apiExt": "",
+                                    "doc": null,
+                                    "isHide": 0,
+                                    "status": 1,
+                                    "sortnum": 0,
+                                    "deleteTime": 0,
+                                    "pathSuffix": ""
+                                },
+                                {
+                                    "title": "留言管理",
+                                    "icon": "",
+                                    "path": "/cms/liuyan",
+                                    "pmenu": "/cms",
+                                    "tip": "",
+                                    "menuLayer": "admin",
+                                    "menuType": 1,
+                                    "routeType": "list",
+                                    "apiPrefix": "v1",
+                                    "apiSuffix": "",
+                                    "apiParams": "",
+                                    "apiMethod": "GET",
+                                    "apiExt": "",
+                                    "doc": null,
+                                    "isHide": 0,
+                                    "status": 1,
+                                    "sortnum": 0,
+                                    "deleteTime": 0,
+                                    "pathSuffix": ""
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

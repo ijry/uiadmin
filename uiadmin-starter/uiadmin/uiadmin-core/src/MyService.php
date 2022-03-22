@@ -8,11 +8,17 @@ use think\Validate;
 
 class MyService extends Service
 {
+    public function register()
+    {
+        // $this->app->middleware->add(Router::class);
+    }
+
     public function boot()
     {
         $this->registerRoutes(function (Route $route) {
             // 分组
-            $route->get('/admin/$', function() {
+            $route->redirect('/' . config("uiadmin.xyadmin.entry") . '$', request()->url(true) . '/');
+            $route->get('/' . config("uiadmin.xyadmin.entry") . '/$', function() {
                 $secondsToCache = 3600;
                 $ts = gmdate("D, d M Y H:i:s", time() + $secondsToCache) . " GMT";
                 $ch= curl_init();

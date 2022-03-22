@@ -39,5 +39,6 @@ return [
     ],
     
     'xyadmin' => [
+        'entry' => 'admin'
     ]
 ];
