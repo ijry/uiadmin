@@ -1,6 +1,6 @@
 <?php
 
-namespace uniadmin\core;
+namespace uiadmin\core;
 
 use think\Route;
 use think\Service;
@@ -27,12 +27,12 @@ class MyService extends Service
             });
 
             // 根接口
-            $route->get('/admin/api$', "uniadmin\\core\\admin\\Index@api");
-            $route->get(config("uniadmin.site.apiPrefix") . '/v1/admin/$', "uniadmin\\core\\admin\\Index@api");
-            $route->post(config("uniadmin.site.apiPrefix") . '/v1/admin/core/user/login', "uniadmin\\core\\admin\\User@login");
-            $route->get(config("uniadmin.site.apiPrefix") . '/v1/admin/core/index/index$', "uniadmin\\core\\admin\\Index@index");
-            $route->get(config("uniadmin.site.apiPrefix") . '/v1/admin/core/menu/trees$', "uniadmin\\core\\admin\\Menu@trees");
-            $route->get(config("uniadmin.site.apiPrefix") . '/v1/core/user/info$', "uniadmin\\core\\controller\\User@info");
+            $route->get('/admin/api$', "uiadmin\\core\\admin\\Index@api");
+            $route->get(config("uiadmin.site.apiPrefix") . '/v1/admin/$', "uiadmin\\core\\admin\\Index@api");
+            $route->post(config("uiadmin.site.apiPrefix") . '/v1/admin/core/user/login', "uiadmin\\core\\admin\\User@login");
+            $route->get(config("uiadmin.site.apiPrefix") . '/v1/admin/core/index/index$', "uiadmin\\core\\admin\\Index@index");
+            $route->get(config("uiadmin.site.apiPrefix") . '/v1/admin/core/menu/trees$', "uiadmin\\core\\admin\\Menu@trees");
+            $route->get(config("uiadmin.site.apiPrefix") . '/v1/core/user/info$', "uiadmin\\core\\controller\\User@info");
         });
     }
 }

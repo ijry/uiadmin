@@ -10,7 +10,7 @@
 // +----------------------------------------------------------------------
 declare (strict_types = 1);
 
-namespace uniadmin\core;
+namespace uiadmin\core;
 
 use think\App;
 use think\exception\ValidateException;

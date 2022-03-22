@@ -1,12 +1,12 @@
 <?php
 // +----------------------------------------------------------------------
-// | UniAdmin配置文件
+// | UiAdmin配置文件
 // +----------------------------------------------------------------------
 
 return [
     'site' => [
         // 系统信息
-        'title' => "UniAdmin后台",     // 系统名称
+        'title' => "UiAdmin后台",     // 系统名称
         'slogan' => "",               // 口号
         'description' => "",          // 简介
         'icp' => "",                  // ICP备案号
@@ -21,16 +21,16 @@ return [
                 'id' => 1,
                 'nickname' => 'admin',
                 'username' => 'admin',
-                'password' => 'uniadmin',
+                'password' => 'uiadmin',
                 'avatar' => '',
                 'roles' => [],
             ]
         ],
-        'driver' => 'uniadmin\\core\\service\\User'
+        'driver' => 'uiadmin\\core\\service\\User'
     ],
 
     'menu' => [
-        'driver' => 'uniadmin\\core\\service\\Menu'
+        'driver' => 'uiadmin\\core\\service\\Menu'
     ],
 
     'upload' => [

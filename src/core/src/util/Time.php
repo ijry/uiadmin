@@ -8,7 +8,7 @@
 // +----------------------------------------------------------------------
 // | Author: 刘志淳 <chun@engineer.com>
 // +----------------------------------------------------------------------
-namespace uniadmin\core\util;
+namespace uiadmin\core\util;
 
 class Time
 {

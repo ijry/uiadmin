@@ -12,7 +12,7 @@
  * | 法律责任的风险。如果需要取得官方授权，请联系官方QQ598821125。
 */
 
-namespace uniadmin\core\util\xybuilder;
+namespace uiadmin\core\util\xybuilder;
 
 /**
  * XyBuilderForm动态表单

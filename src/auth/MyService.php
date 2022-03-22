@@ -1,6 +1,6 @@
 <?php
 
-namespace uniadmin\auth;
+namespace uiadmin\auth;
 
 use think\Route;
 use think\Service;

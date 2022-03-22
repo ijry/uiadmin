@@ -1,15 +1,15 @@
 <?php
 /**
  * +----------------------------------------------------------------------
- * | uniadmin [ 渐进式快速开发接口后台 ]
+ * | uiadmin [ 渐进式快速开发接口后台 ]
  * +----------------------------------------------------------------------
- * | Copyright (c) 2018-2021 http://uniadmin.jiangruyi.com All rights reserved.
+ * | Copyright (c) 2018-2022 http://uiadmin.jiangruyi.com All rights reserved.
  * +----------------------------------------------------------------------
  * | Author: jry <598821125@qq.com>
  * +----------------------------------------------------------------------
 */
 
-namespace uniadmin\core\admin;
+namespace uiadmin\core\admin;
 
 use think\Request;
 

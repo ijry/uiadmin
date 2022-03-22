@@ -1,5 +1,5 @@
 <?php
-namespace uniadmin\core\util;
+namespace uiadmin\core\util;
 
 /**
  * 文件及文件夹处理类

@@ -1,5 +1,5 @@
 {
-    "name": "uniadmin/uniadmin-core",
+    "name": "uiadmin/uiadmin-core",
     "description": "渐进式开源低代码零前端后台",
     "type": "library",
     "license": "Apache-2.0",
@@ -15,7 +15,7 @@
     },
     "autoload": {
         "psr-4": {
-            "uniadmin\\core\\": "src/"
+            "uiadmin\\core\\": "src/"
         },
         "files":[
             "src/core/src/function.php"
@@ -24,10 +24,10 @@
     "extra": {
         "think": {
             "services": [
-                "uniadmin\\core\\MyService"
+                "uiadmin\\core\\MyService"
             ],
             "config":{
-                "uniadmin": "src/config.php",
+                "uiadmin": "src/config.php",
                 "menu": "src/menu.json"
             }
         }

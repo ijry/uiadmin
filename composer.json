@@ -1,5 +1,5 @@
 {
-    "name": "uniadmin/uniadmin",
+    "name": "uiadmin/uiadmin",
     "description": "渐进式开源低代码零前端后台",
     "type": "library",
     "license": "Apache-2.0",
@@ -15,9 +15,9 @@
     },
     "autoload": {
         "psr-4": {
-            "uniadmin\\core\\": "src/core/src/",
-            "uniadmin\\auth\\": "src/auth/src/",
-            "uniadmin\\cms\\": "src/cms/src/"
+            "uiadmin\\core\\": "src/core/src/",
+            "uiadmin\\auth\\": "src/auth/src/",
+            "uiadmin\\cms\\": "src/cms/src/"
         },
         "files":[
             "src/core/src/function.php"
@@ -26,11 +26,11 @@
     "extra": {
         "think": {
             "services": [
-                "uniadmin\\core\\MyService",
+                "uiadmin\\core\\MyService",
                 "tauthz\\TauthzService"
             ],
             "config":{
-                "uniadmin": "src/core/src/config.php"
+                "uiadmin": "src/core/src/config.php"
             }
         }
     }
