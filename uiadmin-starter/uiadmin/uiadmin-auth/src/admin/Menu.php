@@ -9,10 +9,11 @@
  * +----------------------------------------------------------------------
 */
 
-namespace uiadmin\core\admin;
+namespace uiadmin\auth\admin;
 
 use think\Request;
 use think\facade\Db;
+use uiadmin\core\admin\BaseAdmin;
 
 /**
  * 菜单控制器

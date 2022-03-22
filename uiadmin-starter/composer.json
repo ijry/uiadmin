@@ -23,7 +23,8 @@
         "php": ">=7.2.5",
         "topthink/framework": "^6.0.0",
         "topthink/think-orm": "^2.0",
-        "uiadmin/uiadmin-core": "dev-main"
+        "uiadmin/uiadmin-core": "dev-main",
+        "uiadmin/uiadmin-auth": "dev-main"
     },
     "require-dev": {
         "symfony/var-dumper": "^4.2",
