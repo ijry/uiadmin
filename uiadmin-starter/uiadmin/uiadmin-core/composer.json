@@ -13,7 +13,8 @@
         "topthink/framework": "^6.0.0",
         "topthink/think-migration": "^3.0",
         "firebase/php-jwt": "^5.5.1",
-        "guzzlehttp/guzzle": "^6.3"
+        "guzzlehttp/guzzle": "^6.3",
+        "jaguarjack/migration-generator": "dev-master"
     },
     "autoload": {
         "psr-4": {
