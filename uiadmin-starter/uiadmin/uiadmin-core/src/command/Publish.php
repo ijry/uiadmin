@@ -45,6 +45,7 @@ class Publish extends Command
     protected function execute(Input $input, Output $output)
     {
         $destination = $this->app->getRootPath() . '/database/migrations/';
+        $destination2 = $this->app->getRootPath() . '/database/seeds/';
         if(!is_dir($destination)){
             mkdir($destination, 0755, true);
         }
@@ -63,6 +64,20 @@ class Publish extends Command
                 if(($entry!=".")&&($entry!="..")){   
                     if(is_file($source.$entry)){
                         copy($source.$entry, $destination.$entry);
+                    }
+                }
+            }
+
+            $source = $value . '/src/database/seeds/';
+            if (!is_dir($source)) {
+                continue;
+            }
+            // $source = __DIR__.'/../database/seeds/';
+            $handle = dir($source);
+            while($entry=$handle->read()) {   
+                if(($entry!=".")&&($entry!="..")){   
+                    if(is_file($source.$entry)){
+                        copy($source.$entry, $destination2.$entry);
                     }
                 }
             }

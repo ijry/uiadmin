@@ -35,6 +35,9 @@ class Install extends Command
         echo "执行文件发布完成\n";
         $output = \think\facade\Console::call('migrate:run', []);
         echo "执行数据库迁移完成\n";
+        $output = \think\facade\Console::call('seed:run', []);
+        echo "执行数据库seeds迁移完成\n";
+        echo "恭喜，UiAdmin安装完成！\n";
 
         return $output->fetch();
     }
