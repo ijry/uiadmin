@@ -37,13 +37,13 @@ class Index
             'lang' => 'php',
             'framework' => 'thinkphp6.0',
             'name' => "UniAdmin",
-            'title' => config("uniadmin.site.title"),
+            'title' => config("uiadmin.site.title"),
             'stype' => '应用', // 菜单分组类型
             'version' => get_config("version"),
             'domainRoot' => request()->scheme() . '://' . $_SERVER['HTTP_HOST'] . request()->rootUrl(), // 主要给远程组件和iframe用
             'api' => [
                 'apiBase' => $apiBase,
-                'apiPrefix' => config("uniadmin.site.apiPrefix"),
+                'apiPrefix' => config("uiadmin.site.apiPrefix"),
                 'apiLogin' => '/v1/admin/core/user/login',
                 'apiAdmin' => '/v1/admin/core/index/index',
                 'apiMenuTrees' => '/v1/admin/core/menu/trees',
@@ -51,9 +51,9 @@ class Index
                 'apiUserInfo' => '/v1/core/user/info'
             ],
             'siteInfo' => [
-                'title' => config("uniadmin.site.title"),
-                'logo' => config("uniadmin.site.logo"),
-                'logoTitle' => config("uniadmin.site.logoTitle")
+                'title' => config("uiadmin.site.title"),
+                'logo' => config("uiadmin.site.logo"),
+                'logoTitle' => config("uiadmin.site.logoTitle")
             ]
         ]]);
     }

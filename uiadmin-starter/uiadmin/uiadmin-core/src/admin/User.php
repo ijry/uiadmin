@@ -36,9 +36,26 @@ class User
             $userService = new $class();
             $userInfo = $userService->login($account, $password);
 
+            // 颁发登录凭证token
+            $userkey = $userInfo['userKey']; // 秘钥
+            $loginTime = time();
+            $expireTime = $loginTime + 8640000; // 100天有效期
+            $token = [
+                'iss' => 'jiangruyi.com', // 签发者
+                'aud' => 'jiangruyi.com', // 面向的用户
+                'iat' => $loginTime, // 签发时间
+                'nbf' => $loginTime, // 在什么时候jwt开始生效
+                'exp' => $expireTime, // token过期时间
+                'data'=>[
+                    'uid' => $userInfo['id'] // 可以用户ID，可以自定义
+                ]
+            ]; //Payload
+            $jwt = \Firebase\JWT\JWT::encode($token, $userkey); // 此处行进加密算法生成jwt
+
             session_start();
             $sessionId = session_id();
             session('userInfo', $userInfo);
+            session('Authorization', 'Bearer ' . $jwt); // 支持session+jwt登录方式
             if (!$sessionId) {
                 // 返回数据
                 return json([
@@ -47,7 +64,7 @@ class User
                     'data' => []
                 ]);
             }
-            $token = "Bearer " . $sessionId;
+            $token = "Bearer " . $jwt;
             // 可以开启tp6的session驱动解决分布式需求
         } catch (\Exception $e) {
             // 返回数据

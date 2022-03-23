@@ -39,6 +39,7 @@ class MyService extends Service
             $route->get(config("uiadmin.site.apiPrefix") . '/v1/admin/core/index/index$', "uiadmin\\core\\admin\\Index@index");
             $route->get(config("uiadmin.site.apiPrefix") . '/v1/admin/core/menu/trees$', "uiadmin\\core\\admin\\Menu@trees");
             $route->get(config("uiadmin.site.apiPrefix") . '/v1/core/user/info$', "uiadmin\\core\\controller\\User@info");
+            $route->delete(config("uiadmin.site.apiPrefix") . '/v1/core/user/logout', "uiadmin\\core\\controller\\User@logout");
         });
 
         // 注册命令

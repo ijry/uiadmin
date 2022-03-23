@@ -27,7 +27,7 @@ class User
             ->filed('id,nickanme,username,avatar,roles,password')
             ->where('username', $account)
             ->findOrFail();
-        if ($info['password'] != user_pwd_md5($password, "uniadmin")) {
+        if ($info['password'] != user_pwd_md5($password, "uiadmin")) {
             throw new \Exception("密码错误", 0);
         }
         if ($info['status'] == 0) {

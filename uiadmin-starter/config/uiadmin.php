@@ -19,6 +19,7 @@ return [
         'lists' => [
             [
                 'id' => 1,
+                'userKey' => 'uiadmin',
                 'nickname' => 'admin',
                 'username' => 'admin',
                 'password' => 'uiadmin',

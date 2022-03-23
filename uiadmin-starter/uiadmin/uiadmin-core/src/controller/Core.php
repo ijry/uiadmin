@@ -34,9 +34,9 @@ class Core extends BaseHome
             'msg'  => '成功',
             'data' => [
                 'siteInfo' => [
-                    'title' => config("uniadmin.site.title"),
-                    'logo' => config("uniadmin.site.logo"),
-                    'logoTitle' => config("uniadmin.site.logoTitle")
+                    'title' => config("uiadmin.site.title"),
+                    'logo' => config("uiadmin.site.logo"),
+                    'logoTitle' => config("uiadmin.site.logoTitle")
                 ]
             ]
         ]);

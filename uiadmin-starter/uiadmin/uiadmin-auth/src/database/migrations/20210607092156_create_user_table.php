@@ -31,6 +31,7 @@ class CreateUserTable extends Migrator
         $table  =  $this->table('auth_user',
             array('engine'=>'InnoDB', 'id' => false, 'primary_key' => 'id'));
         $table->addColumn('id', 'string',array('limit'  =>  32,'default'=>'','comment'=>'ID')) // 考虑到分布式高并发这里使用guid而不是自增ID
+        ->addColumn('user_key', 'string',array('limit'  =>  64,'default'=>'','comment'=>'用户密钥'))
         ->addColumn('nickname', 'string',array('limit'  =>  128,'default'=>'','comment'=>'昵称'))
         ->addColumn('avatar', 'string',array('limit'  =>  512,'default'=>'','comment'=>'头像地址'))
         ->addColumn('username', 'string',array('limit'  =>  64,'default'=>'','comment'=>'用户名，登陆使用'))

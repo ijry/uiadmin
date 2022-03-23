@@ -31,7 +31,16 @@ class User extends BaseHome
         // 获取用户ID
         $class = config('uiadmin.user.driver');
         $userService = new $class();
-        $userInfo = $userService->getById(session('userInfo.id'));
+        $uid = session('userInfo.id');
+        if (!$uid) {
+            // 返回数据
+            return json([
+                'code' => 402,
+                'msg'  => '登录过期',
+                'data' => []
+            ]);
+        }
+        $userInfo = $userService->getById($uid);
 
         // 返回数据
         return json([
@@ -39,6 +48,23 @@ class User extends BaseHome
             'msg'  => '成功',
             'data' => [
                 'userInfo' => $userInfo
+            ]
+        ]);
+    }
+
+    /**
+     * 注销
+     *
+     * @return \think\Response
+     * @author jry <ijry@qq.com>
+     */
+    public function logout()
+    {
+        // 返回数据
+        return json([
+            'code' => 200,
+            'msg'  => '成功',
+            'data' => [
             ]
         ]);
     }

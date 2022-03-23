@@ -23,12 +23,12 @@ class User
     // 登录
     public function login($account, $password) {
         $userLists = config('uiadmin.user.lists');
-        foreach ($userLists as $key => $value) {
-            if ($value['username'] == $account) {
+        foreach ($userLists as $key => $userInfo) {
+            if ($userInfo['username'] == $account) {
                 // 判断密码
-                if ($password == $value['password']) {
-                    unset($value['password']);
-                    return $value;
+                if ($password == $userInfo['password']) {
+                    unset($userInfo['password']);
+                    return $userInfo;
                 } else {
                     throw new \Exception("密码错误", 0);
                 }
