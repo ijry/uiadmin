@@ -40,5 +40,9 @@ class MyService extends Service
             $route->get(config("uiadmin.site.apiPrefix") . '/v1/admin/core/menu/trees$', "uiadmin\\core\\admin\\Menu@trees");
             $route->get(config("uiadmin.site.apiPrefix") . '/v1/core/user/info$', "uiadmin\\core\\controller\\User@info");
         });
+
+        // 注册命令
+        $this->commands(['uiadmin:publish' => \uiadmin\core\command\Publish::class]);
+        $this->commands(['uiadmin:install' => \uiadmin\core\command\Install::class]);
     }
 }
