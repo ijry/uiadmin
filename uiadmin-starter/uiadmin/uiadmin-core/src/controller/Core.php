@@ -12,6 +12,7 @@
 namespace uiadmin\core\controller;
 
 use think\Request;
+use think\facade\View;
 
 /**
  * 核心控制器
@@ -20,6 +21,13 @@ use think\Request;
  */
 class Core extends BaseHome
 {
+    public function index()
+    {
+        // 返回数据
+        View::config(['view_path' => __DIR__ . '/../view/core/']);
+        return View::fetch('index');
+    }
+
     /**
      * 获取站点信息
      *

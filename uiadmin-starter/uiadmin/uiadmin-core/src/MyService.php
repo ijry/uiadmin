@@ -33,6 +33,7 @@ class MyService extends Service
             });
 
             // 根接口
+            $route->get('/$', "uiadmin\\core\\controller\\Core@index");
             $route->get('/admin/api$', "uiadmin\\core\\admin\\Index@api");
             $route->get(config("uiadmin.site.apiPrefix") . '/v1/admin/$', "uiadmin\\core\\admin\\Index@api");
             $route->post(config("uiadmin.site.apiPrefix") . '/v1/admin/core/user/login', "uiadmin\\core\\admin\\User@login");
