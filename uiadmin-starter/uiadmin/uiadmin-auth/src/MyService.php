@@ -10,10 +10,11 @@ class MyService extends Service
 {
     public function boot()
     {
-        // 设置驱动为auth
-        config('uiadmin.user.driver', 'uiadmin\\auth\\service\\User');
-        config('uiadmin.menu.driver', 'uiadmin\\auth\\service\\Menu');
-
+        // 安装auth扩展后设置驱动为auth
+        $uiadmin_config = config('uiadmin');
+        $uiadmin_config['user']['driver'] = 'uiadmin\\auth\\service\\User';
+        $uiadmin_config['menu']['driver'] = 'uiadmin\\auth\\service\\Menu';
+        config($uiadmin_config , 'uiadmin');
 
         $this->registerRoutes(function (Route $route) {
             $route->get(config("uiadmin.site.apiPrefix") . '/v1/admin/auth/user/lists', "uniadmin\\auth\\admin\\User@lists");

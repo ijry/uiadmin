@@ -13,6 +13,8 @@ namespace uiadmin\auth\service;
 
 use think\Request;
 use think\facade\Db;
+use uiadmin\auth\model\Menu as MenuModel;
+use uiadmin\auth\model\Role as RoleModel;
 
 /**
  * 菜单服务
@@ -28,8 +30,8 @@ class Menu
      */
     public function getByUser($userRoles)
     {
-        $adminAuthList = Db::name('auth_role')::where('name', 'in', $userRoles)
-            ->column('adminAuth');
+        $adminAuthList = RoleModel::where('name', 'in', $userRoles)
+            ->column('policys');
         $adminAuth = [];
         foreach ($adminAuthList as $k => $v) {
             $v = explode(',', $v);
@@ -38,23 +40,22 @@ class Menu
         $adminAuth = array_unique($adminAuth);
 
         // 获取列表
-        $dataList = Db::name('auth_menu')
-            ->where('menuLayer', '=', 'admin')
-            ->where('menuType', 'in', '-1,0,1,2') // 排除掉3纯接口
+        $dataList = MenuModel::where('menu_layer', '=', 'admin')
+            ->where('menu_type', 'in', '-1,0,1,2') // 排除掉3纯接口
             ->order('sortnum asc,id asc')
             ->select();
         // 下面的处理存粹是为了后台界面显示的
         foreach ($dataList as $key => &$val) {
-            if (!in_array('super_admin', $userRoles) && !in_array('/' . $val['apiPrefix'] . '/' . $val['menuLayer'] . $val['path'], $adminAuth)) {
+            if (!in_array('super_admin', $userRoles) && !in_array('/' . $val['apiPrefix'] . '/' . $val['menu_layer'] . $val['path'], $adminAuth)) {
                 unset($dataList[$key]);
                 continue;
             }
-            if ($userRoles == ['super_admin'] && \app\core\util\Str::contains($val['path'], '.')) {
+            if ($userRoles == ['super_admin'] && \uiadmin\core\util\Str::contains($val['path'], '.')) {
                 unset($dataList[$key]);
                 continue;
             }
         }
-        $tree = new \uniadmin\core\util\Tree();
+        $tree = new \uiadmin\core\util\Tree();
         $menuTree = $tree->list2tree($dataList, 'path', 'pmenu', 'children', 0, false);
 
         // 获取站点信息

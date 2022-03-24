@@ -13,6 +13,7 @@ namespace uiadmin\auth\service;
 
 use think\Request;
 use think\facade\Db;
+use uiadmin\auth\model\User as UserModel;
 
 /**
  * 用户服务
@@ -23,8 +24,7 @@ class User
 {
     // 登录
     public function login($account, $password) {
-        $info = Db::name('auth_user')
-            ->filed('id,nickanme,username,avatar,roles,password')
+        $info = UserModel::field('id,nickname,username,avatar,roles,password,status')
             ->where('username', $account)
             ->findOrFail();
         if ($info['password'] != user_pwd_md5($password, "uiadmin")) {
@@ -43,8 +43,7 @@ class User
 
     // 获取用户信息
     public function getById($uid) {
-        $info = Db::name('auth_user')
-            ->filed('id,nickanme,username,avatar,roles')
+        $info = UserModel::field('id,nickname,username,avatar,roles')
             ->where('id', $uid)
             ->findOrFail();
         return $info;

@@ -112,7 +112,7 @@ function is_login()
         if (!$token) {
             $token = session('Authorization'); // 支持session
         }
-        $userService = new \app\core\service\User();
+        $userService = new \uiadmin\core\service\User();
         $ret = $userService->isLogin($token);
         return (Array)$ret['data'];
     } catch (Exception $e) {

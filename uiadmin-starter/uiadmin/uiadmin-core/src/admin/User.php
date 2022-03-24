@@ -12,13 +12,14 @@
 namespace uiadmin\core\admin;
 
 use think\Request;
+use uiadmin\core\admin\BaseAdmin;
 
 /**
  * 用户控制器
  *
  * @author jry <ijry@qq.com>
  */
-class User
+class User extends BaseAdmin
 {
     /**
      * 登录

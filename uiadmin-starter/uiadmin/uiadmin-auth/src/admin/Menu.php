@@ -31,8 +31,11 @@ class Menu extends BaseAdmin
     public function trees()
     {
         // 获取用户角色
-        // $login = $this->isLogin();
-        $roles = session('userInfo.roles');
+        $login = $this->isLogin();
+        $class = config('uiadmin.user.driver');
+        $userService = new $class();
+        $userInfo = $userService->getById($login['uid']);
+        $roles = $userInfo['roles'];
         $adminAuth_list = Db::name('auth_role')->where('name', 'in', $roles)
             ->column('adminAuth');
         $adminAuth = [];

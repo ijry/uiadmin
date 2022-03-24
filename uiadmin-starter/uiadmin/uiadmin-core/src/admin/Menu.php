@@ -12,16 +12,22 @@
 namespace uiadmin\core\admin;
 
 use think\Request;
+use uiadmin\core\admin\BaseAdmin;
 
 /**
  * 菜单控制器
  *
  * @author jry <ijry@qq.com>
  */
-class Menu
+class Menu extends BaseAdmin
 {
     // 获取菜单
     public function trees() {
+        $class = config('uiadmin.user.driver');
+        $userService = new $class();
+        $login = $this->isLogin();
+        $userInfo = $userService->getById($login['uid']);
+
         $class = config('uiadmin.menu.driver');
         $service = new $class();
         $dataList = $service->getByUser(session('userInfo.roles'));
