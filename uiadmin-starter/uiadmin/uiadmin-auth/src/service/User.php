@@ -24,7 +24,7 @@ class User
 {
     // 登录
     public function login($account, $password) {
-        $info = UserModel::field('id,nickname,username,avatar,roles,password,status')
+        $info = UserModel::field('id,user_key,nickname,username,avatar,roles,password,status')
             ->where('username', $account)
             ->findOrFail();
         if ($info['password'] != user_pwd_md5($password, "uiadmin")) {

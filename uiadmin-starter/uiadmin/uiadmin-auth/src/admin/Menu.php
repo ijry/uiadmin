@@ -14,6 +14,8 @@ namespace uiadmin\auth\admin;
 use think\Request;
 use think\facade\Db;
 use uiadmin\core\admin\BaseAdmin;
+use uiadmin\auth\model\Menu as MenuModel;
+use uiadmin\auth\model\Role as RoleModel;
 
 /**
  * 菜单控制器
@@ -36,8 +38,8 @@ class Menu extends BaseAdmin
         $userService = new $class();
         $userInfo = $userService->getById($login['uid']);
         $roles = $userInfo['roles'];
-        $adminAuth_list = Db::name('auth_role')->where('name', 'in', $roles)
-            ->column('adminAuth');
+        $adminAuth_list = RoleModel::where('name', 'in', $roles)
+            ->column('policys');
         $adminAuth = [];
         foreach ($adminAuth_list as $k => $v) {
             $v = explode(',', $v);
@@ -46,8 +48,7 @@ class Menu extends BaseAdmin
         $adminAuth = array_unique($adminAuth);
 
         // 获取列表
-        $dataList = Db::name('auth_menu')
-            ->where('menuLayer', '=', 'admin')
+        $dataList = MenuModel::where('menu_layer', '=', 'admin')
             ->order('sortnum asc,id asc')
             ->select()->toArray();
         // 下面的处理存粹是为了后台界面显示的，API使用本接口是以下数据是没用的。
@@ -56,7 +57,7 @@ class Menu extends BaseAdmin
                 unset($dataList[$key]);
                 continue;
             }
-            if ($roles == ['super_admin'] && \uniadmin\core\util\Str::contains($val['path'], '.')) {
+            if ($roles == ['super_admin'] && \uiadmin\core\util\Str::contains($val['path'], '.')) {
                 unset($dataList[$key]);
                 continue;
             }
@@ -68,17 +69,16 @@ class Menu extends BaseAdmin
                 }
             }
         }
-        $tree = new \uniadmin\core\util\Tree();
+        $tree = new \uiadmin\core\util\Tree();
         $menuTree = $tree->list2tree($dataList, 'path', 'pmenu', 'children', 0, false);
 
         // 获取站点信息
-        $configService = new \app\core\service\Config();
-        $siteInfo = $configService->getValueByModule('core');
-        $siteInfo['domains'] = explode(',', $siteInfo['domains']);
+        $siteInfo = config('uiadmin.site');
+        // $siteInfo['domains'] = explode(',', $siteInfo['domains']);
         $menuTree[0] = array_merge($menuTree[0], $siteInfo);
 
         // 构造动态页面数据
-        $xyBuilderList = new \app\core\util\xybuilder\XyBuilderList();
+        $xyBuilderList = new \uiadmin\core\util\xybuilder\XyBuilderList();
         $listData = $xyBuilderList->init()
             ->addTopButton('add', '添加菜单', ['api' => '/v1/admin/auth/menu/add'])
             ->addRightButton('edit', '修改', ['api' => '/v1/admin/auth/menu/edit', 'title' => '修改菜单'])
@@ -112,10 +112,11 @@ class Menu extends BaseAdmin
                 'options' => [ 1 => '正常', 0 => '禁用']
             ])
             ->addColumn('rightButtonList', '操作', [
-                'minWidth' => '150px',
+                'width' => '150px',
                 'type' => 'template',
                 'template' => 'rightButtonList'
             ])
+            ->setConfig('listExpandAll', true)
             ->setTableName('auth_menu')
             ->setDataList($menuTree)
             ->getData();
@@ -162,27 +163,26 @@ class Menu extends BaseAdmin
             $dataDb['apiMethod'] = implode('|', $dataDb['apiMethod']);
 
             // 存储数据
-            $ret = Db::name('auth_menu')->save($dataDb);
+            $ret = MenuModel::save($dataDb);
             if ($ret) {
                 return json(['code' => 200, 'msg' => '添加成功', 'data' => []]);
             } else {
-                return json(['code' => 0, 'msg' => '添加失败' . Db::name('auth_menu')->getError(), 'data' => []]);
+                return json(['code' => 0, 'msg' => '添加失败', 'data' => []]);
             }
         } else {
             // 获取模块列表
-            $moduleList = $this->core_module
-                ->where('status', 1)
-                ->order('sortnum asc')
-                ->select()->toArray();
-            $moduleListSelect = [];
-            foreach ($moduleList as $key => $val) {
-                $moduleListSelect[$key]['title'] = $val['title'];
-                $moduleListSelect[$key]['value'] = $val['name'];
-            }
+            // $moduleList = $this->core_module
+            //     ->where('status', 1)
+            //     ->order('sortnum asc')
+            //     ->select()->toArray();
+            // $moduleListSelect = [];
+            // foreach ($moduleList as $key => $val) {
+            //     $moduleListSelect[$key]['title'] = $val['title'];
+            //     $moduleListSelect[$key]['value'] = $val['name'];
+            // }
 
             // 获取菜单基于标题的树状列表
-            $menuList = Db::name('auth_menu')
-                ->where('menuLayer', '=', 'admin')
+            $menuList = MenuModel::where('menuLayer', '=', 'admin')
                 ->order('sortnum asc')
                 ->select()->toArray();
             $tree      = new \uniadmin\core\util\Tree();
@@ -194,13 +194,13 @@ class Menu extends BaseAdmin
             }
 
             // 构造动态页面数据
-            $xyBuilderForm = new \app\core\util\xybuilder\XyBuilderForm();
+            $xyBuilderForm = new \uiadmin\core\util\xybuilder\XyBuilderForm();
             $formData = $xyBuilderForm->init()
                 ->setFormMethod('post')
-                ->addFormItem('module', '模块', 'select', '', [
+                ->addFormItem('module', '模块', 'text', '', [
                     'placeholder' => '请选择模块',
                     'tip' => '模块是一个可分享使用的最小功能包',
-                    'options' => $moduleListSelect
+                    //'options' => $moduleListSelect
                 ])
                 ->addFormItem('pmenu', '上级菜单', 'select', '', [
                     'placeholder' => '请选择上级菜单',
@@ -357,19 +357,18 @@ class Menu extends BaseAdmin
 
             // 存储数据
             try{
-                $ret = Db::name('auth_menu')->where('id', '=', $id)->save($dataDb);
+                $ret = MenuModel::where('id', '=', $id)->save($dataDb);
             }catch(\Exception $e){
                 return json(['code' => 0, 'msg' => '修改失败' . json_encode($e), 'data' => []]);
             }
             if ($ret) {
                 return json(['code' => 200, 'msg' => '修改成功', 'data' => []]);
             } else {
-                return json(['code' => 0, 'msg' => '修改失败' . Db::name('auth_menu')->getError(), 'data' => []]);
+                return json(['code' => 0, 'msg' => '修改失败', 'data' => []]);
             }
         } else {
-            // 用户信息
-            $info = Db::name('auth_menu')
-                ->where('id', $id)
+            // 信息
+            $info = MenuModel::where('id', $id)
                 ->find();
             $info['apiMethod'] = explode('|', $info['apiMethod']);
 
@@ -385,8 +384,7 @@ class Menu extends BaseAdmin
             }
 
             // 获取菜单基于标题的树状列表
-            $menuList = Db::name('auth_menu')
-                ->where('menuLayer', '=', 'admin')
+            $menuList = MenuModel::where('menu_layer', '=', 'admin')
                 ->order('sortnum asc')
                 ->select()->toArray();
             $tree      = new \uniadmin\core\util\Tree();
@@ -398,7 +396,7 @@ class Menu extends BaseAdmin
             }
 
             // 构造动态页面数据
-            $xyBuilderForm = new \app\core\util\xybuilder\XyBuilderForm();
+            $xyBuilderForm = new \uiadmin\core\util\xybuilder\XyBuilderForm();
             $formData = $xyBuilderForm->init()
                 ->setFormMethod('put')
                 ->addFormItem('module', '模块', 'select', '', [
@@ -530,26 +528,23 @@ class Menu extends BaseAdmin
     public function delete($id)
     {
         // 子菜单检测
-        $info = Db::name('auth_menu')
-            ->where('menuLayer', '=', 'admin')
+        $info = MenuModel::where('menu_layer', '=', 'admin')
             ->where(['id' => $id])
             ->find();
-        $exist = Db::name('auth_menu')
-            ->where('menuLayer', '=', 'admin')
+        $exist = MenuModel::where('menu_layer', '=', 'admin')
             ->where(['pmenu' => $info['path']])
             ->count();
         if ($exist > 0) {
             return json(['code' => 0, 'msg' => '存在子菜单无法删除', 'data' => []]);
         }
 
-        $ret = Db::name('auth_menu')
-            ->where('menuLayer', '=', 'admin')
+        $ret = MenuModel::where('menu_layer', '=', 'admin')
             ->where(['id' => $id])
             ->delete();
         if ($ret) {
             return json(['code' => 200, 'msg' => '删除成功', 'data' => []]);
         } else {
-            return json(['code' => 0, 'msg' => '删除错误' . Db::name('auth_menu')->getError(), 'data' => []]);
+            return json(['code' => 0, 'msg' => '删除错误', 'data' => []]);
         }
     }
 }

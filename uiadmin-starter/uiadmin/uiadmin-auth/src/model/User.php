@@ -29,6 +29,16 @@ class User extends Model
         parent::init();
     }
 
+    // roles
+    public function setRolesAttr($value)
+    {
+        return implode(',', $value);
+    }
+    public function getRolesAttr($value)
+    {
+        return explode(',', $value);
+    }
+
     // 软删除
     use SoftDelete;
     protected $deleteTime = 'delete_time';

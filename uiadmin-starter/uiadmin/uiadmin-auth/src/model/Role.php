@@ -29,6 +29,16 @@ class Role extends Model
         parent::init();
     }
 
+    // adminAuth
+    public function setPolicysAttr($value)
+    {
+        return implode(',', $value);
+    }
+    public function getPolicysAttr($value)
+    {
+        return explode(',', $value);
+    }
+
     // 软删除
     use SoftDelete;
     protected $deleteTime = 'delete_time';

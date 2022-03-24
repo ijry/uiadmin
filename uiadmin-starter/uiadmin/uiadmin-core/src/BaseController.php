@@ -123,4 +123,35 @@ abstract class BaseController
         return $ret ;
     }
 
+
+
+    /**
+     * 判断用户是否登陆方法
+     * @param  string $token
+     * @return array
+     * @author jry <ijry@qq.com>
+     */
+    protected function isLogin($redirect = 0)
+    {
+        try {
+            // 获取token
+            if (input('get.token', '')) {
+                $token = input('get.token', '');
+            } else {
+                $token = \think\facade\Request::header('Authorization');
+                if (!$token) {
+                    $token = session('Authorization'); // 支持session
+                    if (!$token) {
+                        throw new \Exception("未登录", 402);
+                    }
+                }
+            }
+            $userService = new \uiadmin\core\service\User();
+            $ret = $userService->isLogin($token, ['pathinfo' => request()->pathinfo()]);
+            return ['code' => 200, 'msg' => '成功', 'data' => $ret];
+        } catch (\Exception $e) {
+            return ['code' => $e->getCode(), 'msg' => $e->getMessage(), 'data' => ['redirect' => $redirect]];
+        }
+    }
+
 }

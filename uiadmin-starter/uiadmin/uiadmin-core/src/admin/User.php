@@ -38,7 +38,7 @@ class User extends BaseAdmin
             $userInfo = $userService->login($account, $password);
 
             // 颁发登录凭证token
-            $userkey = $userInfo['userKey']; // 秘钥
+            $userkey = $userInfo->userKey; // 秘钥
             $loginTime = time();
             $expireTime = $loginTime + 8640000; // 100天有效期
             $token = [

@@ -30,6 +30,9 @@ class Menu
      */
     public function getByUser($userRoles)
     {
+        if (is_string($userRoles)) {
+            $userRoles = explode(',', $userRoles);
+        }
         $adminAuthList = RoleModel::where('name', 'in', $userRoles)
             ->column('policys');
         $adminAuth = [];
@@ -41,9 +44,9 @@ class Menu
 
         // 获取列表
         $dataList = MenuModel::where('menu_layer', '=', 'admin')
-            ->where('menu_type', 'in', '-1,0,1,2') // 排除掉3纯接口
             ->order('sortnum asc,id asc')
-            ->select();
+            ->select()->toArray();
+        //var_dump($dataList);
         // 下面的处理存粹是为了后台界面显示的
         foreach ($dataList as $key => &$val) {
             if (!in_array('super_admin', $userRoles) && !in_array('/' . $val['apiPrefix'] . '/' . $val['menu_layer'] . $val['path'], $adminAuth)) {
