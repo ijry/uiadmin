@@ -182,10 +182,10 @@ class Menu extends BaseAdmin
             // }
 
             // 获取菜单基于标题的树状列表
-            $menuList = MenuModel::where('menuLayer', '=', 'admin')
+            $menuList = MenuModel::where('menu_layer', '=', 'admin')
                 ->order('sortnum asc')
                 ->select()->toArray();
-            $tree      = new \uniadmin\core\util\Tree();
+            $tree      = new \uiadmin\core\util\Tree();
             $menuTree = $tree->array2tree($menuList, 'title', 'path', 'pmenu', 0, false);
             $menuTreeSelect = [];
             foreach ($menuTree as $key1 => $val1) {
@@ -373,21 +373,21 @@ class Menu extends BaseAdmin
             $info['apiMethod'] = explode('|', $info['apiMethod']);
 
             // 获取模块列表
-            $moduleList = $this->core_module
-                ->where('status', 1)
-                ->order('sortnum asc')
-                ->select()->toArray();
-            $moduleListSelect = [];
-            foreach ($moduleList as $key => $val) {
-                $moduleListSelect[$key]['title'] = $val['title'];
-                $moduleListSelect[$key]['value'] = $val['name'];
-            }
+            // $moduleList = $this->core_module
+            //     ->where('status', 1)
+            //     ->order('sortnum asc')
+            //     ->select()->toArray();
+            // $moduleListSelect = [];
+            // foreach ($moduleList as $key => $val) {
+            //     $moduleListSelect[$key]['title'] = $val['title'];
+            //     $moduleListSelect[$key]['value'] = $val['name'];
+            // }
 
             // 获取菜单基于标题的树状列表
             $menuList = MenuModel::where('menu_layer', '=', 'admin')
                 ->order('sortnum asc')
                 ->select()->toArray();
-            $tree      = new \uniadmin\core\util\Tree();
+            $tree      = new \uiadmin\core\util\Tree();
             $menuTree = $tree->array2tree($menuList, 'title', 'path', 'pmenu', 0, false);
             $menuTreeSelect = [];
             foreach ($menuTree as $key => $val) {
@@ -399,10 +399,10 @@ class Menu extends BaseAdmin
             $xyBuilderForm = new \uiadmin\core\util\xybuilder\XyBuilderForm();
             $formData = $xyBuilderForm->init()
                 ->setFormMethod('put')
-                ->addFormItem('module', '模块', 'select', '', [
+                ->addFormItem('module', '模块', 'text', '', [
                     'placeholder' => '请选择模块',
                     'tip' => '模块是一个可分享使用的最小功能包',
-                    'options' => $moduleListSelect
+                    // 'options' => $moduleListSelect
                 ])
                 ->addFormItem('pmenu', '上级菜单', 'select', '', [
                     'placeholder' => '请选择上级菜单',

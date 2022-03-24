@@ -17,6 +17,8 @@ use think\Validate;
 use think\facade\Request;
 use uiadmin\core\admin\BaseAdmin;
 use uiadmin\core\util\Tree;
+use uiadmin\auth\model\Role as RoleModel;
+use uiadmin\auth\model\User as UserModel;
 
 /**
  * 用户管理
@@ -40,13 +42,11 @@ class User extends BaseAdmin
         $where[] = ['nickname|username|id', 'like', '%' . $keyword . '%'];
 
         // 用户列表
-        $dataList = Db::name('auth_user')
-            ->where($where)
+        $dataList = UserModel::where($where)
             ->page($page, $limit)
             ->order('id desc')
             ->select();
-        $total = $this->core_user
-            ->where($where)
+        $total = UserModel::where($where)
             ->count();
         // foreach ($dataList as $key => &$value) {
         //     $tmp1 = $this->core_identity
@@ -77,10 +77,10 @@ class User extends BaseAdmin
         $dataList = $tree->list2tree($dataList->toArray());
 
         // 角色
-        $roleCols = Db::name('auth_role')->where('status', 1)->column('id,title,color', 'name');
+        $roleCols = RoleModel::where('status', 1)->column('id,name', 'label');
 
         // 构造动态页面数据
-        $xyBuilderList = new \uniadmin\core\util\xybuilder\XyBuilderList();
+        $xyBuilderList = new \uiadmin\core\util\xybuilder\XyBuilderList();
         $xyBuilderList->init()
             ->setDataPage($total, $limit, $page)
             ->addTopButton('add', '添加用户', ['api' => '/v1/admin/auth/user/add']);
@@ -157,33 +157,11 @@ class User extends BaseAdmin
     public function info($id)
     {
         // 用户信息
-        $info = Db::name('auth_user')
-            ->where('id', $id)
+        $info = UserModel::where('id', $id)
             ->find();
-        // $tmp1 = $this->core_identity
-        //     ->where('uid', $info->id)
-        //     ->where('identityType', 1)
-        //     ->find();
-        // if ($tmp1) {
-        //     $info['mobile'] = $tmp1->identifier;
-        // } else {
-        //     $info['mobile'] = '';
-        // }
-        // unset($tmp1);
-        // $tmp2 = $this->core_identity
-        //     ->where('cloudAlias', $this->cloudAlias)
-        //     ->where('uid', $info->id)
-        //     ->where('identityType', 2)
-        //     ->find();
-        // if ($tmp2) {
-        //     $info['email'] = $tmp2->identifier;
-        // } else {
-        //     $info['email'] = '';
-        // }
-        // unset($tmp2);
 
         // 构造动态页面数据
-        $xyBuilderInfo = new \uniadmin\core\util\xybuilder\XyBuilderInfo();
+        $xyBuilderInfo = new \uiadmin\core\util\xybuilder\XyBuilderInfo();
         $infoData = $xyBuilderInfo->init()
             ->addInfoGroup([
                 // 'title' => '基本',
@@ -222,7 +200,7 @@ class User extends BaseAdmin
         // }
 
         // 动态TAB
-        $xyBuilderTab = new \uniadmin\core\util\xybuilder\XyBuilderTab();
+        $xyBuilderTab = new \uiadmin\core\util\xybuilder\XyBuilderTab();
         $tabData = $xyBuilderTab->init()
             ->addTab('基本', [
                 [
@@ -285,7 +263,7 @@ class User extends BaseAdmin
             $dataDb['createTime'] = time();
 
             // 存储数据
-            $ret = Db::name('auth_user')->save($dataDb);
+            $ret = UserModel::save($dataDb);
             if ($ret) {
                 return json(['code' => 200, 'msg' => '添加用户成功', 'data' => []]);
             } else {
@@ -293,8 +271,7 @@ class User extends BaseAdmin
             }
         } else {
             // 获取角色基于标题的树状列表
-            $roleList = Db::name('auth_role')
-                ::order('sortnum asc')
+            $roleList = RoleModel::order('sortnum asc')
                 ->select();
             $tree      = new Tree();
             $roleTree = $tree->array2tree($roleList, 'title', 'id', 'pid', 0, false);
@@ -310,7 +287,7 @@ class User extends BaseAdmin
             }
 
             // 构造动态页面数据
-            $xyBuilderForm = new \app\core\util\xybuilder\XyBuilderForm();
+            $xyBuilderForm = new \uiadmin\core\util\xybuilder\XyBuilderForm();
             $formData = $xyBuilderForm->init()
                 ->setFormMethod('post')
                 ->addFormItem('roles', '部门角色', 'selects', [], [
@@ -386,8 +363,7 @@ class User extends BaseAdmin
             }
 
             // 存储数据
-            $ret = Db::name('auth_user')
-                ->where('id', '=', $id)
+            $ret = UserModel::where('id', '=', $id)
                 ->update($dataDb);
             if ($ret) {
                 return json(['code' => 200, 'msg' => '修改用户信息成功', 'data' => []]);
@@ -396,13 +372,11 @@ class User extends BaseAdmin
             }
         } else {
             // 用户信息
-            $info = Db::name('auth_user')
-                ->where('id', $id)
+            $info = UserModel::where('id', $id)
                 ->find();
 
             // 获取角色基于标题的树状列表
-            $roleList = Db::name('auth_user')
-                ->order('sortnum asc')
+            $roleList = RoleModel::order('sortnum asc')
                 ->select();
             $tree      = new Tree();
             $roleTree = $tree->array2tree($roleList, 'title', 'id', 'pid', 0, false);
@@ -418,7 +392,7 @@ class User extends BaseAdmin
             }
 
             // 构造动态页面数据
-            $xyBuilderForm = new \uniadmin\core\util\xybuilder\XyBuilderForm();
+            $xyBuilderForm = new \uiadmin\core\util\xybuilder\XyBuilderForm();
             $formData = $xyBuilderForm->init()
                 ->setFormMethod('put')
                 ->addFormItem('roles', '部门角色', 'selects', $info['roles'], [
@@ -468,8 +442,7 @@ class User extends BaseAdmin
         // 注销登录信息
 
         // 删除用户
-        $ret = Db::name('auth_user')
-            ->where(['id' => $id])
+        $ret = UserModel::where(['id' => $id])
             ->delete();
         if ($ret) {
             return json(['code' => 200, 'msg' => '删除成功', 'data' => []]);

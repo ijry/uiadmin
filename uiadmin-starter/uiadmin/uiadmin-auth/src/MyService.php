@@ -18,11 +18,7 @@ class MyService extends Service
         config($uiadmin_config , 'uiadmin');
 
         $this->registerRoutes(function (Route $route) {
-            $route->get(config("uiadmin.site.apiPrefix") . '/v1/admin/auth/user/lists', "uniadmin\\auth\\admin\\User@lists");
-            $route->post(config("uiadmin.site.apiPrefix") . '/v1/admin/auth/user/add', "uniadmin\\auth\\admin\\User@add");
-            $route->put(config("uiadmin.site.apiPrefix") . '/v1/admin/auth/user/edit/:id', "uniadmin\\auth\\admin\\User@edit");
-            $route->delete(config("uiadmin.site.apiPrefix") . '/v1/admin/auth/user/delete/:id', "uniadmin\\auth\\admin\\User@delete");
-            $route->get(config("uiadmin.site.apiPrefix") . '/v1/core/auth/user/info', "uniadmin\\auth\\admin\\User@info");
+            $route->get(config("uiadmin.site.apiPrefix") . '/v1/core/auth/user/info', "uiadmin\\auth\\admin\\User@info");
 
             // 计算API路由
             $dataList = MenuModel::where('status', '=' , 1)
