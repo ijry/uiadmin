@@ -113,7 +113,7 @@ class User extends BaseAdmin
             ->addColumn('username', '用户名', ['width' => '130px'])
             ->addColumn('mobile', '手机号', ['width' => '100px'])
             ->addColumn('email', '邮箱', ['width' => '140px'])
-            ->addColumn('registerTime', '注册时间', [
+            ->addColumn('createTime', '注册时间', [
                 'width' => '140px',
                 'type' => 'template',
                 'template' => 'time',

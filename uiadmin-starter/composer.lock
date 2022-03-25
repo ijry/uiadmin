@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f35631bc35aabbc406939fd4279939bc",
+    "content-hash": "25414628a3e5659cc106a2c4ff769969",
     "packages": [
         {
             "name": "casbin/casbin",
@@ -2782,6 +2782,47 @@
             }
         },
         {
+            "name": "uiadmin/uiadmin-config",
+            "version": "dev-main",
+            "dist": {
+                "type": "path",
+                "url": "uiadmin/uiadmin-config",
+                "reference": "ce5545773a99191e0ba065121067d3755487ee0d"
+            },
+            "require": {
+                "topthink/framework": "^6.0.0",
+                "topthink/think-migration": "^3.0"
+            },
+            "type": "library",
+            "extra": {
+                "think": {
+                    "services": [
+                        "uiadmin\\config\\MyService"
+                    ],
+                    "config": []
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "uiadmin\\config\\": "src/"
+                },
+                "files": []
+            },
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "jry",
+                    "email": "ijry@qq.com"
+                }
+            ],
+            "description": "渐进式开源低代码零前端后台-配置持久化模块",
+            "transport-options": {
+                "relative": true
+            }
+        },
+        {
             "name": "uiadmin/uiadmin-core",
             "version": "dev-main",
             "dist": {
@@ -3078,7 +3119,8 @@
     "minimum-stability": "dev",
     "stability-flags": {
         "uiadmin/uiadmin-core": 20,
-        "uiadmin/uiadmin-auth": 20
+        "uiadmin/uiadmin-auth": 20,
+        "uiadmin/uiadmin-config": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,
