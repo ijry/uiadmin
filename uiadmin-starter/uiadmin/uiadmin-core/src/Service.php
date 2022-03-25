@@ -3,14 +3,18 @@
 namespace uiadmin\core;
 
 use think\Route;
-use think\Service;
 use think\Validate;
 
-class MyService extends Service
+class Service extends \think\Service
 {
     public function register()
     {
         // $this->app->middleware->add(Router::class);
+
+        $service_list = get_ext_services();
+        foreach ($service_list as $key => $value) {
+            $this->app->register($value);
+        }
     }
 
     public function boot()

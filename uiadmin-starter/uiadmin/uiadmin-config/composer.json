@@ -23,7 +23,7 @@
     "extra": {
         "think": {
             "services": [
-                "uiadmin\\config\\MyService"
+                "uiadmin\\config\\Service"
             ],
             "config":{
             }

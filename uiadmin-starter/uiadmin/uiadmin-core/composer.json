@@ -28,7 +28,7 @@
     "extra": {
         "think": {
             "services": [
-                "uiadmin\\core\\MyService"
+                "uiadmin\\core\\Service"
             ],
             "config":{
                 "uiadmin": "src/config.php"

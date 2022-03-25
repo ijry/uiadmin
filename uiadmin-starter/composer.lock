@@ -2744,7 +2744,7 @@
             "dist": {
                 "type": "path",
                 "url": "uiadmin/uiadmin-auth",
-                "reference": "0fcdfcb9c1252f75823c5d23240ddca21d1067ba"
+                "reference": "a4dab439c6e98b452ed0c0f2ec8a1f8451200ef4"
             },
             "require": {
                 "casbin/think-authz": "^1.5.3",
@@ -2755,7 +2755,7 @@
             "extra": {
                 "think": {
                     "services": [
-                        "uiadmin\\auth\\MyService",
+                        "uiadmin\\auth\\Service",
                         "tauthz\\TauthzService"
                     ],
                     "config": []
@@ -2787,7 +2787,7 @@
             "dist": {
                 "type": "path",
                 "url": "uiadmin/uiadmin-config",
-                "reference": "ce5545773a99191e0ba065121067d3755487ee0d"
+                "reference": "6f4adc1b599d5c115200455e1656b957293afbd6"
             },
             "require": {
                 "topthink/framework": "^6.0.0",
@@ -2797,7 +2797,7 @@
             "extra": {
                 "think": {
                     "services": [
-                        "uiadmin\\config\\MyService"
+                        "uiadmin\\config\\Service"
                     ],
                     "config": []
                 }
@@ -2828,7 +2828,7 @@
             "dist": {
                 "type": "path",
                 "url": "uiadmin/uiadmin-core",
-                "reference": "90f81e3ea164e75cca1496645037faf6c3f32812"
+                "reference": "ab2f7f8dd8ae1b4aff35c61cddb6f9efa6b03c8e"
             },
             "require": {
                 "firebase/php-jwt": "^5.5.1",
@@ -2842,7 +2842,7 @@
             "extra": {
                 "think": {
                     "services": [
-                        "uiadmin\\core\\MyService"
+                        "uiadmin\\core\\Service"
                     ],
                     "config": {
                         "uiadmin": "src/config.php"

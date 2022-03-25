@@ -2,6 +2,63 @@
 // 应用公共文件
 
 
+/**
+ * 后去扩展模块的服务
+ *
+ * @author jry <ijry@qq.com>
+ */
+function get_ext_services($service_list = [])
+{
+    $dir = root_path() . '/extention/';
+    $file_arr = scandir($dir);
+    $new_arr = [];
+    foreach($file_arr as $item){
+        if($item!=".." && $item !="."){
+            if(is_dir($dir."/".$item)){
+                $new_arr[] = $dir.$item;
+            }
+        }
+    }
+    $psr4 = [];
+    foreach ($new_arr as $key => $value) {
+        $source = $value . '/composer.json';
+        if (is_file($source)) {
+            $content = json_decode(file_get_contents($source), true);
+            if (isset($content['extra']['think']['services'])
+                && count($content['extra']['think']['services']) > 0) {
+                foreach ($content['extra']['think']['services'] as $key => $value1) {
+                    $service_list[] = '\\' . $value1;
+                }
+            }
+            if (isset($content['autoload']['psr-4'])) {
+                foreach ($content['autoload']['psr-4'] as $key => $value1) {
+                    $psr4[$key] = $value . '/' . $value1;
+                }
+            }
+        }
+    }
+   \think\facade\Cache::set('psr4', $psr4, 200);
+
+    // 注册psr-4
+    spl_autoload_register(function ($class) {
+        /* 限定类名路径映射 */
+        $class_map = \think\facade\Cache::get('psr4');
+        $tmp = explode('\\', $class);
+        $key = $tmp[0] . '\\' . $tmp[1] . '\\';
+        if (isset($class_map[$key])) {
+            unset($tmp[0]);
+            unset($tmp[1]);
+            $file = $class_map[$key] . implode('/', $tmp) . '.php';
+            if (file_exists($file)) {
+                include $file;
+            }
+        }
+    });
+
+    return $service_list;
+}
+
+// 内部配置
 function get_config($name){
     $configs = [
         'version' => '1.2.0',

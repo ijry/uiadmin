@@ -3,11 +3,10 @@
 namespace uiadmin\auth;
 
 use think\Route;
-use think\Service;
 use think\Validate;
 use uiadmin\auth\model\Menu as MenuModel;
 
-class MyService extends Service
+class Service extends \think\Service
 {
     public function boot()
     {

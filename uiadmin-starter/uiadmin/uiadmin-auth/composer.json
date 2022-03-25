@@ -24,7 +24,7 @@
     "extra": {
         "think": {
             "services": [
-                "uiadmin\\auth\\MyService",
+                "uiadmin\\auth\\Service",
                 "tauthz\\TauthzService"
             ],
             "config":{
