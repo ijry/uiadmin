@@ -37,7 +37,7 @@ class Index extends BaseAdmin
         return json(['code' => 200, 'msg' => '成功', 'data' => [
             'lang' => 'php',
             'framework' => 'thinkphp6.0',
-            'name' => "UniAdmin",
+            'name' => "UiAdmin",
             'title' => config("uiadmin.site.title"),
             'stype' => '应用', // 菜单分组类型
             'version' => get_config("version"),
@@ -135,12 +135,12 @@ class Index extends BaseAdmin
                     // ],
                     [
                         'type'  => 'text',
-                        'title' => '接口框架',
-                        'value' => "UniAdmin" . ' (v' . get_config('version') . ')'
+                        'title' => '后台框架',
+                        'value' => "UiAdmin" . ' (v' . get_config('version') . ')'
                     ],
                     [
                         'type'  => 'text',
-                        'title' => '后台框架',
+                        'title' => 'UI框架',
                         'value' => 'XYAdmin (v' . get_config('xyadmin.version') . ')'
                     ],
                     [

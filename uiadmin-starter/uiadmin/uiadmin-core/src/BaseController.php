@@ -123,7 +123,10 @@ abstract class BaseController
         return $ret ;
     }
 
-
+    // 返回json
+    protected function return($data) {
+        return json($data);
+    }
 
     /**
      * 判断用户是否登陆方法
