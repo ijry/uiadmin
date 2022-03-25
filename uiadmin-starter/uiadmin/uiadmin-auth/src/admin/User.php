@@ -77,7 +77,7 @@ class User extends BaseAdmin
         $dataList = $tree->list2tree($dataList->toArray());
 
         // 角色
-        $roleCols = RoleModel::where('status', 1)->column('id,name', 'label');
+        $roleCols = RoleModel::where('status', 1)->column('id,title', 'name');
 
         // 构造动态页面数据
         $xyBuilderList = new \uiadmin\core\util\xybuilder\XyBuilderList();

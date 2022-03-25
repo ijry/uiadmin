@@ -371,6 +371,7 @@ class Config extends BaseAdmin
                 return $this->return(['code' => 0, 'msg' => '无数据提交', 'data' => []]);
             }
 
+            // 更新数据
             foreach ($dataDb as $key => $value) {
                 if (isset($info[$key])) {
                     $info[$key] = $value;
