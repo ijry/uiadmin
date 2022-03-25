@@ -35,6 +35,11 @@ function get_ext_services($service_list = [])
                     $psr4[$key] = $value . '/' . $value1;
                 }
             }
+            if (isset($content['autoload']['files'])) {
+                foreach ($content['autoload']['files'] as $key => $value1) {
+                    include $value . '/' . $value1;
+                }
+            }
         }
     }
    \think\facade\Cache::set('psr4', $psr4, 200);
