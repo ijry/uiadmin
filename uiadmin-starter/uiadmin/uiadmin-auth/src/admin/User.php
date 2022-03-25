@@ -114,7 +114,7 @@ class User extends BaseAdmin
             ->addColumn('mobile', '手机号', ['width' => '100px'])
             ->addColumn('email', '邮箱', ['width' => '140px'])
             ->addColumn('createTime', '注册时间', [
-                'width' => '140px',
+                'width' => '170px',
                 'type' => 'template',
                 'template' => 'time',
                 'extend' => ['format' => 'yyyy-MM-dd hh:mm:ss']

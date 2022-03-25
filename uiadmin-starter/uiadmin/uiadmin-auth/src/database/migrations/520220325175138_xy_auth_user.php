@@ -29,9 +29,8 @@ class XyAuthUser extends Migrator
      */
     public function change()
     {
-        $table = $this->table('xy_auth_user', ['engine' => 'InnoDB', 'collation' => 'utf8_general_ci', 'comment' => '' ,'id' => false ,'primary_key' => ['id']]);
-        $table->addColumn('id', 'string', ['limit' => 32,'null' => false,'default' => '','signed' => true,'comment' => 'ID',])
-			->addColumn('user_key', 'string', ['limit' => 32,'null' => false,'default' => '','signed' => true,'comment' => '用户密钥',])
+        $table = $this->table('xy_auth_user', ['engine' => 'InnoDB', 'collation' => 'utf8_general_ci', 'comment' => '' ,'id' => 'id' ,'primary_key' => ['id']]);
+        $table->addColumn('user_key', 'string', ['limit' => 32,'null' => false,'default' => '','signed' => true,'comment' => '用户密钥',])
 			->addColumn('nickname', 'string', ['limit' => 32,'null' => false,'default' => '','signed' => true,'comment' => '昵称',])
 			->addColumn('avatar', 'string', ['limit' => 512,'null' => false,'default' => '','signed' => true,'comment' => '头像地址',])
 			->addColumn('username', 'string', ['limit' => 15,'null' => false,'default' => '','signed' => true,'comment' => '用户名，登陆使用',])
@@ -42,6 +41,7 @@ class XyAuthUser extends Migrator
 			->addColumn('create_time', 'datetime', ['null' => false,'default' => null,'signed' => true,'comment' => '创建时间',])
 			->addColumn('update_time', 'datetime', ['null' => false,'default' => null,'signed' => true,'comment' => '更新时间',])
 			->addColumn('status', 'boolean', ['null' => false,'default' => 0,'signed' => true,'comment' => '删除状态，0已禁用1正常',])
+			->addColumn('delete_time', 'integer', ['limit' => MysqlAdapter::INT_REGULAR,'null' => false,'default' => 0,'signed' => true,'comment' => '删除时间',])
 			->addIndex(['username'], ['unique' => true,'name' => 'username'])
             ->create();
     }

@@ -32,7 +32,7 @@ class MyService extends Service
                             // 前后端分离路由
                             $route->rule(
                                 config("uiadmin.site.apiPrefix") . '/' . $val['apiPrefix'] . '/admin' . $val['path'] . $val['apiSuffix'],
-                                'uiadmin\\' . $path[1] . '\admin\\' . ucfirst(\uiadmin\core\util\Str::camel($path[2])) . '@' . $path[3],
+                                $val['namespace'] . '\\' . $path[1] . '\admin\\' . ucfirst(\uiadmin\core\util\Str::camel($path[2])) . '@' . $path[3],
                                 $val['apiMethod']
                             )->ext($val['apiExt'] ? : 'html|')
                             ->name(config("uiadmin.site.apiPrefix") . '/' . $val['apiPrefix'] . '/admin/' . $path[1] . '/' . $path[2] .'/' . $path[3]);

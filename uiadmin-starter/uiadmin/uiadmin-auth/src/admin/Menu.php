@@ -138,6 +138,7 @@ class Menu extends BaseAdmin
         if(request()->isPost()){
             // 数据验证
             $this->validateMake([
+                'namespace'  => 'require',
                 'module'  => 'require',
                 'title' => 'require',
                 'menuType' => 'require',
@@ -197,6 +198,10 @@ class Menu extends BaseAdmin
             $xyBuilderForm = new \uiadmin\core\util\xybuilder\XyBuilderForm();
             $formData = $xyBuilderForm->init()
                 ->setFormMethod('post')
+                ->addFormItem('namespace', '根命名空间', 'text', 'app', [
+                    'placeholder' => '',
+                    'tip' => '一般为扩展composer.json里定义的autoload.psr-4根命名空间',
+                ])
                 ->addFormItem('module', '模块', 'text', '', [
                     'placeholder' => '请选择模块',
                     'tip' => '模块是一个可分享使用的最小功能包',
@@ -399,6 +404,10 @@ class Menu extends BaseAdmin
             $xyBuilderForm = new \uiadmin\core\util\xybuilder\XyBuilderForm();
             $formData = $xyBuilderForm->init()
                 ->setFormMethod('put')
+                ->addFormItem('namespace', '根命名空间', 'text', '', [
+                    'placeholder' => '',
+                    'tip' => '一般为扩展composer.json里定义的autoload.psr-4根命名空间',
+                ])
                 ->addFormItem('module', '模块', 'text', '', [
                     'placeholder' => '请选择模块',
                     'tip' => '模块是一个可分享使用的最小功能包',

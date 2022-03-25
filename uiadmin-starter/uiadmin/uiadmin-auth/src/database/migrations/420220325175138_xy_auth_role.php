@@ -29,15 +29,17 @@ class XyAuthRole extends Migrator
      */
     public function change()
     {
-        $table = $this->table('xy_auth_role', ['engine' => 'InnoDB', 'collation' => 'utf8_general_ci', 'comment' => '' ,'id' => false ,'primary_key' => ['id']]);
-        $table->addColumn('id', 'string', ['limit' => 32,'null' => false,'default' => '','signed' => true,'comment' => 'ID',])
-			->addColumn('label', 'string', ['limit' => 32,'null' => false,'default' => '','signed' => true,'comment' => '角色标识',])
-			->addColumn('name', 'string', ['limit' => 32,'null' => false,'default' => '','signed' => true,'comment' => '角色名称',])
+        $table = $this->table('xy_auth_role', ['engine' => 'InnoDB', 'collation' => 'utf8_general_ci', 'comment' => '' ,'id' => 'id' ,'primary_key' => ['id']]);
+        $table->addColumn('pid', 'integer', ['limit' => MysqlAdapter::INT_REGULAR,'null' => false,'default' => 0,'signed' => true,'comment' => 'PID',])
+			->addColumn('name', 'string', ['limit' => 32,'null' => false,'default' => '','signed' => true,'comment' => '角色标识',])
+			->addColumn('title', 'string', ['limit' => 32,'null' => false,'default' => '','signed' => true,'comment' => '角色名称',])
 			->addColumn('policys', 'text', ['limit' => MysqlAdapter::TEXT_REGULAR,'null' => false,'signed' => true,'comment' => '角色的授权规则',])
 			->addColumn('create_time', 'datetime', ['null' => false,'default' => null,'signed' => true,'comment' => '创建时间',])
 			->addColumn('update_time', 'datetime', ['null' => false,'default' => null,'signed' => true,'comment' => '更新时间',])
 			->addColumn('status', 'boolean', ['null' => false,'default' => 0,'signed' => true,'comment' => '删除状态，0已禁用1正常',])
-			->addIndex(['label'], ['unique' => true,'name' => 'label'])
+			->addColumn('delete_time', 'integer', ['limit' => MysqlAdapter::INT_REGULAR,'null' => false,'default' => 0,'signed' => true,'comment' => '删除时间',])
+			->addColumn('sortnum', 'integer', ['limit' => MysqlAdapter::INT_REGULAR,'null' => false,'default' => 0,'signed' => true,'comment' => '排序',])
+			->addIndex(['name'], ['unique' => true,'name' => 'label'])
             ->create();
     }
 }
