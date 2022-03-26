@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "25414628a3e5659cc106a2c4ff769969",
+    "content-hash": "a531307fd216cf5d38b901e71d885a6d",
     "packages": [
         {
             "name": "casbin/casbin",
@@ -2870,6 +2870,47 @@
             "transport-options": {
                 "relative": true
             }
+        },
+        {
+            "name": "uiadmin/uiadmin-ext",
+            "version": "dev-main",
+            "dist": {
+                "type": "path",
+                "url": "uiadmin/uiadmin-ext",
+                "reference": "a5d0a21af4a2da282389e61eda9d53377fd41474"
+            },
+            "require": {
+                "topthink/framework": "^6.0.0",
+                "topthink/think-migration": "^3.0"
+            },
+            "type": "library",
+            "extra": {
+                "think": {
+                    "services": [
+                        "uiadmin\\ext\\Service"
+                    ],
+                    "config": []
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "uiadmin\\ext\\": "src/"
+                },
+                "files": []
+            },
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "jry",
+                    "email": "ijry@qq.com"
+                }
+            ],
+            "description": "渐进式开源低代码零前端-扩展管理模块",
+            "transport-options": {
+                "relative": true
+            }
         }
     ],
     "packages-dev": [
@@ -3120,7 +3161,8 @@
     "stability-flags": {
         "uiadmin/uiadmin-core": 20,
         "uiadmin/uiadmin-auth": 20,
-        "uiadmin/uiadmin-config": 20
+        "uiadmin/uiadmin-config": 20,
+        "uiadmin/uiadmin-ext": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,

@@ -37,7 +37,9 @@ function get_ext_services($service_list = [])
             }
             if (isset($content['autoload']['files'])) {
                 foreach ($content['autoload']['files'] as $key => $value1) {
-                    include $value . '/' . $value1;
+                    if (is_file($value . '/' . $value1)) {
+                        include $value . '/' . $value1;
+                    }
                 }
             }
         }

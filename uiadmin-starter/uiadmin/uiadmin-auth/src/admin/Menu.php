@@ -198,11 +198,11 @@ class Menu extends BaseAdmin
             $xyBuilderForm = new \uiadmin\core\util\xybuilder\XyBuilderForm();
             $formData = $xyBuilderForm->init()
                 ->setFormMethod('post')
-                ->addFormItem('namespace', '根命名空间', 'text', 'app', [
+                ->addFormItem('namespace', '根命名空间', 'text', '', [
                     'placeholder' => '',
                     'tip' => '一般为扩展composer.json里定义的autoload.psr-4根命名空间',
                 ])
-                ->addFormItem('module', '模块', 'text', '', [
+                ->addFormItem('module', '模块名称', 'text', '', [
                     'placeholder' => '请选择模块',
                     'tip' => '模块是一个可分享使用的最小功能包',
                     //'options' => $moduleListSelect

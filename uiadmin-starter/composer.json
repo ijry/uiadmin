@@ -25,7 +25,8 @@
         "topthink/think-orm": "^2.0",
         "uiadmin/uiadmin-core": "dev-main",
         "uiadmin/uiadmin-auth": "dev-main",
-        "uiadmin/uiadmin-config": "dev-main"
+        "uiadmin/uiadmin-config": "dev-main",
+        "uiadmin/uiadmin-ext": "dev-main"
     },
     "require-dev": {
         "symfony/var-dumper": "^4.2",
@@ -43,6 +44,10 @@
         {
             "type": "path",
             "url": "uiadmin/uiadmin-config/"
+        },
+        {
+            "type": "path",
+            "url": "uiadmin/uiadmin-ext/"
         }
     ],
     "autoload": {
