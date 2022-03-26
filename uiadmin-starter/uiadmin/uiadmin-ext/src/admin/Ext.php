@@ -59,6 +59,31 @@ class Ext extends BaseAdmin
                     'status' => 1,
                 ];
 
+                // 发布数据库迁移文件
+                $destination = root_path() . '/database/migrations/';
+                $destination2 = root_path() . '/database/seeds/';
+                $source = $dir . '/database/migrations/';
+                $handle = dir($source);
+                while($entry=$handle->read()) {   
+                    if(($entry!=".")&&($entry!="..")){   
+                        if(is_file($source.$entry)){
+                            copy($source.$entry, $destination.$entry);
+                        }
+                    }
+                }
+                $source = $dir . '/database/seeds/';
+                $handle = dir($source);
+                while($entry=$handle->read()) {   
+                    if(($entry!=".")&&($entry!="..")){   
+                        if(is_file($source.$entry)){
+                            copy($source.$entry, $destination2.$entry);
+                        }
+                    }
+                }
+                // 执行命令
+                \think\facade\Console::call('migrate:run', []);
+                \think\facade\Console::call('seed:run', []);
+
                 // 导入数据表
                 // foreach ($moduleInsall['tables'] as $key => $value) {
                 //     if (isset($value['tableCreate'])) {
