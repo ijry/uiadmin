@@ -109,7 +109,7 @@ class ExtAuthMenuSeeds extends Seeder
             "menu_type" => 2,
             "route_type" => "from",
             "api_prefix" => "v1",
-            "api_suffix" => "/:id",
+            "api_suffix" => "",
             "api_params" => "",
             "out_url" => "",
             "is_dev" => 0,

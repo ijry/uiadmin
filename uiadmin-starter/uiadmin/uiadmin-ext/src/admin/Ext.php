@@ -101,8 +101,18 @@ class Ext extends BaseAdmin
      *
      * @return \think\Response
      */
-    public function export($id)
+    public function export()
     {
+        $id = input('get.id');
+        $info = ExtModel::where('id', $id)
+            ->find();
+        $dir = root_path() . 'extention/' . $info['name'];
+        if (is_dir($dir)) {
+            // 打包下载
+            $archive = new \uiadmin\core\util\Zip();
+            $archive->ZipAndDownload($dir, $info['name']);
+        }
+
         if (request()->isPost()) {
             // 导出模块数据表
             // $mysqlConn = mysqli_connect(
@@ -120,8 +130,6 @@ class Ext extends BaseAdmin
             //     $moduleService->export($id, $mysqlConn);
             // }
             // mysqli_close($mysqlConn);
-
-            // 打包zip下载
 
             return $this->return(['code' => 200, 'msg' => '导出成功', 'data' => []]);
         }
@@ -217,15 +225,11 @@ class Ext extends BaseAdmin
                 'name' => 'export',
                 'title' => '导出',
                 'pageData' => [
-                    'api' => '/v1/admin/ext/ext/export',
-                    'title' => '确认要导出模块吗？',
-                    'modalType' => 'confirm',
-                    'formMethod' => 'post',
-                    'width' => '600',
-                    'noRefresh' => true,
-                    'okText' => '确认导出',
-                    'cancelText' => '取消操作',
-                    'content' => '<p><p>导出的模块可以分发给别人使用</p><p>将会导出模块基本信息、配置信息、API信息、模块数据表等信息。</p></p>',
+                    'url' => (string)url('/api/v1/admin/ext/ext/export', [], true, true),
+                    'modalType' => 'url',
+                    'apiSuffix' => [],
+                    'querySuffix' => [['id', 'id']],
+                    'title' => '确认要导出模块吗？'
                 ],
                 'style' => ['size' => 'small']
             ];
