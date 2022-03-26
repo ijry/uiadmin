@@ -16,7 +16,6 @@ class ExtAuthMenuSeeds extends Seeder
     {
         $data = array(
           [
-            "id" => 22,
             "namespace" => "uiadmin",
             "module" => "uiadmin-ext",
             "title" => "扩展管理",
@@ -43,7 +42,6 @@ class ExtAuthMenuSeeds extends Seeder
             "delete_time" => 0
           ],
           [
-            "id" => 23,
             "namespace" => "uiadmin",
             "module" => "uiadmin-ext",
             "title" => "创建模块",
@@ -70,7 +68,6 @@ class ExtAuthMenuSeeds extends Seeder
             "delete_time" => 0
           ],
           [
-            "id" => 24,
             "namespace" => "uiadmin",
             "module" => "uiadmin-ext",
             "title" => "修改模块",
@@ -97,7 +94,6 @@ class ExtAuthMenuSeeds extends Seeder
             "delete_time" => 0
           ],
           [
-            "id" => 25,
             "namespace" => "uiadmin",
             "module" => "uiadmin-ext",
             "title" => "导出模块",
