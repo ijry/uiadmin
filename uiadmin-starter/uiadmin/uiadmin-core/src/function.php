@@ -320,6 +320,9 @@ function array2xml($array)
  */
 function parse_attr($value, $type = '')
 {
+    if (!$value) {
+        return $value;
+    }
     switch ($type) {
         default:
             // json格式
