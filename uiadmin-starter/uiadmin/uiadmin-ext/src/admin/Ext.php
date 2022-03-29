@@ -293,6 +293,18 @@ class Ext extends BaseAdmin
                 ])
                 ->setTableName('xy_ext')
                 ->setDataList($dataList)
+                ->setConfig('listStyle', 'block')
+                ->setConfig('listAsBlock', [
+                    'title' => [
+                        'field' => 'title'
+                    ],
+                    'titleRight' => [
+                        'field' => 'version'
+                    ],
+                    'info' => [
+                        'field' => 'developer'
+                    ]
+                ])
                 ->getData();
             // $tree      = new Tree();
             // $listData['dataList'] = $tree->list2tree($listData['dataList'], 'name', 'pname', 'children', 0, false);
