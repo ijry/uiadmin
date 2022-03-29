@@ -11,9 +11,11 @@ class Service extends \think\Service
     {
         // $this->app->middleware->add(Router::class);
 
-        $service_list = get_ext_services();
-        foreach ($service_list as $key => $value) {
-            $this->app->register($value);
+        if (env('uiadmin.install')) {
+            $service_list = get_ext_services();
+            foreach ($service_list as $key => $value) {
+                $this->app->register($value);
+            }
         }
     }
 

@@ -19,22 +19,24 @@ class Service extends \think\Service
         $this->registerRoutes(function (Route $route) {
             $route->get(config("uiadmin.site.apiPrefix") . '/v1/core/auth/user/info', "uiadmin\\auth\\admin\\User@info");
 
-            // 计算API路由
-            $dataList = MenuModel::where('status', '=' , 1)
-                ->where('menu_layer', 'in' , 'admin')
-                ->where('menu_type', 'in' , '1,2,3')
-                ->select();
-            foreach ($dataList as $key => $val) {
-                if (\uiadmin\core\util\Str::startsWith($val['path'], '/')) {
-                    $path = explode('/', $val['path']);
-                    if (isset($path[3])) {
-                            // 前后端分离路由
-                            $route->rule(
-                                config("uiadmin.site.apiPrefix") . '/' . $val['apiPrefix'] . '/admin' . $val['path'] . $val['apiSuffix'],
-                                $val['namespace'] . '\\' . $path[1] . '\admin\\' . ucfirst(\uiadmin\core\util\Str::camel($path[2])) . '@' . $path[3],
-                                $val['apiMethod']
-                            )->ext($val['apiExt'] ? : 'html|')
-                            ->name(config("uiadmin.site.apiPrefix") . '/' . $val['apiPrefix'] . '/admin/' . $path[1] . '/' . $path[2] .'/' . $path[3]);
+            if (env('uiadmin.install')) {
+                // 计算API路由
+                $dataList = MenuModel::where('status', '=' , 1)
+                    ->where('menu_layer', 'in' , 'admin')
+                    ->where('menu_type', 'in' , '1,2,3')
+                    ->select();
+                foreach ($dataList as $key => $val) {
+                    if (\uiadmin\core\util\Str::startsWith($val['path'], '/')) {
+                        $path = explode('/', $val['path']);
+                        if (isset($path[3])) {
+                                // 前后端分离路由
+                                $route->rule(
+                                    config("uiadmin.site.apiPrefix") . '/' . $val['apiPrefix'] . '/admin' . $val['path'] . $val['apiSuffix'],
+                                    $val['namespace'] . '\\' . $path[1] . '\admin\\' . ucfirst(\uiadmin\core\util\Str::camel($path[2])) . '@' . $path[3],
+                                    $val['apiMethod']
+                                )->ext($val['apiExt'] ? : 'html|')
+                                ->name(config("uiadmin.site.apiPrefix") . '/' . $val['apiPrefix'] . '/admin/' . $path[1] . '/' . $path[2] .'/' . $path[3]);
+                        }
                     }
                 }
             }
