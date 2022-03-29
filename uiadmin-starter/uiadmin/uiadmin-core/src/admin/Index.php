@@ -107,7 +107,7 @@ class Index extends BaseAdmin
                     [
                         'type'  => 'text',
                         'title' => '服务器IP',
-                        'value' => $_SERVER['SERVER_ADDR']
+                        'value' => isset($_SERVER['SERVER_ADDR']) ? $_SERVER['SERVER_ADDR'] : '0.0.0.0' 
                     ],
                     [
                         'type'  => 'text',
