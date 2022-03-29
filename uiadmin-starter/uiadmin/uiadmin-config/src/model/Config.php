@@ -35,6 +35,10 @@ class Config extends Model
     }
     public function getOptionsAttr($value)
     {
-        return json_decode($value, true);
+        if ($value) {
+            return json_decode($value, true);
+        } else {
+            return [];
+        }
     }
 }
