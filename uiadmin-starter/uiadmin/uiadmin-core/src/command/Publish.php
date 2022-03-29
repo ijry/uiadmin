@@ -49,6 +49,9 @@ class Publish extends Command
         if(!is_dir($destination)){
             mkdir($destination, 0755, true);
         }
+        if(!is_dir($destination2)){
+            mkdir($destination2, 0755, true);
+        }
 
         // 遍历uiadmin模块下的数据库迁移文件
         $uiadminDir = __DIR__ . '/../../../';
