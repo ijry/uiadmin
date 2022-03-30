@@ -10,7 +10,7 @@
 */
 
 
-namespace uiadmin\auth\admin;
+namespace demo\blog\admin;
 
 use think\facade\Db;
 use think\Validate;
@@ -120,10 +120,10 @@ class Post extends BaseAdmin
                 return json(['code' => 0, 'msg' => '无数据提交', 'data' => []]);
             }
             $dataDb['status']   = 1;
-            $dataDb['createTime'] = time();
+            $dataDb['createTime'] = date('Y-m-d');
 
             // 存储数据
-            $ret = PostModel::save($dataDb);
+            $ret = PostModel::create($dataDb);
             if ($ret) {
                 return json(['code' => 200, 'msg' => '添加文章成功', 'data' => []]);
             } else {
@@ -138,7 +138,7 @@ class Post extends BaseAdmin
                     'placeholder' => '标题',
                     'tip' => '标题'
                 ])
-                ->addFormItem('content', '内容', 'text', '', [
+                ->addFormItem('content', '内容', 'html', '', [
                     'placeholder' => '内容',
                     'tip' => '内容'
                 ])
@@ -210,14 +210,14 @@ class Post extends BaseAdmin
                     'placeholder' => '标题',
                     'tip' => '标题'
                 ])
-                ->addFormItem('content', '内容', 'text', '', [
+                ->addFormItem('content', '内容', 'html', '', [
                     'placeholder' => '内容',
                     'tip' => '内容'
                 ])
                 ->addFormRule('title', [
                     ['required' => true, 'message' => '请填写标题', 'trigger' => 'change'],
                 ])
-                ->setFormValues()
+                ->setFormValues($info)
                 ->getData();
 
             // 返回数据

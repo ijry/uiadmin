@@ -30,5 +30,5 @@ class Post extends Model
     // 软删除
     use SoftDelete;
     protected $deleteTime = 'delete_time';
-    protected $defaultSoftDelete = 0;
+    //protected $defaultSoftDelete = 0;
 }
