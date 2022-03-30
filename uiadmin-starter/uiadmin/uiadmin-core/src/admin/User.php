@@ -97,9 +97,10 @@ class User extends BaseAdmin
     public function info()
     {
         // 获取用户ID
+        $login = $this->isLogin();
         $class = config('uiadmin.user.driver');
         $userService = new $class();
-        $userInfo = $userService->getById(session('userInfo.id'));
+        $userInfo = $userService->getById($$login['uid']);
 
         // 返回数据
         return json([

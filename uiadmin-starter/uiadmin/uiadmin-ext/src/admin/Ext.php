@@ -120,11 +120,15 @@ class Ext extends BaseAdmin
             Db::commit(); // 提交事务
             if (input('get.upgrade')) {
                 return $this->return([
-                    'code' => 200, 'msg' => '恭喜您，更新成功！', 'data' => []
+                    'code' => 200, 'msg' => '恭喜您，更新成功！', 'data' => [
+                        'updateMenu' => true
+                    ]
                 ]);
             } else {
                 return $this->return([
-                    'code' => 200, 'msg' => '恭喜您，安装成功！', 'data' => []
+                    'code' => 200, 'msg' => '恭喜您，安装成功！', 'data' => [
+                        'updateMenu' => true
+                    ]
                 ]);
             }
         } catch (\Exception $e) {

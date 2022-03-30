@@ -30,7 +30,7 @@ class Menu extends BaseAdmin
 
         $class = config('uiadmin.menu.driver');
         $service = new $class();
-        $dataList = $service->getByUser(session('userInfo.roles'));
+        $dataList = $service->getByUser($userInfo['roles']);
 
         // 返回数据
         return json([

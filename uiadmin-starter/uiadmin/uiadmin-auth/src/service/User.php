@@ -26,7 +26,10 @@ class User
     public function login($account, $password) {
         $info = UserModel::field('id,user_key,nickname,username,avatar,roles,password,status')
             ->where('username', $account)
-            ->findOrFail();
+            ->find();
+        if (!$info) {
+            throw new \Exception("用户名不存在", 0);
+        }
         if ($info['password'] != user_pwd_md5($password, "uiadmin")) {
             throw new \Exception("密码错误", 0);
         }

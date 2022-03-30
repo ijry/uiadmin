@@ -166,7 +166,9 @@ class Menu extends BaseAdmin
             // 存储数据
             $ret = MenuModel::save($dataDb);
             if ($ret) {
-                return json(['code' => 200, 'msg' => '添加成功', 'data' => []]);
+                return json(['code' => 200, 'msg' => '添加成功', 'data' => [
+                    'updateMenu' => true
+                ]]);
             } else {
                 return json(['code' => 0, 'msg' => '添加失败', 'data' => []]);
             }
@@ -332,6 +334,10 @@ class Menu extends BaseAdmin
      */
     public function edit($id)
     {
+        
+        // 信息
+        $info = MenuModel::where('id', $id)
+            ->find();
         if(request()->isPut()){
             // 数据验证
             $this->validateMake([
@@ -360,21 +366,23 @@ class Menu extends BaseAdmin
                 $dataDb['apiMethod'] = implode('|', $dataDb['apiMethod']);
             }
 
-            // 存储数据
-            try{
-                $ret = MenuModel::where('id', '=', $id)->save($dataDb);
-            }catch(\Exception $e){
-                return json(['code' => 0, 'msg' => '修改失败' . json_encode($e), 'data' => []]);
+            // 更新数据
+            foreach ($dataDb as $key => $value) {
+                if (isset($info[$key])) {
+                    $info[$key] = $value;
+                }
             }
+
+            // 存储数据
+            $ret = $info->save();
             if ($ret) {
-                return json(['code' => 200, 'msg' => '修改成功', 'data' => []]);
+                return json(['code' => 200, 'msg' => '修改成功', 'data' => [
+                    'updateMenu' => true
+                ]]);
             } else {
                 return json(['code' => 0, 'msg' => '修改失败', 'data' => []]);
             }
         } else {
-            // 信息
-            $info = MenuModel::where('id', $id)
-                ->find();
             $info['apiMethod'] = explode('|', $info['apiMethod']);
 
             // 获取模块列表
@@ -551,7 +559,9 @@ class Menu extends BaseAdmin
             ->where(['id' => $id])
             ->delete();
         if ($ret) {
-            return json(['code' => 200, 'msg' => '删除成功', 'data' => []]);
+            return json(['code' => 200, 'msg' => '删除成功', 'data' => [
+                'updateMenu' => true
+            ]]);
         } else {
             return json(['code' => 0, 'msg' => '删除错误', 'data' => []]);
         }

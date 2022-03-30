@@ -31,16 +31,8 @@ class User extends BaseHome
         // 获取用户ID
         $class = config('uiadmin.user.driver');
         $userService = new $class();
-        $uid = session('userInfo.id');
-        if (!$uid) {
-            // 返回数据
-            return json([
-                'code' => 401,
-                'msg'  => '登录过期',
-                'data' => []
-            ]);
-        }
-        $userInfo = $userService->getById($uid);
+        $login = $this->isLogin();
+        $userInfo = $userService->getById($login['uid']);
 
         // 返回数据
         return json([
