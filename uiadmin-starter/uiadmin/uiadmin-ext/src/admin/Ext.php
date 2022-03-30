@@ -46,23 +46,34 @@ class Ext extends BaseAdmin
         try {
             $dir = root_path() . 'extention/' . $name;
             if (is_dir($dir)) {
-                $moduleInsall = file_get_contents($dir . '/composer.json');
-                $moduleInsall = json_decode($moduleInsall, true);
-                $names = explode('/', $moduleInsall['name']);
-                $extData = [
-                    'type' => 'uiadmin',
-                    'name' => $names[1],
-                    'title' => $moduleInsall['title'],
-                    'description' => $moduleInsall['description'],
-                    'developer' => $moduleInsall['authors'][0]['name'],
-                    'version' => $moduleInsall['version'],
-                    'status' => 1,
-                ];
+                if (!input('get.upgrade')) {
+                    $moduleInsall = file_get_contents($dir . '/composer.json');
+                    $moduleInsall = json_decode($moduleInsall, true);
+                    $names = explode('/', $moduleInsall['name']);
+                    $extData = [
+                        'type' => 'uiadmin',
+                        'name' => $names[1],
+                        'title' => $moduleInsall['title'],
+                        'description' => $moduleInsall['description'],
+                        'developer' => $moduleInsall['authors'][0]['name'],
+                        'version' => $moduleInsall['version'],
+                        'status' => 1,
+                    ];
+
+                    // 导入基础信息
+                    ExtModel::create($extData);
+                }
 
                 // 发布数据库迁移文件
-                $destination = root_path() . '/database/migrations/';
-                $destination2 = root_path() . '/database/seeds/';
-                $source = $dir . '/database/migrations/';
+                $destination = root_path() . 'database/migrations/';
+                $destination2 = root_path() . 'database/seeds/';
+                if(!is_dir($destination)){
+                    mkdir($destination, 0755, true);
+                }
+                if(!is_dir($destination2)){
+                    mkdir($destination2, 0755, true);
+                }
+                $source = $dir . '/src/database/migrations/';
                 $handle = dir($source);
                 while($entry=$handle->read()) {   
                     if(($entry!=".")&&($entry!="..")){   
@@ -71,7 +82,7 @@ class Ext extends BaseAdmin
                         }
                     }
                 }
-                $source = $dir . '/database/seeds/';
+                $source = $dir . '/src/database/seeds/';
                 $handle = dir($source);
                 while($entry=$handle->read()) {   
                     if(($entry!=".")&&($entry!="..")){   
@@ -99,9 +110,6 @@ class Ext extends BaseAdmin
                 //     }
                 // }
 
-                // 导入基础信息
-                ExtModel::create($extData);
-
                 // 导入配置
                 // $this->core_config->saveAll($moduleInsall['config']);
                 // 导入菜单及API
@@ -110,9 +118,15 @@ class Ext extends BaseAdmin
                 throw new \Exception("不存在", 0);
             }
             Db::commit(); // 提交事务
-            return $this->return([
-                'code' => 200, 'msg' => '恭喜您，安装成功！', 'data' => []
-            ]);
+            if (input('get.upgrade')) {
+                return $this->return([
+                    'code' => 200, 'msg' => '恭喜您，更新成功！', 'data' => []
+                ]);
+            } else {
+                return $this->return([
+                    'code' => 200, 'msg' => '恭喜您，安装成功！', 'data' => []
+                ]);
+            }
         } catch (\Exception $e) {
             Db::rollback(); // 回滚事务
             return $this->return([
@@ -235,6 +249,25 @@ class Ext extends BaseAdmin
             //     'style' => ['size' => 'small']
             // ];
             $preRightButtonList[] = [
+                'name' => 'upgrade',
+                'title' => '更新',
+                'pageData' => [
+                    'formMethod' => 'post',
+                    'api' => '/v1/admin/ext/ext/import',
+                    'apiSuffix' => [],
+                    'querySuffix' => [
+                        ['name', 'name']
+                    ],
+                    'queryParams' => 'upgrade=1',
+                    'modalType' => 'confirm',
+                    'width' => '600',
+                    'okText' => '立即更新',
+                    'cancelText' => '取消更新',
+                    'content' => '<p>更新主要是更新数据库升级信息</p>',
+                ],
+                'style' => ['size' => 'small']
+            ];
+            $preRightButtonList[] = [
                 'name' => 'edit',
                 'title' => '修改',
                 'pageData' => [
@@ -263,7 +296,7 @@ class Ext extends BaseAdmin
                 if (!$value['id']) {
                     $value['rightButtonList'] = ['install'];
                 } else {
-                    $value['rightButtonList'] = ['edit', 'export'];
+                    $value['rightButtonList'] = ['upgrade', 'edit', 'export'];
                 }
             }
 
