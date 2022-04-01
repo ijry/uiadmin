@@ -74,23 +74,28 @@ class Ext extends BaseAdmin
                     mkdir($destination2, 0755, true);
                 }
                 $source = $dir . '/src/database/migrations/';
-                $handle = dir($source);
-                while($entry=$handle->read()) {   
-                    if(($entry!=".")&&($entry!="..")){   
-                        if(is_file($source.$entry)){
-                            copy($source.$entry, $destination.$entry);
+                if (is_dir($source)) {
+                    $handle = dir($source);
+                    while($entry=$handle->read()) {   
+                        if(($entry!=".")&&($entry!="..")){   
+                            if(is_file($source.$entry)){
+                                copy($source.$entry, $destination.$entry);
+                            }
                         }
                     }
                 }
                 $source = $dir . '/src/database/seeds/';
-                $handle = dir($source);
-                while($entry=$handle->read()) {   
-                    if(($entry!=".")&&($entry!="..")){   
-                        if(is_file($source.$entry)){
-                            copy($source.$entry, $destination2.$entry);
+                if (is_dir($source)) {
+                    $handle = dir($source);
+                    while($entry=$handle->read()) {   
+                        if(($entry!=".")&&($entry!="..")){   
+                            if(is_file($source.$entry)){
+                                copy($source.$entry, $destination2.$entry);
+                            }
                         }
                     }
                 }
+
                 // 执行命令
                 \think\facade\Console::call('migrate:run', []);
                 \think\facade\Console::call('seed:run', []);
