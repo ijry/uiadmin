@@ -44,5 +44,27 @@ class XyAuthUser extends Migrator
 			->addColumn('delete_time', 'integer', ['limit' => MysqlAdapter::INT_REGULAR,'null' => false,'default' => 0,'signed' => true,'comment' => '删除时间',])
 			->addIndex(['username'], ['unique' => true,'name' => 'username'])
             ->create();
+        
+        // 数据
+        $data = array(
+            array(
+                "id" => 1,
+                "user_key" => "uiadmin",
+                "nickname" => "admin",
+                "avatar" => "",
+                "username" => "admin",
+                "password" => user_pwd_md5('uiadmin', 'uiadmin'),
+                "roles" => "super_admin",
+                "last_login_ip" => 0,
+                "last_login_time" => date('Y-m-d H:i:s'),
+                "create_time" => date('Y-m-d H:i:s'),
+                "update_time" => date('Y-m-d H:i:s'),
+                "status" => 1
+            )
+        );
+
+        $posts = $this->table('xy_auth_user');
+        $posts->insert($data)
+                ->save();
     }
 }
