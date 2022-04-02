@@ -12,9 +12,6 @@
 
 namespace uiadmin\auth\admin;
 
-use think\facade\Db;
-use think\Validate;
-use think\facade\Request;
 use uiadmin\core\admin\BaseAdmin;
 use uiadmin\core\util\Tree;
 use uiadmin\auth\model\Role as RoleModel;

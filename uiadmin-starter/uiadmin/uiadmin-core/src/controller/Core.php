@@ -11,7 +11,6 @@
 
 namespace uiadmin\core\controller;
 
-use think\Request;
 use think\facade\View;
 
 /**

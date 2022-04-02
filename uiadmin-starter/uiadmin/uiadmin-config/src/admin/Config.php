@@ -12,11 +12,7 @@
 
 namespace uiadmin\config\admin;
 
-use think\facade\Db;
-use think\Validate;
-use think\facade\Request;
 use uiadmin\core\admin\BaseAdmin;
-use uiadmin\core\util\Tree;
 use uiadmin\config\model\Config as ConfigModel;
 
 /**

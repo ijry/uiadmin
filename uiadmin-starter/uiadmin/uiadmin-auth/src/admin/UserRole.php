@@ -13,13 +13,8 @@
 */
 namespace uiadmin\auth\admin;
 
-use think\facade\Db;
-use think\Validate;
-use think\facade\Request;
 use uiadmin\core\admin\BaseAdmin;
 use uiadmin\auth\model\User as UserModel;
-use uiadmin\auth\model\Menu as MenuModel;
-use uiadmin\auth\model\Role as RoleModel;
 
 /**
  * 用户角色

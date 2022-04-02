@@ -11,8 +11,6 @@
 
 namespace uiadmin\core\controller;
 
-use think\Request;
-
 /**
  * 用户控制器
  *

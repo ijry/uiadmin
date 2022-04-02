@@ -11,7 +11,6 @@
 
 namespace uiadmin\core\admin;
 
-use think\Request;
 use uiadmin\core\admin\BaseAdmin;
 
 /**

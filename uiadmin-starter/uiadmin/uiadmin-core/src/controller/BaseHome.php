@@ -12,7 +12,6 @@
 namespace uiadmin\core\controller;
 
 use uiadmin\core\BaseController;
-use think\Request;
 
 /**
  * 基础控制器

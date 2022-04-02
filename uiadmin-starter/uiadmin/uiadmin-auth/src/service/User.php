@@ -11,8 +11,6 @@
 
 namespace uiadmin\auth\service;
 
-use think\Request;
-use think\facade\Db;
 use uiadmin\auth\model\User as UserModel;
 
 /**

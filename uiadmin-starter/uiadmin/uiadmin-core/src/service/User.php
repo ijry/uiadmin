@@ -11,8 +11,6 @@
 
 namespace uiadmin\core\service;
 
-use think\Request;
-
 /**
  * 用户服务
  *
