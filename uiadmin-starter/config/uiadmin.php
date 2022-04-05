@@ -15,6 +15,20 @@ return [
         'apiPrefix' => '/api',        // api接口通用前缀
     ],
 
+    'alisms' => [
+        'accessKeyId' => '',
+        'accessKeySecret' => ''
+    ],
+
+    'alipay' => [
+        'appid' => '',
+        'privateKey' => '',
+        'publicKey' => '',
+        'aliPublicKey' => '',
+        'isSandbox' => 0,
+        'rate' => 0
+    ],
+
     'user' => [
         'lists' => [
             [

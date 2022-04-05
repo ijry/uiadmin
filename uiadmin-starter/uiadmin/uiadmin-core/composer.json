@@ -32,11 +32,6 @@
             "config":{
                 "uiadmin": "src/config.php"
             }
-        },
-        "laravel": {
-            "providers": [
-                "uiadmin\\core\\LrvService"
-            ]
         }
     }
 }
