@@ -351,50 +351,63 @@ class Ext extends BaseAdmin
             // $tree      = new Tree();
             // $listData['dataList'] = $tree->list2tree($listData['dataList'], 'name', 'pname', 'children', 0, false);
         } else if ($type == 'server') {
-            // todo从服务器获取扩展列表
-            $dataList = [
-                [
-                    'id' => '',
-                    'name' => '插件市场',
-                    'title' => '稍后推出',
-                    'description' => '',
-                    'developer' => '',
-                    'version' => '',
-                    'isExist' => 0,
-                ]
-            ];
+            // 从服务器获取扩展列表
+            $res = file_get_contents('https://uiadmin.jiangruyi.com/api/v1/ext/addon/lists');
+            if ($res) {
+                $res = json_decode($res, true);
+                $dataList = $res['data']['dataList'];
+            } else {
+                // 返回数据
+                return $this->return(
+                    [
+                        'code' => 0, 'msg' => '连接插件市场出错', 'data' => []
+                    ]
+                );
+            }
 
             // 构造动态页面数据
             $xyBuilderList = new \uiadmin\core\util\xybuilder\XyBuilderList();
             $listData = $xyBuilderList->init()
                 // ->addTopButton('login', '登录插件市场', ['api' => '/v1/admin/ext/server/login'])
+                // ->addRightButton('down', '下载', [
+                //     'pageData' => [
+                //         'api' => '/v1/admin/ext/server/down',
+                //         'title' => '确认要下载该扩展吗？',
+                //         'modalType' => 'confirm',
+                //         'formMethod' => 'post',
+                //         'width' => '600',
+                //         'noRefresh' => true,
+                //         'okText' => '确认导出',
+                //         'cancelText' => '取消操作',
+                //         'content' => '<p>下载后点击安装</p>',
+                //     ],
+                //     'condition' => [
+                //         ['isExist', '=', '0']
+                //     ]
+                // ])
                 ->addRightButton('down', '下载', [
-                    'pageData' => [
-                        'api' => '/v1/admin/ext/server/down',
-                        'title' => '确认要下载该扩展吗？',
-                        'modalType' => 'confirm',
-                        'formMethod' => 'post',
-                        'width' => '600',
-                        'noRefresh' => true,
-                        'okText' => '确认导出',
-                        'cancelText' => '取消操作',
-                        'content' => '<p>下载后点击安装</p>',
-                    ],
+                    'url' => 'https://uiadmin.jiangruyi.com/ext',
+                    'modalType' => 'url',
                     'condition' => [
-                        ['isExist', '=', '0']
+                        //['isExist', '=', '0']
                     ]
                 ])
                 ->addColumn('id' , 'ID', ['width' => '90px'])
+                ->addColumn('cover', '封面', [
+                    'type' => 'image',
+                    'width' => '150px'
+                ])
                 ->addColumn('name', '名称', ['width' => '150px'])
                 ->addColumn('title', '标题', ['width' => '180px'])
-                ->addColumn('description', '描述', ['width' => '180px'])
-                ->addColumn('developer', '开发者', ['width' => '80px'])
-                ->addColumn('version', '版本', ['width' => '80px'])
-                ->addColumn('isExist' , '状态', [
-                    'width' => '80px',
-                    'type' => 'tag',
-                    'options' => [ 1 => '已下载', 0 => '未下载']
-                ])
+                //->addColumn('description', '描述', ['width' => '180px'])
+                ->addColumn('userNickname', '开发者', ['width' => '80px'])
+                ->addColumn('lastVersion.version', '版本', ['width' => '80px'])
+                // ->addColumn('isExist' , '状态', [
+                //     'width' => '80px',
+                //     'type' => 'tag',
+                //     'options' => [ 1 => '已下载', 0 => '未下载']
+                // ])
+                ->addColumn('price', '价格', ['width' => '100px'])
                 ->addColumn('rightButtonList', '操作', [
                     'minWidth' => '260px',
                     'type' => 'template',
