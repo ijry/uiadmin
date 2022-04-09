@@ -9,7 +9,8 @@
         "guzzlehttp/guzzle": "^7.2",
         "laravel/framework": "^9.2",
         "laravel/sanctum": "^2.14.1",
-        "laravel/tinker": "^2.7"
+        "laravel/tinker": "^2.7",
+        "uiadmin/uiadmin-core": "dev-master"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9.1",
@@ -19,6 +20,19 @@
         "phpunit/phpunit": "^9.5.10",
         "spatie/laravel-ignition": "^1.0"
     },
+    "repositories": [{
+            "type": "path",
+            "url": "uiadmin/uiadmin-core/"
+        },
+        {
+            "type": "path",
+            "url": "uiadmin/uiadmin-auth/"
+        },
+        {
+            "type": "composer",
+            "url": "https://mirrors.aliyun.com/composer/"
+        }
+    ],
     "autoload": {
         "psr-4": {
             "App\\": "app/",

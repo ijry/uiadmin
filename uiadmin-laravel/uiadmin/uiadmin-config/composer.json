@@ -1,0 +1,32 @@
+{
+    "name": "uiadmin/uiadmin-config",
+    "description": "渐进式开源低代码零前端后台-配置持久化模块",
+    "type": "library",
+    "license": "Apache-2.0",
+    "authors": [
+        {
+            "name": "jry",
+            "email": "ijry@qq.com"
+        }
+    ],
+    "require": {
+        "topthink/framework": "^6.0.0",
+        "topthink/think-migration": "^3.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "uiadmin\\config\\": "src/"
+        },
+        "files":[
+        ] 
+    },
+    "extra": {
+        "think": {
+            "services": [
+                "uiadmin\\config\\Service"
+            ],
+            "config":{
+            }
+        }
+    }
+}

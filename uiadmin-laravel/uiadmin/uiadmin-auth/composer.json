@@ -1,0 +1,33 @@
+{
+    "name": "uiadmin/uiadmin-auth",
+    "description": "渐进式开源低代码零前端后台-用户与权限模块",
+    "type": "library",
+    "license": "Apache-2.0",
+    "authors": [
+        {
+            "name": "jry",
+            "email": "ijry@qq.com"
+        }
+    ],
+    "require": {
+        "topthink/framework": "^6.0.0",
+        "topthink/think-migration": "^3.0",
+        "casbin/think-authz": "^1.5.3"
+    },
+    "autoload": {
+        "psr-4": {
+            "uiadmin\\auth\\": "src/"
+        },
+        "files":[
+        ] 
+    },
+    "extra": {
+        "think": {
+            "services": [
+                "uiadmin\\auth\\Service"
+            ],
+            "config":{
+            }
+        }
+    }
+}
