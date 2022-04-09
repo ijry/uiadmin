@@ -68,7 +68,11 @@ class Index extends BaseAdmin
     {
         // 系统信心
         $server_software = explode(' ', $_SERVER['SERVER_SOFTWARE']);
-        $mysql_info = \think\facade\Db::query('SELECT VERSION() as mysql_version');
+        try {
+            $mysql_info = \think\facade\Db::query('SELECT VERSION() as mysql_version');
+        } catch (\Exception $e) {
+            $mysql_info = [['mysql_version' => 'none']];
+        }
 
         // 首页自定义
         $dataList = [
@@ -134,13 +138,13 @@ class Index extends BaseAdmin
                     // ],
                     [
                         'type'  => 'text',
-                        'title' => '后台框架',
-                        'value' => "UiAdmin" . ' (v' . get_config('version') . ')'
+                        'title' => '框架',
+                        'value' => "ThinkPHP6"
                     ],
                     [
                         'type'  => 'text',
-                        'title' => 'UI框架',
-                        'value' => 'XYAdmin (v' . get_config('xyadmin.version') . ')'
+                        'title' => '后台框架',
+                        'value' => "UiAdmin" . ' (v' . get_config('version') . ')'
                     ],
                     [
                         'type'  => 'text',
