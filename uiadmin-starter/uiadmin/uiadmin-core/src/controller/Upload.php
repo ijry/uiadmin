@@ -31,9 +31,6 @@ class Upload extends BaseHome
         $chunks = (int) input('post.chunks');
         // 合并后的文件名
         $childpath = 'uploads';
-        if ($this->cloudId > 0) {
-            $childpath = 'tenant_' . $this->cloudId;
-        }
         $filename = app()->getRootPath() . 'public/storage/' . $childpath . '/' . substr($context, 7); 
         for($i = 1; $i <= $chunks; ++$i){
             $file = app()->getRootPath() . 'public/storage/' . $childpath . '/' . $context. '/' . $i . '.tmp'; // 读取单个切块
@@ -71,9 +68,6 @@ class Upload extends BaseHome
             $file = request()->file('file');
             // 上传到本地服务器
             $childpath = 'uploads';
-            if ($this->cloudId > 0) {
-                $childpath = 'tenant_' . $this->cloudId;
-            }
             if (input('post.context')) {
                 $savename = \think\facade\Filesystem::disk('public')->putFileAs(
                     $childpath . '/' . input('post.context'),

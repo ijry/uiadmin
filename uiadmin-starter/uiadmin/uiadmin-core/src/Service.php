@@ -46,6 +46,7 @@ class Service extends \think\Service
             $route->get(config("uiadmin.site.apiPrefix") . '/v1/admin/core/index/index$', "uiadmin\\core\\admin\\Index@index");
             $route->get(config("uiadmin.site.apiPrefix") . '/v1/admin/core/menu/trees$', "uiadmin\\core\\admin\\Menu@trees");
             $route->get(config("uiadmin.site.apiPrefix") . '/v1/core/user/info$', "uiadmin\\core\\controller\\User@info");
+            $route->post(config("uiadmin.site.apiPrefix") . '/v1/core/upload/upload$', "uiadmin\\core\\controller\\Upload@upload");
             $route->delete(config("uiadmin.site.apiPrefix") . '/v1/core/user/logout', "uiadmin\\core\\controller\\User@logout");
         });
 
