@@ -50,6 +50,9 @@ class User extends BaseHome
      */
     public function logout()
     {
+        // 修复注销
+        session('Authorization', '');
+
         // 返回数据
         return json([
             'code' => 200,
