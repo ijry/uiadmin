@@ -2,6 +2,46 @@
 // 应用公共文件
 
 
+// 以下兼容TP写法
+function input($name) {
+    $name = explode('.', $name);
+    return Illuminate\Support\Facades\Request::input($name[1]);
+}
+function json($data) {
+    return response()->json($data);
+}
+/**
+ * 当前URL地址中的scheme参数
+ * @access public
+ * @return string
+ */
+function scheme(): string
+{
+    return isSsl() ? 'https' : 'http';
+}
+/**
+ * 当前是否ssl
+ * @access public
+ * @return bool
+ */
+function isSsl(): bool
+{
+    if (isset($_SERVER['HTTPS']) && ('1' == $_SERVER['HTTPS'] || 'on' == strtolower($_SERVER['HTTPS']))) {
+        return true;
+    } elseif (isset($_SERVER['REQUEST_SCHEME']) && 'https' == $_SERVER['REQUEST_SCHEME']) {
+        return true;
+    } elseif ('443' == $_SERVER['SERVER_PORT']) {
+        return true;
+    } elseif (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && 'https' == $_SERVER['HTTP_X_FORWARDED_PROTO']) {
+        return true;
+    }
+    // elseif ($this->httpsAgentName && $_SERVER($this->httpsAgentName)) {
+    //     return true;
+    // }
+
+    return false;
+}
+
 /**
  * 后去扩展模块的服务
  *

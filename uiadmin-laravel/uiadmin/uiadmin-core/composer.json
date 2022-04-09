@@ -23,7 +23,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "uiadmin\\core\\LrvService"
+                "uiadmin\\core\\LrvServiceProvider"
             ],
             "config":{
                 "uiadmin": "src/config.php"

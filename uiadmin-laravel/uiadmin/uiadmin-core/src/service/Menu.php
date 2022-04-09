@@ -27,7 +27,7 @@ class Menu
     public function getByUser($userRoles)
     {
         // todo根据用户角色获取菜单
-        $menuListJson = file_get_contents(config_path() . 'menu.json');
+        $menuListJson = file_get_contents(config_path() . '/menu.json');
         $menuList = json_decode($menuListJson, true);
         return $menuList['menu']; 
     }

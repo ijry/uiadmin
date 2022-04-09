@@ -88,7 +88,7 @@ class BaseController extends Controller
             if (input('get.token', '')) {
                 $token = input('get.token', '');
             } else {
-                $token = \think\facade\Request::header('Authorization');
+                $token = \Illuminate\Support\Facades\Request::header('Authorization');
                 if (!$token) {
                     $token = session('Authorization'); // 支持session
                     if (!$token) {
@@ -97,7 +97,7 @@ class BaseController extends Controller
                 }
             }
             $userService = new \uiadmin\core\service\User();
-            $ret = $userService->isLogin($token, ['pathinfo' => request()->pathinfo()]);
+            $ret = $userService->isLogin($token, ['pathinfo' => '']);
             return ['code' => 200, 'msg' => '成功', 'data' => $ret];
         } catch (\Exception $e) {
             return ['code' => $e->getCode(), 'msg' => $e->getMessage(), 'data' => ['redirect' => $redirect]];

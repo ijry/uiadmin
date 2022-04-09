@@ -11,6 +11,10 @@
 
 namespace uiadmin\core\controller;
 
+use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\View;
+use Illuminate\View\FileViewFinder;
+
 /**
  * 核心控制器
  *
@@ -18,10 +22,18 @@ namespace uiadmin\core\controller;
  */
 class Core extends BaseHome
 {
+    public function __construct()
+    {
+        // 方法一（该方法框架默认的分页模版会找不到）
+        // public_path为获取public文件夹的绝对路径
+        $path = [dirname(dirname(__FILE__))  . '/view'];
+        // View::setFinder设置视图获取路径
+        View::setFinder(new FileViewFinder(App::make('files'), $path));
+    }
+
     public function index()
     {
         // 返回数据
-        // View::config(['view_path' => __DIR__ . '/../view/core/']);
         return view('core.index', [
         ]);
     }

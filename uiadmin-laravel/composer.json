@@ -1,9 +1,9 @@
 {
-    "name": "laravel/laravel",
+    "name": "uiadmin/uiadmin-laravel",
     "type": "project",
-    "description": "The Laravel Framework.",
+    "description": "The Modern Admin Framework.",
     "keywords": ["framework", "laravel"],
-    "license": "MIT",
+    "license": "Apache2",
     "require": {
         "php": "^8.0.2",
         "guzzlehttp/guzzle": "^7.2",

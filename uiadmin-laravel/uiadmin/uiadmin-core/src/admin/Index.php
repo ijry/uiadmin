@@ -11,8 +11,9 @@
 
 namespace uiadmin\core\admin;
 
-use think\Request;
 use uiadmin\core\admin\BaseAdmin;
+use Illuminate\Support\Facades\Request;
+use Illuminate\Support\Facades\DB;
 
 /**
  * 默认控制器
@@ -31,17 +32,17 @@ class Index extends BaseAdmin
     public function api()
     {
         // 获取接口信息
-        $apiBase = request()->scheme() . '://' . $_SERVER['HTTP_HOST']  . request()->rootUrl() . config("uiadmin.site.apiPrefix");
+        $apiBase = scheme() . '://' . $_SERVER['HTTP_HOST']  . config("uiadmin.site.apiPrefix");
 
         // 返回
-        return json(['code' => 200, 'msg' => '成功', 'data' => [
+        return response()->json(['code' => 200, 'msg' => '成功', 'data' => [
             'lang' => 'php',
             'framework' => 'thinkphp6.0',
             'name' => "UiAdmin",
             'title' => config("uiadmin.site.title"),
             'stype' => '应用', // 菜单分组类型
             'version' => get_config("version"),
-            'domainRoot' => request()->scheme() . '://' . $_SERVER['HTTP_HOST'] . request()->rootUrl(), // 主要给远程组件和iframe用
+            'domainRoot' => scheme() . '://' . $_SERVER['HTTP_HOST'], // 主要给远程组件和iframe用
             'api' => [
                 'apiBase' => $apiBase,
                 'apiPrefix' => config("uiadmin.site.apiPrefix"),
@@ -69,7 +70,11 @@ class Index extends BaseAdmin
     {
         // 系统信心
         $server_software = explode(' ', $_SERVER['SERVER_SOFTWARE']);
-        $mysql_info = \think\facade\Db::query('SELECT VERSION() as mysql_version');
+        try {
+            $mysql_info = DB::select('SELECT VERSION() as mysql_version');
+        } catch (\Exception $e) {
+            $mysql_info = [['mysql_version' => 'none']];
+        }
 
         // 首页自定义
         $dataList = [
@@ -135,13 +140,13 @@ class Index extends BaseAdmin
                     // ],
                     [
                         'type'  => 'text',
-                        'title' => '后台框架',
-                        'value' => "UiAdmin" . ' (v' . get_config('version') . ')'
+                        'title' => '框架',
+                        'value' => "Laravel9"
                     ],
                     [
                         'type'  => 'text',
-                        'title' => 'UI框架',
-                        'value' => 'XYAdmin (v' . get_config('xyadmin.version') . ')'
+                        'title' => '后台框架',
+                        'value' => "UiAdmin" . ' (v' . get_config('version') . ')'
                     ],
                     [
                         'type'  => 'text',
@@ -180,7 +185,7 @@ class Index extends BaseAdmin
         ];
 
         // 返回数据
-        return json(['code' => 200, 'msg' => '成功', 'data' => [
+        return response()->json(['code' => 200, 'msg' => '成功', 'data' => [
             'dataList' => $dataList
         ]]);
     }
