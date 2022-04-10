@@ -13,9 +13,8 @@
 */
 namespace uiadmin\auth\admin;
 
-use think\facade\Db;
-use think\Validate;
-use think\facade\Request;
+
+use Illuminate\Support\Facades\Request;
 use uiadmin\core\admin\BaseAdmin;
 use uiadmin\auth\model\User as UserModel;
 use uiadmin\auth\model\Menu as MenuModel;
@@ -111,7 +110,7 @@ class Role extends BaseAdmin
      */
     public function add()
     {
-        if(request()->isPost()){
+        if(Request::isMethod('post')){
             // 数据验证
             $this->validateMake([
                 'pid'  => 'number',
@@ -144,17 +143,17 @@ class Role extends BaseAdmin
         } else {
             // 获取后台权限接口
             $dataList = MenuModel::where('menu_layer', '=', 'admin')
-                ->order('sortnum asc')
+                ->orderBy('sortnum')
                 ->get()->toArray();
             foreach ($dataList as $key => &$val) {
-                $val['adminAuth'] = '/' . $val['apiPrefix'] . '/admin' . $val['path'];
+                $val['adminAuth'] = '/' . $val['api_prefix'] . '/admin' . $val['path'];
             }
             $tree      = new Tree();
             $menuTree = $tree->list2tree($dataList, 'path', 'pmenu', 'children', 0, false);
 
             // 获取角色基于标题的树状列表
-            $roleList = RoleModel::order('sortnum asc')
-                ->select()->toArray();
+            $roleList = RoleModel::orderBy('sortnum')
+                ->select();
             $tree      = new Tree();
             $roleTree = $tree->array2tree($roleList, 'title', 'id', 'pid', 0, false);
             $roleTreeSelect = [];
@@ -228,8 +227,8 @@ class Role extends BaseAdmin
 
         // 获取角色信息
         $info = RoleModel::where('id', $id)
-            ->firsrt();
-        if(request()->isPut()){
+            ->first();
+        if(Request::isMethod('put')){
             if ($id == 1) {
                 return $this->return(['code' => 0,'msg' => '超级管理员角色不允许修改','data' => []]);
             }
@@ -271,11 +270,11 @@ class Role extends BaseAdmin
         } else {
             // 获取后台权限接口
             $dataList = MenuModel::where('menu_layer', '=', 'admin')
-                ->order('sortnum asc')
+                ->orderBy('sortnum')
                 ->get()->toArray();
             $all = [];
             foreach ($dataList as $key => &$val) {
-                $val['adminAuth'] = '/' . $val['apiPrefix'] . '/admin' . $val['path'];
+                $val['adminAuth'] = '/' . $val['api_prefix'] . '/admin' . $val['path'];
                 // 超级管理员拥有所有权限
                 if ($id == 1) {
                     $all[] = $val['adminAuth'];
@@ -288,7 +287,7 @@ class Role extends BaseAdmin
             $menuTree = $tree->list2tree($dataList, 'path', 'pmenu', 'children', 0, false);
 
             // 获取角色基于标题的树状列表
-            $roleList = RoleModel::order('sortnum asc')
+            $roleList = RoleModel::orderBy('sortnum')
                 ->get()->toArray();
             $tree      = new Tree();
             $roleTree = $tree->array2tree($roleList, 'title', 'id', 'pid', 0, false);

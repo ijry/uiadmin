@@ -13,9 +13,8 @@
 */
 namespace uiadmin\auth\admin;
 
-use think\facade\Db;
-use think\Validate;
-use think\facade\Request;
+
+use Illuminate\Support\Facades\Request;
 use uiadmin\core\admin\BaseAdmin;
 use uiadmin\auth\model\User as UserModel;
 use uiadmin\auth\model\Menu as MenuModel;
@@ -37,7 +36,7 @@ class UserRole extends BaseAdmin
     public function lists($name)
     {
         // 成员列表
-        $dataList = UserModel::where('', 'EXP', "FIND_IN_SET('$name', roles)")
+        $dataList = UserModel::whereRaw('FIND_IN_SET(?,roles)',[$name])
             ->get()->toArray();
         foreach ($dataList as $key => &$val) {
             $val['roleName'] = $name;
@@ -93,7 +92,7 @@ class UserRole extends BaseAdmin
      */
     public function add($name)
     {
-        if(request()->isPost()){
+        if(Request::isMethod('post')){
             // 数据验证
             $this->validateMake([
                 'uid'  => 'number',

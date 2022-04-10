@@ -12,9 +12,7 @@
 
 namespace uiadmin\config\admin;
 
-use think\facade\Db;
-use think\Validate;
-use think\facade\Request;
+use Illuminate\Support\Facades\Request;
 use uiadmin\core\admin\BaseAdmin;
 use uiadmin\core\util\Tree;
 use uiadmin\config\model\Config as ConfigModel;
@@ -34,7 +32,7 @@ class Config extends BaseAdmin
      */
     public function saveBatch()
     {
-        if (request()->isPut()) {
+        if (Request::isMethod('put')) {
             $data = input('post.');
 
             // 数据构造
@@ -67,10 +65,10 @@ class Config extends BaseAdmin
             }
         } else {
             // 获取所有配置
-            $configList = ConfigModel::order('sortnum asc')
+            $configList = ConfigModel::orderBy('sortnum')
                 // ->where('module', '=', $module)
                 ->where('status', '=', 1)
-                ->select()->toArray();
+                ->get()->toArray();
             foreach ($configList as $key => &$value) {
                 if (in_array($value['type'], ['images', 'files'])) {
                     $value['value'] = json_decode($value['value'], true);
@@ -131,8 +129,8 @@ class Config extends BaseAdmin
         $module = input('get.module');
         $dataList = ConfigModel::where('profile', '=', 'prod')
             // ->where('module', '=', $module)
-            ->page($page, $limit)
-            ->orderBt('id')
+            //->page($page, $limit)
+            ->orderBy('id')
             ->get();
         $total = ConfigModel::where('profile', '=', 'prod')
             ->count();
@@ -199,7 +197,7 @@ class Config extends BaseAdmin
      */
     public function add()
     {
-        if (request()->isPost()) {
+        if (Request::isMethod('post')) {
             // 数据验证
             $this->validateMake([
                 'name' => 'require',
@@ -236,7 +234,7 @@ class Config extends BaseAdmin
         } else {
             // 获取模块列表
             // $moduleList = coreModuleModel::where('status', 1)
-            //     ->order('sortnum asc')
+            //     ->orderBy('sortnum')
             //     ->select()->toArray();
             // $moduleListSelect = [];
             // foreach ($moduleList as $key => $val) {
@@ -351,7 +349,7 @@ class Config extends BaseAdmin
         // 信息
         $info = ConfigModel::where('id', $id)
             ->first();
-        if (request()->isPut()) {
+        if (Request::isMethod('put')) {
             $this->validateMake([
                 'name' => 'require',
                 'title' => 'require',
@@ -388,7 +386,7 @@ class Config extends BaseAdmin
         } else {
             // 获取模块列表
             // $moduleList = coreModuleModel::where('status', 1)
-            //     ->order('sortnum asc')
+            //     ->orderBy('sortnum')
             //     ->select()->toArray();
             // $moduleListSelect = [];
             // foreach ($moduleList as $key => $val) {

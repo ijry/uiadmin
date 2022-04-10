@@ -12,9 +12,8 @@
 
 namespace uiadmin\auth\admin;
 
-use think\facade\Db;
-use think\Validate;
-use think\facade\Request;
+
+use Illuminate\Support\Facades\Request;
 use uiadmin\core\admin\BaseAdmin;
 use uiadmin\core\util\Tree;
 use uiadmin\auth\model\Role as RoleModel;
@@ -39,13 +38,13 @@ class User extends BaseAdmin
         $limit = input('get.limit/d') ?: 10;
         $where = [];
         $keyword = input('get.keyword', '');
-        $where[] = ['nickname|username|id', 'like', '%' . $keyword . '%'];
+        //$where[] = ['nickname|username|id', 'like', '%' . $keyword . '%'];
 
         // 用户列表
         $dataList = UserModel::where($where)
-            ->page($page, $limit)
-            ->order('id desc')
-            ->select();
+            //->paginate($page, $limit)
+            ->orderByDesc('id')
+            ->get();
         $total = UserModel::where($where)
             ->count();
         // foreach ($dataList as $key => &$value) {
@@ -77,7 +76,9 @@ class User extends BaseAdmin
         $dataList = $tree->list2tree($dataList->toArray());
 
         // 角色
-        $roleCols = RoleModel::where('status', 1)->get('id,title', 'name');
+        $roleCols = RoleModel::where('status', 1)
+            ->select('id', 'name as value', 'title')
+            ->get();
 
         // 构造动态页面数据
         $xyBuilderList = new \uiadmin\core\util\xybuilder\XyBuilderList();
@@ -182,7 +183,9 @@ class User extends BaseAdmin
         $tabList = [];
         // $hasUserInfoHook = $this->core_config
         //     ->where('name', '=', 'hookList')
+
         //     ->where('', 'EXP', "FIND_IN_SET('userInfoApi', value)")
+        //     ->whereRaw('FIND_IN_SET(?,userInfoApi)',[$value])
         //     ->field('id,module,name,title,value')
         //     ->select();
         // if ($hasUserInfoHook) {
@@ -236,7 +239,7 @@ class User extends BaseAdmin
      */
     public function add()
     {
-        if (request()->isPost()) {
+        if (Request::isMethod('post')) {
             // 数据验证
             $this->validateMake([
                 'nickname'  => 'require',
@@ -271,7 +274,7 @@ class User extends BaseAdmin
             }
         } else {
             // 获取角色基于标题的树状列表
-            $roleList = RoleModel::order('sortnum asc')
+            $roleList = RoleModel::orderBy('sortnum')
                 ->get();
             $tree      = new Tree();
             $roleTree = $tree->array2tree($roleList, 'title', 'id', 'pid', 0, false);
@@ -337,7 +340,7 @@ class User extends BaseAdmin
      */
     public function edit($id)
     {
-        if (request()->isPut()) {
+        if (Request::isMethod('put')) {
             // 数据验证
             $this->validateMake([
                     'nickname'  => 'require',
@@ -376,7 +379,7 @@ class User extends BaseAdmin
                 ->first();
 
             // 获取角色基于标题的树状列表
-            $roleList = RoleModel::order('sortnum asc')
+            $roleList = RoleModel::orderBy('sortnum')
                 ->get();
             $tree      = new Tree();
             $roleTree = $tree->array2tree($roleList, 'title', 'id', 'pid', 0, false);

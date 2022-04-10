@@ -93,7 +93,7 @@ class XyBuilderForm {
                 'labelPosition' => 'left',
                 'labelWidth' => '100px',
                 'defaultUploadDriver' => config('uiadmin.upload.defaultUploadDriver'),
-                'defaultUploadAction' => request()->scheme() . '://' . $_SERVER['HTTP_HOST'] . '/api/v1/core/upload/upload',
+                'defaultUploadAction' => scheme() . '://' . $_SERVER['HTTP_HOST'] . '/api/v1/core/upload/upload',
                 'defaultUploadMaxSize' => 512
             ]
         ];

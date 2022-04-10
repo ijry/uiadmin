@@ -4,8 +4,13 @@
 
 // 以下兼容TP写法
 function input($name) {
-    $name = explode('.', $name);
-    return Illuminate\Support\Facades\Request::input($name[1]);
+    
+    if (\uiadmin\core\util\Str::contains('.', $name)) {
+        $name = explode('.', $name);
+        return Illuminate\Support\Facades\Request::input($name[1]);
+    } else {
+        return Illuminate\Support\Facades\Request::input($name);
+    }
 }
 function json($data) {
     return response()->json($data);

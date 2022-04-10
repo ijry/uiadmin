@@ -14,9 +14,7 @@
 
 namespace uiadmin\ext\admin;
 
-use think\facade\Db;
-use think\Validate;
-use think\facade\Request;
+use Illuminate\Support\Facades\Request;
 use uiadmin\core\admin\BaseAdmin;
 use uiadmin\core\util\Tree;
 use uiadmin\ext\model\Ext as ExtModel;
@@ -42,9 +40,9 @@ class Ext extends BaseAdmin
         }
         $name = input('get.name');
         // 启动事务
-        Db::startTrans();
+        // Db::startTrans();
         try {
-            $dir = root_path() . 'extention/' . $name;
+            $dir = base_path() . 'extention/' . $name;
             if (is_dir($dir)) {
                 if (!input('get.upgrade')) {
                     $moduleInsall = file_get_contents($dir . '/composer.json');
@@ -65,8 +63,8 @@ class Ext extends BaseAdmin
                 }
 
                 // 发布数据库迁移文件
-                $destination = root_path() . 'database/migrations/';
-                $destination2 = root_path() . 'database/seeds/';
+                $destination = base_path() . 'database/migrations/';
+                $destination2 = base_path() . 'database/seeds/';
                 if(!is_dir($destination)){
                     mkdir($destination, 0755, true);
                 }
@@ -122,7 +120,7 @@ class Ext extends BaseAdmin
             } else {
                 throw new \Exception("不存在", 0);
             }
-            Db::commit(); // 提交事务
+            //Db::commit(); // 提交事务
             if (input('get.upgrade')) {
                 return $this->return([
                     'code' => 200, 'msg' => '恭喜您，更新成功！', 'data' => [
@@ -137,7 +135,7 @@ class Ext extends BaseAdmin
                 ]);
             }
         } catch (\Exception $e) {
-            Db::rollback(); // 回滚事务
+            //Db::rollback(); // 回滚事务
             return $this->return([
                 'code' => 0, 'msg' => $e->getMessage(), 'data' => []
             ]);
@@ -154,14 +152,14 @@ class Ext extends BaseAdmin
         $id = input('get.id');
         $info = ExtModel::where('id', $id)
             ->first();
-        $dir = root_path() . 'extention/' . $info['name'];
+        $dir = base_path() . 'extention/' . $info['name'];
         if (is_dir($dir)) {
             // 打包下载
             $archive = new \uiadmin\core\util\Zip();
             $archive->ZipAndDownload($dir, $info['name']);
         }
 
-        if (request()->isPost()) {
+        if (Request::isMethod('post')) {
             // 导出模块数据表
             // $mysqlConn = mysqli_connect(
             //     config('database.connections.mysql.hostname'),
@@ -198,14 +196,14 @@ class Ext extends BaseAdmin
         // 获取本地未安装模块
         // 获取已经安装的模块名称
         $installed_names = ExtModel::get('name');
-        $dirList = \uiadmin\core\util\File::get_dirs(root_path() . '/extention')['dir'];
+        $dirList = \uiadmin\core\util\File::get_dirs(base_path() . '/extention')['dir'];
         foreach ($dirList as $key => $value) {
             if ($value == '.' || $value == '..') {
                 continue;
             }
             if (!in_array($value, $installed_names)) {
-                if (is_file(root_path() . 'extention/' . $value . '/composer.json')) {
-                    $moduleInsall = file_get_contents(root_path() . 'extention/' . $value . '/composer.json');
+                if (is_file(base_path() . 'extention/' . $value . '/composer.json')) {
+                    $moduleInsall = file_get_contents(base_path() . 'extention/' . $value . '/composer.json');
                     $moduleInsall = json_decode($moduleInsall, true);
                     $names = explode('/', $moduleInsall['name']);
                     $module = [
@@ -470,7 +468,7 @@ class Ext extends BaseAdmin
      */
     public function add()
     {
-        if (request()->isPost()) {
+        if (Request::isMethod('post')) {
             // 数据验证
             $this->validateMake([
                 'name'  => 'require',
@@ -502,7 +500,7 @@ class Ext extends BaseAdmin
             if ($exist > 0) {
                 return $this->return(['code' => 0, 'msg' => '模块名称已经存在请换一个', 'data' => []]);
             }
-            if (is_dir(root_path() . 'extention/' . $dataDb['name'])) {
+            if (is_dir(base_path() . 'extention/' . $dataDb['name'])) {
                 return $this->return(['code' => 0, 'msg' => '模块名称已经存在请换一个', 'data' => []]);
             }
 
@@ -528,7 +526,7 @@ class Ext extends BaseAdmin
                         $moduleNameWithSubdir . '/src/view'
                     ]
                 ];
-                $moduleBuilder = new \uiadmin\ext\util\Build(root_path() . 'extention/');
+                $moduleBuilder = new \uiadmin\ext\util\Build(base_path() . 'extention/');
                 $moduleBuilder->run($buildData);
 
                 $names = explode('-', $dataDb['name']);
@@ -570,20 +568,20 @@ class Ext extends BaseAdmin
                     ]
                 ];
                 $composerContent = json_encode($composerContentArray, JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES|JSON_PRETTY_PRINT);
-                file_put_contents(root_path() . 'extention/' . $moduleNameWithSubdir . '/composer.json', $composerContent);
+                file_put_contents(base_path() . 'extention/' . $moduleNameWithSubdir . '/composer.json', $composerContent);
 
                 // 公共方法
                 $commonContent = <<<EOF
                 <?php 
 EOF;
-                file_put_contents(root_path() . 'extention/' . $moduleNameWithSubdir . '/src/function.php', $commonContent);
+                file_put_contents(base_path() . 'extention/' . $moduleNameWithSubdir . '/src/function.php', $commonContent);
 
                 // readme
                 $readmeContent = <<<EOF
 ## 说明
 {$dataDb['description']}                
 EOF;
-                file_put_contents(root_path() . 'extention/' . $moduleNameWithSubdir . '/README.md', $readmeContent);
+                file_put_contents(base_path() . 'extention/' . $moduleNameWithSubdir . '/README.md', $readmeContent);
 
                 // Service
                 $serviceContent = <<<EOF
@@ -625,7 +623,7 @@ class LrvServiceProvider extends ServiceProvider
     }
 }
 EOF;
-                file_put_contents(root_path() . 'extention/' . $moduleNameWithSubdir . '/src/LrvServiceProvider.php', $serviceContent);
+                file_put_contents(base_path() . 'extention/' . $moduleNameWithSubdir . '/src/LrvServiceProvider.php', $serviceContent);
 
 
                 // 存储数据
@@ -639,7 +637,7 @@ EOF;
             }
         } else {
             // 基于标题的树状列表
-            // $moduleList = ExtModel::order('sortnum asc')
+            // $moduleList = ExtModel::orderBy('sortnum')
             //     ->select()->toArray();
             // $tree      = new Tree();
             // $module_tree = $tree->array2tree($moduleList, 'title', 'name', 'pname', 0, false);
@@ -726,7 +724,7 @@ EOF;
         // 模块信息
         $info = ExtModel::where('id', $id)
             ->first();
-        if (request()->isPut()) {
+        if (Request::isMethod('put')) {
             // 数据验证
             $this->validateMake([
                 'name'  => 'require',
@@ -772,7 +770,7 @@ EOF;
             }
         } else {
             // 基于标题的树状列表
-            // $moduleList = ExtModel::order('sortnum asc')
+            // $moduleList = ExtModel::orderBy('sortnum')
             //     ->select()->toArray();
             // $tree      = new Tree();
             // $module_tree = $tree->array2tree($moduleList, 'title', 'name', 'pname', 0, false);

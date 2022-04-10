@@ -51,10 +51,20 @@ class LrvServiceProvider extends ServiceProvider
                 if (\uiadmin\core\util\Str::startsWith($val['path'], '/')) {
                     $path = explode('/', $val['path']);
                     if (isset($path[3])) {
+                            $apiSuffix = explode('/:', $val->api_suffix);
+                            $apiSuffixReal = '';
+                            unset($apiSuffix[0]);
+                            foreach ($apiSuffix as $key => $value) {
+                                $apiSuffixReal = $apiSuffixReal . '{' . $value . '}';
+                            }
+                            if (count($apiSuffix) > 0) {
+                                $apiSuffixReal = '/' . $apiSuffixReal;
+                            }
+                            //dump($apiSuffixReal);
                             // 前后端分离路由
                             Route::match(
                                 explode('|', $val['api_method']),
-                                config("uiadmin.site.apiPrefix") . '/' . $val->api_prefix . '/admin' . $val['path'] . $val->api_suffix,
+                                config("uiadmin.site.apiPrefix") . '/' . $val->api_prefix . '/admin' . $val['path'] . $apiSuffixReal,
                                 $val['namespace'] . '\\' . $path[1] . '\admin\\' . ucfirst(\uiadmin\core\util\Str::camel($path[2])) . '@' . $path[3]
                             )->middleware(\uiadmin\core\middleware\ResponseTransFormMiddleware::class);
                     }

@@ -11,8 +11,8 @@
 
 namespace uiadmin\auth\admin;
 
-use think\Request;
-use think\facade\Db;
+
+use Illuminate\Support\Facades\Request;
 use uiadmin\core\admin\BaseAdmin;
 use uiadmin\auth\model\Menu as MenuModel;
 use uiadmin\auth\model\Role as RoleModel;
@@ -49,7 +49,8 @@ class Menu extends BaseAdmin
 
         // 获取列表
         $dataList = MenuModel::where('menu_layer', '=', 'admin')
-            ->order('sortnum asc,id asc')
+            ->orderBy('sortnum')
+            ->orderBy('id')
             ->get()->toArray();
         // 下面的处理存粹是为了后台界面显示的，API使用本接口是以下数据是没用的。
         foreach ($dataList as $key => &$val) {
@@ -61,11 +62,11 @@ class Menu extends BaseAdmin
                 unset($dataList[$key]);
                 continue;
             }
-            if ($val['routeType'] == 'iframe') {
+            if ($val['route_type'] == 'iframe') {
                 $val['adminApi'] = $val['apiParams'];
             } else {
-                if ($val['menuType'] > -1 && $val['menuType'] < 4) {
-                    $val['adminApi'] = '/' . $val['apiPrefix'] . '/admin' . $val['path'] . $val['apiSuffix'];
+                if ($val['menu_type'] > -1 && $val['menu_type'] < 4) {
+                    $val['adminApi'] = '/' . $val['api_prefix'] . '/admin' . $val['path'] . $val['api_suffix'];
                 }
             }
         }
@@ -135,7 +136,7 @@ class Menu extends BaseAdmin
      */
     public function add()
     {
-        if(request()->isPost()){
+        if(Request::isMethod('post')){
             // 数据验证
             $this->validateMake([
                 'namespace'  => 'require',
@@ -176,7 +177,7 @@ class Menu extends BaseAdmin
             // 获取模块列表
             // $moduleList = $this->core_module
             //     ->where('status', 1)
-            //     ->order('sortnum asc')
+            //     ->orderBy('sortnum')
             //     ->select()->toArray();
             // $moduleListSelect = [];
             // foreach ($moduleList as $key => $val) {
@@ -186,8 +187,8 @@ class Menu extends BaseAdmin
 
             // 获取菜单基于标题的树状列表
             $menuList = MenuModel::where('menu_layer', '=', 'admin')
-                ->order('sortnum asc')
-                ->select()->toArray();
+                ->orderBy('sortnum')
+                ->get()->toArray();
             $tree      = new \uiadmin\core\util\Tree();
             $menuTree = $tree->array2tree($menuList, 'title', 'path', 'pmenu', 0, false);
             $menuTreeSelect = [];
@@ -337,8 +338,8 @@ class Menu extends BaseAdmin
         
         // 信息
         $info = MenuModel::where('id', $id)
-            ->find();
-        if(request()->isPut()){
+            ->first();
+        if(Request::isMethod('put')){
             // 数据验证
             $this->validateMake([
                 'module'  => 'require',
@@ -388,7 +389,7 @@ class Menu extends BaseAdmin
             // 获取模块列表
             // $moduleList = $this->core_module
             //     ->where('status', 1)
-            //     ->order('sortnum asc')
+            //     ->orderBy('sortnum')
             //     ->select()->toArray();
             // $moduleListSelect = [];
             // foreach ($moduleList as $key => $val) {
@@ -398,8 +399,8 @@ class Menu extends BaseAdmin
 
             // 获取菜单基于标题的树状列表
             $menuList = MenuModel::where('menu_layer', '=', 'admin')
-                ->order('sortnum asc')
-                ->select()->toArray();
+                ->orderBy('sortnum')
+                ->get()->toArray();
             $tree      = new \uiadmin\core\util\Tree();
             $menuTree = $tree->array2tree($menuList, 'title', 'path', 'pmenu', 0, false);
             $menuTreeSelect = [];
