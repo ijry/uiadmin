@@ -77,7 +77,7 @@ class User extends BaseAdmin
         $dataList = $tree->list2tree($dataList->toArray());
 
         // 角色
-        $roleCols = RoleModel::where('status', 1)->column('id,title', 'name');
+        $roleCols = RoleModel::where('status', 1)->get('id,title', 'name');
 
         // 构造动态页面数据
         $xyBuilderList = new \uiadmin\core\util\xybuilder\XyBuilderList();
@@ -158,7 +158,7 @@ class User extends BaseAdmin
     {
         // 用户信息
         $info = UserModel::where('id', $id)
-            ->find();
+            ->first();
 
         // 构造动态页面数据
         $xyBuilderInfo = new \uiadmin\core\util\xybuilder\XyBuilderInfo();
@@ -256,14 +256,14 @@ class User extends BaseAdmin
             if (count($dataDb) <= 0 ) {
                 return json(['code' => 0, 'msg' => '无数据提交', 'data' => []]);
             }
-            $dataDb['userKey'] = \uniadmin\core\util\Str::random(64); //秘钥
+            $dataDb['userKey'] = \uiadmin\core\util\Str::random(64); //秘钥
             $dataDb['password'] = user_md5($dataDb['password'], $dataDb['userKey']); // 密码不能明文需要加密存储
             $dataDb['avatar'] = isset($dataDb['avatar']) ? $dataDb['avatar'] : '';
             $dataDb['status']   = 1;
             $dataDb['createTime'] = time();
 
             // 存储数据
-            $ret = UserModel::save($dataDb);
+            $ret = UserModel::create($dataDb);
             if ($ret) {
                 return json(['code' => 200, 'msg' => '添加用户成功', 'data' => []]);
             } else {
@@ -272,7 +272,7 @@ class User extends BaseAdmin
         } else {
             // 获取角色基于标题的树状列表
             $roleList = RoleModel::order('sortnum asc')
-                ->select();
+                ->get();
             $tree      = new Tree();
             $roleTree = $tree->array2tree($roleList, 'title', 'id', 'pid', 0, false);
             $roleTreeSelect = [
@@ -373,11 +373,11 @@ class User extends BaseAdmin
         } else {
             // 用户信息
             $info = UserModel::where('id', $id)
-                ->find();
+                ->first();
 
             // 获取角色基于标题的树状列表
             $roleList = RoleModel::order('sortnum asc')
-                ->select();
+                ->get();
             $tree      = new Tree();
             $roleTree = $tree->array2tree($roleList, 'title', 'id', 'pid', 0, false);
             $roleTreeSelect = [

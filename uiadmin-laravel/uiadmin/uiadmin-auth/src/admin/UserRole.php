@@ -38,7 +38,7 @@ class UserRole extends BaseAdmin
     {
         // 成员列表
         $dataList = UserModel::where('', 'EXP', "FIND_IN_SET('$name', roles)")
-            ->select()->toArray();
+            ->get()->toArray();
         foreach ($dataList as $key => &$val) {
             $val['roleName'] = $name;
         }
@@ -107,7 +107,7 @@ class UserRole extends BaseAdmin
             $this->validate($data);
 
             // 数据构造
-            $userInfo  = UserModel::where('id', $data['uid'])->find();
+            $userInfo  = UserModel::where('id', $data['uid'])->first();
             if ($userInfo['roles']) {
                 $userInfo['roles'] = array_unique(array_merge($userInfo['roles'], [$data['roleName']]));
             } else {
@@ -178,7 +178,7 @@ class UserRole extends BaseAdmin
         if ($uid == 1) {
             return $this->return(['code' => 0,'msg' => '超级管理员不允许删除','data' => []]);
         }
-        $userInfo  = UserModel::where('id', $uid)->find();
+        $userInfo  = UserModel::where('id', $uid)->first();
         if ($userInfo['roles']) {
             $userInfo['roles'] = explode(',', $userInfo['roles']);
             foreach ($userInfo['roles'] as $key => $val) {

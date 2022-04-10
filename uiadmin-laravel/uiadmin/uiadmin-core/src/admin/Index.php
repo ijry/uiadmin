@@ -72,8 +72,9 @@ class Index extends BaseAdmin
         $server_software = explode(' ', $_SERVER['SERVER_SOFTWARE']);
         try {
             $mysql_info = DB::select('SELECT VERSION() as mysql_version');
+            $mysql_version = $mysql_info[0]->mysql_version;
         } catch (\Exception $e) {
-            $mysql_info = [['mysql_version' => 'none']];
+            $mysql_version = 'none';
         }
 
         // 首页自定义
@@ -127,7 +128,7 @@ class Index extends BaseAdmin
                     [
                         'type'  => 'text',
                         'title' => '数据库信息',
-                        'value' => config('database.type') . ' ' .$mysql_info[0]['mysql_version']
+                        'value' => config('database.type') . ' ' . $mysql_version
                     ],
                     [
                         'type'  => 'text',

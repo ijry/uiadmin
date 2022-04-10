@@ -40,7 +40,6 @@ class LrvServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-
         // 路由
         Route::redirect('/' . config("uiadmin.xyadmin.entry") . '', request()->url(true) . '/');
         Route::get('/' . config("uiadmin.xyadmin.entry") . '/', function() {
@@ -58,15 +57,17 @@ class LrvServiceProvider extends ServiceProvider
         });
         
         // 根接口
-        Route::get('/', "uiadmin\\core\\controller\\Core@index");
-        Route::get('/admin/api', "uiadmin\\core\\admin\\Index@api");
-        Route::get(config("uiadmin.site.apiPrefix") . '/v1/admin/core/index/index', "uiadmin\\core\\admin\\Index@api");
-        Route::post(config("uiadmin.site.apiPrefix") . '/v1/admin/core/user/login', "uiadmin\\core\\admin\\User@login");
-        Route::get(config("uiadmin.site.apiPrefix") . '/v1/admin/core/index/index', "uiadmin\\core\\admin\\Index@index");
-        Route::get(config("uiadmin.site.apiPrefix") . '/v1/admin/core/menu/trees', "uiadmin\\core\\admin\\Menu@trees");
-        Route::get(config("uiadmin.site.apiPrefix") . '/v1/core/user/info', "uiadmin\\core\\controller\\User@info");
-        Route::post(config("uiadmin.site.apiPrefix") . '/v1/core/upload/upload', "uiadmin\\core\\controller\\Upload@upload");
-        Route::delete(config("uiadmin.site.apiPrefix") . '/v1/core/user/logout', "uiadmin\\core\\controller\\User@logout"); 
+        Route::middleware([\uiadmin\core\middleware\ResponseTransFormMiddleware::class])->group(function () {
+            Route::get('/', "uiadmin\\core\\controller\\Core@index");
+            Route::get('/admin/api', "uiadmin\\core\\admin\\Index@api");
+            Route::get(config("uiadmin.site.apiPrefix") . '/v1/admin/core/index/index', "uiadmin\\core\\admin\\Index@api");
+            Route::post(config("uiadmin.site.apiPrefix") . '/v1/admin/core/user/login', "uiadmin\\core\\admin\\User@login");
+            Route::get(config("uiadmin.site.apiPrefix") . '/v1/admin/core/index/index', "uiadmin\\core\\admin\\Index@index");
+            Route::get(config("uiadmin.site.apiPrefix") . '/v1/admin/core/menu/trees', "uiadmin\\core\\admin\\Menu@trees");
+            Route::get(config("uiadmin.site.apiPrefix") . '/v1/core/user/info', "uiadmin\\core\\controller\\User@info");
+            Route::post(config("uiadmin.site.apiPrefix") . '/v1/core/upload/upload', "uiadmin\\core\\controller\\Upload@upload");
+            Route::delete(config("uiadmin.site.apiPrefix") . '/v1/core/user/logout', "uiadmin\\core\\controller\\User@logout");
+        }); 
     }
 }
 

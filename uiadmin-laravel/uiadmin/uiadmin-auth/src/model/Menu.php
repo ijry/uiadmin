@@ -11,19 +11,16 @@
 */
 namespace uiadmin\auth\model;
 
-use think\Model;
-use think\model\concern\SoftDelete;
+use uiadmin\core\model\BaseModel;
 
-class Menu extends Model
+class Menu extends BaseModel
 {
-    // 设置当前模型对应的完整数据表名称
+
+    /**
+     * 与模型关联的数据表.
+     *
+     * @var string
+     */
     protected $table =  'xy_auth_menu';
 
-    // 数据转换为驼峰命名
-    protected $convertNameToCamel = true;
-
-    public static function init()
-    {
-        parent::init();
-    }
 }

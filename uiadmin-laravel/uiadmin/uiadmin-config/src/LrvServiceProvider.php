@@ -2,21 +2,45 @@
 
 namespace uiadmin\config;
 
-use think\Route;
-use think\Validate;
+use Illuminate\Contracts\Support\DeferrableProvider;
+use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\DB;
 use uiadmin\config\model\Config as ConfigModel;
 
-class Service extends \think\Service
+// 实现DeferrableProvider时必须提供provides方法
+// class LrvServiceProvider extends ServiceProvider implements DeferrableProvider
+class LrvServiceProvider extends ServiceProvider
 {
+
+    /**
+     * Get the services provided by the provider.
+     *
+     * @return array
+     */
+    // public function provides()
+    // {
+    //     return [TestService::class];
+    // }
+
+    public function register()
+    {
+    }
+
+    /**
+     * Bootstrap any application services.
+     *
+     * @return void
+     */
     public function boot()
     {
-        if (env('uiadmin.install')) {
+        if (env('UIADMIN_INSTALL')) {
             // 获取数据库中的配置覆盖配置文件的配置
             $dataList = ConfigModel::where('status', '=' , 1)
                 ->where('application', '=' , 'uiadmin')
                 ->where('profile', '=' , 'prod')
                 ->where('label', '=' , 'main')
-                ->column('value', 'name');
+                ->get('value', 'name');
             foreach ($dataList as $name => $value) {
                 $name_array = explode('.', $name);
                 if (isset($name_array[0])) {
@@ -34,8 +58,6 @@ class Service extends \think\Service
                 }
             }
         }
-
-        $this->registerRoutes(function (Route $route) {
-        });
     }
 }
+

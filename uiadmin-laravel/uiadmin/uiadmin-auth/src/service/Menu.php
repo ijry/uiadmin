@@ -33,8 +33,9 @@ class Menu
         if (is_string($userRoles)) {
             $userRoles = explode(',', $userRoles);
         }
-        $adminAuthList = RoleModel::where('name', 'in', $userRoles)
-            ->column('policys');
+        $adminAuthList = RoleModel::whereIn('name', $userRoles)
+            ->select(['policys'])
+            ->get();
         $adminAuth = [];
         foreach ($adminAuthList as $k => $v) {
             $v = explode(',', $v);
@@ -44,8 +45,9 @@ class Menu
 
         // 获取列表
         $dataList = MenuModel::where('menu_layer', '=', 'admin')
-            ->order('sortnum asc,id asc')
-            ->select()->toArray();
+            ->orderBy('sortnum')
+            ->orderBy('id')
+            ->get()->toArray();
         //var_dump($dataList);
         // 下面的处理存粹是为了后台界面显示的
         foreach ($dataList as $key => &$val) {

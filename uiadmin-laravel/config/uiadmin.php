@@ -27,11 +27,11 @@ return [
                 'roles' => [],
             ]
         ],
-        'driver' => 'uiadmin\\core\\service\\User'
+        'driver' => 'uiadmin\\auth\\service\\User'
     ],
 
     'menu' => [
-        'driver' => 'uiadmin\\core\\service\\Menu'
+        'driver' => 'uiadmin\\auth\\service\\Menu'
     ],
 
     'upload' => [

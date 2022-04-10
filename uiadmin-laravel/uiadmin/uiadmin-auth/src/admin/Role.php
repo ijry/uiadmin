@@ -38,7 +38,7 @@ class Role extends BaseAdmin
     public function trees()
     {
         // 角色列表
-        $dataList = RoleModel::select()->toArray();
+        $dataList = RoleModel::get()->toArray();
         $tree      = new Tree();
         $dataTree = $tree->list2tree($dataList);
 
@@ -145,7 +145,7 @@ class Role extends BaseAdmin
             // 获取后台权限接口
             $dataList = MenuModel::where('menu_layer', '=', 'admin')
                 ->order('sortnum asc')
-                ->select()->toArray();
+                ->get()->toArray();
             foreach ($dataList as $key => &$val) {
                 $val['adminAuth'] = '/' . $val['apiPrefix'] . '/admin' . $val['path'];
             }
@@ -228,7 +228,7 @@ class Role extends BaseAdmin
 
         // 获取角色信息
         $info = RoleModel::where('id', $id)
-            ->find();
+            ->firsrt();
         if(request()->isPut()){
             if ($id == 1) {
                 return $this->return(['code' => 0,'msg' => '超级管理员角色不允许修改','data' => []]);
@@ -272,7 +272,7 @@ class Role extends BaseAdmin
             // 获取后台权限接口
             $dataList = MenuModel::where('menu_layer', '=', 'admin')
                 ->order('sortnum asc')
-                ->select()->toArray();
+                ->get()->toArray();
             $all = [];
             foreach ($dataList as $key => &$val) {
                 $val['adminAuth'] = '/' . $val['apiPrefix'] . '/admin' . $val['path'];
@@ -289,7 +289,7 @@ class Role extends BaseAdmin
 
             // 获取角色基于标题的树状列表
             $roleList = RoleModel::order('sortnum asc')
-                ->select()->toArray();
+                ->get()->toArray();
             $tree      = new Tree();
             $roleTree = $tree->array2tree($roleList, 'title', 'id', 'pid', 0, false);
             $roleTreeSelect = [];
@@ -363,7 +363,7 @@ class Role extends BaseAdmin
             return $this->return(['code' => 0,'msg' => '超级管理员角色不允许删除','data' => []]);
         }
         $ret = RoleModel::where('id', $id)
-            ->find()
+            ->first()
             ->delete();
         if ($ret) {
             return $this->return(['code' => 200, 'msg' => '删除成功', 'data' => []]);

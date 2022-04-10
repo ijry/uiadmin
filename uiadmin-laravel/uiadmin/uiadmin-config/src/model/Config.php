@@ -11,34 +11,25 @@
 */
 namespace uiadmin\config\model;
 
-use think\Model;
-use think\model\concern\SoftDelete;
+use Illuminate\Database\Eloquent\Casts\Attribute;
+use uiadmin\core\model\BaseModel;
 
-class Config extends Model
+class Config extends BaseModel
 {
-    // 设置当前模型对应的完整数据表名称
+
+    /**
+     * 与模型关联的数据表.
+     *
+     * @var string
+     */
     protected $table =  'xy_config';
 
-    // 数据转换为驼峰命名
-    protected $convertNameToCamel = true;
-
-    public static function init()
+    protected function options(): Attribute
     {
-        parent::init();
+        return new Attribute(
+            get: fn ($value) => json_decode($value, true),
+            set: fn ($value) => json_encode($value, JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES),
+        );
     }
 
-    // Options
-    public function setOptionsAttr($value)
-    {
-        $value = json_encode($value, JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES);
-        return $value;
-    }
-    public function getOptionsAttr($value)
-    {
-        if ($value) {
-            return json_decode($value, true);
-        } else {
-            return [];
-        }
-    }
 }

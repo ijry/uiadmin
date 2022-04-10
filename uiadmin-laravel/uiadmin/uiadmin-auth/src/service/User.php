@@ -24,9 +24,9 @@ class User
 {
     // 登录
     public function login($account, $password) {
-        $info = UserModel::field('id,user_key,nickname,username,avatar,roles,password,status')
+        $info = UserModel::select(['id','user_key','nickname','username','avatar','roles','password','status'])
             ->where('username', $account)
-            ->find();
+            ->first();
         if (!$info) {
             throw new \Exception("用户名不存在", 0);
         }
@@ -46,9 +46,9 @@ class User
 
     // 获取用户信息
     public function getById($uid) {
-        $info = UserModel::field('id,nickname,username,avatar,roles')
+        $info = UserModel::select(['id','nickname','username','avatar','roles'])
             ->where('id', $uid)
-            ->findOrFail();
+            ->first();
         return $info;
     }
 }

@@ -10,8 +10,7 @@
         }
     ],
     "require": {
-        "topthink/framework": "^6.0.0",
-        "topthink/think-migration": "^3.0"
+        "laravel/framework": "^9.2"
     },
     "autoload": {
         "psr-4": {
@@ -21,12 +20,10 @@
         ] 
     },
     "extra": {
-        "think": {
-            "services": [
-                "uiadmin\\config\\Service"
-            ],
-            "config":{
-            }
+        "laravel": {
+            "providers": [
+                "uiadmin\\config\\LrvServiceProvider"
+            ]
         }
     }
 }

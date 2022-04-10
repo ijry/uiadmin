@@ -132,8 +132,8 @@ class Config extends BaseAdmin
         $dataList = ConfigModel::where('profile', '=', 'prod')
             // ->where('module', '=', $module)
             ->page($page, $limit)
-            ->order('id asc')
-            ->select();
+            ->orderBt('id')
+            ->get();
         $total = ConfigModel::where('profile', '=', 'prod')
             ->count();
 
@@ -350,7 +350,7 @@ class Config extends BaseAdmin
 
         // 信息
         $info = ConfigModel::where('id', $id)
-            ->find();
+            ->first();
         if (request()->isPut()) {
             $this->validateMake([
                 'name' => 'require',
@@ -500,8 +500,8 @@ class Config extends BaseAdmin
     public function delete($id)
     {
         $info = ConfigModel::where(['id' => $id])
-            ->find();
-        if (isset($info['isSystem']) && $info['isSystem']) {
+            ->first();
+        if (isset($info->isSystem) && $info->isSystem) {
             return $this->return(['code' => 0, 'msg' => '系统级别不允许删除', 'data' => []]);
         }
 

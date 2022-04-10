@@ -153,7 +153,7 @@ class Ext extends BaseAdmin
     {
         $id = input('get.id');
         $info = ExtModel::where('id', $id)
-            ->find();
+            ->first();
         $dir = root_path() . 'extention/' . $info['name'];
         if (is_dir($dir)) {
             // 打包下载
@@ -193,11 +193,11 @@ class Ext extends BaseAdmin
         $type = input('type', '');
 
         // 模块列表
-        $dataList = ExtModel::select()->toArray();
+        $dataList = ExtModel::get()->toArray();
 
         // 获取本地未安装模块
         // 获取已经安装的模块名称
-        $installed_names = ExtModel::column('name');
+        $installed_names = ExtModel::get('name');
         $dirList = \uiadmin\core\util\File::get_dirs(root_path() . '/extention')['dir'];
         foreach ($dirList as $key => $value) {
             if ($value == '.' || $value == '..') {
@@ -516,7 +516,7 @@ class Ext extends BaseAdmin
                 $buildData = [
                     '__file__'   => [
                         $moduleNameWithSubdir . '/src/common.php',
-                        $moduleNameWithSubdir . '/src/Service.php'
+                        $moduleNameWithSubdir . '/src/LrvServiceProvider.php'
                     ],
                     '__dir__'    => [
                         $moduleNameWithSubdir . '/src/controller',
@@ -546,7 +546,7 @@ class Ext extends BaseAdmin
                         ]
                     ],
                     "require" => [
-                        "topthink/framework" =>"^6.0.0"
+                        "laravel/framework" => "^9.2"
                     ],
                     "autoload" => [
                         "psr-4" => [
@@ -559,12 +559,12 @@ class Ext extends BaseAdmin
                     "extra" => [
                         "uiadmin" => [
                         ],
-                        "think" => [
-                            "services" =>[
-                                $names[0] . "\\".$names[1]."\\Service"
+                        "laravel" => [
+                            "providers" =>[
+                                $names[0] . "\\".$names[1]."\\LrvServiceProvider"
                             ],
                             "config" => [
-                                $names[0] =>"src/config.php"
+                                //$names[0] =>"src/config.php"
                             ]
                         ]
                     ]
@@ -590,25 +590,42 @@ EOF;
 <?php
 namespace {$names[0]}\\{$names[1]};
 
-use think\Route;
-use think\Validate;
+use Illuminate\Contracts\Support\DeferrableProvider;
+use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\DB;
+use uiadmin\auth\model\Menu as MenuModel;
 
-class Service extends \\think\Service
+// 实现DeferrableProvider时必须提供provides方法
+// class LrvServiceProvider extends ServiceProvider implements DeferrableProvider
+class LrvServiceProvider extends ServiceProvider
 {
+
+    /**
+     * Get the services provided by the provider.
+     *
+     * @return array
+     */
+    // public function provides()
+    // {
+    //     return [TestService::class];
+    // }
+
     public function register()
     {
     }
 
+    /**
+     * Bootstrap any application services.
+     *
+     * @return void
+     */
     public function boot()
     {
-        \$this->registerRoutes(function (Route \$route) {
-            // 在这里注册前端路由接口
-            // \$route->get(config("uiadmin.site.apiPrefix") . '/v1/{$names[1]}/post/lists', '\\{$names[0]}\\{$names[1]}\\controller\\Post@lists');
-        });
     }
 }
 EOF;
-                file_put_contents(root_path() . 'extention/' . $moduleNameWithSubdir . '/src/Service.php', $serviceContent);
+                file_put_contents(root_path() . 'extention/' . $moduleNameWithSubdir . '/src/LrvServiceProvider.php', $serviceContent);
 
 
                 // 存储数据
@@ -708,7 +725,7 @@ EOF;
     {
         // 模块信息
         $info = ExtModel::where('id', $id)
-            ->find();
+            ->first();
         if (request()->isPut()) {
             // 数据验证
             $this->validateMake([

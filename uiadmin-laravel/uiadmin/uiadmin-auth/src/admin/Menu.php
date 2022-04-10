@@ -39,7 +39,7 @@ class Menu extends BaseAdmin
         $userInfo = $userService->getById($login['uid']);
         $roles = $userInfo['roles'];
         $adminAuth_list = RoleModel::where('name', 'in', $roles)
-            ->column('policys');
+            ->get('policys');
         $adminAuth = [];
         foreach ($adminAuth_list as $k => $v) {
             $v = explode(',', $v);
@@ -50,7 +50,7 @@ class Menu extends BaseAdmin
         // 获取列表
         $dataList = MenuModel::where('menu_layer', '=', 'admin')
             ->order('sortnum asc,id asc')
-            ->select()->toArray();
+            ->get()->toArray();
         // 下面的处理存粹是为了后台界面显示的，API使用本接口是以下数据是没用的。
         foreach ($dataList as $key => &$val) {
             if (!in_array('super_admin', $roles) && !in_array('/' . $val['apiPrefix'] . '/' . $val['menuLayer'] . $val['path'], $adminAuth)) {
@@ -164,7 +164,7 @@ class Menu extends BaseAdmin
             $dataDb['apiMethod'] = implode('|', $dataDb['apiMethod']);
 
             // 存储数据
-            $ret = MenuModel::save($dataDb);
+            $ret = MenuModel::create($dataDb);
             if ($ret) {
                 return json(['code' => 200, 'msg' => '添加成功', 'data' => [
                     'updateMenu' => true
