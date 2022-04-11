@@ -20,5 +20,10 @@
         ] 
     },
     "extra": {
+        "laravel": {
+            "providers": [
+                "uiadmin\\ext\\LrvServiceProvider"
+            ]
+        }
     }
 }

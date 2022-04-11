@@ -16,7 +16,7 @@ namespace uiadmin\ext\admin;
 
 use Illuminate\Support\Facades\Request;
 use uiadmin\core\admin\BaseAdmin;
-use uiadmin\core\util\Tree;
+use Illuminate\Support\Facades\Artisan;
 use uiadmin\ext\model\Ext as ExtModel;
 
 /**
@@ -62,41 +62,11 @@ class Ext extends BaseAdmin
                     ExtModel::create($extData);
                 }
 
-                // 发布数据库迁移文件
-                $destination = base_path() . 'database/migrations/';
-                $destination2 = base_path() . 'database/seeds/';
-                if(!is_dir($destination)){
-                    mkdir($destination, 0755, true);
-                }
-                if(!is_dir($destination2)){
-                    mkdir($destination2, 0755, true);
-                }
-                $source = $dir . '/src/database/migrations/';
-                if (is_dir($source)) {
-                    $handle = dir($source);
-                    while($entry=$handle->read()) {   
-                        if(($entry!=".")&&($entry!="..")){   
-                            if(is_file($source.$entry)){
-                                copy($source.$entry, $destination.$entry);
-                            }
-                        }
-                    }
-                }
-                $source = $dir . '/src/database/seeds/';
-                if (is_dir($source)) {
-                    $handle = dir($source);
-                    while($entry=$handle->read()) {   
-                        if(($entry!=".")&&($entry!="..")){   
-                            if(is_file($source.$entry)){
-                                copy($source.$entry, $destination2.$entry);
-                            }
-                        }
-                    }
-                }
-
                 // 执行命令
-                \think\facade\Console::call('migrate:run', []);
-                \think\facade\Console::call('seed:run', []);
+                Artisan::command('migrate -q', function () {
+                });
+                // Artisan::command('migrate -seed -q', function () {
+                // });
 
                 // 导入数据表
                 // foreach ($moduleInsall['tables'] as $key => $value) {
@@ -505,7 +475,7 @@ class Ext extends BaseAdmin
             }
 
             // 启动事务
-            Db::startTrans();
+            // Db::startTrans();
             try {
                 // 创建目录
                 $moduleName = $dataDb['name'];
@@ -629,10 +599,10 @@ EOF;
                 // 存储数据
                 // ExtModel::create($dataDb);
 
-                Db::commit(); // 提交事务
+                // Db::commit(); // 提交事务
                 return $this->return(['code' => 200, 'msg' => '添加模块成功', 'data' => []]);
             } catch (\Exception $e) {
-                Db::rollback(); // 回滚事务
+                // Db::rollback(); // 回滚事务
                 return $this->return(['code' => 0, 'msg' => '添加模块失败:' . $e->getMessage(), 'data' => []]);
             }
         } else {

@@ -73,7 +73,7 @@ function array_get($array, $key, $default = null)
  */
 function get_ext_services($service_list = [])
 {
-    $dir = root_path() . '/extention/';
+    $dir = base_path() . '/extention/';
     $file_arr = scandir($dir);
     $new_arr = [];
     foreach($file_arr as $item){

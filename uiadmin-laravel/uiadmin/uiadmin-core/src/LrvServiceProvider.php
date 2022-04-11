@@ -25,9 +25,9 @@ class LrvServiceProvider extends ServiceProvider
     {
         if (env('UIADMIN_INSTALL')) {
             $service_list = get_ext_services();
-            foreach ($service_list as $key => $value) {
-                $this->app->register($value);
-            }
+            // foreach ($service_list as $key => $value) {
+            //     $this->app->register($value);
+            // }
         }
     }
 
@@ -65,7 +65,15 @@ class LrvServiceProvider extends ServiceProvider
             Route::get(config("uiadmin.site.apiPrefix") . '/v1/core/user/info', "uiadmin\\core\\controller\\User@info");
             Route::post(config("uiadmin.site.apiPrefix") . '/v1/core/upload/upload', "uiadmin\\core\\controller\\Upload@upload");
             Route::delete(config("uiadmin.site.apiPrefix") . '/v1/core/user/logout', "uiadmin\\core\\controller\\User@logout");
-        }); 
+        });
+
+        // 注册命令
+        if ($this->app->runningInConsole()) {
+            $this->commands([
+                'uiadmin:publish' => \uiadmin\core\console\Publish::class,
+                'uiadmin:install' => \uiadmin\core\console\Install::class
+            ]);
+        }
     }
 }
 
