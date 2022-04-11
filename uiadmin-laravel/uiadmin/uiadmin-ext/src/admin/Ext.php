@@ -590,6 +590,9 @@ class LrvServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        // 一旦您的包的迁移被注册，它们将在执行 php artisan migrate 命令时自动运行。 
+        // 您不需要将它们导出到应用程序的 database/migrations 目录。
+        \$this->loadMigrationsFrom(__DIR__.'/../database/migrations');
     }
 }
 EOF;
