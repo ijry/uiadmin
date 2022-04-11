@@ -1,6 +1,6 @@
 <?php
 
-namespace uiadmin\config;
+namespace uiadmin\ext;
 
 use Illuminate\Contracts\Support\DeferrableProvider;
 use Illuminate\Support\ServiceProvider;

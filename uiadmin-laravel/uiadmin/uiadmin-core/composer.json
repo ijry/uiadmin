@@ -12,6 +12,9 @@
     "require": {
         "firebase/php-jwt": "^5.5.1"
     },
+    "require-dev": {
+        "kitloong/laravel-migrations-generator": "^5.2"
+    },
     "autoload": {
         "psr-4": {
             "uiadmin\\core\\": "src/"

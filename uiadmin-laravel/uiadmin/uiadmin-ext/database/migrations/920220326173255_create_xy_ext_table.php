@@ -1,51 +1,35 @@
 <?php
 
-use think\migration\Migrator;
-use think\migration\db\Column;
-use Phinx\Db\Adapter\MysqlAdapter;
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
-class XyExt extends Migrator
+class CreateXyExtTable extends Migration
 {
     /**
-     * Change Method.
+     * Run the migrations.
      *
-     * Write your reversible migrations using this method.
-     *
-     * More information on writing migrations is available here:
-     * http://docs.phinx.org/en/latest/migrations.html#the-abstractmigration-class
-     *
-     * The following commands can be used in this method and Phinx will
-     * automatically reverse them when rolling back:
-     *
-     *    createTable
-     *    renameTable
-     *    addColumn
-     *    renameColumn
-     *    addIndex
-     *    addForeignKey
-     *
-     * Remember to call "create()" or "update()" and NOT "save()" when working
-     * with the Table class.
+     * @return void
      */
-    public function change()
+    public function up()
     {
-        $table = $this->table('xy_ext', ['engine' => 'InnoDB', 'collation' => 'utf8_general_ci', 'comment' => '后台模块表' ,'id' => 'id','signed' => true ,'primary_key' => ['id']]);
-        $table->addColumn('type', 'string', ['limit' => 255,'null' => false,'default' => '','signed' => true,'comment' => '类型composer/uiadmin',])
-			->addColumn('pname', 'string', ['limit' => 255,'null' => false,'default' => '','signed' => true,'comment' => '父模块',])
-			->addColumn('path', 'string', ['limit' => 63,'null' => false,'default' => ' ','signed' => true,'comment' => '模块路径',])
-			->addColumn('name', 'string', ['limit' => 255,'null' => false,'default' => '','signed' => true,'comment' => '模块名称',])
-			->addColumn('title', 'string', ['limit' => 255,'null' => false,'default' => '','signed' => true,'comment' => '模块标题',])
-			->addColumn('description', 'string', ['limit' => 255,'null' => false,'default' => '','signed' => true,'comment' => '模块描述',])
-			->addColumn('developer', 'string', ['limit' => 255,'null' => false,'default' => '','signed' => true,'comment' => '开发者',])
-			->addColumn('website', 'string', ['limit' => 255,'null' => false,'default' => '','signed' => true,'comment' => '开发者网站',])
-			->addColumn('version', 'string', ['limit' => 255,'null' => false,'default' => '','signed' => true,'comment' => '版本号',])
-			->addColumn('build', 'string', ['limit' => 255,'null' => false,'default' => '','signed' => true,'comment' => 'build版本',])
-			->addColumn('status', 'boolean', ['null' => false,'default' => 0,'signed' => true,'comment' => '状态',])
-			->addColumn('sortnum', 'integer', ['limit' => MysqlAdapter::INT_REGULAR,'null' => false,'default' => 0,'signed' => true,'comment' => '排序',])
-			->addColumn('deleteTime', 'integer', ['limit' => MysqlAdapter::INT_REGULAR,'null' => false,'default' => 0,'signed' => true,'comment' => '删除时间',])
-			->addIndex(['name'], ['unique' => true,'name' => 'name'])
-            ->create();
-        
+        Schema::create('xy_ext', function (Blueprint $table) {
+            $table->increments('id')->comment('ID');
+            $table->string('type')->default('')->comment('类型composer/uiadmin');
+            $table->string('pname')->default('')->comment('父模块');
+            $table->string('path', 63)->default(' ')->comment('模块路径');
+            $table->string('name')->default('')->unique('name')->comment('模块名称');
+            $table->string('title')->default('')->comment('模块标题');
+            $table->string('description')->default('')->comment('模块描述');
+            $table->string('developer')->default('')->comment('开发者');
+            $table->string('website')->default('')->comment('开发者网站');
+            $table->string('version')->default('')->comment('版本号');
+            $table->string('build')->default('')->comment('build版本');
+            $table->boolean('status')->default(false)->comment('状态');
+            $table->integer('sortnum')->default(0)->comment('排序');
+            $table->integer('deleteTime')->default(0)->comment('删除时间');
+        });
+
         // 后台菜单
         $data = array(
             [
@@ -178,10 +162,17 @@ class XyExt extends Migrator
                 "api_ext" => "",
                 "delete_time" => 0
             ]
-            );
-    
-            $posts = $this->table('xy_auth_menu');
-            $posts->insert($data)
-                ->save();
+        );
+        \Illuminate\Support\Facades\DB::table('xy_role_menu')->insert($data);
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::dropIfExists('xy_ext');
     }
 }

@@ -1,52 +1,37 @@
 <?php
 
-use think\migration\Migrator;
-use think\migration\db\Column;
-use Phinx\Db\Adapter\MysqlAdapter;
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
-class XyConfig extends Migrator
+class CreateXyConfigTable extends Migration
 {
     /**
-     * Change Method.
+     * Run the migrations.
      *
-     * Write your reversible migrations using this method.
-     *
-     * More information on writing migrations is available here:
-     * http://docs.phinx.org/en/latest/migrations.html#the-abstractmigration-class
-     *
-     * The following commands can be used in this method and Phinx will
-     * automatically reverse them when rolling back:
-     *
-     *    createTable
-     *    renameTable
-     *    addColumn
-     *    renameColumn
-     *    addIndex
-     *    addForeignKey
-     *
-     * Remember to call "create()" or "update()" and NOT "save()" when working
-     * with the Table class.
+     * @return void
      */
-    public function change()
+    public function up()
     {
-        $table = $this->table('xy_config', ['engine' => 'InnoDB', 'collation' => 'utf8_bin', 'comment' => '' ,'id' => 'id' ,'primary_key' => ['id']]);
-        $table->addColumn('name', 'string', ['limit' => 50,'null' => false,'default' => null,'signed' => true,'comment' => '',])
-			->addColumn('title', 'string', ['limit' => 50,'null' => false,'default' => null,'signed' => true,'comment' => '标题',])
-			->addColumn('value', 'text', ['limit' => MysqlAdapter::TEXT_REGULAR,'null' => true,'signed' => true,'comment' => '',])
-			->addColumn('application', 'string', ['limit' => 50,'null' => false,'default' => null,'signed' => true,'comment' => '',])
-			->addColumn('profile', 'string', ['limit' => 50,'null' => false,'default' => null,'signed' => true,'comment' => '',])
-			->addColumn('label', 'string', ['limit' => 50,'null' => true,'signed' => true,'comment' => '',])
-			->addColumn('placeholder', 'string', ['limit' => 255,'null' => true,'signed' => true,'comment' => '',])
-			->addColumn('tip', 'string', ['limit' => 512,'null' => true,'signed' => true,'comment' => '',])
-			->addColumn('type', 'string', ['limit' => 50,'null' => true,'signed' => true,'comment' => '表单类型',])
-			->addColumn('options', 'text', ['limit' => MysqlAdapter::TEXT_REGULAR,'null' => true,'signed' => true,'comment' => '选项',])
-			->addColumn('create_time', 'datetime', ['null' => true,'signed' => true,'comment' => '创建时间',])
-			->addColumn('update_time', 'datetime', ['null' => true,'signed' => true,'comment' => '修改时间',])
-			->addColumn('status', 'integer', ['limit' => MysqlAdapter::INT_REGULAR,'null' => false,'default' => 1,'signed' => true,'comment' => '状态',])
-			->addColumn('sortnum', 'integer', ['limit' => MysqlAdapter::INT_REGULAR,'null' => false,'default' => 1,'signed' => true,'comment' => '排序',])
-			->addColumn('module', 'string', ['limit' => 50,'null' => false,'default' => null,'signed' => true,'comment' => '模块',])
-            ->create();
-        
+        Schema::create('xy_config', function (Blueprint $table) {
+            $table->bigInteger('id', true);
+            $table->string('name', 50);
+            $table->string('title', 50)->comment('标题');
+            $table->text('value')->nullable();
+            $table->string('application', 50);
+            $table->string('profile', 50);
+            $table->string('label', 50)->nullable();
+            $table->string('placeholder')->nullable();
+            $table->string('tip', 512)->nullable();
+            $table->string('type', 50)->nullable()->comment('表单类型');
+            $table->text('options')->nullable()->comment('选项');
+            $table->dateTime('create_time')->nullable()->comment('创建时间');
+            $table->dateTime('update_time')->nullable()->comment('修改时间');
+            $table->integer('status')->default(1)->comment('状态');
+            $table->integer('sortnum')->default(1)->comment('排序');
+            $table->string('module', 50)->comment('模块');
+        });
+
         // 数据
         $data = array(
             [
@@ -236,12 +221,9 @@ class XyConfig extends Migrator
                 "sortnum" => 1,
                 "module" => "uiadmin-core"
             ]
-            );
-    
-            $postsConfig = $this->table('xy_config');
-            $postsConfig->insert($data)
-                ->save();
-        
+        );
+        \Illuminate\Support\Facades\DB::table('xy_config')->insert($data);
+
         // 后台菜单
         $data = array(
             [
@@ -349,9 +331,16 @@ class XyConfig extends Migrator
                 "delete_time" => 0
                 ]
         );
+        \Illuminate\Support\Facades\DB::table('xy_role_menu')->insert($data);
+    }
 
-        $posts = $this->table('xy_auth_menu');
-        $posts->insert($data)
-                ->save();
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::dropIfExists('xy_config');
     }
 }
