@@ -133,7 +133,7 @@ class User extends BaseAdmin
                 'options' => [ 1 => '正常', 0 => '禁用']
             ])
             ->addColumn('rightButtonList', '操作', [
-                'minWidth' => '260px',
+                'width' => '200px',
                 'type' => 'template',
                 'template' => 'rightButtonList'
             ])

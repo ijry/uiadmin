@@ -331,7 +331,7 @@ class CreateXyConfigTable extends Migration
                 "delete_time" => 0
                 ]
         );
-        \Illuminate\Support\Facades\DB::table('xy_role_menu')->insert($data);
+        \Illuminate\Support\Facades\DB::table('xy_auth_menu')->insert($data);
     }
 
     /**

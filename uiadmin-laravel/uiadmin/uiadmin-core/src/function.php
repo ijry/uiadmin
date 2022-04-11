@@ -114,13 +114,15 @@ function get_ext_services($service_list = [])
         /* 限定类名路径映射 */
         $class_map = $psr4;
         $tmp = explode('\\', $class);
-        $key = $tmp[0] . '\\' . $tmp[1] . '\\';
-        if (isset($class_map[$key])) {
-            unset($tmp[0]);
-            unset($tmp[1]);
-            $file = $class_map[$key] . implode('/', $tmp) . '.php';
-            if (file_exists($file)) {
-                include $file;
+        if (isset($tmp[1])) {
+            $key = $tmp[0] . '\\' . $tmp[1] . '\\';
+            if (isset($class_map[$key])) {
+                unset($tmp[0]);
+                unset($tmp[1]);
+                $file = $class_map[$key] . implode('/', $tmp) . '.php';
+                if (file_exists($file)) {
+                    include $file;
+                }
             }
         }
     });

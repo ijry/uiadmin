@@ -51,7 +51,9 @@ class Service extends \think\Service
         });
 
         // 注册命令
-        $this->commands(['uiadmin:publish' => \uiadmin\core\command\Publish::class]);
-        $this->commands(['uiadmin:install' => \uiadmin\core\command\Install::class]);
+        $this->commands([
+            'uiadmin:publish' => \uiadmin\core\command\Publish::class,
+            'uiadmin:install' => \uiadmin\core\command\Install::class
+        ]);
     }
 }

@@ -40,27 +40,21 @@ class Install extends Command
     public function handle()
     {
         if (!env('UIADMIN_INSTALL')) {
-            Artisan::command('uiadmin:publish', function () {
-                $this->info("执行文件发布完成");
-            });
-            Artisan::command('migrate', function () {
-                $this->info("执行文件发布完成");
-            });
-            Artisan::command('migrate -seed', function () {
-                $this->info("执行文件发布完成");
-            });
-            file_put_contents(root_path() . '.env', "\n\nUIADMIN_INSTALL = true\n", FILE_APPEND);
+            Artisan::call('uiadmin:publish');
+            echo "执行文件发布完成\n";
+            Artisan::call('migrate');
+            echo "执行数据库迁移完成\n";
+            Artisan::call('migrate --seed');
+            echo "执行数据库seeds迁移完成\n";
+            file_put_contents(base_path() . '/.env', "\n\nUIADMIN_INSTALL = true\n", FILE_APPEND);
             echo "恭喜，UiAdmin-Laravel安装完成！\n";
         } else {
-            Artisan::command('uiadmin:publish', function () {
-                $this->info("执行文件发布完成");
-            });
-            Artisan::command('migrate', function () {
-                $this->info("执行文件发布完成");
-            });
-            Artisan::command('migrate -seed', function () {
-                $this->info("执行文件发布完成");
-            });
+            Artisan::call('uiadmin:publish');
+            echo "执行文件发布完成\n";
+            Artisan::call('migrate');
+            echo "执行数据库迁移完成\n";
+            Artisan::call('migrate --seed');
+            echo "执行数据库seeds迁移完成\n";
             echo "恭喜，UiAdmin-Laravel更新完成！\n";
         }
     }
