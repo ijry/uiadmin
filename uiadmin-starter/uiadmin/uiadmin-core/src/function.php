@@ -44,12 +44,11 @@ function get_ext_services($service_list = [])
             }
         }
     }
-   \think\facade\Cache::set('psr4', $psr4, 200);
 
     // 注册psr-4
-    spl_autoload_register(function ($class) {
+    spl_autoload_register(function ($class) use($psr4) {
         /* 限定类名路径映射 */
-        $class_map = \think\facade\Cache::get('psr4');
+        $class_map = $psr4;
         $tmp = explode('\\', $class);
         $key = $tmp[0] . '\\' . $tmp[1] . '\\';
         if (isset($class_map[$key])) {
