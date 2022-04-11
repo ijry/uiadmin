@@ -260,7 +260,7 @@ class User extends BaseAdmin
             $dataDb['createTime'] = time();
 
             // 存储数据
-            $ret = UserModel::save($dataDb);
+            $ret = UserModel::create($dataDb);
             if ($ret) {
                 return json(['code' => 200, 'msg' => '添加用户成功', 'data' => []]);
             } else {

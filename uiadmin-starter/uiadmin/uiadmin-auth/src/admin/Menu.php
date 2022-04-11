@@ -162,7 +162,7 @@ class Menu extends BaseAdmin
             $dataDb['apiMethod'] = implode('|', $dataDb['apiMethod']);
 
             // 存储数据
-            $ret = MenuModel::save($dataDb);
+            $ret = MenuModel::create($dataDb);
             if ($ret) {
                 return json(['code' => 200, 'msg' => '添加成功', 'data' => [
                     'updateMenu' => true
@@ -332,7 +332,6 @@ class Menu extends BaseAdmin
      */
     public function edit($id)
     {
-        
         // 信息
         $info = MenuModel::where('id', $id)
             ->find();
@@ -547,7 +546,7 @@ class Menu extends BaseAdmin
             ->where(['id' => $id])
             ->find();
         $exist = MenuModel::where('menu_layer', '=', 'admin')
-            ->where(['pmenu' => $info['path']])
+            ->where(['pmenu', '=', $info['path']])
             ->count();
         if ($exist > 0) {
             return json(['code' => 0, 'msg' => '存在子菜单无法删除', 'data' => []]);
