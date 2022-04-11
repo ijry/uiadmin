@@ -11,8 +11,6 @@
 
 namespace uiadmin\auth\service;
 
-use think\Request;
-use think\facade\Db;
 use uiadmin\auth\model\User as UserModel;
 
 /**
@@ -24,6 +22,9 @@ class User
 {
     // 登录
     public function login($account, $password) {
+        if (!$account) {
+            throw new \Exception("用户名不能为空", 0);
+        }
         $info = UserModel::select(['id','user_key','nickname','username','avatar','roles','password','status'])
             ->where('username', $account)
             ->first();

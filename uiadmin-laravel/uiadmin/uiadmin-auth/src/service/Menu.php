@@ -11,8 +11,7 @@
 
 namespace uiadmin\auth\service;
 
-use think\Request;
-use think\facade\Db;
+use Illuminate\Support\Facades\Request;
 use uiadmin\auth\model\Menu as MenuModel;
 use uiadmin\auth\model\Role as RoleModel;
 

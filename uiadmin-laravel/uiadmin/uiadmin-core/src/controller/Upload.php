@@ -11,7 +11,7 @@
 
 namespace uiadmin\core\controller;
 
-use think\Request;
+use Illuminate\Support\Facades\Request;
 
 /**
  * 核心控制器
@@ -23,14 +23,14 @@ class Upload extends BaseHome
     /**
      * 分片上传合并上传
      *
-     * @return \think\Response
+     * @return \Response
      * @author jry <ijry@qq.com>
      */
     public function merge()
     {
         // $login = parent::isLogin();
-        $context = input('post.context');
-        $chunks = (int) input('post.chunks');
+        $context = Request::input('context');
+        $chunks = (int) Request::input('chunks');
         // 合并后的文件名
         $childpath = 'uploads';
         if ($this->cloudId > 0) {
@@ -61,7 +61,7 @@ class Upload extends BaseHome
     /**
      * 文件上传
      *
-     * @return \think\Response
+     * @return \Response
      * @author jry <ijry@qq.com>
      */
     public function upload()
@@ -76,11 +76,11 @@ class Upload extends BaseHome
             if ($this->cloudId > 0) {
                 $childpath = 'tenant_' . $this->cloudId;
             }
-            if (input('post.context')) {
+            if (Request::input('context')) {
                 $savename = \think\facade\Filesystem::disk('public')->putFileAs(
-                    $childpath . '/' . input('post.context'),
+                    $childpath . '/' . Request::input('context'),
                     $file,
-                    input('post.index') . '.' . $file->getExtension());
+                    Request::input('index') . '.' . $file->getExtension());
             } else {
                 $savename = \think\facade\Filesystem::disk('public')->putFile($childpath, $file);
             }

@@ -12,7 +12,7 @@
 namespace uiadmin\core\admin;
 
 use uiadmin\core\BaseController;
-use think\Request;
+use Illuminate\Support\Facades\Request;
 
 /**
  * 基础控制器

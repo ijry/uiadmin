@@ -41,7 +41,7 @@ class Core extends BaseHome
     /**
      * 获取站点信息
      *
-     * @return \think\Response
+     * @return \Response
      * @author jry <ijry@qq.com>
      */
     public function info()

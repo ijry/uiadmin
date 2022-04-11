@@ -27,7 +27,7 @@ class Config extends BaseAdmin
      /**
      * 批量修改配置
      *
-     * @return \think\Response
+     * @return \Response
      * @author jry <ijry@qq.com>
      */
     public function saveBatch()
@@ -118,7 +118,7 @@ class Config extends BaseAdmin
     /**
      * 列表
      *
-     * @return \think\Response
+     * @return \Response
      * @author jry <ijry@qq.com>
      */
     public function lists()
@@ -192,7 +192,7 @@ class Config extends BaseAdmin
     /**
      * 添加
      *
-     * @return \think\Response
+     * @return \Response
      * @author jry <ijry@qq.com>
      */
     public function add()
@@ -340,7 +340,7 @@ class Config extends BaseAdmin
     /**
      * 修改
      *
-     * @return \think\Response
+     * @return \Response
      * @author jry <ijry@qq.com>
      */
     public function edit($id)
@@ -492,7 +492,7 @@ class Config extends BaseAdmin
     /**
      * 删除
      *
-     * @return \think\Response
+     * @return \Response
      * @author jry <ijry@qq.com>
      */
     public function delete($id)

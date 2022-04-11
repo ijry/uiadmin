@@ -31,7 +31,7 @@ class Role extends BaseAdmin
     /**
      * 角色列表
      *
-     * @return \think\Response
+     * @return \Response
      * @author jry <ijry@qq.com>
      */
     public function trees()
@@ -105,7 +105,7 @@ class Role extends BaseAdmin
     /**
      * 添加
      *
-     * @return \think\Response
+     * @return \Response
      * @author jry <ijry@qq.com>
      */
     public function add()
@@ -219,7 +219,7 @@ class Role extends BaseAdmin
     /**
      * 修改
      *
-     * @return \think\Response
+     * @return \Response
      * @author jry <ijry@qq.com>
      */
     public function edit($id)
@@ -353,7 +353,7 @@ class Role extends BaseAdmin
     /**
      * 删除
      *
-     * @return \think\Response
+     * @return \Response
      * @author jry <ijry@qq.com>
      */
     public function delete($id)

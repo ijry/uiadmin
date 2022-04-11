@@ -29,7 +29,7 @@ class Ext extends BaseAdmin
     /**
      * 安装模块
      *
-     * @return \think\Response
+     * @return \Response
      */
     public function import()
     {
@@ -115,7 +115,7 @@ class Ext extends BaseAdmin
     /**
      * 导出模块
      *
-     * @return \think\Response
+     * @return \Response
      */
     public function export()
     {
@@ -154,7 +154,7 @@ class Ext extends BaseAdmin
     /**
      * 模块列表
      *
-     * @return \think\Response
+     * @return \Response
      */
     public function lists()
     {
@@ -434,7 +434,7 @@ class Ext extends BaseAdmin
     /**
      * 添加
      *
-     * @return \think\Response
+     * @return \Response
      */
     public function add()
     {
@@ -687,7 +687,7 @@ EOF;
     /**
      * 修改
      *
-     * @return \think\Response
+     * @return \Response
      */
     public function edit($id)
     {

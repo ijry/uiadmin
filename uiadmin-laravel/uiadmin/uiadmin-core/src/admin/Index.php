@@ -26,7 +26,7 @@ class Index extends BaseAdmin
     /**
      * API对接
      *
-     * @return \think\Response
+     * @return \Response
      * @author jry <ijry@qq.com>
      */
     public function api()
@@ -63,7 +63,7 @@ class Index extends BaseAdmin
     /**
      * 后台首页
      *
-     * @return \think\Response
+     * @return \Response
      * @author jry <ijry@qq.com>
      */
     public function index()

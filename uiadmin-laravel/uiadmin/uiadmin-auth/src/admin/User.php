@@ -29,7 +29,7 @@ class User extends BaseAdmin
     /**
      * 用户列表
      *
-     * @return \think\Response
+     * @return \Response
      * @author jry <ijry@qq.com>
      */
     public function lists()
@@ -152,7 +152,7 @@ class User extends BaseAdmin
     /**
      * 详情
      *
-     * @return \think\Response
+     * @return \Response
      * @author jry <ijry@qq.com>
      */
     public function info($id)
@@ -234,7 +234,7 @@ class User extends BaseAdmin
     /**
      * 添加
      *
-     * @return \think\Response
+     * @return \Response
      * @author jry <ijry@qq.com>
      */
     public function add()
@@ -335,7 +335,7 @@ class User extends BaseAdmin
     /**
      * 修改
      *
-     * @return \think\Response
+     * @return \Response
      * @author jry <ijry@qq.com>
      */
     public function edit($id)
@@ -437,7 +437,7 @@ class User extends BaseAdmin
     /**
      * 删除
      *
-     * @return \think\Response
+     * @return \Response
      * @author jry <ijry@qq.com>
      */
     public function delete($id)

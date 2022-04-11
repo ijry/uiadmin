@@ -30,7 +30,7 @@ class UserRole extends BaseAdmin
     /**
      * 角色成员列表
      *
-     * @return \think\Response
+     * @return \Response
      * @author jry <ijry@qq.com>
      */
     public function lists($name)
@@ -87,7 +87,7 @@ class UserRole extends BaseAdmin
     /**
      * 添加
      *
-     * @return \think\Response
+     * @return \Response
      * @author jry <ijry@qq.com>
      */
     public function add($name)
@@ -169,7 +169,7 @@ class UserRole extends BaseAdmin
     /**
      * 删除
      *
-     * @return \think\Response
+     * @return \Response
      * @author jry <ijry@qq.com>
      */
     public function delete($uid, $name)

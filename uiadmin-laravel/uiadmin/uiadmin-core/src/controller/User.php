@@ -21,7 +21,7 @@ class User extends BaseHome
     /**
      * 获取用户信息
      *
-     * @return \think\Response
+     * @return \Response
      * @author jry <ijry@qq.com>
      */
     public function info()
@@ -45,7 +45,7 @@ class User extends BaseHome
     /**
      * 注销
      *
-     * @return \think\Response
+     * @return \Response
      * @author jry <ijry@qq.com>
      */
     public function logout()

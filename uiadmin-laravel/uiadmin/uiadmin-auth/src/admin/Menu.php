@@ -26,7 +26,7 @@ class Menu extends BaseAdmin
     /**
      * 后台左侧导航列表
      *
-     * @return \think\Response
+     * @return \Response
      * @author jry <ijry@qq.com>
      */
     public function trees()
@@ -130,7 +130,7 @@ class Menu extends BaseAdmin
     /**
      * 添加
      *
-     * @return \think\Response
+     * @return \Response
      * @author jry <ijry@qq.com>
      */
     public function add()
@@ -329,7 +329,7 @@ class Menu extends BaseAdmin
     /**
      * 修改
      *
-     * @return \think\Response
+     * @return \Response
      * @author jry <ijry@qq.com>
      */
     public function edit($id)
@@ -539,7 +539,7 @@ class Menu extends BaseAdmin
     /**
      * 删除
      *
-     * @return \think\Response
+     * @return \Response
      * @author jry <ijry@qq.com>
      */
     public function delete($id)

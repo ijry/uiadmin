@@ -1,6 +1,6 @@
 <?php
 // 应用公共文件
-
+use Illuminate\Support\Facades\Request;
 
 // 以下兼容TP写法
 function input($name) {
@@ -238,7 +238,7 @@ function is_login()
 {
     try {
         // 获取token
-        $token = \think\facade\Request::header('Authorization');
+        $token = Request::header('Authorization');
         if (!$token) {
             $token = session('Authorization'); // 支持session
         }

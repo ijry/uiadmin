@@ -11,7 +11,7 @@
 
 namespace uiadmin\core\admin;
 
-use think\Request;
+use Illuminate\Support\Facades\Request;
 use uiadmin\core\admin\BaseAdmin;
 
 /**

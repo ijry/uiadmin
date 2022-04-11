@@ -11,7 +11,7 @@
 
 namespace uiadmin\core\admin;
 
-use think\Request;
+use Illuminate\Support\Facades\Request;
 use uiadmin\core\admin\BaseAdmin;
 
 /**
@@ -24,14 +24,14 @@ class User extends BaseAdmin
     /**
      * 登录
      *
-     * @return \think\Response
+     * @return \Response
      * @author jry <ijry@qq.com>
      */
     public function login()
     {
         try {
-            $account = input('post.account');
-            $password = input('post.password');
+            $account = Request::input('account');
+            $password = Request::input('password');
 
             $class = config('uiadmin.user.driver');
             $userService = new $class();
@@ -91,7 +91,7 @@ class User extends BaseAdmin
     /**
      * 获取用户信息
      *
-     * @return \think\Response
+     * @return \Response
      * @author jry <ijry@qq.com>
      */
     public function info()
