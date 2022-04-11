@@ -33,7 +33,7 @@ class Config extends BaseAdmin
     public function saveBatch()
     {
         if (Request::isMethod('put')) {
-            $data = input('post.');
+            $data = Request::input();
 
             // 数据构造
             $dataDb = $data;
@@ -41,7 +41,7 @@ class Config extends BaseAdmin
                 return $this->return(['code' => 0, 'msg' => '无数据提交', 'data' => []]);
             }
 
-            if (env('read_only') == true) {
+            if (env('READ_ONLY') == true) {
                 return $this->return(['code' => 0, 'msg' => '无写入权限', 'data' => []]);
             }
 
@@ -200,8 +200,8 @@ class Config extends BaseAdmin
         if (Request::isMethod('post')) {
             // 数据验证
             $this->validateMake([
-                'name' => 'require',
-                'title' => 'require',
+                'name' => 'required',
+                'title' => 'required',
                 'type' => 'require'
             ],
             [
@@ -209,8 +209,8 @@ class Config extends BaseAdmin
                 'title.require' => '配置标题必须',
                 'type.require' => '配置类型必须'
             ]);
-            $data = input('post.');
-            $this->validate($data);
+            $data = Request::input();
+            $this->validateData($data);
 
             $module = input('get.module');
 
@@ -351,8 +351,8 @@ class Config extends BaseAdmin
             ->first();
         if (Request::isMethod('put')) {
             $this->validateMake([
-                'name' => 'require',
-                'title' => 'require',
+                'name' => 'required',
+                'title' => 'required',
                 'type' => 'require'
             ],
             [
@@ -360,8 +360,8 @@ class Config extends BaseAdmin
                 'title.require' => '配置标题必须',
                 'type.require' => '配置类型必须'
             ]);
-            $data = input('post.');
-            $this->validate($data);
+            $data = Request::input();
+            $this->validateData($data);
 
             // 数据构造
             $dataDb = $data;

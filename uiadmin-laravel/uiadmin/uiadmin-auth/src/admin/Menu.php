@@ -11,7 +11,6 @@
 
 namespace uiadmin\auth\admin;
 
-
 use Illuminate\Support\Facades\Request;
 use uiadmin\core\admin\BaseAdmin;
 use uiadmin\auth\model\Menu as MenuModel;
@@ -139,12 +138,12 @@ class Menu extends BaseAdmin
         if(Request::isMethod('post')){
             // 数据验证
             $this->validateMake([
-                'namespace'  => 'require',
-                'module'  => 'require',
-                'title' => 'require',
-                'menuType' => 'require',
-                'path' => 'require',
-                'apiMethod' => 'require',
+                'namespace'  => 'required',
+                'module'  => 'required',
+                'title' => 'required',
+                'menuType' => 'required',
+                'path' => 'required',
+                'apiMethod' => 'required',
             ],
             [
                 'module.require' => '请选择模块',
@@ -153,8 +152,8 @@ class Menu extends BaseAdmin
                 'path.require' => '接口路径必须',
                 'apiMethod.require' => '请求方法必须',
             ]);
-            $data = input('post.');
-            $this->validate($data);
+            $data = Request::input();
+            $this->validateData($data);
 
             // 数据构造
             $dataDb = $data;
@@ -342,11 +341,11 @@ class Menu extends BaseAdmin
         if(Request::isMethod('put')){
             // 数据验证
             $this->validateMake([
-                'module'  => 'require',
-                'title' => 'require',
-                'menuType' => 'require',
-                'path' => 'require',
-                'apiMethod' => 'require',
+                'module'  => 'required',
+                'title' => 'required',
+                'menuType' => 'required',
+                'path' => 'required',
+                'apiMethod' => 'required',
             ],
             [
                 'module.require' => '请选择模块',
@@ -355,8 +354,8 @@ class Menu extends BaseAdmin
                 'path.require' => '接口路径必须',
                 'apiMethod.require' => '请求方法必须',
             ]);
-            $data = input('post.');
-            $this->validate($data);
+            $data = Request::input();
+            $this->validateData($data);
 
             // 数据构造
             $dataDb = $data;

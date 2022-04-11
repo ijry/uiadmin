@@ -13,6 +13,7 @@ declare (strict_types = 1);
 namespace uiadmin\core;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Request;
 
 /**
  * 控制器基础类
@@ -22,6 +23,15 @@ use App\Http\Controllers\Controller;
  */
 class BaseController extends Controller
 {
+    protected $validateRule = [];
+    protected $validateMessage = [];
+
+    // 验证
+    protected function validateMake($validateRule, $validateMessage) {
+        $this->validateRule =  $validateRule;
+        $this->validateMessage =  $validateMessage;
+    }
+
     /**
      * 验证数据
      * @access protected
@@ -32,47 +42,23 @@ class BaseController extends Controller
      * @return array|string|true
      * @throws ValidateException
      */
-    // protected function validate(array $data, $validate = [], array $message = [], bool $batch = false)
-    // {
-        // if (count($validate) == 0) {
-        //     $validate = $this->validateRule;
-        // }
-        // if (count($message) == 0) {
-        //     $message = $this->validateMessage;
-        // }
-        // if (is_array($validate)) {
-        //     $v = new Validate();
-        //     $v->rule($validate);
-        // } else {
-        //     if (strpos($validate, '.')) {
-        //         // 支持场景
-        //         [$validate, $scene] = explode('.', $validate);
-        //     }
-        //     $class = false !== strpos($validate, '\\') ? $validate : $this->app->parseClass('validate', $validate);
-        //     $v     = new $class();
-        //     if (!empty($scene)) {
-        //         $v->scene($scene);
-        //     }
-        // }
-
-        // $v->message($message);
-
-        // // 是否批量验证
-        // if ($batch || $this->batchValidate) {
-        //     $v->batch(true);
-        // }
-
-        // try {
-        //     $ret = $v->failException(true)->check($data);
-        // } catch (\Exception $e) {
-        //     return $this->return(['code' => 0, 'msg' => $e->getMessage(), 'data' => []]);
-        // }
-        // return $ret ;
-    //}
+    protected function validateData($data)
+    {
+        // dump($data);exit;
+        try {
+            $validated = Request::validate($this->validateRule, $data);
+        } catch (\Exception $e) {
+            $this->return([
+                'code' => 422,
+                'msg' => $e->getMessage(),
+                'data' => []
+            ]);
+        }
+    }
 
     // 返回json
     protected function return($data) {
-        return json($data);
+        return response()->json($data);
     }
 
     /**

@@ -114,7 +114,7 @@ class Role extends BaseAdmin
             // 数据验证
             $this->validateMake([
                 'pid'  => 'number',
-                'name' => 'require',
+                'name' => 'required',
                 'title' => 'require'
             ],
             [
@@ -122,8 +122,8 @@ class Role extends BaseAdmin
                 'name.require' => '名称必须',
                 'title.require' => '标题必须'
             ]);
-            $data = input('post.');
-            $this->validate($data);
+            $data = Request::input();
+            $this->validateData($data);
 
             // 数据构造
             $dataDb = $data;
@@ -236,7 +236,7 @@ class Role extends BaseAdmin
             // 数据验证
             $this->validateMake([
                 'pid'  => 'number',
-                'name' => 'require',
+                'name' => 'required',
                 'title' => 'require'
             ],
             [
@@ -244,8 +244,8 @@ class Role extends BaseAdmin
                 'name.require' => '名称必须',
                 'title.require' => '标题必须'
             ]);
-            $data = input('post.');
-            $this->validate($data);
+            $data = Request::input();
+            $this->validateData($data);
 
             // 数据构造
             $dataDb = $data;

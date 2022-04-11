@@ -23,14 +23,12 @@ class LrvServiceProvider extends ServiceProvider
 
     public function register()
     {
-        // $this->app->middleware->add(Router::class);
-
-        // if (env('uiadmin.install')) {
-        //     $service_list = get_ext_services();
-        //     foreach ($service_list as $key => $value) {
-        //         $this->app->register($value);
-        //     }
-        // }
+        if (env('UIADMIN_INSTALL')) {
+            $service_list = get_ext_services();
+            foreach ($service_list as $key => $value) {
+                $this->app->register($value);
+            }
+        }
     }
 
     /**

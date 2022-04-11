@@ -29,16 +29,14 @@ class Install extends Command
      */
     protected function execute(Input $input, Output $output)
     {
-        if (!env('uiadmin.install')) {
-            $output = \think\facade\Console::call('tauthz:publish', []);
-            echo "执行think-authz发布完成\n";
+        if (!env('UIADMIN_INSTALL')) {
             $output = \think\facade\Console::call('uiadmin:publish', []);
             echo "执行文件发布完成\n";
             $output = \think\facade\Console::call('migrate:run', []);
             echo "执行数据库迁移完成\n";
             $output = \think\facade\Console::call('seed:run', []);
             echo "执行数据库seeds迁移完成\n";
-            file_put_contents(root_path() . '.env', "\n\n[UIADMIN]\nINSTALL = true\n", FILE_APPEND);
+            file_put_contents(root_path() . '.env', "\n\nUIADMIN_INSTALL = true\n", FILE_APPEND);
             echo "恭喜，UiAdmin安装完成！\n";
         } else {
             $output = \think\facade\Console::call('uiadmin:publish', []);

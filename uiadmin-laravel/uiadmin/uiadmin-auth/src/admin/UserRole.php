@@ -102,8 +102,8 @@ class UserRole extends BaseAdmin
                 'uid.number' => 'pid必须数字',
                 'roleName.require' => '角色名称必须',
             ]);
-            $data = input('post.');
-            $this->validate($data);
+            $data = Request::input();
+            $this->validateData($data);
 
             // 数据构造
             $userInfo  = UserModel::where('id', $data['uid'])->first();

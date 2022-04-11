@@ -471,11 +471,11 @@ class Ext extends BaseAdmin
         if (Request::isMethod('post')) {
             // 数据验证
             $this->validateMake([
-                'name'  => 'require',
-                'title' => 'require',
-                'description' => 'require',
-                'developer' => 'require',
-                'version' => 'require',
+                'name'  => 'required',
+                'title' => 'required',
+                'description' => 'required',
+                'developer' => 'required',
+                'version' => 'required',
             ],
             [
                 'name.require' => '模块名称必须',
@@ -484,8 +484,8 @@ class Ext extends BaseAdmin
                 'developer.require' => '开发者必须',
                 'version.require' => '版本号必须',
             ]);
-            $data = input('post.');
-            $this->validate($data);
+            $data = Request::input();
+            $this->validateData($data);
 
             // 数据构造
             $dataDb = $data;
@@ -727,12 +727,12 @@ EOF;
         if (Request::isMethod('put')) {
             // 数据验证
             $this->validateMake([
-                'name'  => 'require',
-                'title' => 'require',
-                'description' => 'require',
-                'developer' => 'require',
-                'website' => 'require',
-                'version' => 'require',
+                'name'  => 'required',
+                'title' => 'required',
+                'description' => 'required',
+                'developer' => 'required',
+                'website' => 'required',
+                'version' => 'required',
                 //'build' => 'require'
             ],
             [
@@ -744,8 +744,8 @@ EOF;
                 'version.require' => '版本号必须',
                 //'build.require' => 'build版本号必须',
             ]);
-            $data = input('post.');
-            $this->validate($data);
+            $data = Request::input();
+            $this->validateData($data);
             $dataDb = $data;
 
             // 数据构造

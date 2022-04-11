@@ -4,7 +4,6 @@
 
 // 以下兼容TP写法
 function input($name) {
-    
     if (\uiadmin\core\util\Str::contains('.', $name)) {
         $name = explode('.', $name);
         return Illuminate\Support\Facades\Request::input($name[1]);
@@ -89,9 +88,9 @@ function get_ext_services($service_list = [])
         $source = $value . '/composer.json';
         if (is_file($source)) {
             $content = json_decode(file_get_contents($source), true);
-            if (isset($content['extra']['think']['services'])
-                && count($content['extra']['think']['services']) > 0) {
-                foreach ($content['extra']['think']['services'] as $key => $value1) {
+            if (isset($content['extra']['laravel']['providers'])
+                && count($content['extra']['laravel']['providers']) > 0) {
+                foreach ($content['extra']['laravel']['providers'] as $key => $value1) {
                     $service_list[] = '\\' . $value1;
                 }
             }
@@ -109,12 +108,11 @@ function get_ext_services($service_list = [])
             }
         }
     }
-   \think\facade\Cache::set('psr4', $psr4, 200);
 
     // 注册psr-4
-    spl_autoload_register(function ($class) {
+    spl_autoload_register(function ($class) use($psr4) {
         /* 限定类名路径映射 */
-        $class_map = \think\facade\Cache::get('psr4');
+        $class_map = $psr4;
         $tmp = explode('\\', $class);
         $key = $tmp[0] . '\\' . $tmp[1] . '\\';
         if (isset($class_map[$key])) {
@@ -133,6 +131,7 @@ function get_ext_services($service_list = [])
 // 内部配置
 function get_config($name){
     $configs = [
+        'framework' => 'Laravel9',
         'version' => '1.2.0',
         'xyadmin' => [
             'version' => '1.2.0'

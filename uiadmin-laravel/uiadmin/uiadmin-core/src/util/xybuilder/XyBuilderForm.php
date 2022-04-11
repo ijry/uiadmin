@@ -233,6 +233,9 @@ class XyBuilderForm {
      * @author jry <ijry@qq.com>
      */
     public function setFormValues($data = []) {
+        if (is_object($data)) {
+            $data = $data->toArray();
+        }
         $this->data['itemValues'] = $data;
         return $this;
     }

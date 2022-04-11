@@ -242,8 +242,8 @@ class User extends BaseAdmin
         if (Request::isMethod('post')) {
             // 数据验证
             $this->validateMake([
-                'nickname'  => 'require',
-                'username' => 'require',
+                'nickname'  => 'required',
+                'username' => 'required',
                 'password' => 'require'
             ],
             [
@@ -251,8 +251,8 @@ class User extends BaseAdmin
                 'username.require' => '用户名必须',
                 'password.require' => '密码必须'
             ]);
-            $data = input('post.');
-            $this->validate($data);
+            $data = Request::input();
+            $this->validateData($data);
 
             // 数据构造
             $dataDb = $data;
@@ -343,15 +343,15 @@ class User extends BaseAdmin
         if (Request::isMethod('put')) {
             // 数据验证
             $this->validateMake([
-                    'nickname'  => 'require',
-                    'username' => 'require',
+                    'nickname'  => 'required',
+                    'username' => 'required',
                 ],
                 [
                     'nickname.require' => '昵称必须',
                     'username.require' => '用户名必须',
                 ]);
-            $data = input('post.');
-            $this->validate($data);
+            $data = Request::input();
+            $this->validateData($data);
 
             // 数据构造
             $dataDb = $data;

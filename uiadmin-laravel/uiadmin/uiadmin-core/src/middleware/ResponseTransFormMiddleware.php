@@ -9,7 +9,6 @@ class ResponseTransFormMiddleware
     //下划线转驼峰
     public function handle($request, Closure $next)
     {
-        
         $response = $next($request);
         if ($response->original) {
             return $this->changeHump($response->original);
