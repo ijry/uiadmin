@@ -259,7 +259,7 @@ class User extends BaseAdmin
             if (count($dataDb) <= 0 ) {
                 return json(['code' => 0, 'msg' => '无数据提交', 'data' => []]);
             }
-            $dataDb['userKey'] = \uiadmin\core\util\Str::random(64); //秘钥
+            $dataDb['userKey'] = \uiadmin\core\util\Str::random(16); //秘钥
             $dataDb['password'] = user_md5($dataDb['password'], $dataDb['userKey']); // 密码不能明文需要加密存储
             $dataDb['avatar'] = isset($dataDb['avatar']) ? $dataDb['avatar'] : '';
             $dataDb['status']   = 1;
@@ -360,7 +360,7 @@ class User extends BaseAdmin
                 return json(['code' => 0, 'msg' => '无数据提交', 'data' => []]);
             }
             if (isset($dataDb['password']) && $dataDb['password'] != '') {
-                $dataDb['userKey'] = \uniadmin\core\util\Str::random(64); //秘钥
+                $dataDb['userKey'] = \uniadmin\core\util\Str::random(16); //秘钥
                 $dataDb['password'] = user_md5($dataDb['password'], $dataDb['userKey']); // 密码不能明文需要加密存储
             } else {
                 unset($dataDb['password']);
