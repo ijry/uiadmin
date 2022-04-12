@@ -335,6 +335,9 @@ class User extends BaseAdmin
      */
     public function edit($id)
     {
+        // 用户信息
+        $info = UserModel::where('id', $id)
+            ->find();
         if (request()->isPut()) {
             // 数据验证
             $this->validateMake([
@@ -360,19 +363,21 @@ class User extends BaseAdmin
                 unset($dataDb['password']);
             }
 
+            // 更新数据
+            foreach ($dataDb as $key => $value) {
+                if (isset($info[$key])) {
+                    $info[$key] = $value;
+                }
+            }
+
             // 存储数据
-            $ret = UserModel::where('id', '=', $id)
-                ->update($dataDb);
+            $ret = $info->save();
             if ($ret) {
                 return json(['code' => 200, 'msg' => '修改用户信息成功', 'data' => []]);
             } else {
                 return json(['code' => 0, 'msg' => '修改用户信息失败', 'data' => []]);
             }
         } else {
-            // 用户信息
-            $info = UserModel::where('id', $id)
-                ->find();
-
             // 获取角色基于标题的树状列表
             $roleList = RoleModel::order('sortnum asc')
                 ->select();
