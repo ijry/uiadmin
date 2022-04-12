@@ -547,7 +547,7 @@ class Menu extends BaseAdmin
         // 子菜单检测
         $info = MenuModel::where('menu_layer', '=', 'admin')
             ->where(['id' => $id])
-            ->find();
+            ->first();
         $exist = MenuModel::where('menu_layer', '=', 'admin')
             ->where(['pmenu' => $info['path']])
             ->count();

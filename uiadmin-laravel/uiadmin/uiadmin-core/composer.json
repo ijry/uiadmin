@@ -13,6 +13,7 @@
         "firebase/php-jwt": "^5.5.1"
     },
     "require-dev": {
+        "laravel/framework": "^9.2",
         "kitloong/laravel-migrations-generator": "^5.2"
     },
     "autoload": {

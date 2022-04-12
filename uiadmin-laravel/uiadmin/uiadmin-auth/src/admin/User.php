@@ -264,6 +264,7 @@ class User extends BaseAdmin
             $dataDb['avatar'] = isset($dataDb['avatar']) ? $dataDb['avatar'] : '';
             $dataDb['status']   = 1;
             $dataDb['createTime'] = time();
+            $dataDb['lastLoginTime'] = time();
 
             // 存储数据
             $ret = UserModel::create($dataDb);
