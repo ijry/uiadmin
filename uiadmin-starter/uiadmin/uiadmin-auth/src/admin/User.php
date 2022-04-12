@@ -257,8 +257,8 @@ class User extends BaseAdmin
             $dataDb['password'] = user_md5($dataDb['password'], $dataDb['userKey']); // 密码不能明文需要加密存储
             $dataDb['avatar'] = isset($dataDb['avatar']) ? $dataDb['avatar'] : '';
             $dataDb['status']   = 1;
-            $dataDb['createTime'] = time();
-            $dataDb['lastLoginTime'] = time();
+            $dataDb['createTime'] = date('Y-m-d H:i:s');
+            $dataDb['lastLoginTime'] = date('Y-m-d H:i:s');
 
             // 存储数据
             $ret = UserModel::create($dataDb);
