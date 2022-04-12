@@ -352,7 +352,13 @@ class Ext extends BaseAdmin
             // $listData['dataList'] = $tree->list2tree($listData['dataList'], 'name', 'pname', 'children', 0, false);
         } else if ($type == 'server') {
             // 从服务器获取扩展列表
-            $res = file_get_contents('https://uiadmin.jiangruyi.com/api/v1/ext/addon/lists');
+            $stream_opts = [
+                "ssl" => [
+                        "verify_peer" => false,
+                        "verify_peer_name" => false,
+                ]
+            ];             
+            $res = file_get_contents('https://uiadmin.jiangruyi.com/api/v1/ext/addon/lists?framework=thinkphp', false, stream_context_create($stream_opts));
             if ($res) {
                 $res = json_decode($res, true);
                 $dataList = $res['data']['dataList'];
