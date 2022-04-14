@@ -1,0 +1,107 @@
+{
+    "name": "hyperf/hyperf-skeleton",
+    "type": "project",
+    "keywords": [
+        "php",
+        "swoole",
+        "framework",
+        "hyperf",
+        "microservice",
+        "middleware"
+    ],
+    "description": "A coroutine framework that focuses on hyperspeed and flexible, specifically use for build microservices and middlewares.",
+    "license": "Apache-2.0",
+    "require": {
+        "php": ">=8.0",
+        "hyperf/amqp": "~3.0.0",
+        "hyperf/async-queue": "~3.0.0",
+        "hyperf/cache": "~3.0.0",
+        "hyperf/command": "~3.0.0",
+        "hyperf/config": "~3.0.0",
+        "hyperf/database": "~3.0.0",
+        "hyperf/db-connection": "~3.0.0",
+        "hyperf/elasticsearch": "~3.0.0",
+        "hyperf/framework": "~3.0.0",
+        "hyperf/guzzle": "~3.0.0",
+        "hyperf/http-server": "~3.0.0",
+        "hyperf/logger": "~3.0.0",
+        "hyperf/memory": "~3.0.0",
+        "hyperf/model-cache": "~3.0.0",
+        "hyperf/task": "~3.0.0",
+        "hyperf/process": "~3.0.0",
+        "hyperf/tracer": "~3.0.0",
+        "hyperf/view": "^3.0.0",
+        "hyperf/view-engine": "^3.0.0",
+        "duncan3dc/blade": "dev-master"
+    },
+    "require-dev": {
+        "friendsofphp/php-cs-fixer": "^3.0",
+        "hyperf/devtool": "~3.0.0",
+        "hyperf/ide-helper": "~3.0.0",
+        "hyperf/testing": "~3.0.0",
+        "mockery/mockery": "^1.0",
+        "phpstan/phpstan": "^0.12",
+        "swoole/ide-helper": "^4.5",
+        "uiadmin/uiadmin-core": "dev-master",
+        "uiadmin/uiadmin-auth": "dev-master",
+        "uiadmin/uiadmin-config": "dev-master",
+        "uiadmin/uiadmin-ext": "dev-master"
+    },
+    "repositories": [
+        {
+            "type": "path",
+            "url": "uiadmin/uiadmin-core/"
+        },
+        {
+            "type": "path",
+            "url": "uiadmin/uiadmin-auth/"
+        },
+        {
+            "type": "path",
+            "url": "uiadmin/uiadmin-config/"
+        },
+        {
+            "type": "path",
+            "url": "uiadmin/uiadmin-ext/"
+        }
+    ],
+    "suggest": {
+        "ext-openssl": "Required to use HTTPS.",
+        "ext-json": "Required to use JSON.",
+        "ext-pdo": "Required to use MySQL Client.",
+        "ext-pdo_mysql": "Required to use MySQL Client."
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/"
+        },
+        "files": []
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "HyperfTest\\": "./test/"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "config": {
+        "optimize-autoloader": true,
+        "sort-packages": true
+    },
+    "extra": [],
+    "scripts": {
+        "post-root-package-install": [
+            "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
+        ],
+        "post-autoload-dump": [
+            "rm -rf runtime/container"
+        ],
+        "test": "co-phpunit --prepend test/bootstrap.php -c phpunit.xml --colors=always",
+        "cs-fix": "php-cs-fixer fix $1",
+        "analyse": "phpstan analyse --memory-limit 300M -l 0 -c phpstan.neon ./app ./config",
+        "start": [
+            "Composer\\Config::disableProcessTimeout",
+            "php ./bin/hyperf.php start"
+        ]
+    }
+}

@@ -1,0 +1,33 @@
+{
+    "name": "uiadmin/uiadmin-config",
+    "description": "渐进式开源低代码零前端后台-配置持久化模块",
+    "type": "library",
+    "license": "Apache-2.0",
+    "authors": [
+        {
+            "name": "jry",
+            "email": "ijry@qq.com"
+        }
+    ],
+    "require": {
+        "hyperf/view": "^3.0.0",
+        "hyperf/view-engine": "^3.0.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "uiadmin\\config\\": "src/"
+        },
+        "files":[
+        ] 
+    },
+    "extra": {
+        "hyperf": {
+            "config": "uiadmin\\config\\ConfigProvider"
+        },
+        "laravel": {
+            "providers": [
+                "uiadmin\\config\\LrvServiceProvider"
+            ]
+        }
+    }
+}

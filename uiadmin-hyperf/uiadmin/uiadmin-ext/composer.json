@@ -1,0 +1,31 @@
+{
+    "name": "uiadmin/uiadmin-ext",
+    "description": "渐进式开源低代码零前端-扩展管理模块",
+    "type": "library",
+    "license": "Apache-2.0",
+    "authors": [
+        {
+            "name": "jry",
+            "email": "ijry@qq.com"
+        }
+    ],
+    "require": {
+    },
+    "autoload": {
+        "psr-4": {
+            "uiadmin\\ext\\": "src/"
+        },
+        "files":[
+        ] 
+    },
+    "extra": {
+        "hyperf": {
+            "config": "uiadmin\\ext\\ConfigProvider"
+        },
+        "laravel": {
+            "providers": [
+                "uiadmin\\ext\\LrvServiceProvider"
+            ]
+        }
+    }
+}
