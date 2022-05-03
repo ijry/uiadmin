@@ -9,7 +9,7 @@
 请参考文档
 
 ## UiAdmin(ThinkPHP6.0版本)
-UiAdmin是一套零前端代码通用后台，采用前后端分离技术，数据交互采用json格式；通过后端Builder不需要一行前端代码就能构建一个vue+element的现代化后台；同时我们打造一了套兼容性的API标准，从ThinkPHP6.0、SpringBoot、.NET5开始，逐步覆盖Go、Node.jS等多语言框架。
+UiAdmin是一套轻量级全栈通用后台，采用前后端分离技术，数据交互采用json格式；通过后端Builder不需要一行前端代码就能体验一个vue+element的现代化后台；同时我们打造一了套兼容性的API标准，从ThinkPHP6.0、SpringBoot、.NET5开始，逐步覆盖Go、Node.jS等多语言框架。
 
 ## 特性
 
