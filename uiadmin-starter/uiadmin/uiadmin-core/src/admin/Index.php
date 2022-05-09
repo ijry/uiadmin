@@ -138,7 +138,7 @@ class Index extends BaseAdmin
                     // ],
                     [
                         'type'  => 'text',
-                        'title' => '框架',
+                        'title' => '语言框架',
                         'value' => "ThinkPHP6"
                     ],
                     [

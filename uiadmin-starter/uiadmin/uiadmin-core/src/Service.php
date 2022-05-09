@@ -44,7 +44,6 @@ class Service extends \think\Service
             // 根接口
             $route->get('/$', "uiadmin\\core\\controller\\Core@index");
             $route->get('/admin/api$', "uiadmin\\core\\admin\\Index@api");
-            $route->get(config("uiadmin.site.apiPrefix") . '/v1/admin/core/index/index$', "uiadmin\\core\\admin\\Index@index");
             $route->post(config("uiadmin.site.apiPrefix") . '/v1/admin/core/user/login', "uiadmin\\core\\admin\\User@login");
             $route->get(config("uiadmin.site.apiPrefix") . '/v1/admin/core/index/index$', "uiadmin\\core\\admin\\Index@index");
             $route->get(config("uiadmin.site.apiPrefix") . '/v1/admin/core/menu/trees$', "uiadmin\\core\\admin\\Menu@trees");

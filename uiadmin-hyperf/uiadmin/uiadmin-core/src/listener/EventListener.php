@@ -24,7 +24,7 @@ class EventListener implements ListenerInterface
     {
         // 返回一个该监听器要监听的事件数组，可以同时监听多个事件
         return [
-            \Hyperf\Framework\Event\BeforeWorkerStart::class,
+            \Hyperf\Framework\Event\ConsoleComandEvent::class
         ];
     }
 
