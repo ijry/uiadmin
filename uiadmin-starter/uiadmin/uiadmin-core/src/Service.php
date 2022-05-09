@@ -35,6 +35,9 @@ class Service extends \think\Service
                 curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0); // 表示不检查证书
                 $xyadminIndex = curl_exec($ch);
                 curl_close($ch);
+                // 替换处理
+                $xyadminIndex = preg_replace('#https\://cdn\.jiangruyi\.com\/npm/element-ui@2.15.5\/#',
+                    request()->root(true) . '/npm/element-ui@2.15.5/', $xyadminIndex);
                 return $xyadminIndex;
             });
 
