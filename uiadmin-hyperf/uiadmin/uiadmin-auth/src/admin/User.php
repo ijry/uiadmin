@@ -118,7 +118,7 @@ class User extends BaseAdmin
                 'width' => '170px',
                 'type' => 'template',
                 'template' => 'time',
-                'extend' => ['format' => 'yyyy-MM-dd hh:mm:ss']
+                'extend' => ['format' => 'yyyy-MM-dd HH:mm:ss']
             ])
             ->addColumn('roles', '角色', [
                 'width' => '120px',
