@@ -12,11 +12,7 @@
 
 namespace demo\blog\admin;
 
-use think\facade\Db;
-use think\Validate;
-use think\facade\Request;
 use uiadmin\core\admin\BaseAdmin;
-use uiadmin\core\util\Tree;
 use demo\blog\model\Post as PostModel;
 
 /**
