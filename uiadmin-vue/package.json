@@ -17,6 +17,8 @@
     "vue-router": "^4.0.15"
   },
   "devDependencies": {
+    "@headlessui/vue": "^1.6.3",
+    "@heroicons/vue": "^1.0.6",
     "@vitejs/plugin-vue": "^2.3.3",
     "autoprefixer": "^10.4.7",
     "path": "^0.12.7",
