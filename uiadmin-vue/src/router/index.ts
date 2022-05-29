@@ -1,7 +1,26 @@
+/**
+ * +----------------------------------------------------------------------
+ * | uiadmin [ 渐进式快速开发接口后台 ]
+ * +----------------------------------------------------------------------
+ * | Copyright (c) 2018-2022 http://uiadmin.jiangruyi.com All rights reserved.
+ * +----------------------------------------------------------------------
+ * | Author: jry <598821125@qq.com>
+ * +----------------------------------------------------------------------
+*/
+
 import {createRouter,createWebHistory,createWebHashHistory} from 'vue-router';
 
 const routes = [
-    { path: '/', component: () => import('@/pages/home.vue') },
+    {
+        path: '/base',
+        component: () => import('@/pages/base.vue'),
+        children: [
+            {
+                path: '/',
+                component: () => import('@/pages/home.vue')
+            }
+        ]
+    },
 ]
 
 const router = createRouter({
