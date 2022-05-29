@@ -4,6 +4,9 @@
     <div>
       <img alt="Vue logo" src="@/assets/logo.png" />
       <HelloWorld msg="Hello Vue 3 + Vite + uiadmin" />
+      <h1 class="text-3xl font-bold underline text-red-400">
+        Hello world!
+      </h1>
     </div>
 </template>
 <script lang="ts" setup>
