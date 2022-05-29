@@ -12,18 +12,14 @@ const count = ref(0)
   <h1>{{ msg }}</h1>
 
   <p>
-    Recommended IDE setup:
-    <a href="https://code.visualstudio.com/" target="_blank">VSCode</a>
+    
+    <a href="https://gitee.com/uiadmin/uiadmin" target="_blank">Gitee</a>
     +
-    <a href="https://github.com/johnsoncodehk/volar" target="_blank">Volar</a>
+    <a href="https://github.com/ijry/uiadmin" target="_blank">Github</a>
   </p>
 
   <p>
-    <a href="https://vitejs.dev/guide/features.html" target="_blank">
-      Vite Documentation
-    </a>
-    |
-    <a href="https://v3.vuejs.org/" target="_blank">Vue 3 Documentation</a>
+    <a href="https://uiadmin.jiangruyi.com/" target="_blank">UiAdmin Documentation</a>
   </p>
 
   <button type="button" @click="count++">count is: {{ count }}</button>

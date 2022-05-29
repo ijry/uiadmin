@@ -1,17 +1,26 @@
 {
-  "name": "test",
+  "name": "uiadmin-vue",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.2.0",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "vue-tsc --noEmit && vite build",
     "preview": "vite preview"
   },
   "dependencies": {
-    "vue": "^3.2.25"
+    "@codemirror/lang-html": "^0.20.0",
+    "@codemirror/lang-javascript": "^0.20.0",
+    "@codemirror/theme-one-dark": "^0.20.0",
+    "element-plus": "^2.2.1",
+    "vue": "^3.2.25",
+    "vue-codemirror": "^5.0.1",
+    "vue-router": "^4.0.15"
   },
   "devDependencies": {
-    "@vitejs/plugin-vue": "^2.2.0",
-    "vite": "^2.8.0"
+    "@vitejs/plugin-vue": "^2.3.3",
+    "path": "^0.12.7",
+    "typescript": "^4.5.4",
+    "vite": "^2.9.9",
+    "vue-tsc": "^0.34.7"
   }
 }
