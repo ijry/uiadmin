@@ -11,7 +11,7 @@
                 </span>
                 <p class="ml-3 font-medium text-white truncate">
                     <span class="md:hidden"> We announced a new product! </span>
-                    <span class="hidden md:inline"> 这是UiAdmin配套的前台Vue工程，可以以此为基石开发前台页面配合UiAdmin开发接口。</span>
+                    <span class="hidden md:inline"> 这是UiAdmin配套的前台Vue3（Vite+TypeScript构建）工程，可以以此为基石开发前台页面配合UiAdmin开发接口。</span>
                 </p>
                 </div>
                 <div class="order-3 mt-2 flex-shrink-0 w-full sm:order-2 sm:mt-0 sm:w-auto">
