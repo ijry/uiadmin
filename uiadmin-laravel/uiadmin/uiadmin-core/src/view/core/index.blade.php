@@ -162,11 +162,11 @@
                     <div class="flex" style="justify-content: flex-start;margin-top: 3em;flex-wrap: wrap;">
                         <div class="buttons">
                             <el-button
-                                type="default" plain @click="switchType('https://uiadmin.jiangruyi.com')">
+                                type="default" plain @click="switchType('https://uiadmin.net')">
                                 官网
                             </el-button>
                             <el-button
-                                type="default" plain @click="switchType('https://uiadmin.jiangruyi.com/uiadmin')">
+                                type="default" plain @click="switchType('https://uiadmin.net/uiadmin')">
                                 文档
                             </el-button>
                             <el-button

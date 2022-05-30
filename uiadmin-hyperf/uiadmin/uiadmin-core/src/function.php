@@ -133,8 +133,9 @@ function get_ext_services($service_list = [])
 // 内部配置
 function get_config($name){
     $configs = [
-        'framework' => 'Laravel9',
+        'framework' => 'Hyperf3',
         'version' => '1.2.0',
+        'uidomain' => 'https://uiadmin.net'
         'xyadmin' => [
             'version' => '1.2.0'
         ]

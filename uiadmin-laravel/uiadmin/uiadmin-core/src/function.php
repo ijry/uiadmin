@@ -135,6 +135,7 @@ function get_config($name){
     $configs = [
         'framework' => 'Laravel9',
         'version' => '1.2.0',
+        'uidomain' => 'https://uiadmin.net',
         'xyadmin' => [
             'version' => '1.2.0'
         ]

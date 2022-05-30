@@ -324,7 +324,7 @@ class Ext extends BaseAdmin
                         "verify_peer_name" => false,
                 ]
             ];             
-            $res = file_get_contents('https://uiadmin.jiangruyi.com/api/v1/ext/addon/lists?framework=hyperf', false, stream_context_create($stream_opts));
+            $res = file_get_contents('https://uiadmin.net/api/v1/ext/addon/lists?framework=hyperf', false, stream_context_create($stream_opts));
 
             if ($res) {
                 $res = json_decode($res, true);
@@ -359,7 +359,7 @@ class Ext extends BaseAdmin
                 //     ]
                 // ])
                 ->addRightButton('down', '下载', [
-                    'url' => 'https://uiadmin.jiangruyi.com/ext',
+                    'url' => 'https://uiadmin.net/ext',
                     'modalType' => 'url',
                     'condition' => [
                         //['isExist', '=', '0']

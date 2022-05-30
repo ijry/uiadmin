@@ -29,13 +29,13 @@ UiAdmin诞生在移动互联网后半场，面多各种 流量入口，UiAdmin�
 UiAdmin后台将打造统一的后台框架体系， 后端横跨php、java、python、node、.net 等等语言，前端将支持vue、react、angular 语言，多个语言支持通过统一的API标准兼容.
 
 ## 资源
-官方网站：https://uiadmin.jiangruyi.com  
-成功案例：https://uiadmin.jiangruyi.com/case  
-插件市场：https://uiadmin.jiangruyi.com/ext  
+官方网站：https://uiadmin.net  
+成功案例：https://uiadmin.net/case  
+插件市场：https://uiadmin.net/ext  
 
 ## 解决问题
-文档手册：https://uiadmin.jiangruyi.com/docs/uiadmin1-2
-交流社区：https://uiadmin.jiangruyi.com/ask  
+文档手册：https://uiadmin.net/docs/uiadmin1-2
+交流社区：https://uiadmin.net/ask  
 或者通过下面的QQ群进行提问
 
 ## 开源地址

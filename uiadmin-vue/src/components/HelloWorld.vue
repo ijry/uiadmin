@@ -19,7 +19,7 @@ const count = ref(0)
   </p>
 
   <p>
-    <a href="https://uiadmin.jiangruyi.com/" target="_blank">UiAdmin Documentation</a>
+    <a href="https://uiadmin.net/" target="_blank">UiAdmin Documentation</a>
   </p>
 
   <button type="button" @click="count++">count is: {{ count }}</button>
