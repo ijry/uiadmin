@@ -35,7 +35,7 @@ class AllowCrossDomain
         header('Access-Control-Allow-Origin: *');
         header('Access-Control-Max-Age: 1800');
         header('Access-Control-Allow-Methods: GET, POST, PATCH, PUT, DELETE');
-        header('Access-Control-Allow-Headers: Authorization, CloudId, Eid, Content-Type, If-Match, If-Modified-Since, If-None-Match, If-Unmodified-Since, X-CSRF-TOKEN, X-Requested-With, Token');
+        header('Access-Control-Allow-Headers: Access-Control-Allow-Origin, Authorization, CloudId, Eid, Content-Type, If-Match, If-Modified-Since, If-None-Match, If-Unmodified-Since, X-CSRF-TOKEN, X-Requested-With, Token');
         if (strtoupper($request->method()) == "OPTIONS") {
             exit; // 修复CROS
         }

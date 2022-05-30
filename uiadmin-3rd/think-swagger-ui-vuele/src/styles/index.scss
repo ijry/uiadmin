@@ -1,0 +1,12 @@
+@import './main/sidebar.scss';
+@import './main/sidebar-simple.scss';
+@import './tennetcn-ui//index.scss';
+
+a,
+a:focus,
+a:hover {
+  cursor: pointer;
+  color: inherit;
+  outline: none;
+  text-decoration: none;
+}

@@ -26,7 +26,8 @@
         "uiadmin/uiadmin-core": "dev-master",
         "uiadmin/uiadmin-auth": "dev-master",
         "uiadmin/uiadmin-config": "dev-master",
-        "uiadmin/uiadmin-ext": "dev-master"
+        "uiadmin/uiadmin-ext": "dev-master",
+        "uiadmin/uiadmin-apidoc": "dev-master"
     },
     "require-dev": {
         "symfony/var-dumper": "^4.2",
@@ -48,6 +49,9 @@
         {
             "type": "path",
             "url": "uiadmin/uiadmin-ext/"
+        },{
+            "type": "path",
+            "url": "uiadmin/uiadmin-apidoc/"
         },
         {
             "type": "composer",
