@@ -1,11 +1,11 @@
 <template>
   <div class="topbar-container">
     <el-menu class="topbar" mode="horizontal">
-      <span class="logo-img" style="padding-top:5px;float:left;height:50px;padding-left:10px;">
+      <span class="logo-img" style="display:none;padding-top:5px;float:left;height:50px;padding-left:10px;">
         <img src="@/assets/logo.png" style="width:40px;height:40px;" />
       </span>
       <span class="title-font">
-        <a :href="mainIndex">SwaggerUI</a>
+        <a :href="mainIndex">{{swaggerInfo.info.title}}</a>
       </span>
       <div class="avatar-container">
         <tc-button size="small" type="think" @click="openCommonSetting">通用设置</tc-button>
@@ -40,7 +40,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['theme']),
+    ...mapGetters(['theme', 'swaggerInfo']),
     mainIndex: function() {
       return this.theme === 'admin' ? '/#/main/index' : '/#/simpleMain/index'
     }

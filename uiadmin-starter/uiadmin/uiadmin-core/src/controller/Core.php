@@ -16,7 +16,7 @@ use think\facade\View;
 /**
  * 核心控制器
  * 
- * *@OA\Tag(
+ * @OA\Tag(
  *     name="核心模块",
  *     description="包含用户登录、注销、详情、上传等基本核心接口",
  * )
