@@ -5,6 +5,22 @@
 
 这是一个Monorepo仓库，包含不同框架的uiadmin实现。
 
+### 后端实现
+
+```
+uiadmin-hyperf 基于hyperf3[php]框架的uiadmin后端实现
+uiadmin-laravel 基于laravel9[php]框架的uiadmin后端实现
+uiadmin-starter 基于thinkphp6[php]框架的uiadmin后端实现
+```
+
+### 配套前台脚手架几其它
+```
+uiadmin-3rd 一些第三方的开源依赖项目，一般不需要自己编译。
+uiadmin-flutter 一个基于flutter的前台脚手架工程
+uiadmin-uniapp 一个基于uni-app的前台脚手架工程
+uiadmin-vue 一个基于vue3+vite+typescript的前台脚手架工程
+```
+
 ##  安装
 请参考文档
 
