@@ -11,6 +11,7 @@
     "@codemirror/lang-html": "^0.20.0",
     "@codemirror/lang-javascript": "^0.20.0",
     "@codemirror/theme-one-dark": "^0.20.0",
+    "axios": "^0.27.2",
     "element-plus": "^2.2.1",
     "vue": "^3.2.25",
     "vue-codemirror": "^5.0.1",

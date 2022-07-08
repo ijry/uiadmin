@@ -17,10 +17,6 @@ export default defineConfig({
   plugins: [vue()],
   base:'./', // 添加这个属性
   build: {
-    rollupOptions: {
-      output: {
-      }
-    }
   },
   define: {
     'process.env': {},
