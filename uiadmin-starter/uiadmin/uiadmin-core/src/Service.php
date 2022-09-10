@@ -28,7 +28,7 @@ class Service extends \think\Service
                 $secondsToCache = 3600;
                 $ts = gmdate("D, d M Y H:i:s", time() + $secondsToCache) . " GMT";
                 $ch= curl_init();
-                curl_setopt($ch, CURLOPT_URL, 'https://admin.starideas.net/xyadmin/?version=' . get_config('xyadmin.version'));
+                curl_setopt($ch, CURLOPT_URL, 'https://uiadmin.jiangruyi.com/xyadmin/?version=' . get_config('xyadmin.version'));
                 curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
                 curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 10);
                 curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // 信任任何证
