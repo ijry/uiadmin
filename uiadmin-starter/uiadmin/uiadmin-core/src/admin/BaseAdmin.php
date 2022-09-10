@@ -35,4 +35,13 @@ class BaseAdmin extends BaseController
             return (Array)$ret['data']['data'];
         }
     }
+
+    /**
+     * 快速修改字段值
+     *
+     * @author jry <ijry@qq.com>
+     */
+    protected function editField() {
+        return parent::editField();
+    }
 }
