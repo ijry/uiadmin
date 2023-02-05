@@ -1,0 +1,22 @@
+{
+  "name": "uiadmin-express-starter",
+  "version": "1.0.0",
+  "description": "a express version of uiadmin",
+  "main": "app.js",
+  "private": true,
+  "dependencies": {
+    "uiadmin-express": "^1.0.6"
+  },
+  "devDependencies": {
+  },
+  "scripts": {
+    "start": "babel-node app",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "uiadmin"
+  ],
+  "author": "jry",
+  "license": "Apache2",
+  "website": "https://uiadmin.net"
+}
