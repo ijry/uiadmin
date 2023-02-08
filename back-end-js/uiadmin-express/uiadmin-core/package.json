@@ -1,6 +1,6 @@
 {
   "name": "uiadmin-express",
-  "version": "1.0.7",
+  "version": "1.0.9",
   "description": "a express version of uiadmin",
   "main": "index.js",
   "dependencies": {
