@@ -7,10 +7,15 @@ import org.apache.commons.codec.digest.DigestUtils;
 
 import com.jiangruyi.summer.core.service.IUserService;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 
 @Service
 public class UserServiceImpl implements IUserService{
+    @Autowired
+	private Environment env;
+
     /**
 	 * 根据username获取用户记录
      * @throws Exception
@@ -22,7 +27,6 @@ public class UserServiceImpl implements IUserService{
                     put("id", "1");
                     put("nickname", "管理员");
                     put("username", "admin");
-                    put("password", "b898091b7529570e52c01ddad1520250");
                     put("avatar", "");
                     put("roles", "super_admin");
                 }
@@ -31,7 +35,7 @@ public class UserServiceImpl implements IUserService{
             String pwdsha1 = DigestUtils.sha1Hex(password.getBytes());
             String pwdmd5  = org.springframework.util.DigestUtils.md5DigestAsHex(pwdsha1.getBytes());
             // System.out.println(password + pwdmd5);
-            if (!pwdmd5.equals(userInfo.get("password"))) {
+            if (!pwdmd5.equals(org.springframework.util.DigestUtils.md5DigestAsHex(DigestUtils.sha1Hex(env.getProperty("summer.user.password").getBytes()).getBytes()))) {
                 throw new Exception("密码不正确");
             }
             return userInfo;

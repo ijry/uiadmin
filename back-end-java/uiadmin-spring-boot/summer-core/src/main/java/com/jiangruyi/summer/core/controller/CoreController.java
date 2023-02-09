@@ -53,7 +53,7 @@ public class CoreController {
 	@GetMapping("/xyadmin/")
 	public String admin() throws ClientProtocolException, IOException {
 		// (1) 创建HttpGet实例  
-		HttpGet get = new HttpGet("https://uiadmin.net/xyadmin/?version=1.0.0");  
+		HttpGet get = new HttpGet("https://uiadmin.net/xyadmin/?version=1.1.0");  
 		  
 		// (2) 使用HttpClient发送get请求，获得返回结果HttpResponse  
 		HttpClient http = new DefaultHttpClient();  
@@ -103,7 +103,7 @@ public class CoreController {
 	 */
 	@GetMapping("/xyadmin/api")
 	public Object api() {
-		final String apiBase = request.getScheme() + "://" + request.getServerName() + ":" + request.getLocalPort() + "/api/";
+		final String apiBase = request.getScheme() + "://" + request.getServerName() + ":" + request.getLocalPort() + "/api";
 		HashMap<String, Object> data = new HashMap<String, Object>() {
 			{
 				put("lang", "java");
@@ -111,7 +111,7 @@ public class CoreController {
 				put("name", "summer");
 				put("title", environment.getProperty("summer.site.title")); // 网站名称
 				put("stype", "应用");
-				put("version", "1.0.0");
+				put("version", "1.1.0");
 				put("domainRoot", request.getScheme()+"://"+ request.getServerName() + ":" + request.getLocalPort());
 				put("api", new HashMap<String, Object>() {
 					{
@@ -125,7 +125,7 @@ public class CoreController {
 				});
                 put("config", new HashMap<String, Object>() {
                     {
-                        put("useVerify", environment.getProperty("summer.user.useVerify", boolean.class)); // 开启登录验证码
+                        put("useVerify", environment.getProperty("summer.user.useVerify")); // 开启登录验证码
                     }
                 });
 				put("siteInfo", new HashMap<String, Object>() {

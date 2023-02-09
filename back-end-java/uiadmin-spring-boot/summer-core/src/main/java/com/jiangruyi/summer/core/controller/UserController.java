@@ -50,13 +50,19 @@ public class UserController {
 	public Object login(@Valid @NotBlank @RequestBody JSONObject data) {
         // 行为验证
         if (environment.getProperty("summer.user.useVerify") != null
-            && environment.getProperty("summer.user.useVerify", Boolean.class) != false) {
-            //必传参数：captchaVO.captchaVerification
-            CaptchaVO  cvo = new CaptchaVO();
-            cvo.setCaptchaVerification(data.getJSONObject("captchaVerify").getString("captchaVerification"));
-            ResponseModel response = captchaService.verification(cvo);
-            if(response.isSuccess() == false){
-                return ApiReturnUtil.error(0, response.getRepCode() + response.getRepMsg());
+            && environment.getProperty("summer.user.useVerify") != "") {
+            switch (environment.getProperty("summer.user.useVerify")) {
+                case "aj-captcha":
+                    //必传参数：captchaVO.captchaVerification
+                    CaptchaVO  cvo = new CaptchaVO();
+                    cvo.setCaptchaVerification(data.getJSONObject("captchaVerify").getString("captchaVerification"));
+                    ResponseModel response = captchaService.verification(cvo);
+                    if(response.isSuccess() == false){
+                        return ApiReturnUtil.error(0, response.getRepCode() + response.getRepMsg());
+                    }
+                    break;
+                default:
+                    break;
             }
         }
 
@@ -111,7 +117,7 @@ public class UserController {
     /**
 	 * 注销登录
 	 */
-	@DeleteMapping("/api/v1/user/logout")
+	@DeleteMapping("/api/v1/core/user/logout")
 	public Object logout() {
         // 当前会话注销登录
         StpUtil.logout();

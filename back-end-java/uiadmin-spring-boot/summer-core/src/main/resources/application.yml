@@ -8,7 +8,8 @@ summer:
     logoTitle: ""
   user: 
     # 使用行为验证
-    useVerify: true
+    useVerify: "aj-captcha"
+    password: 'uniadmin'
 
 spring:
   application:

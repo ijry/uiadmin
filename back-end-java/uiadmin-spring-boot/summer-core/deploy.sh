@@ -3,8 +3,8 @@
 # 当发生错误时中止脚本
 set -e
 
-# 新机器需要先安装gpg并生成证书 gpg --full-generate-key && gpg --list-key 
-# 上传公钥
+# 新机器需要先安装gpg并生成证书 gpg --gen-key && gpg --list-key
+# 上传公钥主义Windows在PowerShell和Bash下是有两份不同数据的
 # gpg --keyserver hkp://keyserver.ubuntu.com:11371 --send-keys 7A0FAC2160A478370728B04F6059F1264AB47BB2
 # gpg --keyserver hkp://keyserver.ubuntu.com:11371 --recv-keys 7A0FAC2160A478370728B04F6059F1264AB47BB2
 
