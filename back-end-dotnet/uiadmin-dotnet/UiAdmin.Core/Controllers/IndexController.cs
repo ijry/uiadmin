@@ -36,7 +36,7 @@ namespace UiAdmin.Core.Controllers
             string result;  
             try {
                 var webClient = new WebClient { Encoding = Encoding.UTF8 };
-                result = webClient.DownloadString("https://admin.starideas.net/xyadmin/?version=1.0.0");
+                result = webClient.DownloadString("https://uiadmin.net/xyadmin/?version=1.1.0");
             } catch (Exception ex) {
                 result = ex.Message;
             }

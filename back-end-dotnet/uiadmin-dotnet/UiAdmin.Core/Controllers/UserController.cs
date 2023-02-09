@@ -29,7 +29,7 @@ namespace UiAdmin.Core.Controllers
         {
             string account =  (string) model.GetValue("account");
             string password = (string) model.GetValue("password");
-            if (account != "admin" || password != "uniadmin") {
+            if (account != "admin" || password != "uiadmin") {
                 return Ok(ApiReturnUtil.error(0, "账号密码错误"));
             }
             string token = "mvp-temp-token";
