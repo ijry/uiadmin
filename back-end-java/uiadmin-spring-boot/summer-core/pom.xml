@@ -96,7 +96,7 @@
     <dependency>
         <groupId>com.alibaba</groupId>
         <artifactId>fastjson</artifactId>
-        <version>1.2.75</version>
+        <version>1.2.83</version>
     </dependency>
     <!-- sa-token 权限认证, 在线文档：http://sa-token.dev33.cn/ -->
     <dependency>
