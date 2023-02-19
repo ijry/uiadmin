@@ -16,7 +16,7 @@
   <packaging>jar</packaging>
 
   <name>summer-core</name>
-  <url>https://uniadmin.jiangruyi.com</url>
+  <url>https://uniadmin.net</url>
   <description>Summer Framework Core</description>
   
   <!-- 开源签名证书 -->
@@ -102,7 +102,7 @@
     <dependency>
         <groupId>cn.dev33</groupId>
         <artifactId>sa-token-spring-boot-starter</artifactId>
-        <version>1.16.0.RELEASE</version>
+        <version>1.34.0.RELEASE</version>
     </dependency>
     <!-- captcha 验证 https://captcha.anji-plus.com/-->
     <dependency>

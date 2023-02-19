@@ -10,5 +10,5 @@ public interface IMenuService {
 	 * 根据用户ID和角色获取用户有权限的菜单
      * @throws Exception
 	 */
-	public List<Object> getByUser(String userId, String userRoles) throws Exception;
+	public List<Object> getByUser(String userId, List<String> userAuthoritys) throws Exception;
 }

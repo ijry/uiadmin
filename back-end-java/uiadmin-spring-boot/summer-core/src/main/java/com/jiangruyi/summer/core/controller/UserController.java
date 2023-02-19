@@ -26,6 +26,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.jiangruyi.summer.core.entity.User;
+
 import cn.dev33.satoken.stp.StpUtil;
 /**
  * @author Jry
@@ -69,7 +71,7 @@ public class UserController {
         // 登录
         String account = data.getString("account");
         String password = data.getString("password");
-        Map userInfo;
+        User userInfo = new User();
         try {
             userInfo = userService.login(account, password);
         } catch (Exception e) {
@@ -83,23 +85,17 @@ public class UserController {
 
         HashMap<String, Object> result = new HashMap<String, Object>();
         result.put("token", "Bearer " + token);
-        result.put("userInfo", new HashMap<String, Object>() {
-            {
-                put("id", userInfo.get("id"));
-                put("nickname", userInfo.get("nickname"));
-                put("username", userInfo.get("username"));
-                put("avatar", userInfo.get("avatar"));
-            }
-        });
+        userInfo.setPassword("");
+        result.put("userInfo", userInfo);
 		return ApiReturnUtil.success("登录成功", result);
     }
 
     /**
 	 * 获取当前登录的用户信息接口
 	 */
-	@GetMapping("/api/v1/user/info")
+	@GetMapping("/api/v1/admin/user/info")
 	public Object userInfo() {
-        Map userInfo;
+        User userInfo;
         try {
             // 获取当前会话登录id, 如果未登录，则抛出异常：`NotLoginException`
             userInfo = userService.getById((String) StpUtil.getLoginId());
@@ -107,10 +103,8 @@ public class UserController {
             return ApiReturnUtil.error(401, e.getMessage());
         }
         JSONObject result = new JSONObject();
-        result.put("id", userInfo.get("id"));
-        result.put("nickname", userInfo.get("nickname"));
-        result.put("username", userInfo.get("username"));
-        result.put("avatar", userInfo.get("avatar"));
+        userInfo.setPassword("");
+        result.put("userInfo", userInfo);
 		return ApiReturnUtil.success(result);
 	}
     

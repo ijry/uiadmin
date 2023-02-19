@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.alibaba.fastjson.JSONObject;
+import com.jiangruyi.summer.core.entity.User;
 import com.jiangruyi.summer.core.util.ApiReturnUtil;
 import com.jiangruyi.summer.core.service.IMenuService;
 import com.jiangruyi.summer.core.service.IUserService;
@@ -29,13 +30,14 @@ public class MenuController {
 
     @Autowired
     private IMenuService menuService;
+
     /**
 	 * 获取菜单接口
      * @throws IOException
 	 */
 	@GetMapping("/api/v1/admin/menu/trees")
 	public Object trees() throws IOException {
-        Map userInfo;
+        User userInfo = new User();
         try {
             // 获取当前会话登录id, 如果未登录，则抛出异常：`NotLoginException`
             userInfo = userService.getById((String) StpUtil.getLoginId());
@@ -44,7 +46,8 @@ public class MenuController {
         }
         List menuList;
         try {
-            menuList = menuService.getByUser(userInfo.get("id").toString(), userInfo.get("roles").toString());
+            menuList = menuService.getByUser(userInfo.getId().toString(),
+                userInfo.getAuthorities());
         } catch (Exception e) {
             return ApiReturnUtil.error(0, e.getMessage());
         }

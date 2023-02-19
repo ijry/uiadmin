@@ -45,6 +45,16 @@ public class CoreController {
 	@Autowired
     private HttpServletResponse response;
 
+    /**
+	 * 调用云后台
+	 * @throws IOException 
+	 * @throws ClientProtocolException 
+	 */
+	@GetMapping("/xyadmin")
+    public void index(HttpServletResponse response) throws ClientProtocolException, IOException {
+        response.sendRedirect("/xyadmin/");
+    }
+
 	/**
 	 * 调用云后台
 	 * @throws IOException 
@@ -111,7 +121,7 @@ public class CoreController {
 				put("name", "summer");
 				put("title", environment.getProperty("summer.site.title")); // 网站名称
 				put("stype", "应用");
-				put("version", "1.1.0");
+				put("version", "1.2.0");
 				put("domainRoot", request.getScheme()+"://"+ request.getServerName() + ":" + request.getLocalPort());
 				put("api", new HashMap<String, Object>() {
 					{
@@ -120,7 +130,7 @@ public class CoreController {
 						put("apiAdmin", "/v1/admin/index/index");
 						put("apiMenuTrees", "/v1/admin/menu/trees"); // 必须实现
 						put("apiConfig", "/v1/site/info"); // 此接口注意不要返回isClassified=1的字段
-						put("apiUserInfo", "/v1/user/info");
+						put("apiUserInfo", "/v1/admin/user/info");
 					}
 				});
                 put("config", new HashMap<String, Object>() {
@@ -142,6 +152,10 @@ public class CoreController {
     /**
 	 * 后台首页
 	 */
+    @MenuItem(title = "系统", path = "/_system", pmenu = "/default_root", menuType = -1, sortnum = 99, icon="xyicon-settings")
+    @MenuItem(title = "开发工具", path = "/dev", pmenu = "/_system", menuType = 0, sortnum = 0)
+    @MenuItem(title = "内容", path = "/_content", pmenu = "/default_root", menuType = -1, sortnum = 10, icon="xyicon-plane")
+    @MenuItem(title = "内容管理", path = "/content", pmenu = "/_content", menuType = 0, sortnum = 0)
 	@GetMapping("/api/v1/admin/index/index")
 	public Object adminIndex() {
         ArrayList dataList = new ArrayList();
