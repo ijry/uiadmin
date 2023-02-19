@@ -3,9 +3,17 @@
 ## 安装依赖
 ```
 pip install twine
+
 ```
 
-## 发布
+## debug本地调试
+避免改动后需要频繁发布pip
+
+```
+python3 setup.py install
+```
+
+## 发布到pip
 ```
 rm -r ./build
 rm -r ./dist
