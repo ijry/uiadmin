@@ -1,9 +1,20 @@
-
-![UiAdmin](https://vkceyugu.cdn.bspapp.com/VKCEYUGU-f12e1180-fce8-465f-a4cd-9f2da88ca0e6/ba0c3585-fa80-4277-9ea2-46b08a23a4bf.png)
+[![Build Status](https://travis-ci.org/ijry/initadmin.svg?branch=master)](https://travis-ci.org/ijry/initadmin)
+![Downloads](https://img.shields.io/badge/downloads-1K-brightgreen.svg)
+![License](https://img.shields.io/badge/license-Apache2-brightgreen.svg)
+![builder](https://img.shields.io/badge/xybuilder-1.2.0-brightgreen.svg)
+![cloudadmin](https://img.shields.io/badge/xyadmin-1.2.0-brightgreen.svg)
+![RepoSize](https://img.shields.io/github/repo-size/ijry/initadmin.svg)
+![Star](https://img.shields.io/github/stars/ijry/initadmin.svg?style=social)
+[![Open in Visual Studio Code](https://img.shields.io/badge/-open%20in%20vscode-blue?style=for-the-badge&logo=visualstudiocode)](https://open.vscode.dev/ijry/uiadmin)
 
 
 ## 介绍
 UiAdmin是一套渐进式模块化开源后台，采用前后端分离技术，数据交互采用json格式，功能低耦合高内聚；核心模块支持系统设置、权限管理、用户管理、菜单管理、API管理等功能；同时我们按照统一的API风格，开发了支持spring-boot3.0、thinkphp6.0、laravel9.0、Hyperf3.0版本的后端实现；后台管理界面前端采用vue2/vue3+element-ui/element-plus实现。
+
+
+## 预览
+
+![UiAdmin](https://vkceyugu.cdn.bspapp.com/VKCEYUGU-f12e1180-fce8-465f-a4cd-9f2da88ca0e6/ba0c3585-fa80-4277-9ea2-46b08a23a4bf.png)
 
 
 ## 为什么选择UiAdmin-降本增效
