@@ -1,0 +1,5 @@
+__pycache__
+dist
+build
+requirements.txt
+.DS_Store
