@@ -15,7 +15,7 @@ https://uiadmin.net/docs/builder
 
 如果您不想自己搭建项目工程，可以直接使用官方的脚手架。
 
-https://gitee.com/uiadmin/uiadmin/tree/master/back-end-js/uiadmin-express
+https://gitee.com/uiadmin/uiadmin/tree/master/back-end-js/
 
 ### 下载后执行
 
@@ -78,7 +78,7 @@ package.json配置如下命令，其中app为你的koa应用入口。
 
 ### 配置文件
 
-根目录新建config.yml文件
+根目录新建config/default.yml文件
 
 ```
 uiadmin:
@@ -115,13 +115,6 @@ uiadmin:
         avatar: ""
         roles: "super_admin"
         status: 1
-
-dev:
-    # ...
-test:
-    # ...
-prod:
-    # ...
 ```
 
 ### 新建接口控制器
