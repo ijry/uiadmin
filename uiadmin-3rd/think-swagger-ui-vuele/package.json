@@ -14,7 +14,7 @@
     "build": "rimraf dist && node build/build.js"
   },
   "dependencies": {
-    "axios": "0.18.0",
+    "axios": "0.21.2",
     "tennetcn-ui": "0.0.70",
     "vue": "2.6.10",
     "vue-json-viewer": "^2.2.1",
