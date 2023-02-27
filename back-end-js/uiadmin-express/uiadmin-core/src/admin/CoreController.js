@@ -1,7 +1,7 @@
 // const { Controller, Get, RootUrl, Post } = require('@tuzilow/express-decorator')
 import { Controller, Get, RootUrl, Post } from '@tuzilow/express-decorator'
-
-const {MenuItem, menuList} = require('../decorator/MenuItem')
+import { config } from '../util/common'
+const { MenuItem, menuList } = require('../decorator/MenuItem')
 const https = require('https')
 const path = require('path')
 const os = require('os')
@@ -66,14 +66,14 @@ class CoreController {
                 "apiConfig": "/v1/site/info",
                 "apiBase": req.protocol + '://' + req.get('host') + "/api",
                 "apiUserInfo": "/v1/admin/user/info",
-                "apiAdmin": req.app.get('uiadmin')?.system['api-url']['api-admin'] || "/v1/admin/index/index",
+                "apiAdmin": config.get("uiadmin.api-url.api-admin") || "/v1/admin/index/index",
                 "apiMenuTrees": "/v1/admin/menu/trees"
             },
             "lang": "python",
-            "title": req.app.get('uiadmin')?.site.title,
+            "title": config.get("uiadmin.site.title"),
             "domainRoot": req.protocol + '://' + req.get('host'),
             "siteInfo": {
-                "title": req.app.get('uiadmin')?.site.title
+                "title": config.get("uiadmin.site.title")
             },
             "version": "1.0.0",
             "config": {
@@ -102,7 +102,7 @@ class CoreController {
             }
         })
     }
-    req.app.get('uiadmin')?.user['user-list'].forEach(user => {
+    config.get("uiadmin.user.user-list").forEach(user => {
         if (user.username == req.body.account) {
             if (req.body.password == user.password) {
                 res.json({
@@ -165,7 +165,7 @@ class CoreController {
             "listData": {
                 "dataList": [
                     {
-                        "title": req.app.get('uiadmin')?.site.title,
+                        "title": config.get("uiadmin.site.title"),
                         "logo": "",
                         "path": "/root",
                         "status": 1,

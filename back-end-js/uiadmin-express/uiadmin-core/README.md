@@ -15,12 +15,13 @@ https://uiadmin.net/docs/builder
 
 如果您不想自己搭建项目工程，可以直接使用官方的脚手架。
 
-https://gitee.com/uiadmin/uiadmin/tree/master/back-end-js/uiadmin-express
+https://gitee.com/uiadmin/uiadmin/tree/master/back-end-js/
 
 ### 下载后执行
 
 ```
 npm i
+npm i -g @babel/cli
 npm run start
 ```
 访问：localhost:4000/xyadmin/
@@ -30,7 +31,6 @@ npm run start
 ### 开发
 
 仿照DemoController进行业务开发
-
 
 
 ## 自建工程使用步骤
@@ -75,6 +75,47 @@ package.json配置如下命令，其中app为你的express应用入口。
 }
 ```
 
+### 配置文件
+
+根目录新建config/default.yml文件
+
+```
+uiadmin:
+  site:
+    # 网站名称
+    title: "UiAdmin"
+    #正方形logo 
+    logo: ""
+    #带有标题的横logo 
+    logoTitle: ""
+    logoBadge: ""
+  system:
+    api-version: "1.0.0"
+    menu-from: "annotation"
+  user: 
+    user-role:
+      - id: 1
+        name: super_admin
+        title: 超级管理员
+        menus: ""
+        status: 1
+      - id: 2
+        name: admin
+        title: 管理员
+        menus: [
+          "/v1/admin/demo/lists"
+        ]
+        status: 1
+    user-list:
+      - id: 1
+        nickname: "admin"
+        username: "admin"
+        password: "uiadmin"
+        avatar: ""
+        roles: "super_admin"
+        status: 1
+```
+
 ### 初始化
 app.js请参考如下代码
 ```
@@ -94,67 +135,21 @@ const express = require('express')
 const app = express()
 const port = 4000
 
+// 配置
+const myconfig = require('config-lite')({
+  filename: 'default',
+  config_basedir: __dirname,
+  config_dir: 'config'
+});
+
 // 引入
 const {
-  Controller, Get, RootUrl, Post, MenuItem, UiAdmin, XyBuilderList, XyBuilderForm
+  Controller, Get, RootUrl, Post, MenuItem, UiAdmin, config, XyBuilderList, XyBuilderForm
 } =  require('uiadmin-express')
 
-// 配置
-app.set('uiadmin', {
-  site: {
-      title: "UiAdmin(NodeJS)"
-  },
-  system: {
-      'api-url': {
-          'api-admin': ""
-      }
-  },
-  user: {
-      'user-role': [
-          {
-              name: 'super_admin',
-              title: '超级管理员',
-              menus: "",
-              status: 1
-          },
-          {
-              name: 'beta',
-              title: '内测',
-              menus: "/v1/admin/demo/lists,",
-              status: 1
-          }
-      ],
-      'user-list': [
-          {
-              id: 1,
-              nickname: "admin",
-              username: "admin",
-              password: "uiadmin",
-              avatar: "",
-              roles: "super_admin",
-              country: "+86",
-              mobile: "",
-              email: "",
-              authorities: ["ROLE_SUPER_ADMIN"],
-              status: 1
-          },
-          {
-              id: 5,
-              nickname: "bet",
-              username: "beta",
-              password: "uiadmin",
-              avatar: "",
-              roles: "beta",
-              country: "+86",
-              mobile: "",
-              email: "",
-              authorities: ["ROLE_BETA"],
-              status: 1
-          }
-      ]
-    }
-  }
-);
+// 调用uiadmin
+app.use(new UiAdmin())
+config.configs = myconfig
 
 
 // 文章管理后台控制器（演示DEMO）
