@@ -41,7 +41,7 @@ class BaseAdmin extends BaseController
      *
      * @author jry <ijry@qq.com>
      */
-    protected function editField() {
+    public function editField() {
         return parent::editField();
     }
 }
