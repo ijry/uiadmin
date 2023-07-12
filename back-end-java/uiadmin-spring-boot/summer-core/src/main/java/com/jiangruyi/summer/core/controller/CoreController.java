@@ -53,7 +53,7 @@ public class CoreController {
 	@GetMapping("/xyadmin/")
 	public String admin() throws ClientProtocolException, IOException {
 		// (1) 创建HttpGet实例  
-		HttpGet get = new HttpGet("https://uiadmin.net/xyadmin/?version=1.1.0");  
+		HttpGet get = new HttpGet("https://uiadmin.net/xyadmin/?version=1.2.0");  
 		  
 		// (2) 使用HttpClient发送get请求，获得返回结果HttpResponse  
 		HttpClient http = new DefaultHttpClient();  

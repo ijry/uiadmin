@@ -9,7 +9,7 @@ summer:
   user: 
     # 使用行为验证
     useVerify: "aj-captcha"
-    password: 'uniadmin'
+    password: 'uiadmin'
 
 spring:
   application:
