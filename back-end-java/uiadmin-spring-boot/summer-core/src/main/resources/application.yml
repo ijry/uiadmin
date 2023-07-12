@@ -1,0 +1,23 @@
+summer:
+  site:
+    # 网站名称
+    title: "Summer"
+    #正方形logo 
+    logo: ""
+    #带有标题的横logo 
+    logoTitle: ""
+  user: 
+    # 使用行为验证
+    useVerify: true
+
+spring:
+  application:
+    name: summer-core
+  freemarker:
+    tempalte-loader-path=classpath: /templates
+    check-template-location: true
+    content-type: text/html
+    expose-request-attributes: true
+    expose-session-attributes: true
+    request-context-attribute: request
+    suffix: .ftl

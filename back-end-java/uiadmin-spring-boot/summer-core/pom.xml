@@ -1,0 +1,231 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    <maven.compiler.source>1.8</maven.compiler.source>
+    <maven.compiler.target>1.8</maven.compiler.target>
+  </properties>
+
+  <!-- 以下信息必须有才能发布中央仓库 -->
+  <groupId>com.jiangruyi.summer</groupId>
+  <artifactId>summer-core</artifactId>
+  <version>1.0.0-RELEASE</version>
+  <packaging>jar</packaging>
+
+  <name>summer-core</name>
+  <url>https://uniadmin.jiangruyi.com</url>
+  <description>Summer Framework Core</description>
+  
+  <!-- 开源签名证书 -->
+  <licenses>
+    <license>
+        <name>The Apache Software License, Version 2.0</name>
+        <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+        <distribution>repo</distribution>
+    </license>
+  </licenses>
+  <!-- 仓库信息 -->
+  <scm>
+    <connection>scm:git@github.com:ijry/uniadmin.git</connection>
+    <developerConnection>scm:git@github.com:ijry/uniadmin.git
+    </developerConnection>
+    <url>https://github.com/ijry/uniadmin</url>
+  </scm>
+  <!-- 开发者信息 -->
+  <developers>
+    <developer>
+        <name>jry</name>
+        <email>ijry@qq.com</email>
+    </developer>
+</developers>
+
+  <dependencies>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>3.8.1</version>
+      <scope>test</scope>
+    </dependency>
+    <!-- spring boot start -->
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter</artifactId>
+        <version>2.2.5.RELEASE</version>
+        <exclusions>
+            <!-- 排除自带的logback依赖 -->
+            <exclusion>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-logging</artifactId>
+            </exclusion>
+        </exclusions>
+    </dependency>
+    <!-- web项目必要的依赖 -->
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-web</artifactId>
+        <version>2.2.5.RELEASE</version>
+    </dependency>
+    <!-- log4j -->
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-log4j2</artifactId>
+        <version>2.2.5.RELEASE</version>
+    </dependency>
+    <dependency>
+        <groupId>org.apache.commons</groupId>
+        <artifactId>commons-lang3</artifactId>
+        <version>3.8</version>
+    </dependency>
+    <!-- httpclient -->
+    <dependency>
+        <groupId>org.apache.httpcomponents</groupId>
+        <artifactId>httpclient</artifactId>
+        <version>4.5.13</version>
+    </dependency>
+    <!-- lombok -->
+    <dependency>
+        <groupId>org.projectlombok</groupId>
+        <artifactId>lombok</artifactId>
+        <version>1.18.16</version>
+        <optional>true</optional>
+    </dependency>
+    <!-- fastjson -->
+    <dependency>
+        <groupId>com.alibaba</groupId>
+        <artifactId>fastjson</artifactId>
+        <version>1.2.75</version>
+    </dependency>
+    <!-- sa-token 权限认证, 在线文档：http://sa-token.dev33.cn/ -->
+    <dependency>
+        <groupId>cn.dev33</groupId>
+        <artifactId>sa-token-spring-boot-starter</artifactId>
+        <version>1.16.0.RELEASE</version>
+    </dependency>
+    <!-- captcha 验证 https://captcha.anji-plus.com/-->
+    <dependency>
+        <groupId>com.anji-plus</groupId>
+        <artifactId>spring-boot-starter-captcha</artifactId>
+        <version>1.2.8</version>
+     </dependency>
+    <!-- freemarker -->
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-freemarker</artifactId>
+        <version>2.2.5.RELEASE</version>
+    </dependency>
+    <!-- easyexcel -->
+    <dependency>
+        <groupId>com.alibaba</groupId>
+        <artifactId>easyexcel</artifactId>
+        <version>2.2.8</version>
+    </dependency>
+  </dependencies>
+
+  <repositories>
+    <repository>
+        <id>aliyun</id>
+        <name>aliyun</name>
+        <url>http://maven.aliyun.com/nexus/content/groups/public/</url>
+        <layout>default</layout>
+        <releases>
+            <enabled>true</enabled>
+            <updatePolicy>never</updatePolicy>
+        </releases>
+        <snapshots>
+            <enabled>true</enabled>
+            <updatePolicy>always</updatePolicy>
+        </snapshots>
+     </repository>
+  </repositories>
+
+    <pluginRepositories>
+        <pluginRepository>
+            <id>aliyun</id>
+            <name>aliyun</name>
+            <url>http://maven.aliyun.com/nexus/content/groups/public/</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </pluginRepository>
+    </pluginRepositories>
+
+    <distributionManagement>
+        <snapshotRepository>
+          <id>ossrh</id>
+          <url>https://s01.oss.sonatype.org/content/repositories/snapshots</url>
+        </snapshotRepository>
+        <repository>
+            <id>ossrh</id>
+            <url>https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+          </repository>
+      </distributionManagement>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.sonatype.plugins</groupId>
+            <artifactId>nexus-staging-maven-plugin</artifactId>
+            <version>1.6.7</version>
+            <extensions>true</extensions>
+            <configuration>
+              <serverId>ossrh</serverId>
+              <nexusUrl>https://s01.oss.sonatype.org/</nexusUrl>
+              <autoReleaseAfterClose>true</autoReleaseAfterClose>
+            </configuration>
+          </plugin>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-source-plugin</artifactId>
+            <version>2.2.1</version>
+            <executions>
+              <execution>
+                <id>attach-sources</id>
+                <goals>
+                  <goal>jar-no-fork</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-javadoc-plugin</artifactId>
+            <version>2.9.1</version>
+            <configuration>
+                <aggregate>true</aggregate>
+                <charset>UTF-8</charset>
+                <encoding>UTF-8</encoding>
+                <docencoding>UTF-8</docencoding>
+                <!-- -Xdoclint:none maven忽视javadoc过程中警告和错误 -->
+                <additionalparam>-Xdoclint:none</additionalparam>
+            </configuration>
+            <executions>
+              <execution>
+                <id>attach-javadocs</id>
+                <goals>
+                  <goal>jar</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-gpg-plugin</artifactId>
+            <version>1.5</version>
+            <executions>
+              <execution>
+                <id>sign-artifacts</id>
+                <phase>verify</phase>
+                <goals>
+                  <goal>sign</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+</project>
