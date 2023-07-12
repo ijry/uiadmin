@@ -12,7 +12,7 @@
   <!-- 以下信息必须有才能发布中央仓库 -->
   <groupId>com.jiangruyi.summer</groupId>
   <artifactId>summer-core</artifactId>
-  <version>1.1.0-SNAPSHOT</version>
+  <version>1.1.0-RELEASE</version>
   <packaging>jar</packaging>
 
   <name>summer-core</name>
