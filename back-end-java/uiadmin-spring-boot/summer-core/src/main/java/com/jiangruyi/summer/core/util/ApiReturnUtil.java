@@ -2,6 +2,7 @@ package com.jiangruyi.summer.core.util;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -23,11 +24,11 @@ public class ApiReturnUtil implements Serializable {
     }
 
     public static ApiReturnObject success() {
-		return new ApiReturnObject(200, "success", null);
+		return new ApiReturnObject(200, "success", new HashMap<String, Object>());
     }
     
     public static ApiReturnObject success(String msg) {
-		return new ApiReturnObject(200, msg, null);
+		return new ApiReturnObject(200, msg, new HashMap<String, Object>());
 	}
 
 	public static ApiReturnObject success(Object data) {
