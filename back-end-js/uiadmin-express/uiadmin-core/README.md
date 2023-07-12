@@ -1,6 +1,9 @@
 # 简介
 
-uiadmin的express实现版本
+uiadmin的express实现版本，无需进行vue开发即可实时动态生成管理后台。
+
+![UiAdmin列表](https://github.com/ijry/uiadmin/blob/master/preview/lists.png?raw=true)
+
 
 # 使用步骤
 
@@ -45,8 +48,20 @@ package.json配置如下命令，其中app为你的express应用入口。
 ```
 
 ## 初始化
-请参考如下代码
+app.js请参考如下代码
 ```
+// 必须，支持node_modules中的装饰器等语法
+require("@babel/register")({
+  // This will override `node_modules` ignoring - you can alternatively pass
+  // an array of strings to be explicitly matched or a regex / glob
+  ignore: [],
+  plugins: [
+    ["@babel/plugin-proposal-decorators", { "legacy": true }],
+    ["@babel/plugin-proposal-class-properties", { "loose": true }],
+    ["@babel/plugin-proposal-private-methods", { "loose": true }],
+    ["@babel/plugin-proposal-private-property-in-object", { "loose": true }]
+  ]
+});
 const express = require('express')
 const app = express()
 const port = 4000
@@ -298,6 +313,8 @@ npm run start
 ```
 
 访问{host:端口}/xyadmin/
+
+输入账号admin密码uiadmin登录即可进入管理后台页面
 
 
 ## 开发
