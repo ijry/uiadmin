@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <!-- 项目配置 -->
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+    <PackageId>UiAdmin.Core</PackageId>
+    <Version>1.0.0</Version>
+    <Authors>jry</Authors>
+    <Company>uiadmin.net</Company>
+    <IsPackable>true</IsPackable>
+  </PropertyGroup>
+
+  <!-- 依赖插件 -->
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="5.0.5" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="5.0.5" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="5.0.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />
+  </ItemGroup>
+
+</Project>
