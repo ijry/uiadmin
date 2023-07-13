@@ -4,15 +4,43 @@ python版本uiadmin实现， API接口自动生成管理后台，无需前端参
 
 https://pypi.org/project/Uiadmin-Flask/
 
-# 教程
+## Builder文档
 
-## 安装依赖
+https://uiadmin.net/docs/builder
+
+## 官方脚手架
+
+### 下载脚手架工程
+
+如果您不想自己搭建项目工程，可以直接使用官方的脚手架。
+
+https://gitee.com/uiadmin/uiadmin/tree/master/back-end-js/uiadmin-express
+
+### 下载后执行
+
+```
+pip install
+export FLASK_APP=app
+flask run
+```
+访问：localhost:5000/xyadmin/
+输入账号admin密码uiadmin登录即可进入管理后台页面
+
+
+### 开发
+
+仿照示例接口进行业务开发
+
+
+## 自建工程使用步骤
+
+### 安装依赖
 ```
 pip install Flask
 pip install uiadmin-flask
 ```
 
-## app.py使用
+### app.py使用
 ```
 from flask import Flask
 from flask_cors import CORS
@@ -213,18 +241,17 @@ if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=True)
 ```
 
-## 运行
+### 运行
 
 ```
 export FLASK_APP=app
 flask run
 ```
 
-# 二次开发
+访问：localhost:5000/xyadmin/
+输入账号admin密码uiadmin登录即可进入管理后台页面
 
-## debug本地调试
-避免改动后需要频繁发布pip
+### 开发
 
-```
-python3 setup.py install
-```
+仿照示例接口进行业务开发
+

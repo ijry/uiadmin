@@ -2,19 +2,47 @@
 
 uiadmin的express实现版本，无需进行vue开发即可实时动态生成管理后台。
 
-![UiAdmin列表](https://github.com/ijry/uiadmin/blob/master/preview/lists.png?raw=true)
+![UiAdmin列表](https://raw.githubusercontent.com/ijry/uiadmin/master/back-end-js/uiadmin-express/uiadmin-core/preview/lists.png)
+
+## Builder文档
+
+https://uiadmin.net/docs/builder
 
 
-# 使用步骤
+## 官方脚手架
 
-## 安装
+### 下载脚手架工程
+
+如果您不想自己搭建项目工程，可以直接使用官方的脚手架。
+
+https://gitee.com/uiadmin/uiadmin/tree/master/back-end-js/uiadmin-express
+
+### 下载后执行
+
+```
+npm i
+npm run start
+```
+访问：localhost:4000/xyadmin/
+输入账号admin密码uiadmin登录即可进入管理后台页面
+
+
+### 开发
+
+仿照DemoController进行业务开发
+
+
+
+## 自建工程使用步骤
+
+### 安装
 
 ```
 npm i uiadmin-express
 npm i -g @babel/cli
 ```
 
-## 配置babel
+### 配置babel
 
 babel.config.js文件增加如下配置
 注意删除.babelrc
@@ -37,7 +65,7 @@ module.exports = {
 
 ```
 
-## 配置启动
+### 配置启动
 
 package.json配置如下命令，其中app为你的express应用入口。
 
@@ -47,7 +75,7 @@ package.json配置如下命令，其中app为你的express应用入口。
 }
 ```
 
-## 初始化
+### 初始化
 app.js请参考如下代码
 ```
 // 必须，支持node_modules中的装饰器等语法
@@ -65,12 +93,6 @@ require("@babel/register")({
 const express = require('express')
 const app = express()
 const port = 4000
-
-// 引入
-import {
-    Controller, Get, RootUrl, Post, MenuItem,
-    UiAdmin, XyBuilderList, XyBuilderForm
-} from 'uiadmin-express'
 
 // 引入
 const {
@@ -306,7 +328,7 @@ app.use(new DemoController())
 app.listen(port, () => {
   console.log(`http://127.0.0.1:${port}`)
 })
-## 启动
+### 启动
 
 ```
 npm run start
@@ -317,7 +339,7 @@ npm run start
 输入账号admin密码uiadmin登录即可进入管理后台页面
 
 
-## 开发
+### 开发
 
 仿照DemoController进行业务开发
 
