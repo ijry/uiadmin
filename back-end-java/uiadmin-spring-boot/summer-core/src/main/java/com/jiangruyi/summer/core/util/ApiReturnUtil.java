@@ -13,7 +13,6 @@ public class ApiReturnUtil implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	public static ApiReturnObject error(int code, String msg) {
-		System.out.println(msg);
 		return new ApiReturnObject(code, msg);
 	}
 

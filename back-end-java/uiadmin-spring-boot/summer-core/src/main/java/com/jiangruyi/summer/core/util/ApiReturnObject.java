@@ -2,6 +2,7 @@
  * 
  */
 package com.jiangruyi.summer.core.util;
+import java.util.HashMap;
 
 /**
  * 
@@ -15,7 +16,7 @@ public class ApiReturnObject implements Serializable {
 
 	int code = 0;
 	String msg;
-	Object data;
+	Object data = new HashMap<String, Object>();
 
 	public ApiReturnObject(int code, String msg, Object data) {
 		super();
