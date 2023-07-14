@@ -1,12 +1,16 @@
 # 说明
 python版本uiadmin实现， API接口自动生成管理后台，无需前端参与。
-![UiAdmin](https://vkceyugu.cdn.bspapp.com/VKCEYUGU-f12e1180-fce8-465f-a4cd-9f2da88ca0e6/6ce3a522-6b27-47d9-abd1-5573620bc636.png)
+
+![UiAdmin列表](https://raw.githubusercontent.com/ijry/uiadmin/master/back-end-js/uiadmin-express/uiadmin-core/preview/lists.png)
 
 https://pypi.org/project/Uiadmin-Flask/
+
 
 ## Builder文档
 
 https://uiadmin.net/docs/builder
+
+# 教程
 
 ## 官方脚手架
 
@@ -14,7 +18,7 @@ https://uiadmin.net/docs/builder
 
 如果您不想自己搭建项目工程，可以直接使用官方的脚手架。
 
-https://gitee.com/uiadmin/uiadmin/tree/master/back-end-js/uiadmin-express
+https://gitee.com/uiadmin/uiadmin/tree/master/back-end-python/
 
 ### 下载后执行
 
@@ -38,6 +42,50 @@ flask run
 ```
 pip install Flask
 pip install uiadmin-flask
+pip freeze >requirements.txt
+pip install -r requirements.txt
+```
+
+### 增加配置文件
+
+
+在config/default.y
+
+```
+   uiadmin:
+   site:
+     # 网站名称
+     title: "UiAdm
+     #正方形logo 
+     logo: ""
+     #带有标题的横
+     logoTitle: ""
+     logoBadge: ""
+   system:
+     api-version: 
+     menu-from: "a
+   user: 
+     user-role:
+       - id: 1
+         name: sup
+         title: 超
+         menus: ""
+         status: 1
+       - id: 2
+         name: adm
+         title: 管
+         menus: [
+           "/v1/ad
+         ]
+         status: 1
+     user-list:
+       - id: 1
+         nickname:
+         username:
+         password:
+         avatar: "
+         roles: "s
+         status: 1
 ```
 
 ### app.py使用
