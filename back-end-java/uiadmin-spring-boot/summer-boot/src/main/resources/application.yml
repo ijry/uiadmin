@@ -12,7 +12,6 @@ summer:
     # 使用行为验证
     useVerify: "aj-captcha"
     password: 'uiadmin'
-    user-list:
     user-role:
       - id: 1
         name: super_admin
@@ -36,3 +35,12 @@ summer:
 
 server:
   port: 8080
+
+spring:
+  profiles:
+    active: dev
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/db?characterEncoding=utf-8
+    username: root
+    password: root
