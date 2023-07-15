@@ -15,71 +15,21 @@ const express = require('express')
 const app = express()
 const port = 4000
 
+// 配置
+const myconfig = require('config-lite')({
+  filename: 'default',
+  config_basedir: __dirname,
+  config_dir: 'config'
+});
+
 // 引入
 const {
-  Controller, Get, RootUrl, Post, MenuItem, UiAdmin, XyBuilderList, XyBuilderForm
+  Controller, Get, RootUrl, Post, MenuItem, UiAdmin, config, XyBuilderList, XyBuilderForm
 } =  require('uiadmin-express')
-
-// 配置
-app.set('uiadmin', {
-  site: {
-      title: "UiAdmin(NodeJS)"
-  },
-  system: {
-      'api-url': {
-          'api-admin': ""
-      }
-  },
-  user: {
-      'user-role': [
-          {
-              name: 'super_admin',
-              title: '超级管理员',
-              menus: "",
-              status: 1
-          },
-          {
-              name: 'beta',
-              title: '内测',
-              menus: "/v1/admin/demo/lists,",
-              status: 1
-          }
-      ],
-      'user-list': [
-          {
-              id: 1,
-              nickname: "admin",
-              username: "admin",
-              password: "uiadmin",
-              avatar: "",
-              roles: "super_admin",
-              country: "+86",
-              mobile: "",
-              email: "",
-              authorities: ["ROLE_SUPER_ADMIN"],
-              status: 1
-          },
-          {
-              id: 5,
-              nickname: "bet",
-              username: "beta",
-              password: "uiadmin",
-              avatar: "",
-              roles: "beta",
-              country: "+86",
-              mobile: "",
-              email: "",
-              authorities: ["ROLE_BETA"],
-              status: 1
-          }
-      ]
-    }
-  }
-);
-// console.log(app.get('uiadmin'));
 
 // 调用uiadmin
 app.use(new UiAdmin())
+config.configs = myconfig
 
 // 文章管理后台控制器（演示DEMO）
 @Controller

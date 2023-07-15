@@ -1,0 +1,33 @@
+uiadmin:
+  site:
+    # 网站名称
+    title: "UiAdmin-koa"
+    #正方形logo 
+    logo: ""
+    #带有标题的横logo 
+    logoTitle: ""
+    logoBadge: ""
+  system:
+    api-version: "1.0.0"
+    menu-from: "annotation"
+  user: 
+    user-role:
+      - id: 1
+        name: super_admin
+        title: 超级管理员
+        menus: ""
+        status: 1
+      - id: 2
+        name: admin
+        title: 管理员
+        menus:
+          - "/v1/admin/demo/lists"
+        status: 1
+    user-list:
+      - id: 1
+        nickname: "admin"
+        username: "admin"
+        password: "uiadmin"
+        avatar: ""
+        roles: "super_admin"
+        status: 1
