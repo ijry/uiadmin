@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>2.7.9</version>
+		<relativePath/> <!-- lookup parent from repository -->
+	</parent>
+	<groupId>com.jiangruyi.summer</groupId>
+	<artifactId>boot</artifactId>
+	<version>1.2.0-SNAPSHOT</version>
+	<name>summer-boot</name>
+	<description>Demo Boot Project For Uiadmin of Spring Boot</description>
+	<properties>
+		<java.version>1.8</java.version>
+		<spring-boot.version>2.7.9</spring-boot.version>
+        <summer.version>1.2.0-SNAPSHOT</summer.version>
+	</properties>
+
+	<dependencyManagement>
+		<dependencies>
+			<!-- 导入uiadmin的依赖 -->
+			<dependency>
+				<groupId>com.jiangruyi.summer</groupId>
+				<artifactId>summer-core</artifactId>
+				<version>${summer.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
+	<dependencies>
+		<!-- uiadmin/summer -->
+		<dependency>
+			<groupId>com.jiangruyi.summer</groupId>
+			<artifactId>summer-core</artifactId>
+			<version>${summer.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-devtools</artifactId>
+			<scope>runtime</scope>
+			<optional>true</optional>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-configuration-processor</artifactId>
+			<optional>true</optional>
+		</dependency>
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<optional>true</optional>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+
+	<!--定义全局的配置信息-->
+	<profiles>
+		<profile>
+			<id>dev</id> <!--开发环境-->
+			<properties>
+				<profiles.active>dev</profiles.active> <!-- profiles.active这个命名自己喜欢就好 -->
+			</properties>
+			<activation>
+				<activeByDefault>true</activeByDefault> <!-- 默认指定的配置文件 -->
+			</activation>
+		</profile>
+		<profile>
+			<id>prod</id> <!--生产环境-->
+			<properties>
+				<profiles.active>prod</profiles.active>
+			</properties>
+		</profile>
+        <!-- 支持快照仓库 -->
+        <profile>
+            <id>allow-snapshots</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <repositories>
+              <repository>
+                <id>snapshots-repo</id>
+                <url>https://s01.oss.sonatype.org/content/repositories/snapshots</url>
+                <releases><enabled>false</enabled></releases>
+                <snapshots><enabled>true</enabled></snapshots>
+              </repository>
+            </repositories>
+        </profile>
+	</profiles>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<excludes>
+						<exclude>
+							<groupId>org.projectlombok</groupId>
+							<artifactId>lombok</artifactId>
+						</exclude>
+					</excludes>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>
