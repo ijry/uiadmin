@@ -1,0 +1,43 @@
+{
+  "name": "uiadmin-koa-starter",
+  "version": "1.0.0",
+  "description": "a koa version of uiadmin",
+  "main": "app.js",
+  "private": true,
+  "dependencies": {
+    "uiadmin-express": "^1.0.0"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.20.7",
+    "@babel/core": "^7.20.12",
+    "@babel/node": "^7.0.0",
+    "@babel/plugin-proposal-class-properties": "^7.10.4",
+    "@babel/plugin-proposal-decorators": "^7.10.5",
+    "@babel/preset-env": "^7.0.0",
+    "@babel/register": "^7.18.9",
+    "@koa/cors": "^4.0.0",
+    "@koa/router": "^12.0.0",
+    "@stefcud/configyml": "^1.2.3",
+    "axios": "^1.3.1",
+    "babel-eslint": "^9.0.0",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "babel-plugin-transform-decorators-legacy": "^1.3.5",
+    "babel-plugin-transform-export-extensions": "^6.22.0",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "config-lite": "^3.0.0",
+    "core-js": "^3.27.2",
+    "koa": "^2.14.1",
+    "koa-body": "^6.0.1"
+  },
+  "scripts": {
+    "start": "babel-node app",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "uiadmin"
+  ],
+  "author": "jry",
+  "license": "Apache2",
+  "website": "https://uiadmin.net"
+}
