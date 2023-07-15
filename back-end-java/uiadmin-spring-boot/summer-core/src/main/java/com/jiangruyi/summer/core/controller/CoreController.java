@@ -29,6 +29,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.WebApplicationContext;
 
+import com.jiangruyi.summer.core.annotation.MenuItem;
+
+
 /**
  * @author Jry
  */

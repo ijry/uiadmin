@@ -3,6 +3,7 @@
  */
 package com.jiangruyi.summer.core.util.xybuilder;
 
+import java.util.List;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -118,7 +119,7 @@ public class XyBuilderForm implements Serializable {
     }
 
     // 添加分栏
-    public Object addFormCol(String name,HashMap span, ArrayList itemList, HashMap extra){
+    public Object addFormCol(String name, Map<String,Object> span, List<Object> itemList, Map<String,Object> extra){
         JSONObject col = new JSONObject();
         col.put("name", name);
         col.put("span", span);
@@ -129,7 +130,7 @@ public class XyBuilderForm implements Serializable {
     }
 
     // 添加分组
-    public Object addFormGroup(String name,String title, ArrayList itemList, HashMap extra){
+    public Object addFormGroup(String name,String title, List<Object> itemList, HashMap<String,Object> extra){
         JSONObject col = new JSONObject();
         col.put("name", name);
         col.put("title", title);
@@ -146,7 +147,7 @@ public class XyBuilderForm implements Serializable {
         col.put("title", title);
         col.put("type", type);
         col.put("value", value);
-        col.put("extra", new HashMap());
+        col.put("extra", new HashMap<>());
         this.formItems.add(col);
         return this;
     }
@@ -176,7 +177,7 @@ public class XyBuilderForm implements Serializable {
     }
 
     // 获取数据
-	public HashMap getData() {
+	public Map<String, Object> getData() {
         HashMap<String, Object> data = new HashMap<String, Object>() {
             {
                 put("alertList", new HashMap<String, Object>() {

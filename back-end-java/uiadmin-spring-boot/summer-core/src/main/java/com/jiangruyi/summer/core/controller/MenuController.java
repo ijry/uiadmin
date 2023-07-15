@@ -2,7 +2,6 @@ package com.jiangruyi.summer.core.controller;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.Map;
 
 import com.alibaba.fastjson.JSONObject;
 import com.jiangruyi.summer.core.entity.User;
@@ -44,7 +43,7 @@ public class MenuController {
         } catch (Exception e) {
             return ApiReturnUtil.error(401, e.getMessage());
         }
-        List menuList;
+        List<Object> menuList;
         try {
             menuList = menuService.getByUser(userInfo.getId().toString(),
                 userInfo.getAuthorities());

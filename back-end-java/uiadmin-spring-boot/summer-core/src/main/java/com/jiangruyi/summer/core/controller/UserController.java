@@ -79,7 +79,7 @@ public class UserController {
         }
 
         // 标记当前会话登录的账号id 
-        StpUtil.setLoginId((String) userInfo.get("id"));
+        StpUtil.setLoginId(userInfo.getId());
         // 获取当前会话的token值
         String token = StpUtil.getTokenValue();
 

@@ -1,7 +1,8 @@
 package com.jiangruyi.summer.core.service.impl;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
+import java.util.ArrayList;
+
 
 import org.apache.commons.codec.digest.DigestUtils;
 
@@ -11,7 +12,7 @@ import com.jiangruyi.summer.core.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
-import com.jiangruyi.core.config.UserList;
+import com.jiangruyi.summer.core.config.UserList;
 
 @Service
 public class UserServiceImpl implements IUserService{
@@ -28,7 +29,7 @@ public class UserServiceImpl implements IUserService{
     protected List<String> getAuthoritiesByUserRoles(String userRoles) {
         return new ArrayList(){{
             add("ROLE_SUPER_ADMIN");
-        }}
+        }};
     }
 
     /**
@@ -47,9 +48,9 @@ public class UserServiceImpl implements IUserService{
                 }
 
                 // 获取用户角色权限
-                returnUserInfo.setAuthorities(getAuthoritiesByUserRoles(returnUserInfo.getRoles()));
+                userInfo.setAuthorities(getAuthoritiesByUserRoles(userInfo.getRoles()));
 
-                return returnUserInfo;
+                return userInfo;
             }
         }
         throw new Exception("用户不存在");

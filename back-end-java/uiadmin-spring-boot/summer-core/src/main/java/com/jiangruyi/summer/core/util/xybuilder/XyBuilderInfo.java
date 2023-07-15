@@ -6,9 +6,6 @@ package com.jiangruyi.summer.core.util.xybuilder;
 import java.util.*;
 import java.io.Serializable;
 
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
-
 /**
  * @author jry
  *
@@ -39,7 +36,7 @@ public class XyBuilderInfo implements Serializable {
     }
 
     // 获取数据
-	public HashMap getData() {
+	public Map<String,Object> getData() {
         HashMap<String, Object> data = new HashMap<String, Object>() {
             {
                 put("alertList", new HashMap<String, Object>() {

@@ -1,6 +1,5 @@
 package com.jiangruyi.summer.core.util.xybuilder;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.io.Serializable;
 

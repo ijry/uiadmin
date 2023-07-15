@@ -10,6 +10,7 @@ summer:
     # 使用行为验证
     useVerify: "aj-captcha"
     password: 'uiadmin'
+    user-list:
 
 spring:
   application:

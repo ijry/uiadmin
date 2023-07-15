@@ -2,7 +2,6 @@ package com.jiangruyi.summer.core.annotation;
 
 import io.github.classgraph.*;
 
-import java.lang.annotation.Annotation;
 import java.util.*;
 
 /**

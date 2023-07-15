@@ -1,7 +1,5 @@
 package com.jiangruyi.summer.core.service;
 
-import java.util.Map;
-
 import com.jiangruyi.summer.core.entity.User;
 import org.springframework.stereotype.Service;
 
