@@ -3,9 +3,9 @@ package com.jiangruyi.summer.core.controller;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.annotation.Resource;
-import javax.validation.Valid;
-import javax.validation.constraints.NotBlank;
+import jakarta.annotation.Resource;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
 
 import com.alibaba.fastjson.JSONObject;
 import com.anji.captcha.model.common.ResponseModel;
@@ -79,7 +79,7 @@ public class UserController {
         }
 
         // 标记当前会话登录的账号id 
-        StpUtil.setLoginId(userInfo.getId());
+        StpUtil.login(userInfo.getId());
         // 获取当前会话的token值
         String token = StpUtil.getTokenValue();
 

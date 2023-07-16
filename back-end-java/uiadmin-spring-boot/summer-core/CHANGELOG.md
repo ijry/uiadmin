@@ -8,6 +8,8 @@
 
 支持从配置文件读取用户
 
+支持jdk17以上javax迁移到jakarta
+
 1.1.0
 
 【修复】修复classpath直接用File读取会在打包为jar后失效问题

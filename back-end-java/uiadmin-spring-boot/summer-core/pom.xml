@@ -7,9 +7,15 @@
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
-    <spring-boot.version>2.7.9</spring-boot.version>
     <summer.version>1.2.0-SNAPSHOT</summer.version>
   </properties>
+
+  <parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>2.7.9</version>
+		<relativePath/> <!-- lookup parent from repository -->
+	</parent>
 
   <!-- 以下信息必须有才能发布中央仓库 -->
   <groupId>com.jiangruyi.summer</groupId>
@@ -55,7 +61,6 @@
     <dependency>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter</artifactId>
-        <version>${spring-boot.version}</version>
         <exclusions>
             <!-- 排除自带的logback依赖 -->
             <exclusion>
@@ -68,31 +73,38 @@
     <dependency>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-web</artifactId>
-        <version>${spring-boot.version}</version>
     </dependency>
     <!-- aop -->
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-aop</artifactId>
-      <version>${spring-boot.version}</version>
     </dependency>  
     <!-- configuration-processor -->
     <dependency>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-configuration-processor</artifactId>
-        <version>${spring-boot.version}</version>
         <optional>true</optional>
     </dependency>
+    <!-- 健康管理与开发工具 -->
+    <dependency>
+			  <groupId>org.springframework.boot</groupId>
+			  <artifactId>spring-boot-starter-actuator</artifactId>
+		</dependency>
+    <dependency>
+			  <groupId>org.springframework.boot</groupId>
+			  <artifactId>spring-boot-devtools</artifactId>
+			  <scope>runtime</scope>
+			  <optional>true</optional>
+		</dependency>
     <!-- log4j -->
     <dependency>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-log4j2</artifactId>
-        <version>${spring-boot.version}</version>
     </dependency>
     <dependency>
         <groupId>org.apache.commons</groupId>
         <artifactId>commons-lang3</artifactId>
-        <version>3.8</version>
+        <version>3.12.0</version>
     </dependency>
     <!-- httpclient -->
     <dependency>
@@ -104,7 +116,7 @@
     <dependency>
         <groupId>org.projectlombok</groupId>
         <artifactId>lombok</artifactId>
-        <version>1.18.16</version>
+        <version>1.18.26</version>
         <optional>true</optional>
     </dependency>
     <!-- fastjson -->
@@ -129,7 +141,6 @@
     <dependency>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-freemarker</artifactId>
-        <version>${spring-boot.version}</version>
     </dependency>
     <!-- easyexcel -->
     <dependency>
@@ -148,6 +159,33 @@
         <groupId>io.jsonwebtoken</groupId>
         <artifactId>jjwt</artifactId>
         <version>0.9.1</version>
+    </dependency>
+    <!-- Swagger -->
+		<dependency>
+			<groupId>io.swagger.core.v3</groupId>
+			<artifactId>swagger-annotations</artifactId>
+			<version>2.2.7</version>
+		</dependency>
+    <!-- jakarta代替javax -->
+    <dependency>
+        <groupId>jakarta.servlet</groupId>
+        <artifactId>jakarta.servlet-api</artifactId>
+        <version>6.0.0</version>
+    </dependency>
+    <dependency>
+        <groupId>jakarta.validation</groupId>
+        <artifactId>jakarta.validation-api</artifactId>
+        <version>3.0.2</version>
+    </dependency>
+    <dependency>
+        <groupId>jakarta.annotation</groupId>
+        <artifactId>jakarta.annotation-api</artifactId>
+        <version>2.1.1</version>
+    </dependency>
+    <dependency>
+        <groupId>jakarta.persistence</groupId>
+        <artifactId>jakarta.persistence-api</artifactId>
+        <version>3.1.0</version>
     </dependency>
   </dependencies>
 

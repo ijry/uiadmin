@@ -7,9 +7,9 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.annotation.Resource;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 import com.alibaba.fastjson.JSONObject;
 import com.jiangruyi.summer.core.util.ApiReturnUtil;
@@ -31,7 +31,6 @@ import org.springframework.web.context.WebApplicationContext;
 
 import com.jiangruyi.summer.core.annotation.MenuItem;
 
-
 /**
  * @author Jry
  */
@@ -41,12 +40,6 @@ import com.jiangruyi.summer.core.annotation.MenuItem;
 public class CoreController {
     @Autowired
     WebApplicationContext applicationContext;
-
-	@Autowired
-	private HttpServletRequest request;
-
-	@Autowired
-    private HttpServletResponse response;
 
     /**
 	 * 调用云后台
@@ -115,7 +108,7 @@ public class CoreController {
 	 * XYAdmin是一个基于Vue、跨语言的、统一接口、全自动Builder渲染页面的云后台，不限制后端语言，可以以一套相同的API自由切换后端语言。
 	 */
 	@GetMapping("/xyadmin/api")
-	public Object api() {
+	public Object api(HttpServletRequest request) {
 		final String apiBase = request.getScheme() + "://" + request.getServerName() + ":" + request.getLocalPort() + "/api";
 		HashMap<String, Object> data = new HashMap<String, Object>() {
 			{
