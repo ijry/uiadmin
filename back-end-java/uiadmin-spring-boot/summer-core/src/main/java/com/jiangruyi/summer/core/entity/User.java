@@ -33,7 +33,7 @@ public class User implements Cloneable,Serializable {
 
     private List<String> authorities;
 
-    private Integer status;
+    private Integer status = 1;
 
     @Override
     public Object clone() throws CloneNotSupportedException {

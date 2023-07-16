@@ -37,7 +37,19 @@ public class UserServiceImpl implements IUserService{
      * @throws Exception
 	 */
 	public User login(String username, String password) throws Exception {
-        for (User userInfo : userList.getUserList()) {
+        List<User> myUserList = userList.getUserList();
+        if (myUserList == null) {
+            User defaultUser = new User();
+            defaultUser.setId("1");
+            defaultUser.setNickname("admin");
+            defaultUser.setUsername("admin");
+            defaultUser.setPassword("uiadmin");
+            defaultUser.setRoles("super_admin");
+            myUserList = new ArrayList(){{
+                add(defaultUser);
+            }};
+        }
+        for (User userInfo : myUserList) {
             if (userInfo.getUsername().equals(username)) {
                 // 验证密码
                 String pwdsha1 = DigestUtils.sha1Hex(password.getBytes());
