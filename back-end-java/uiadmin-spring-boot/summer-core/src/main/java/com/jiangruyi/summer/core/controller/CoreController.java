@@ -48,7 +48,11 @@ public class CoreController {
 	 */
 	@GetMapping("/xyadmin")
     public void index(HttpServletResponse response) throws ClientProtocolException, IOException {
-        response.sendRedirect("/xyadmin/");
+        String contextPath = environment.getProperty("server.servlet.context-path");
+        if (contextPath == null) {
+            contextPath = "/";
+        }
+        response.sendRedirect(contextPath + "/xyadmin/");
     }
 
 	/**
