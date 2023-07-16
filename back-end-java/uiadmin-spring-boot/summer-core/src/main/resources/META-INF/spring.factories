@@ -1,0 +1,10 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+com.jiangruyi.summer.core.config.OpenBrowser,\
+com.jiangruyi.summer.core.config.UserList,\
+com.jiangruyi.summer.core.config.SaTokenConfigure,\
+com.jiangruyi.summer.core.controller.CoreController,\
+com.jiangruyi.summer.core.controller.MenuController,\
+com.jiangruyi.summer.core.controller.UploadController,\
+com.jiangruyi.summer.core.controller.UserController,\
+com.jiangruyi.summer.core.service.impl.MenuServiceImpl,\
+com.jiangruyi.summer.core.service.impl.UserServiceImpl

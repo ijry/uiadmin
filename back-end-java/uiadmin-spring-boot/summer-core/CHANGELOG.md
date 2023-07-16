@@ -10,6 +10,8 @@
 
 引入javax包兼容java17
 
+支持spring-boot自动配置无需ComponentScan
+
 1.1.0
 
 【修复】修复classpath直接用File读取会在打包为jar后失效问题

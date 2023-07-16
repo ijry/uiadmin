@@ -32,7 +32,6 @@ import cn.dev33.satoken.stp.StpUtil;
 /**
  * @author Jry
  */
-@Controller
 @RestController
 @RequestMapping("/")
 public class UserController {

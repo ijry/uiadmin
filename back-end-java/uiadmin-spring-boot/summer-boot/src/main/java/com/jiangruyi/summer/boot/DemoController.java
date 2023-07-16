@@ -47,7 +47,7 @@ public class DemoController {
 	 * Demo列表
 	 */
     @Operation(summary = "Demo列表")
-    @MenuItem(title = "迭代管理", path = "/demo/lists", pmenu = "/content", menuType = 1,
+    @MenuItem(title = "Demo列表", path = "/demo/lists", pmenu = "/content", menuType = 1,
         routeType = "list", apiSuffix = "", apiParams = "", apiMethod = "GET", sortnum = 0)
 	@GetMapping("/v1/admin/demo/lists")
     // @PreAuthorize("hasAnyAuthority('ROLE_SUPER_ADMIN', '/v1/admin/demo/lists')")
@@ -93,7 +93,7 @@ public class DemoController {
             put("width", "1000px");
         }});
         // 多条件筛选
-        listBuilder.addFilterItem("title", "标题", "text", no, new HashMap<String, Object>() {{
+        listBuilder.addFilterItem("title", "标题", "text", title, new HashMap<String, Object>() {{
         }});        
         listBuilder.addColumn("title", "标题", new HashMap<String, Object>() {{   
             put("type", "");  

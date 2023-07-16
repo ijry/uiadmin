@@ -37,47 +37,16 @@ mvn spring-boot:run
 
 在pom.xml新增如下配置
 ```
-<properties>
-    ...
-    <summer.version>1.2.0</summer.version>
-</properties>
-...
-<dependencyManagement>
-    ...
-    <dependencies>
-        ...
-        <!-- 导入uiadmin的依赖 -->
-        <dependency>
-            <groupId>com.jiangruyi.summer</groupId>
-            <artifactId>summer-core</artifactId>
-            <version>${summer.version}</version>
-            <type>pom</type>
-            <scope>import</scope>
-        </dependency>
-    </dependencies>
-</dependencyManagement>
-
 <dependencies>
     ...
     <!-- uiadmin/summer -->
     <dependency>
         <groupId>com.jiangruyi.summer</groupId>
         <artifactId>summer-core</artifactId>
-        <version>${summer.version}</version>
+        <version>1.2.0</version>
     </dependency>
 </dependencies>
 
-```
-
-###
-
-在XXXApplication里新增ComponentScan路径
-
-```
-import org.springframework.context.annotation.ComponentScan;
-
-@SpringBootApplication
-@ComponentScan("com.jiangruyi.summer.*")
 ```
 
 
@@ -121,10 +90,19 @@ uiadmin:
         status: 1
 ```
 
-### 初始化
-app.js请参考如下代码
 ```
 ### 启动
+
+注意：如果项目中使用了spring-security，需要注意自定义Filter需要使用new方式，且Filter上不能使用@Component@Bean等注解。
+
+并且参考如下配置
+
+```
+@Override
+public void configure(WebSecurity web) throws Exception {
+    web.ignoring().antMatchers("/api/v1/admin/**", "/xyadmin/", "/xyadmin/*");
+}
+```
 
 ```
 mvn spring-boot:run

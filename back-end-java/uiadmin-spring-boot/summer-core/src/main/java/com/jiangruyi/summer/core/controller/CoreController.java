@@ -34,7 +34,6 @@ import com.jiangruyi.summer.core.annotation.MenuItem;
 /**
  * @author Jry
  */
-@Controller
 @RestController
 @RequestMapping("/")
 public class CoreController {
@@ -122,12 +121,16 @@ public class CoreController {
             + request.getLocalPort()
             + contextPath
             + "/api";
+        String title = "UiAdmin";
+        if (environment.getProperty("summer.site.title") != null) {
+            title = environment.getProperty("summer.site.title");
+        }
 		HashMap<String, Object> data = new HashMap<String, Object>() {
 			{
 				put("lang", "java");
 				put("framework", "spring-boot");
 				put("name", "summer");
-				put("title", environment.getProperty("summer.site.title")); // 网站名称
+				put("title", environment.getProperty("summer.site.title") != null ? environment.getProperty("summer.site.title") : "UiAdmin"); // 网站名称
 				put("stype", "应用");
 				put("version", "1.2.0");
 				put("domainRoot", request.getScheme()+"://"+ request.getServerName() + ":" + request.getLocalPort());
@@ -148,7 +151,7 @@ public class CoreController {
                 });
 				put("siteInfo", new HashMap<String, Object>() {
                     {
-                        put("title", environment.getProperty("summer.site.title"));
+                        put("title", environment.getProperty("summer.site.title") != null ? environment.getProperty("summer.site.title") : "UiAdmin");
                     }
                 });
 			}
