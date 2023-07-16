@@ -13,7 +13,7 @@ import com.jiangruyi.summer.core.annotation.AnnotationUtil;
 import io.github.classgraph.AnnotationParameterValue;
 import io.github.classgraph.AnnotationParameterValueList;
 
-import jakarta.annotation.Resource;
+import javax.annotation.Resource;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.FileCopyUtils;

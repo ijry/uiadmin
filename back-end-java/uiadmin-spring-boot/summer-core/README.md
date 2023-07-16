@@ -74,6 +74,8 @@ mvn spring-boot:run
 在XXXApplication里新增ComponentScan路径
 
 ```
+import org.springframework.context.annotation.ComponentScan;
+
 @SpringBootApplication
 @ComponentScan("com.jiangruyi.summer.*")
 ```

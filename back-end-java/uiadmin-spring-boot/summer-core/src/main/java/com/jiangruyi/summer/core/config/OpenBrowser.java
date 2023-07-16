@@ -20,11 +20,9 @@ public class OpenBrowser implements CommandLineRunner {
 			"                                        \n" +
             "---__----------_--_---_--_----__---)__  \n" +
             "  (_ ` /   /  / /  ) / /  ) /___) /   ) \n" +
-            "_(__)_(___(__/_/__/_/_/__/_(___ _/      \n" +
-            ":: Summer ::         V1.2.0 Build2023"
+            "_(__)_(___(__/_/__/_/_/__/_(___ _/      \n"
 		);
-		System.out.println("UniAdmin-Java版启动成功");
-        System.out.println("框架官网：https://uniamin.net");
+		// System.out.println("uiadmin-summer版启动成功");
         try {
             String osName = System.getProperty("os.name");
             String cmd = "";

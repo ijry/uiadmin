@@ -8,7 +8,7 @@
 
 支持从配置文件读取用户
 
-支持jdk17以上javax迁移到jakarta
+引入javax包兼容java17
 
 1.1.0
 
