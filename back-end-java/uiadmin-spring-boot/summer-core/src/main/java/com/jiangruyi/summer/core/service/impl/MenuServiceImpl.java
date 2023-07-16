@@ -34,7 +34,8 @@ public class MenuServiceImpl implements IMenuService{
 	 */
 	public List<Object> getByUser(String userId, List<String> userAuthoritys) throws Exception {
         JSONArray menuTree = new JSONArray();
-        if (environment.getProperty("summer.system.menu-from").equals("file")) {
+        if (environment.getProperty("summer.system.menu-from") != null
+            && environment.getProperty("summer.system.menu-from").equals("file")) {
             // 默认是从summer.json文件读取整个菜单，需要根据用户与角色显示不同菜单可以重写这个接口
             ClassPathResource classPathResource = new ClassPathResource("summer.json");
             byte[]  bytes= FileCopyUtils.copyToByteArray(classPathResource.getInputStream());
@@ -44,7 +45,11 @@ public class MenuServiceImpl implements IMenuService{
         } else {
             // 从注解读取菜单
             JSONObject defaultRoot = new JSONObject();
-            defaultRoot.put("title", environment.getProperty("summer.site.title"));
+            String title = "UiAdmin";
+            if (environment.getProperty("summer.site.title") != null) {
+                title = environment.getProperty("summer.site.title");
+            }
+            defaultRoot.put("title", title);
             defaultRoot.put("logo", environment.getProperty("summer.site.logo"));
             defaultRoot.put("logoTitle", environment.getProperty("summer.site.logoTitle"));
             defaultRoot.put("logoBadge", environment.getProperty("summer.site.logoBadge"));

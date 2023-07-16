@@ -48,7 +48,7 @@ public class MenuController {
             menuList = menuService.getByUser(userInfo.getId().toString(),
                 userInfo.getAuthorities());
         } catch (Exception e) {
-            return ApiReturnUtil.error(0, e.getMessage());
+            return ApiReturnUtil.error(0, "获取菜单错误" + e.getMessage());
         }
         
         // 添加一层listData.listData

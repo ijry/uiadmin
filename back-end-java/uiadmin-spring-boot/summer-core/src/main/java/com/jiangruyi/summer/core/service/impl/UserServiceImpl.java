@@ -33,10 +33,10 @@ public class UserServiceImpl implements IUserService{
     }
 
     /**
-	 * 根据username获取用户记录
+	 * 获取用户列表
      * @throws Exception
 	 */
-	public User login(String username, String password) throws Exception {
+    private List<User> getUserList() {
         List<User> myUserList = userList.getUserList();
         if (myUserList == null) {
             User defaultUser = new User();
@@ -49,6 +49,15 @@ public class UserServiceImpl implements IUserService{
                 add(defaultUser);
             }};
         }
+        return myUserList;
+    }
+
+    /**
+	 * 根据username获取用户记录
+     * @throws Exception
+	 */
+	public User login(String username, String password) throws Exception {
+        List<User> myUserList = getUserList();
         for (User userInfo : myUserList) {
             if (userInfo.getUsername().equals(username)) {
                 // 验证密码
@@ -73,7 +82,8 @@ public class UserServiceImpl implements IUserService{
      * @throws Exception
 	 */
 	public User getById(String userId) throws Exception {
-        for (User userInfo : userList.getUserList()) {
+        List<User> myUserList = getUserList();
+        for (User userInfo : myUserList) {
             if (userInfo.getId().equals(userId)) {
                 // 获取用户角色权限
                 userInfo.setAuthorities(getAuthoritiesByUserRoles(userInfo.getRoles()));
