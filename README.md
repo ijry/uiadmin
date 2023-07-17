@@ -9,8 +9,7 @@
 
 
 ## 介绍
-UiAdmin是一套渐进式模块化开源后台，采用前后端分离技术，数据交互采用json格式，功能低耦合高内聚；核心模块支持系统设置、权限管理、用户管理、菜单管理、API管理等功能；同时我们按照统一的API风格，开发了支持spring-boot3.0、thinkphp6.0、laravel9.0、Hyperf3.0版本的后端实现；后台管理界面前端采用vue2/vue3+element-ui/element-plus实现。
-
+UiAdmin是一套渐进式模块化开源后台，采用前后端分离技术，数据交互采用json格式，功能低耦合高内聚；核心模块支持系统设置、权限管理、用户管理、菜单管理、API管理等功能；同时我们按照统一的API风格，开发了支持spring-boot3.0、thinkphp6.0、laravel9.0、Hyperf3.0版本的后端实现；后台管理界面前端采用vue+element实现。
 
 ## 预览
 
