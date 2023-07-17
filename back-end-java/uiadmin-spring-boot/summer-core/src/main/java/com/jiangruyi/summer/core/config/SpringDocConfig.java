@@ -1,22 +1,24 @@
 package com.jiangruyi.summer.core.config;
 
-import org.springdoc.core.models.GroupedOpenApi;
+import org.springdoc.core.GroupedOpenApi;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.core.env.Environment;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 
 import java.io.File;
 
 import io.swagger.v3.oas.models.*;
 import io.swagger.v3.oas.models.info.Info;
 import io.swagger.v3.oas.models.info.License;
-import jakarta.annotation.Resource;
+import javax.annotation.Resource;
 
 /**
  * SpringDoc API文档相关配置
  * Created by jry on 2022/12/09
  */
+@ConditionalOnProperty(prefix = "summer.system.loadconfig", name = "spring-doc")
 @Configuration
 public class SpringDocConfig {
     @Bean

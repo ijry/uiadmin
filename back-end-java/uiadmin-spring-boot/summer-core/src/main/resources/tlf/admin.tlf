@@ -23,7 +23,7 @@ import com.jiangruyi.summer.core.util.Tree;
 import com.jiangruyi.summer.core.util.xybuilder.XyBuilderForm;
 import com.jiangruyi.summer.core.util.xybuilder.XyBuilderList;
 import com.jiangruyi.summer.core.annotation.MenuItem;
-import jakarta.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletRequest;
 
 import io.swagger.v3.oas.annotations.*;
 import io.swagger.v3.oas.annotations.tags.Tag;

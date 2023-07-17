@@ -1,6 +1,6 @@
 package com.jiangruyi.summer.core.config;
 
-import jakarta.annotation.PreDestroy;
+import javax.annotation.PreDestroy;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

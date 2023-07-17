@@ -21,8 +21,8 @@ import com.jiangruyi.summer.core.annotation.MenuItem;
 import com.jiangruyi.summer.generator.CodeGenerator;
 import com.jiangruyi.summer.generator.mapper.TableDao;
 
-import jakarta.annotation.Resource;
-import jakarta.servlet.http.HttpServletRequest;
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
 import io.swagger.v3.oas.annotations.*;
 

@@ -3,6 +3,7 @@ package com.jiangruyi.summer.core.config;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 
 @Component
 public class OpenBrowser implements CommandLineRunner {
