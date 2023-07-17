@@ -1,0 +1,166 @@
+package ${targetPackage}.controller;
+
+import ${targetPackage}.entity.${entity};
+import ${targetPackage}.service.I${entity}Service;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
+
+import java.util.*;
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.jiangruyi.summer.core.security.SecurityUtil;
+import com.jiangruyi.summer.core.util.ApiReturnObject;
+import com.jiangruyi.summer.core.util.ApiReturnUtil;
+import com.jiangruyi.summer.core.util.Tree;
+
+import jakarta.servlet.http.HttpServletRequest;
+
+import io.swagger.v3.oas.annotations.*;
+import io.swagger.v3.oas.annotations.tags.Tag;
+
+/**
+ * ${tableComment} Controller
+ *
+ * ${author}
+ * ${date}
+ */
+@Tag(name = "前台-${tableComment}", description = "")
+@RestController("${entity}Controller")
+@RequestMapping("/api")
+public class ${entity}Controller {
+    @Autowired
+    private I${entity}Service ${entityFirstToLowerCase}Service;
+
+    /**
+     * ${tableComment}列表
+     */
+    @Operation(summary = "${tableComment}列表")
+    @GetMapping("/v1/${entityFirstToLowerCase}/lists")
+    public ApiReturnObject lists(HttpServletRequest request){
+        QueryWrapper<${entity}> queryWrapper = new QueryWrapper<>();
+        queryWrapper.orderByDesc("id");
+
+        // 获取前台发送过来的分页数据
+        Integer pageNo = 1;
+        if (request.getParameter("page") != null) {
+            pageNo = Integer.valueOf(request.getParameter("page"));
+        }
+        Integer pageSize = 10;
+        if (request.getParameter("limit") != null) {
+            pageSize = Integer.valueOf(request.getParameter("limit"));
+        }
+        Page<${entity}> page = new Page<${entity}>(pageNo, pageSize);
+
+        // 查询列表
+		IPage<${entity}> dataPage = ${entityFirstToLowerCase}Service.page(page,queryWrapper);
+
+        // 返回数据
+        JSONObject result = new JSONObject();
+        result.put("dataList", dataPage.getRecords());
+		return ApiReturnUtil.success(result);
+    }
+    
+    /**
+     * ${tableComment}详情
+     */
+    @Operation(summary = "${tableComment}详情", description="获取${tableComment}详情")
+    @GetMapping("/v1/${entityFirstToLowerCase}/info/{id}")
+    public ApiReturnObject info(@PathVariable String id){
+        ${entity} info = ${entityFirstToLowerCase}Service.getById(id);
+
+        // 返回数据
+        JSONObject result = new JSONObject();
+        result.put("info", info);
+		return ApiReturnUtil.success(result);
+    }
+
+    /**
+     * 我的${tableComment}列表
+     */
+    @Operation(summary = "我的${tableComment}列表", description="获取我的${tableComment}列表")
+    @GetMapping("/v1/${entityFirstToLowerCase}/my")
+    public ApiReturnObject my(HttpServletRequest request){
+        QueryWrapper<${entity}> queryWrapper = new QueryWrapper<>();
+        queryWrapper.orderByDesc("id");
+        // queryWrapper.eq("create_uid", SecurityUtil.getLoginId());
+
+        // 获取前台发送过来的分页数据
+        Integer pageNo = 1;
+        if (request.getParameter("page") != null) {
+            pageNo = Integer.valueOf(request.getParameter("page"));
+        }
+        Integer pageSize = 10;
+        if (request.getParameter("limit") != null) {
+            pageSize = Integer.valueOf(request.getParameter("limit"));
+        }
+        Page<${entity}> page = new Page<>(pageNo, pageSize);
+
+        // 查询列表
+		IPage<${entity}> dataPage = ${entityFirstToLowerCase}Service.page(page,queryWrapper);
+
+        // 返回数据
+        JSONObject result = new JSONObject();
+        result.put("dataList", dataPage.getRecords());
+		return ApiReturnUtil.success(result);
+    }
+
+    /**
+     * ${tableComment}新增
+     */
+    @Operation(summary = "${tableComment}新增", description="新增一个${tableComment}数据")
+    @PostMapping(path = "/v1/${entityFirstToLowerCase}/add")
+    public ApiReturnObject add(HttpServletRequest request, @RequestBody(required = false) ${entity} bodyData) {
+        Date today = new Date();
+        // bodyData.setCreateTime(today);
+        // bodyData.setUpdateTime(today);
+        // bodyData.setCreateUid(SecurityUtil.getLoginId());
+        // bodyData.setStatus(1);
+        if (${entityFirstToLowerCase}Service.save(bodyData)) {
+            return ApiReturnUtil.error(0, "添加出错");
+        }
+        return ApiReturnUtil.success("添加成功");
+    }
+
+    /**
+     * ${tableComment}编辑
+     */
+    @Operation(summary = "${tableComment}编辑", description="修改${tableComment}数据")
+    @PutMapping(path = "/v1/${entityFirstToLowerCase}/edit/{id}")
+    public ApiReturnObject edit(HttpServletRequest request, @PathVariable String id, @RequestBody(required = false) ${entity} bodyData) {
+        QueryWrapper<${entity}> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("id", id);
+        // queryWrapper.eq("create_uid", SecurityUtil.getLoginId());
+
+        Date today = new Date();
+        // bodyData.setUpdateTime(today);
+        if (${entityFirstToLowerCase}Service.update(bodyData, queryWrapper)) {
+            return ApiReturnUtil.error(0, "修改出错");
+        }
+        return ApiReturnUtil.success("修改成功");
+    }
+
+    /**
+     * ${tableComment}删除
+     */
+    @Operation(summary = "${tableComment}删除", description="删除一个${tableComment}，一般需要该条记录数据权限。")
+    @DeleteMapping("/v1/${entityFirstToLowerCase}/delete/{id}")
+    public ApiReturnObject delete(@PathVariable String id){
+        String userId = SecurityUtil.getLoginId();
+
+        // 判断
+        Map<String, Object> delMap = new HashMap<String, Object>();
+        delMap.put("id", id);
+        delMap.put("create_uid", userId);
+        boolean ret =  ${entityFirstToLowerCase}Service.removeByMap(delMap);
+        if (!ret) {
+            return ApiReturnUtil.error(0, "删除出错");
+        }
+        return ApiReturnUtil.success("删除成功");
+    }
+}

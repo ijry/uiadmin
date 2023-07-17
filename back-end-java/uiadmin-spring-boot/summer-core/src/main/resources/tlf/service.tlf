@@ -1,0 +1,16 @@
+package ${targetPackage}.service;
+
+import ${targetPackage}.entity.${entity};
+import com.baomidou.mybatisplus.extension.service.IService;
+import org.springframework.stereotype.Service;
+import com.jiangruyi.summer.core.service.IBaseService;
+
+/**
+ * ${tableComment} Service
+ *
+ * ${author}
+ * ${date}
+ */
+@Service
+public interface I${entity}Service extends IBaseService<${entity}> {
+}
