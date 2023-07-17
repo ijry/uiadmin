@@ -12,6 +12,7 @@ import com.anji.captcha.model.common.ResponseModel;
 import com.anji.captcha.model.vo.CaptchaVO;
 import com.anji.captcha.service.CaptchaService;
 import com.jiangruyi.summer.core.util.ApiReturnUtil;
+import com.jiangruyi.summer.core.util.ApiReturnObject;
 import com.jiangruyi.summer.core.service.IUserService;
 
 import org.apache.commons.codec.digest.DigestUtils;
@@ -48,7 +49,7 @@ public class UserController {
 	 * 登录
 	 */
 	@PostMapping("/api/v1/admin/user/login")
-	public Object login(@Valid @NotBlank @RequestBody JSONObject data) {
+	public ApiReturnObject login(@Valid @NotBlank @RequestBody JSONObject data) {
         // 行为验证
         if (environment.getProperty("summer.user.useVerify") != null
             && environment.getProperty("summer.user.useVerify") != "") {
@@ -93,7 +94,7 @@ public class UserController {
 	 * 获取当前登录的用户信息接口
 	 */
 	@GetMapping("/api/v1/admin/user/info")
-	public Object userInfo() {
+	public ApiReturnObject userInfo() {
         User userInfo;
         try {
             // 获取当前会话登录id, 如果未登录，则抛出异常：`NotLoginException`
@@ -111,7 +112,7 @@ public class UserController {
 	 * 注销登录
 	 */
 	@DeleteMapping("/api/v1/core/user/logout")
-	public Object logout() {
+	public ApiReturnObject logout() {
         // 当前会话注销登录
         StpUtil.logout();
 

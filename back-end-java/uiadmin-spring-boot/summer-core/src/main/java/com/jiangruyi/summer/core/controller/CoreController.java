@@ -30,6 +30,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.WebApplicationContext;
 
 import com.jiangruyi.summer.core.annotation.MenuItem;
+import com.jiangruyi.summer.core.util.ApiReturnObject;
 
 /**
  * @author Jry
@@ -111,7 +112,7 @@ public class CoreController {
 	 * XYAdmin是一个基于Vue、跨语言的、统一接口、全自动Builder渲染页面的云后台，不限制后端语言，可以以一套相同的API自由切换后端语言。
 	 */
 	@GetMapping("/xyadmin/api")
-	public Object api(HttpServletRequest request) {
+	public ApiReturnObject api(HttpServletRequest request) {
         String contextPath = environment.getProperty("server.servlet.context-path");
         if (contextPath == null) {
             contextPath = "";
@@ -168,7 +169,7 @@ public class CoreController {
     @MenuItem(title = "内容", path = "/_content", pmenu = "/default_root", menuType = -1, sortnum = 10, icon="xyicon-plane")
     @MenuItem(title = "内容管理", path = "/content", pmenu = "/_content", menuType = 0, sortnum = 0)
 	@GetMapping("/api/v1/admin/index/index")
-	public Object adminIndex() {
+	public ApiReturnObject adminIndex() {
         ArrayList dataList = new ArrayList();
         dataList.add(new HashMap<String, Object>() {
             {
@@ -363,7 +364,7 @@ public class CoreController {
 	 * 获取网站配置信息
 	 */
 	@GetMapping("/api/v1/site/info")
-	public Object sysConfig() {
+	public ApiReturnObject sysConfig() {
         JSONObject result = new JSONObject();
         result.put("title", environment.getProperty("summer.site.title"));
         result.put("logo", environment.getProperty("summer.site.logo"));

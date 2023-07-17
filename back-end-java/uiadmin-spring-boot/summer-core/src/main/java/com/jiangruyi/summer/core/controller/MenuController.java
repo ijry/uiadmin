@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.alibaba.fastjson.JSONObject;
 import com.jiangruyi.summer.core.entity.User;
+import com.jiangruyi.summer.core.util.ApiReturnObject;
 import com.jiangruyi.summer.core.util.ApiReturnUtil;
 import com.jiangruyi.summer.core.service.IMenuService;
 import com.jiangruyi.summer.core.service.IUserService;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
 
 import cn.dev33.satoken.stp.StpUtil;
 
@@ -34,7 +36,7 @@ public class MenuController {
      * @throws IOException
 	 */
 	@GetMapping("/api/v1/admin/menu/trees")
-	public Object trees() throws IOException {
+	public ApiReturnObject trees() throws IOException {
         User userInfo = new User();
         try {
             // 获取当前会话登录id, 如果未登录，则抛出异常：`NotLoginException`

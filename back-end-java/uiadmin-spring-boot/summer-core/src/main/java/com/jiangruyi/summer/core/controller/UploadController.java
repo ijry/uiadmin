@@ -7,6 +7,7 @@ import java.util.UUID;
 
 import com.alibaba.fastjson.JSONObject;
 import com.jiangruyi.summer.core.util.ApiReturnUtil;
+import com.jiangruyi.summer.core.util.ApiReturnObject;
 
 import org.springframework.boot.system.ApplicationHome;
 import org.springframework.stereotype.Controller;
@@ -26,7 +27,7 @@ public class UploadController {
 	 * 上传接口
 	 */
     @PostMapping("/api/v1/upload/upload")
-    public Object upload(@RequestParam("file") MultipartFile file) {
+    public ApiReturnObject upload(@RequestParam("file") MultipartFile file) {
         if (file.isEmpty()) {
             return ApiReturnUtil.error(0, "上传失败，请选择文件");
         }
