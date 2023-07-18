@@ -3,7 +3,7 @@ package ${targetPackage}.service;
 import ${targetPackage}.entity.${entity};
 import com.baomidou.mybatisplus.extension.service.IService;
 import org.springframework.stereotype.Service;
-import com.jiangruyi.summer.core.service.IBaseService;
+import com.jiangruyi.summer.core.mybatisplus.IBaseService;
 
 /**
  * ${tableComment} Service

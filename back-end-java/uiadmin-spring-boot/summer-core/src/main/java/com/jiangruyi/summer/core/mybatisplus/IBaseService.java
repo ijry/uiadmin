@@ -1,4 +1,4 @@
-package com.jiangruyi.summer.core.service;
+package com.jiangruyi.summer.core.mybatisplus;
 
 import java.util.List;
 import java.util.stream.Collectors;

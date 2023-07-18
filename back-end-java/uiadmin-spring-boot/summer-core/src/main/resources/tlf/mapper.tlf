@@ -1,9 +1,8 @@
 package ${targetPackage}.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
-import com.jiangruyi.summer.core.mapper.SummerBaseMapper;
+import com.jiangruyi.summer.core.mybatisplus.SummerBaseMapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import icu.mhb.mybatisplus.plugln.base.mapper.JoinBaseMapper;
 import ${targetPackage}.entity.${entity};
 
 @Mapper
