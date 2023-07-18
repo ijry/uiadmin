@@ -55,7 +55,7 @@ mvn spring-boot:run
 application.yml新增如下配置
 
 ```
-uiadmin:
+summer:
   site:
     # 网站名称
     title: "UiAdmin"
@@ -67,7 +67,15 @@ uiadmin:
   system:
     api-version: "1.0.0"
     menu-from: "annotation"
-  user: 
+    loadconfig:
+      mybatis-plus: "uiadmin"
+      cors: "uiadmin"
+      date: "uiadmin"
+      spring-doc: "uiadmin"
+      spring-mvc: "uiadmin"
+  user:
+    security:
+      driver: "sa-token"
     user-role:
       - id: 1
         name: super_admin
