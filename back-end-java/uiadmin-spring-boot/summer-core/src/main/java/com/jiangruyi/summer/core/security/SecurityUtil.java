@@ -27,7 +27,7 @@ public class SecurityUtil {
     private IUserService userService;
     private static IUserService SUserService;
 
-    @Value("${summer.user.security.driver}")
+    @Value("${summer.user.security.driver:sa-token}")
     private String driver;
     private static String Sdriver;
     @PostConstruct
