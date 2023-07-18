@@ -7,9 +7,12 @@ import org.springframework.stereotype.Component;
 import com.jiangruyi.summer.core.entity.User;
 import com.jiangruyi.summer.core.entity.Role;
 
+import org.mybatis.spring.annotation.MapperScan;
+
 @Component
 @ConfigurationProperties(prefix = "summer.user") // 配置文件的前缀
 @Data
+@MapperScan("com.jiangruyi.summer.**.mapper.**")
 public class UserList {
     // 用户列表
     private List<User> userList;
