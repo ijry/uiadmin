@@ -22,7 +22,7 @@ public class OpenBrowser implements CommandLineRunner {
             "---__----------_--_---_--_----__---)__  \n" +
             "  (_ ` /   /  / /  ) / /  ) /___) /   ) \n" +
             "_(__)_(___(__/_/__/_/_/__/_(___ _/      \n" +
-            " :: uiadmin.net ::               1.2.0  \n"
+            " :: uiadmin.net ::               1.3.0  \n"
 		);
 		// System.out.println("uiadmin-summer版启动成功");
         try {
