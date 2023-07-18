@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.util.List;
 
 import com.alibaba.fastjson.JSONObject;
+import com.jiangruyi.summer.core.security.SecurityUtil;
+import com.jiangruyi.summer.core.security.LoginUser;
 import com.jiangruyi.summer.core.entity.User;
 import com.jiangruyi.summer.core.util.ApiReturnObject;
 import com.jiangruyi.summer.core.util.ApiReturnUtil;
@@ -37,13 +39,7 @@ public class MenuController {
 	 */
 	@GetMapping("/api/v1/admin/menu/trees")
 	public ApiReturnObject trees() throws IOException {
-        User userInfo = new User();
-        try {
-            // 获取当前会话登录id, 如果未登录，则抛出异常：`NotLoginException`
-            userInfo = userService.getById((String) StpUtil.getLoginId());
-        } catch (Exception e) {
-            return ApiReturnUtil.error(401, e.getMessage());
-        }
+        User userInfo = SecurityUtil.getLoginInfo().getUser();
         List<Object> menuList;
         try {
             menuList = menuService.getByUser(userInfo.getId().toString(),

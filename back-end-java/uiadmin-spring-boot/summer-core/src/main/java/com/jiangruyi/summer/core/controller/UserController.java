@@ -27,6 +27,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.jiangruyi.summer.core.security.SecurityUtil;
+import com.jiangruyi.summer.core.security.LoginUser;
 import com.jiangruyi.summer.core.entity.User;
 
 import cn.dev33.satoken.stp.StpUtil;
@@ -95,13 +97,7 @@ public class UserController {
 	 */
 	@GetMapping("/api/v1/admin/user/info")
 	public ApiReturnObject userInfo() {
-        User userInfo;
-        try {
-            // 获取当前会话登录id, 如果未登录，则抛出异常：`NotLoginException`
-            userInfo = userService.getById((String) StpUtil.getLoginId());
-        } catch (Exception e) {
-            return ApiReturnUtil.error(401, e.getMessage());
-        }
+        User userInfo = SecurityUtil.getLoginInfo().getUser();
         JSONObject result = new JSONObject();
         userInfo.setPassword("");
         result.put("userInfo", userInfo);
