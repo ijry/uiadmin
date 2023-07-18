@@ -7,7 +7,7 @@
   <parent>
     <groupId>com.jiangruyi.summer</groupId>
     <artifactId>summer-parent</artifactId>
-    <version>${summer.version}</version>
+    <version>1.3.0-SNAPSHOT</version>
     <relativePath>../pom.xml</relativePath>
   </parent>
 

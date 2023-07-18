@@ -13,13 +13,12 @@
 
     <!-- 以下信息必须有才能发布中央仓库 -->
     <groupId>com.jiangruyi.summer</groupId>
+    <name>summer-parent</name>
     <artifactId>summer-parent</artifactId>
     <version>${summer.version}</version>
     <packaging>pom</packaging>
-
-    <name>summer-core</name>
     <url>https://uniadmin.net</url>
-    <description>Summer Framework</description>
+    <description>Summer Framework Parent Module</description>
 
     <!-- 所有模块 -->
     <modules>
