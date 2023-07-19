@@ -32,6 +32,10 @@ import com.jiangruyi.summer.core.security.LoginUser;
 import com.jiangruyi.summer.core.entity.User;
 
 import cn.dev33.satoken.stp.StpUtil;
+
+import io.swagger.v3.oas.annotations.*;
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 /**
  * @author Jry
  */
@@ -41,7 +45,7 @@ public class UserController {
     @Autowired
     private IUserService userService;
 
-    @Resource
+    @Autowired
 	private Environment environment;
 
     @Autowired(required = false)
@@ -50,6 +54,7 @@ public class UserController {
     /**
 	 * 登录
 	 */
+    @Operation(summary = "用户登录", tags = {"后台-核心模块"})
 	@PostMapping("/api/v1/admin/user/login")
 	public ApiReturnObject login(@Valid @NotBlank @RequestBody JSONObject data) {
         // 行为验证
@@ -91,6 +96,7 @@ public class UserController {
     /**
 	 * 获取当前登录的用户信息接口
 	 */
+    @Operation(summary = "用户详情", tags = {"后台-核心模块"})
 	@GetMapping("/api/v1/admin/user/info")
 	public ApiReturnObject userInfo() {
         User userInfo = SecurityUtil.getLoginInfo().getUser();
@@ -103,6 +109,7 @@ public class UserController {
     /**
 	 * 注销登录
 	 */
+    @Operation(summary = "退出登录", tags = {"前台-核心模块"})
 	@DeleteMapping("/api/v1/core/user/logout")
 	public ApiReturnObject logout() {
         // 当前会话注销登录

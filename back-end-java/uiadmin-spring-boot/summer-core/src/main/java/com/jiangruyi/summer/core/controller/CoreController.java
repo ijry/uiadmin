@@ -32,6 +32,9 @@ import org.springframework.web.context.WebApplicationContext;
 import com.jiangruyi.summer.core.annotation.MenuItem;
 import com.jiangruyi.summer.core.util.ApiReturnObject;
 
+import io.swagger.v3.oas.annotations.*;
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 /**
  * @author Jry
  */
@@ -49,6 +52,7 @@ public class CoreController {
 	 * @throws IOException 
 	 * @throws ClientProtocolException 
 	 */
+    @Operation(hidden = true)
 	@GetMapping("/xyadmin")
     public void index(HttpServletResponse response) throws ClientProtocolException, IOException {
         String contextPath = environment.getProperty("server.servlet.context-path");
@@ -63,6 +67,7 @@ public class CoreController {
 	 * @throws IOException 
 	 * @throws ClientProtocolException 
 	 */
+    @Operation(hidden = true)
 	@GetMapping("/xyadmin/")
 	public String admin() throws ClientProtocolException, IOException {
 		// (1) 创建HttpGet实例  
@@ -111,6 +116,7 @@ public class CoreController {
 	 * 实现这个接口里的几个标记必须实现的API就可以快速跨语言对接XYAdmin云后台。
 	 * XYAdmin是一个基于Vue、跨语言的、统一接口、全自动Builder渲染页面的云后台，不限制后端语言，可以以一套相同的API自由切换后端语言。
 	 */
+    @Operation(summary = "根数据", tags = {"后台-核心模块"})
 	@GetMapping("/xyadmin/api")
 	public ApiReturnObject api(HttpServletRequest request) {
         String contextPath = environment.getProperty("server.servlet.context-path");
@@ -161,6 +167,7 @@ public class CoreController {
     /**
 	 * 后台首页
 	 */
+    @Operation(summary = "首页", tags = {"后台-核心模块"})
     @MenuItem(title = "系统", path = "/_system", pmenu = "/default_root", menuType = -1, sortnum = 99, icon="xyicon-settings")
     @MenuItem(title = "开发工具", path = "/dev", pmenu = "/_system", menuType = 0, sortnum = 0)
     @MenuItem(title = "内容", path = "/_content", pmenu = "/default_root", menuType = -1, sortnum = 10, icon="xyicon-plane")
@@ -360,6 +367,7 @@ public class CoreController {
     /**
 	 * 获取网站配置信息
 	 */
+    @Operation(summary = "站点信息", tags = {"前台-核心模块"})
 	@GetMapping("/api/v1/site/info")
 	public ApiReturnObject sysConfig() {
         JSONObject result = new JSONObject();

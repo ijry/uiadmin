@@ -18,8 +18,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-
 import cn.dev33.satoken.stp.StpUtil;
+
+import io.swagger.v3.oas.annotations.*;
+import io.swagger.v3.oas.annotations.tags.Tag;
 
 /**
  * @author Jry
@@ -37,6 +39,7 @@ public class MenuController {
 	 * 获取菜单接口
      * @throws IOException
 	 */
+    @Operation(summary = "后台菜单树", tags = {"后台-核心模块"})
 	@GetMapping("/api/v1/admin/menu/trees")
 	public ApiReturnObject trees() throws IOException {
         User userInfo = SecurityUtil.getLoginInfo().getUser();
