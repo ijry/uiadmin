@@ -15,7 +15,7 @@
     <groupId>com.jiangruyi.summer</groupId>
     <name>summer-parent</name>
     <artifactId>summer-parent</artifactId>
-    <version>${summer.version}</version>
+    <version>1.3.0-SNAPSHOT</version>
     <packaging>pom</packaging>
     <url>https://uniadmin.net</url>
     <description>Summer Framework Parent Module</description>
