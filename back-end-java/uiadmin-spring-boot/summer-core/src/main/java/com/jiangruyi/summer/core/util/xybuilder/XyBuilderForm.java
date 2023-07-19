@@ -119,7 +119,7 @@ public class XyBuilderForm implements Serializable {
     }
 
     // 添加分栏
-    public Object addFormCol(String name, Map<String,Object> span, List<Object> itemList, Map<String,Object> extra){
+    public Object addFormCol(String name, Map<String,Integer> span, List<String> itemList, Map<String,Object> extra){
         JSONObject col = new JSONObject();
         col.put("name", name);
         col.put("span", span);
@@ -130,7 +130,7 @@ public class XyBuilderForm implements Serializable {
     }
 
     // 添加分组
-    public Object addFormGroup(String name,String title, List<Object> itemList, HashMap<String,Object> extra){
+    public Object addFormGroup(String name,String title, List<String> itemList, Map<String,Object> extra){
         JSONObject col = new JSONObject();
         col.put("name", name);
         col.put("title", title);
