@@ -9,8 +9,7 @@ summer:
   system:
     api-version: "1.0.0"
   user: 
-    # 使用行为验证
-    useVerify: "aj-captcha"
+    use-verify: "none" #aj-captcha
     password: 'uiadmin'
     user-role:
       - id: 1
@@ -44,3 +43,4 @@ spring:
     url: jdbc:mysql://localhost:3306/db?characterEncoding=utf-8
     username: root
     password: root
+
