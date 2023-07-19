@@ -59,7 +59,7 @@ public class CoreController {
         if (contextPath == null) {
             contextPath = "/";
         }
-        response.sendRedirect(contextPath + "/xyadmin/");
+        response.sendRedirect(contextPath + "xyadmin/");
     }
 
 	/**
@@ -120,6 +120,9 @@ public class CoreController {
 	@GetMapping("/xyadmin/api")
 	public ApiReturnObject api(HttpServletRequest request) {
         String contextPath = environment.getProperty("server.servlet.context-path");
+        if (contextPath == null) {
+            contextPath = "/";
+        }
 		final String apiBase = request.getScheme() + "://"
             + request.getServerName() + ":"
             + request.getLocalPort()
