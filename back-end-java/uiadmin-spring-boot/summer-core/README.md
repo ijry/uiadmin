@@ -45,6 +45,18 @@ mvn spring-boot:run
         <artifactId>summer-core</artifactId>
         <version>1.2.0</version>
     </dependency>
+    <!-- spring-boot2.x需要引入 -->
+    <dependency>
+      <groupId>org.springdoc</groupId>
+      <artifactId>springdoc-openapi-ui</artifactId>
+      <version>1.7.0</version>
+    </dependency>
+    <!-- spring-boot3.x需要引入 -->
+    <dependency>
+      <groupId>org.springdoc</groupId>
+      <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+      <version>2.1.0</version>
+   </dependency>
 </dependencies>
 
 ```
