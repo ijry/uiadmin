@@ -1,5 +1,7 @@
 package com.jiangruyi.summer.core.service.impl;
 
+import java.util.Map;
+import java.util.HashMap;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -15,13 +17,32 @@ import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 import com.jiangruyi.summer.core.config.UserList;
 
-@Service
-public class UserServiceImpl implements IUserService{
+import cn.dev33.satoken.stp.StpUtil;
+
+@Service("CoreUserServiceImpl")
+public class UserServiceImpl implements IUserService {
     @Autowired
 	private Environment env;
 
     @Autowired
 	private UserList userList;
+
+    /**
+	 * 获取用户列表
+     * @throws Exception
+	 */
+    public List<Map<String, Object>> getUserListColumns() {
+        // 获取用户列表
+        List<User> myUserList = getUserList();
+        List<Map<String, Object>> userList = new ArrayList();
+        for (User userInfo : myUserList) {
+            userList.add(new HashMap() {{
+                put("title", userInfo.getNickname());
+                put("value", userInfo.getId());
+            }});
+        }
+        return userList;
+    }
 
      /**
 	 * 根据角色获取权限集合
@@ -99,6 +120,12 @@ public class UserServiceImpl implements IUserService{
 
                 // 获取用户角色权限
                 userInfo.setAuthorities(getAuthoritiesByUserRoles(userInfo.getRoles()));
+
+                // 标记当前会话登录的账号id 
+                StpUtil.login(userInfo.getId());
+
+                // 获取当前会话的token值
+                userInfo.setToken(StpUtil.getTokenValue());
 
                 return userInfo;
             }
