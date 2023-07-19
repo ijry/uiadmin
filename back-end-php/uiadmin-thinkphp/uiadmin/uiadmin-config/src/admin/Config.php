@@ -125,12 +125,12 @@ class Config extends BaseAdmin
         $page = input('get.page/d') ?: 1;
         $limit = input('get.limit/d') ?: 10;
         $module = input('get.module');
-        $dataList = ConfigModel::where('profile', '=', 'prod')
+        $dataList = ConfigModel::where('profile', '=', '')
             // ->where('module', '=', $module)
             ->page($page, $limit)
             ->order('id asc')
             ->select();
-        $total = ConfigModel::where('profile', '=', 'prod')
+        $total = ConfigModel::where('profile', '=', '')
             ->count();
 
 
@@ -260,7 +260,7 @@ class Config extends BaseAdmin
                     'placeholder' => '默认值',
                     'tip' => '预留字段，暂时保持默认'
                 ])
-                ->addFormItem('profile', '配置环境', 'text', 'prod', [
+                ->addFormItem('profile', '配置环境', 'text', '', [
                     'disabled' => true,
                     'placeholder' => '默认值',
                     'tip' => '预留字段，暂时保持默认'
@@ -412,7 +412,7 @@ class Config extends BaseAdmin
                     'placeholder' => '默认值',
                     'tip' => '预留字段，暂时保持默认'
                 ])
-                ->addFormItem('profile', '配置环境', 'text', 'prod', [
+                ->addFormItem('profile', '配置环境', 'text', '', [
                     'disabled' => true,
                     'placeholder' => '默认值',
                     'tip' => '预留字段，暂时保持默认'

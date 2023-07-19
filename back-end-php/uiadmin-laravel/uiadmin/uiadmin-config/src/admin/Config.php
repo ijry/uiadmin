@@ -262,7 +262,7 @@ class Config extends BaseAdmin
                     'placeholder' => '默认值',
                     'tip' => '预留字段，暂时保持默认'
                 ])
-                ->addFormItem('profile', '配置环境', 'text', 'prod', [
+                ->addFormItem('profile', '配置环境', 'text', '', [
                     'disabled' => true,
                     'placeholder' => '默认值',
                     'tip' => '预留字段，暂时保持默认'
@@ -414,7 +414,7 @@ class Config extends BaseAdmin
                     'placeholder' => '默认值',
                     'tip' => '预留字段，暂时保持默认'
                 ])
-                ->addFormItem('profile', '配置环境', 'text', 'prod', [
+                ->addFormItem('profile', '配置环境', 'text', '', [
                     'disabled' => true,
                     'placeholder' => '默认值',
                     'tip' => '预留字段，暂时保持默认'
