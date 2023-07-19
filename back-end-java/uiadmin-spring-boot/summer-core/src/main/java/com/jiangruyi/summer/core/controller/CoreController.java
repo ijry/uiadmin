@@ -7,9 +7,9 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.annotation.Resource;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 import com.alibaba.fastjson.JSONObject;
 import com.jiangruyi.summer.core.util.ApiReturnUtil;
@@ -35,11 +35,14 @@ import com.jiangruyi.summer.core.util.ApiReturnObject;
 /**
  * @author Jry
  */
-@RestController
+@RestController("CoreController")
 @RequestMapping("/")
 public class CoreController {
     @Autowired
     WebApplicationContext applicationContext;
+
+    @Resource
+	private Environment environment;
 
     /**
 	 * 调用云后台
@@ -103,9 +106,6 @@ public class CoreController {
         return total.toString();
     }
 
-    @Resource
-	private Environment environment;
-
 	/**
 	 * SpringBoot版云后台对接接口
 	 * 实现这个接口里的几个标记必须实现的API就可以快速跨语言对接XYAdmin云后台。
@@ -114,14 +114,11 @@ public class CoreController {
 	@GetMapping("/xyadmin/api")
 	public ApiReturnObject api(HttpServletRequest request) {
         String contextPath = environment.getProperty("server.servlet.context-path");
-        if (contextPath == null) {
-            contextPath = "";
-        }
 		final String apiBase = request.getScheme() + "://"
             + request.getServerName() + ":"
             + request.getLocalPort()
             + contextPath
-            + "/api";
+            + "api";
         String title = "UiAdmin";
         if (environment.getProperty("summer.site.title") != null) {
             title = environment.getProperty("summer.site.title");

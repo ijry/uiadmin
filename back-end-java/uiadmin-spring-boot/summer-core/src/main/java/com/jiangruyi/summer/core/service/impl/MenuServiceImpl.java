@@ -20,8 +20,8 @@ import org.springframework.util.FileCopyUtils;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 
-@Service
-public class MenuServiceImpl implements IMenuService{
+@Service("CoreMenuServiceImpl")
+public class MenuServiceImpl implements IMenuService {
     @Resource
 	private Environment environment;
 

@@ -35,7 +35,7 @@ import cn.dev33.satoken.stp.StpUtil;
 /**
  * @author Jry
  */
-@RestController
+@RestController("CoreUserController")
 @RequestMapping("/")
 public class UserController {
     @Autowired
@@ -44,7 +44,7 @@ public class UserController {
     @Resource
 	private Environment environment;
 
-    @Autowired
+    @Autowired(required = false)
     private CaptchaService captchaService;
 
     /**
@@ -54,7 +54,8 @@ public class UserController {
 	public ApiReturnObject login(@Valid @NotBlank @RequestBody JSONObject data) {
         // 行为验证
         if (environment.getProperty("summer.user.useVerify") != null
-            && environment.getProperty("summer.user.useVerify") != "") {
+            && environment.getProperty("summer.user.useVerify") != ""
+            && captchaService != null) {
             switch (environment.getProperty("summer.user.useVerify")) {
                 case "aj-captcha":
                     //必传参数：captchaVO.captchaVerification
@@ -80,13 +81,8 @@ public class UserController {
             return ApiReturnUtil.error(0, e.getMessage());
         }
 
-        // 标记当前会话登录的账号id 
-        StpUtil.login(userInfo.getId());
-        // 获取当前会话的token值
-        String token = StpUtil.getTokenValue();
-
         HashMap<String, Object> result = new HashMap<String, Object>();
-        result.put("token", "Bearer " + token);
+        result.put("token", "Bearer " + userInfo.getToken());
         userInfo.setPassword("");
         result.put("userInfo", userInfo);
 		return ApiReturnUtil.success("登录成功", result);

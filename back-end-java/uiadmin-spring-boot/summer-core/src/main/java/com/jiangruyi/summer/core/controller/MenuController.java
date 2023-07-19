@@ -24,7 +24,7 @@ import cn.dev33.satoken.stp.StpUtil;
 /**
  * @author Jry
  */
-@RestController
+@RestController("CoreMenuController")
 @RequestMapping("/")
 public class MenuController {
     @Autowired

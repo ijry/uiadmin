@@ -35,6 +35,9 @@ public class User implements Cloneable,Serializable {
 
     private Integer status = 1;
 
+    // token
+    private String token;
+
     @Override
     public Object clone() throws CloneNotSupportedException {
         return super.clone();

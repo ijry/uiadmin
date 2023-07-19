@@ -20,7 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 /**
  * 上传
  */
-@Controller
+@Controller("CoreUploadController")
 @RestController
 public class UploadController {
     /**

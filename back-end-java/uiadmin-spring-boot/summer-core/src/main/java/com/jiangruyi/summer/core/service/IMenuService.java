@@ -12,7 +12,7 @@ import io.github.classgraph.AnnotationParameterValueList;
 
 import org.springframework.stereotype.Service;
 
-@Service
+@Service("CoreMenuService")
 public interface IMenuService {
 	/**
 	 * 获取所有菜单
