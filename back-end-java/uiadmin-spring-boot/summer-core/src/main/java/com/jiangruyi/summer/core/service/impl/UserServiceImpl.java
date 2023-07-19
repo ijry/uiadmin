@@ -2,11 +2,12 @@ package com.jiangruyi.summer.core.service.impl;
 
 import java.util.List;
 import java.util.ArrayList;
-
+import java.util.Arrays;
 
 import org.apache.commons.codec.digest.DigestUtils;
 
 import com.jiangruyi.summer.core.entity.User;
+import com.jiangruyi.summer.core.entity.Role;
 import com.jiangruyi.summer.core.service.IUserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,10 +27,38 @@ public class UserServiceImpl implements IUserService{
 	 * 根据角色获取权限集合
      * @throws Exception
 	 */
-    protected List<String> getAuthoritiesByUserRoles(String userRoles) {
-        return new ArrayList(){{
-            add("ROLE_SUPER_ADMIN");
-        }};
+    public List<String> getAuthoritiesByUserRoles(String userRoles) {
+        List<String> userRolesList = Arrays.asList(userRoles.split(","));
+        String roleHasMenus = "";
+        for (Role userRole : userList.getUserRole()) {
+            for (String roleName : userRolesList) {
+                if (userRole.getName().equals(roleName)
+                    && !userRole.getMenus().equals("")) {
+                    // 一个用户有多个角色将菜单权限整合
+                    roleHasMenus = roleHasMenus + ",ROLE_" + roleName.toUpperCase();
+                    roleHasMenus = roleHasMenus + ',' + userRole.getMenus();
+                }
+            }
+        }
+        List<String> menuUserRolesList =  Arrays.asList(roleHasMenus.split(","));
+        return menuUserRolesList;
+    }
+
+    /**
+	 * 根据username获取用户记录
+     * @throws Exception
+	 */
+	public User getUserByUserName(String username) throws Exception {
+        List<User> myUserList = getUserList();
+        for (User userInfo : myUserList) {
+            if (userInfo.getUsername().equals(username)) {
+                // 获取用户角色权限
+                userInfo.setAuthorities(getAuthoritiesByUserRoles(userInfo.getRoles()));
+                return userInfo;
+            }
+        }
+
+        throw new Exception("用户不存在");
     }
 
     /**
