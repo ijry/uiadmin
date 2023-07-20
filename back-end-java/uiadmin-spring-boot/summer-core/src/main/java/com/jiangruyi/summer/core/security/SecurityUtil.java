@@ -27,7 +27,7 @@ public class SecurityUtil {
     private IUserService userService;
     private static IUserService SUserService;
 
-    @Value("${summer.user.security.driver:sa-token}")
+    @Value("${summer.auth.driver:sa-token}")
     private String driver;
     private static String Sdriver;
     @PostConstruct
@@ -51,6 +51,7 @@ public class SecurityUtil {
      */
     public static LoginUser getLoginInfo() {
         LoginUser userLoginInfo = new LoginUser();
+        System.out.println("当前auth-driver是" + Sdriver);
         switch (Sdriver) {
             case "spring-security":
                 Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -63,7 +64,6 @@ public class SecurityUtil {
                 }
                 break;
             case "sa-token":
-            default:
                 // 获取当前会话登录id, 如果未登录，则抛出异常：`NotLoginException`
                 String userId = (String)StpUtil.getLoginId();
                 User userInfo = new User();
@@ -74,6 +74,8 @@ public class SecurityUtil {
                 }
                 userLoginInfo.setUser(userInfo); 
                 break;
+            default:
+                throw new RuntimeException("用户认证驱动未设置");
         }
         return userLoginInfo;
     }

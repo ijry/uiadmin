@@ -9,7 +9,6 @@ com.jiangruyi.summer.core.controller.UploadController,\
 com.jiangruyi.summer.core.controller.UserController,\
 com.jiangruyi.summer.core.service.impl.MenuServiceImpl,\
 com.jiangruyi.summer.core.service.impl.UserServiceImpl,\
-com.jiangruyi.summer.core.service.impl.UserServiceImpl,\
 com.jiangruyi.summer.core.config.ConfigCors,\
 com.jiangruyi.summer.core.config.DateConfig,\
 com.jiangruyi.summer.core.config.ShutDownConfig,\

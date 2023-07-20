@@ -22,7 +22,7 @@ import org.springframework.stereotype.Service;
 
 @Service("CoreMenuServiceImpl")
 public class MenuServiceImpl implements IMenuService {
-    @Resource
+    @Autowired
 	private Environment environment;
 
     @Autowired
