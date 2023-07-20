@@ -6,7 +6,7 @@ long_description = (this_directory / "README.md").read_text()
  
 setup(
     name='Uiadmin-FastApi',
-    version='1.0.2',
+    version='1.0.3',
     url='http://uiadmin.net',
     license='Apache2',
     author='jry',

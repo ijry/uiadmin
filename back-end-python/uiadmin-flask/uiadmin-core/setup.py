@@ -6,7 +6,7 @@ long_description = (this_directory / "README.md").read_text()
 
 setup(
     name='Uiadmin-Flask',
-    version='1.0.6',
+    version='1.0.7',
     url='http://uiadmin.net',
     license='Apache2',
     author='jry',

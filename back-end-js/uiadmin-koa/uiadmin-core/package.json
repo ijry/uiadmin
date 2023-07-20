@@ -1,6 +1,6 @@
 {
   "name": "uiadmin-koa",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "a koa2 version of uiadmin",
   "main": "index.js",
   "dependencies": {
