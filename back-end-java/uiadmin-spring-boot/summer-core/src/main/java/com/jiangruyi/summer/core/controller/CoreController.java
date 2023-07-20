@@ -44,7 +44,7 @@ public class CoreController {
     @Autowired
     WebApplicationContext applicationContext;
 
-    @Resource
+    @Autowired
 	private Environment environment;
 
     /**
@@ -70,8 +70,12 @@ public class CoreController {
     @Operation(hidden = true)
 	@GetMapping("/xyadmin/")
 	public String admin() throws ClientProtocolException, IOException {
-		// (1) 创建HttpGet实例  
-		HttpGet get = new HttpGet("https://uiadmin.net/xyadmin/?version=1.3.0");  
+		// (1) 创建HttpGet实例
+        String xyadminApi = environment.getProperty("summer.system.xyadmin-api");
+        if (xyadminApi == null || xyadminApi.equals("")) {
+            xyadminApi = "https://uiadmin.net/xyadmin/?version=1.3.0";
+        }
+		HttpGet get = new HttpGet(xyadminApi);  
 		  
 		// (2) 使用HttpClient发送get请求，获得返回结果HttpResponse  
 		HttpClient http = new DefaultHttpClient();  
