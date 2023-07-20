@@ -7,9 +7,9 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.annotation.Resource;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 import com.alibaba.fastjson.JSONObject;
 import com.jiangruyi.summer.core.util.ApiReturnUtil;
@@ -143,7 +143,7 @@ public class CoreController {
 				put("name", "summer");
 				put("title", environment.getProperty("summer.site.title") != null ? environment.getProperty("summer.site.title") : "UiAdmin"); // 网站名称
 				put("stype", "应用");
-				put("version", "1.2.0");
+				put("version", "1.3.0");
 				put("domainRoot", request.getScheme()+"://"+ request.getServerName() + ":" + request.getLocalPort());
 				put("api", new HashMap<String, Object>() {
 					{
