@@ -175,9 +175,9 @@ public class CoreController {
 	 * 后台首页
 	 */
     @Operation(summary = "首页", tags = {"后台-核心模块"})
-    @MenuItem(title = "系统", path = "/_system", pmenu = "/default_root", menuType = -1, sortnum = 99, icon="xyicon-settings")
+    @MenuItem(title = "系统", path = "/_system", pmenu = "/default_root", menuType = -1, sortnum = 0, icon="xyicon-settings")
     @MenuItem(title = "开发工具", path = "/dev", pmenu = "/_system", menuType = 0, sortnum = 0)
-    @MenuItem(title = "内容", path = "/_content", pmenu = "/default_root", menuType = -1, sortnum = 10, icon="xyicon-plane")
+    @MenuItem(title = "内容", path = "/_content", pmenu = "/default_root", menuType = -1, sortnum = 5, icon="xyicon-plane")
     @MenuItem(title = "内容管理", path = "/content", pmenu = "/_content", menuType = 0, sortnum = 0)
 	@GetMapping("/api/v1/admin/index/index")
 	public ApiReturnObject adminIndex() {

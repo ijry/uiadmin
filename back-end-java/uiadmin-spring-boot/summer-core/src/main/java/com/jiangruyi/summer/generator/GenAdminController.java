@@ -30,10 +30,10 @@ import io.swagger.v3.oas.annotations.*;
 @RequestMapping("/")
 public class GenAdminController {
 
-    @Resource
+    @Autowired
 	private Environment environment;
 
-    @Resource
+    @Autowired
     TableDao tableDao;
 
     /**
