@@ -1,12 +1,16 @@
 package com.jiangruyi.summer.core.service;
 
 import java.util.List;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.JSONArray;
 import com.jiangruyi.summer.core.util.Tree;
 import com.jiangruyi.summer.core.annotation.AnnotationUtil;
-import com.jiangruyi.summer.core.annotation.MenuItem;
+import com.jiangruyi.summer.core.entity.MenuItem;
+
 import io.github.classgraph.AnnotationParameterValue;
 import io.github.classgraph.AnnotationParameterValueList;
 
@@ -19,8 +23,8 @@ public interface IMenuService {
      * @throws Exception
 	 */
     public static JSONArray getAllMenus() {
-        List<AnnotationParameterValueList> ctl = AnnotationUtil.methodAnnotionScan("*", MenuItem.class);
-        JSONArray arr = new JSONArray();
+        List<AnnotationParameterValueList> ctl = AnnotationUtil.methodAnnotionScan("*", com.jiangruyi.summer.core.annotation.MenuItem.class);
+        List<MenuItem> arr = new ArrayList();
         for (AnnotationParameterValueList each : ctl) {
             JSONObject tmp = new JSONObject();
             for (AnnotationParameterValue each1 : each) {
@@ -30,10 +34,18 @@ public interface IMenuService {
                 && tmp.getInteger("isHide") == 0) {
                 tmp.put("fullPath", "/" + tmp.getString("apiPrefix")
                     + "/" + tmp.getString("menuLayer") + tmp.getString("path"));
-                arr.add(tmp);
+                arr.add(tmp.toJavaObject(MenuItem.class));
             }
+            
         }
-        JSONArray ret = Tree.listToTree(arr, "path", "pmenu", "children");
+        // 使用匿名比较器排序
+        Collections.sort(arr, new Comparator<MenuItem>() {
+            @Override
+            public int compare(MenuItem p1, MenuItem p2) {
+                return p2.getSortnum() - p1.getSortnum();
+            }
+        });
+        JSONArray ret = Tree.listToTree(JSONArray.parseArray(JSON.toJSONString(arr)), "path", "pmenu", "children");
         return ret;
     }
 
