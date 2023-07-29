@@ -1,0 +1,29 @@
+---
+version: "v1"
+image: "cloudstudio-devops-docker.pkg.coding.net/artifacts/workspace/full-1.0.0:2023-07-10.0946"
+extensions: []
+lifecycle:
+  start:
+  - name: "start"
+    command: "cd back-end-php/uiadmin-thinkphp && cp .example.env .env  && composer\
+      \ install && php think uiadmin:install   &&  php think run"
+sidecar:
+  mysql:
+    enabled: true
+    password: "uiadmin"
+    database: "uiadmin"
+    port: 3306
+name: "uiadmin通用后台(spring-boot版本)"
+description: "UiAdmin是一套零前端代码通用后台，采用前后端分离技术，数据交互采用json格式；通过后端Builder不需要一行前端代码就能实时体\
+  验一个vue+element的现代化后台；同时我们打造一了套兼容性的API标准，从SpringBoot、ThinkPHP、Laravel、.NET开始，逐步覆盖\
+  js、go等多语言和框架。"
+tags:
+- "Java"
+- "Spring Boot"
+repository: "https://github.com/ijry/uiadmin.git"
+ref: "master"
+storage:
+  copy_to_working_dir: true
+category: "userDefined"
+sort: 0
+show: true

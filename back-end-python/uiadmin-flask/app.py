@@ -12,7 +12,7 @@ app = Flask(__name__)
 uiadmin = Uiadmin(app)
 app.config.update(
     UIADMIN_SITE_TITLE='UiAdmin',
-    UIADMIN_SITE_LOGO='',
+    UIADMIN_SITE_LOGO='https://s1.ax1x.com/2023/07/28/pCzWg2Q.png',
     UIADMIN_SITE_LOGO_BADGE='1.0'
 )
 

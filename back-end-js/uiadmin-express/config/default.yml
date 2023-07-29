@@ -3,10 +3,10 @@ uiadmin:
     # 网站名称
     title: "UiAdmin-Express"
     #正方形logo 
-    logo: ""
+    logo: "https://s1.ax1x.com/2023/07/28/pCzWg2Q.png"
     #带有标题的横logo 
-    logoTitle: ""
-    logoBadge: ""
+    logoTitle: "https://s1.ax1x.com/2023/07/28/pCzWg2Q.png"
+    logoBadge: "https://s1.ax1x.com/2023/07/28/pCzWg2Q.png"
   system:
     api-version: "1.0.0"
     menu-from: "annotation"

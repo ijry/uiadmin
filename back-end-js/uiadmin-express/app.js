@@ -30,7 +30,7 @@ var fs = require("fs");
 var checkDir = fs.existsSync("uiadmin-core");
 let uiadminAlias = './uiadmin-core';
 if (!checkDir) {
-  uiadinAlias = 'uiadmin-express'
+  uiadminAlias = 'uiadmin-express'
 }
 const {
   Controller, Get, RootUrl, Post, MenuItem, UiAdmin, config, XyBuilderList, XyBuilderForm

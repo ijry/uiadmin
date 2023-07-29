@@ -1,5 +1,7 @@
 # 简介
 
+[![Cloud Studio Template](https://cs-res.codehub.cn/common/assets/icon-badge.svg)](https://cloudstudio.net/templates/3801gn1bim8)
+
 uiadmin的express实现版本，无需进行vue开发即可实时动态生成管理后台。
 
 ![UiAdmin列表](https://raw.githubusercontent.com/ijry/uiadmin/master/back-end-js/uiadmin-express/uiadmin-core/preview/lists.png)
