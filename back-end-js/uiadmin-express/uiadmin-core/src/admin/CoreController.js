@@ -54,6 +54,18 @@ class CoreController {
 
   @Get('/xyadmin/api')
   xyadminApi(req, res) {
+    if (process.env.NODE_ENV == 'development') {
+        console.log(req.headers);
+    }
+    let host = '';
+    let protocol = '';
+    if (req.headers['x-forwarded-host']) {
+        host = req.headers['x-forwarded-host'];
+        protocol = req.headers['x-forwarded-scheme'];
+    } else {
+        host = req.get('host');
+        protocol = req.protocol;
+    }
     res.json({
         "code": 200,
         "msg": "success",
@@ -64,14 +76,14 @@ class CoreController {
             "api": {
                 "apiLogin": "/v1/admin/user/login",
                 "apiConfig": "/v1/site/info",
-                "apiBase": req.protocol + '://' + req.get('host') + "/api",
+                "apiBase": protocol + '://' + host + "/api",
                 "apiUserInfo": "/v1/admin/user/info",
                 "apiAdmin": config.get("uiadmin.api-url.api-admin") || "/v1/admin/index/index",
                 "apiMenuTrees": "/v1/admin/menu/trees"
             },
             "lang": "python",
             "title": config.get("uiadmin.site.title"),
-            "domainRoot": req.protocol + '://' + req.get('host'),
+            "domainRoot": protocol + '://' + host,
             "siteInfo": {
                 "title": config.get("uiadmin.site.title")
             },
@@ -93,6 +105,9 @@ class CoreController {
 
   @Post('/api/v1/admin/user/login')
   admin_login(req, res) {
+    //if (process.env.NODE_ENV == 'development') {
+        console.log(req.body);
+    //}
     if (!req.body.account == 'admin'
         || !req.body.password == 'uiadmin') {
         res.json({
@@ -101,6 +116,7 @@ class CoreController {
             "data": {
             }
         })
+        return
     }
     config.get("uiadmin.user.user-list").forEach(user => {
         if (user.username == req.body.account) {
@@ -113,12 +129,14 @@ class CoreController {
                         "userInfo": user
                     }
                 })
+                return
             } else {
                 res.json({
                     "code": 0,
                     "msg": "密码错误",
                     "data": {}
                 })
+                return
             }
         }
     });
@@ -128,6 +146,7 @@ class CoreController {
         "data": {}
     })
   }
+
   @Get('/api/v1/admin/user/info')
   userInfo(req, res) {
     res.json({

@@ -134,6 +134,9 @@ require("@babel/register")({
 const express = require('express')
 const app = express()
 const port = 4000
+var bodyParser = require('body-parser');
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 
 // 配置
 const myconfig = require('config-lite')({
@@ -151,6 +154,17 @@ const {
 app.use(new UiAdmin())
 config.configs = myconfig
 
+
+// 默认控制器
+@Controller
+class IndexController {
+  // 首页
+  @Get('/')
+  home(req, res) {
+    res.send("<div style='text-align:center'><a href='/xyadmin/'>点击打开UiAdmin通用后台</a>，账号admin密码uiadmin。</div><iframe style='width: 100%;height: calc(100vh - 20px)' src='/xyadmin/'></iframe>")
+  }
+}
+app.use(new IndexController())
 
 // 文章管理后台控制器（演示DEMO）
 @Controller

@@ -5,7 +5,7 @@
   "main": "app.js",
   "private": true,
   "dependencies": {
-    "uiadmin-express": "^1.0.10"
+    "uiadmin-express": "^1.0.14"
   },
   "devDependencies": {
   },

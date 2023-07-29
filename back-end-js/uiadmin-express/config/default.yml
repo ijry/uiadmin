@@ -1,7 +1,7 @@
 uiadmin:
   site:
     # 网站名称
-    title: "UiAdmin-koa"
+    title: "UiAdmin-Express"
     #正方形logo 
     logo: ""
     #带有标题的横logo 

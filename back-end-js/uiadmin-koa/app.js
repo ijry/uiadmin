@@ -27,13 +27,21 @@ const myconfig = require('config-lite')({
 // 注意这里需要引入所有的控制器路由装饰器才会生效
 require('./DemoController')
 
-// 调用uiadmin
-const { uiadmin, config } =  require('uiadmin-koa')
+
+// 自动引入uiadmin
+var fs = require("fs");
+var checkDir = fs.existsSync("uiadmin-core");
+let uiadminAlias = './uiadmin-core';
+if (!checkDir) {
+  uiadinAlias = 'uiadmin-koa'
+}
+// 调用
+const { uiadmin, config } =  require(uiadinAlias)
 uiadmin(app, router, myconfig)
 
 // 首页
 router.get('/', (ctx, next) => {
-  ctx.body = "<a href='/xyadmin/'>点击打开后台</a>"
+  ctx.body = "<div style='text-align:center'><a href='/xyadmin/'>点击打开UiAdmin通用后台</a>，账号admin密码uiadmin。</div><iframe style='width: 100%;height: calc(100vh - 20px)' src='/xyadmin/'></iframe>"
 });
 
 app.listen(port, () => {
