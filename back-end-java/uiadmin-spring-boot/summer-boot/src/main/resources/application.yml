@@ -8,6 +8,13 @@ summer:
     logoTitle: ""
   system:
     api-version: "1.0.0"
+    menu-from: "annotation"
+    loadconfig:
+      mybatis-plus: "uiadmin"
+      cors: "uiadmin"
+      date: "uiadmin"
+      spring-doc: "uiadmin"
+      spring-mvc: "uiadmin"
   user: 
     use-verify: "none" #aj-captcha
     password: 'uiadmin'
@@ -39,8 +46,8 @@ spring:
   profiles:
     active: dev
   datasource:
-    driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/db?characterEncoding=utf-8
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/uiadmin?characterEncoding=utf-8
     username: root
     password: root
 
