@@ -163,7 +163,7 @@
       <artifactId>javax.persistence-api</artifactId>
     </dependency>
     <!-- jakarta -->
-    <dependency>
+    <!-- <dependency>
       <groupId>jakarta.servlet</groupId>
       <artifactId>jakarta.servlet-api</artifactId>
     </dependency>
@@ -178,6 +178,6 @@
     <dependency>
       <groupId>jakarta.persistence</groupId>
       <artifactId>jakarta.persistence-api</artifactId>
-    </dependency>
+    </dependency> -->
   </dependencies>
 </project>
