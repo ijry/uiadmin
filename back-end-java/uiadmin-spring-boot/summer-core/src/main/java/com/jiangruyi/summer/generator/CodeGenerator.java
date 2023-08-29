@@ -2,6 +2,7 @@ package com.jiangruyi.summer.generator;
 
 import java.io.*;
 import java.sql.*;
+import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -129,7 +130,7 @@ public class CodeGenerator {
         // 读取模板文件
         try (
             InputStream is = getClass().getClassLoader().getResourceAsStream(templatePath);
-            InputStreamReader fileReader = new InputStreamReader(is);
+            InputStreamReader fileReader = new InputStreamReader(is, StandardCharsets.UTF_8);
             BufferedReader reader = new BufferedReader(fileReader)) {
             // 生成文件
             File file = FileUtil.createFile(outputFile);
@@ -520,13 +521,26 @@ public class CodeGenerator {
         private static void fileWriter(File file, StringBuilder stringBuilder) {
             // 字符流
             try {
-                FileWriter resultFile = new FileWriter(file, false);// true,则追加写入 false,则覆盖写入
-                PrintWriter myFile = new PrintWriter(resultFile);
-                // 写入
-                myFile.println(stringBuilder.toString());
+                // 创建一个FileOutputStream对象
+                FileOutputStream fos = new FileOutputStream(file);
 
-                myFile.close();
-                resultFile.close();
+                // 创建一个Writer对象，设置字符编码为UTF-8
+                Writer writer = new OutputStreamWriter(fos, StandardCharsets.UTF_8);
+
+                // 写入内容
+                writer.write(stringBuilder.toString());
+
+                // 关闭文件流
+                writer.close();
+                fos.close();
+
+                // FileWriter resultFile = new FileWriter(file, false); // true,则追加写入 false,则覆盖写入
+                // PrintWriter myFile = new PrintWriter(resultFile);
+                // // 写入
+                // myFile.println(stringBuilder.toString());
+
+                // myFile.close();
+                // resultFile.close();
             } catch (Exception e) {
                 System.err.println("写入操作出错");
                 e.printStackTrace();
