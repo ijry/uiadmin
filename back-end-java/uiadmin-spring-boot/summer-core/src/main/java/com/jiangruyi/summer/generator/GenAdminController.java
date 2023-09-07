@@ -173,7 +173,7 @@ public class GenAdminController {
             }});
             formBuilder.setFormValues(new HashMap<String, Object>() {{
                 put("tableName", request.getParameter("tableName"));
-                put("targetPath", "com/jiangruyi/gen");
+                put("targetPath", "com/jiangruyi/summer/gen");
                 put("pmenu", "/content");
                 put("genFiles", new ArrayList());
             }});
@@ -251,7 +251,7 @@ public class GenAdminController {
             }});
             formBuilder.setFormValues(new HashMap<String, Object>() {{
                 put("tableNames", request.getParameter("tableNames"));
-                put("targetPath", "com/jiangruyi/gen");
+                put("targetPath", "com/jiangruyi/summer/gen");
                 put("pmenu", "/content");
                 put("genFiles", new ArrayList());
             }});
