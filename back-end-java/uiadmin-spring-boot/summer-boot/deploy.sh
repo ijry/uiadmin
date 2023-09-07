@@ -43,25 +43,27 @@ else
 fi
 
 #拷贝项目jar
-currentdate=prod_$(date "+%Y-%m-%d_%H-%M-%S") 
-echo 文件名$currentdate
+JARFILE=summer-boot
+echo 文件名$JARFILE
 if [ "$1"x = "restart"x ]; then
     echo "不上传jar仅重启"
 else
-    scp -r target/*.jar $SRV:$POJDIR/$currentdate.jar
+    scp -r target/*.jar $SRV:$POJDIR/$JARFILE-build.jar
 fi
 
 # 重启应用
 if [ "$USER"x = "Administrator"x ]; then
     echo "Windows服务器"
-    ssh -T -p 22 $SRV "$POJDIR\summer.bat stop;"
+    ssh -T -p 22 $SRV "$POJDIR\summer.bat stop $JARFILE.jar;"
 
     # Windows系统在ssh连接断开后cmd启动的jar也会立刻退出，所以必须用powershell命令来执行
     # 一定要cd到目录里再运行jar因为会影响classpath/user.dir等变量
-    ssh -T -p 22 $SRV "powershell -Command \"cd $POJDIR;java -jar .\\$currentdate.jar;\" ; exit ; rem"
+    ssh -T -p 22 $SRV "powershell -Command \"cd $POJDIR;java -jar .\\$JARFILE.jar;\" ; exit ; rem"
 else
-    ssh -T -p 22 $SRV "/bin/sh $POJDIR/summer.sh stop;"
-    ssh -T -p 22 $SRV "/bin/sh $POJDIR/summer.sh start $currentdate.jar;"
+    ssh -T -p 22 $SRV "/bin/sh $POJDIR/summer.sh stop $JARFILE.jar;"
+    ssh -T -p 22 $SRV "mv $POJDIR/$JARFILE.jar backup/$JARFILE-$(date "+%Y-%m-%d_%H-%M-%S").jar ;"
+    ssh -T -p 22 $SRV "mv $POJDIR/$JARFILE-build.jar $POJDIR/$JARFILE.jar;"
+    ssh -T -p 22 $SRV "/bin/sh $POJDIR/summer.sh start $JARFILE.jar;"
 fi
 
 exit 1;
