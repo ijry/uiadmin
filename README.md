@@ -7,6 +7,7 @@
 ![Star](https://img.shields.io/github/stars/ijry/initadmin.svg?style=social)
 [![Open in Visual Studio Code](https://img.shields.io/badge/-open%20in%20vscode-blue?style=for-the-badge&logo=visualstudiocode)](https://open.vscode.dev/ijry/uiadmin)
 
+本项目来源于[《腾讯云 Cloud Studio 实战训练营》](https://marketing.csdn.net/p/06a21ca7f4a1843512fa8f8c40a16635)的参赛作品，该作品在腾讯云 [Cloud Studio](https://www.cloudstudio.net/?utm=csdn) 中运行无误。
 
 ## 介绍
 UiAdmin是一套渐进式模块化开源后台，采用前后端分离技术，数据交互采用json格式，功能低耦合高内聚；核心模块支持系统设置、权限管理、用户管理、菜单管理、API管理等功能；同时我们按照统一的API风格，开发了支持spring-boot3.0、thinkphp6.0、laravel9.0、Hyperf3.0版本的后端实现；后台管理界面前端采用vue+element实现。
