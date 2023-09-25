@@ -14,7 +14,7 @@ UiAdmin是一套渐进式模块化开源后台，采用前后端分离技术，�
 
 ## 预览
 
-![UiAdmin](https://imgse.com/i/pP7yfWn)
+[![UiAdmin](https://z1.ax1x.com/2023/09/25/pP7yfWn.md.png)](https://imgse.com/i/pP7yfWn)
 
 
 ## 为什么选择UiAdmin-降本增效
