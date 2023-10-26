@@ -49,7 +49,7 @@ function isSsl(): bool
 function array_get($array, $key, $default = null)
 {
     if (is_null($key)) {
-        return $array; 
+        return $array;
     }
 
     if (isset($array[$key])) {
@@ -137,7 +137,7 @@ function get_config($name){
         'version' => '1.2.0',
         'uidomain' => 'https://uiadmin.net',
         'xyadmin' => [
-            'version' => '1.2.0'
+            'version' => '1.3.0'
         ]
     ];
     $names = explode('.', $name);
@@ -542,16 +542,16 @@ function cut_str($str, $start, $length, $suffix = true, $charset = 'utf-8') {
     }
 }
 
-//PHP stdClass Object转array  
-function object2array($array) {  
-    if(is_object($array)) {  
-        $array = (array)$array;  
-     } if(is_array($array)) {  
-        foreach($array as $key=>$value) {  
-             $array[$key] = object2array($value);  
-        }  
-     }  
-     return $array;  
+//PHP stdClass Object转array
+function object2array($array) {
+    if(is_object($array)) {
+        $array = (array)$array;
+     } if(is_array($array)) {
+        foreach($array as $key=>$value) {
+             $array[$key] = object2array($value);
+        }
+     }
+     return $array;
 }
 
 /**

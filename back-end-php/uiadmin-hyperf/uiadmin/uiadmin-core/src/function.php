@@ -135,9 +135,9 @@ function get_config($name){
     $configs = [
         'framework' => 'Hyperf3',
         'version' => '1.2.0',
-        'uidomain' => 'https://uiadmin.net'
+        'uidomain' => 'https://uiadmin.net',
         'xyadmin' => [
-            'version' => '1.2.0'
+            'version' => '1.3.0'
         ]
     ];
     $names = explode('.', $name);
