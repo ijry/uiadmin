@@ -10,7 +10,7 @@
         }
     ],
     "require": {
-        "topthink/framework": "^6.0.0",
+        "topthink/framework": "^6.1.4",
         "zircote/swagger-php": "^3.1"
     },
     "autoload": {

@@ -10,7 +10,7 @@
         }
     ],
     "require": {
-        "topthink/framework": "^6.0.0",
+        "topthink/framework": "^6.1.4",
         "topthink/think-migration": "^3.0"
     },
     "autoload": {

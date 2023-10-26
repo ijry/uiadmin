@@ -20,14 +20,15 @@
         }        
     ],
     "require": {
-        "php": ">=7.2.5",
-        "topthink/framework": "^6.0.0",
+        "php": ">=8.0.0",
+        "topthink/framework": "6.1.4",
+        "topthink/think-filesystem": "2.0.2",
         "topthink/think-orm": "^2.0",
-        "uiadmin/uiadmin-core": "dev-master",
-        "uiadmin/uiadmin-auth": "dev-master",
-        "uiadmin/uiadmin-config": "dev-master",
-        "uiadmin/uiadmin-ext": "dev-master",
-        "uiadmin/uiadmin-apidoc": "dev-master"
+        "uiadmin/uiadmin-core": "dev-main",
+        "uiadmin/uiadmin-auth": "dev-main",
+        "uiadmin/uiadmin-config": "dev-main",
+        "uiadmin/uiadmin-ext": "dev-main",
+        "uiadmin/uiadmin-apidoc": "dev-main"
     },
     "require-dev": {
         "symfony/var-dumper": "^4.2",
