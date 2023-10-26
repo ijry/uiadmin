@@ -55,7 +55,6 @@ class Install extends HyperfCommand
             file_put_contents(base_path() . '/.env', "\n\nUIADMIN_INSTALL = true\n", FILE_APPEND);
             echo "恭喜，UiAdmin-Hyperf安装完成！\n";
             echo "接下来你可以运行php bin/hyperf.php start\n";
-            echo "然后访问http://127.0.0.1:9501\n";
         } else {
             $this->call('uiadmin:publish', [
             ]);
@@ -70,8 +69,9 @@ class Install extends HyperfCommand
             echo "执行数据库seeds迁移完成\n";
             echo "恭喜，UiAdmin-Hyperf更新完成！\n";
             echo "接下来你可以运行php bin/hyperf.php start\n";
-            echo "然后访问http://127.0.0.1:9501\n";
         }
+
+        echo "访问后台网址如：http:127.0.0.1:9501/admin\n";
     }
 }
 

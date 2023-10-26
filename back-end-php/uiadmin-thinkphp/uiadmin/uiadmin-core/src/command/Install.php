@@ -49,6 +49,8 @@ class Install extends Command
             echo "执行数据库seeds迁移完成\n";
             echo "恭喜，更新完成！\n";
         }
+        
+        echo "访问后台网址如：http:127.0.0.1:6001/admin【127.0.0.1:6001取决于本地环境实际配置】\n";
 
         return $output->fetch();
     }

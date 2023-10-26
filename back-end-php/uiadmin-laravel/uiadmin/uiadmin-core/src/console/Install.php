@@ -49,7 +49,6 @@ class Install extends Command
             file_put_contents(base_path() . '/.env', "\n\nUIADMIN_INSTALL = true\n", FILE_APPEND);
             echo "恭喜，UiAdmin-Laravel9安装完成！\n";
             echo "接下来你可以运行php artisan serve\n";
-            echo "然后访问http://127.0.0.1:8000\n";
         } else {
             Artisan::call('uiadmin:publish');
             echo "执行文件发布完成\n";
@@ -57,10 +56,11 @@ class Install extends Command
             echo "执行数据库迁移完成\n";
             Artisan::call('migrate --seed');
             echo "执行数据库seeds迁移完成\n";
-            echo "恭喜，UiAdmin-Laravel9更新完成！\n";
+            echo "恭喜，UiAdmin-Laravel更新完成！\n";
             echo "接下来你可以运行php artisan serve\n";
-            echo "然后访问http://127.0.0.1:8000\n";
         }
+
+        echo "后台网址如：http:127.0.0.1:6001/admin【127.0.0.1:6001取决于本地环境实际配置】\n";
     }
 }
 
