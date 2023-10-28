@@ -71,8 +71,8 @@ function get_ext_services($service_list = [])
 // 内部配置
 function get_config($name){
     $configs = [
-        'framework' => 'ThinkPHP6',
-        'version' => '1.2.0',
+        'framework' => 'ThinkPHP8',
+        'version' => '1.3.0',
         'uidomain' => 'https://uiadmin.net',
         'xyadmin' => [
             'version' => '1.3.0'

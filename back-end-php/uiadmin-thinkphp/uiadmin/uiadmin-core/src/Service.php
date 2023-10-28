@@ -3,10 +3,20 @@
 namespace uiadmin\core;
 
 use think\Route;
-use think\Validate;
+use uiadmin\core\attributes\Index as RouteIndex;
 
+/**
+ * 服务提供者
+ *
+ * @author jry <ijry@qq.com>
+ */
 class Service extends \think\Service
 {
+    /**
+     * 注册其它扩展的服务
+     *
+     * @author jry <ijry@qq.com>
+     */
     public function register()
     {
         // $this->app->middleware->add(Router::class);
@@ -19,6 +29,11 @@ class Service extends \think\Service
         }
     }
 
+    /**
+     * 初始化加载
+     *
+     * @author jry <ijry@qq.com>
+     */
     public function boot()
     {
         $this->registerRoutes(function (Route $route) {
@@ -51,6 +66,65 @@ class Service extends \think\Service
             $route->get(config("uiadmin.site.apiPrefix") . '/v1/core/user/info$', "uiadmin\\core\\controller\\User@info");
             $route->post(config("uiadmin.site.apiPrefix") . '/v1/core/upload/upload$', "uiadmin\\core\\controller\\Upload@upload");
             $route->delete(config("uiadmin.site.apiPrefix") . '/v1/core/user/logout', "uiadmin\\core\\controller\\User@logout");
+
+            // 注解菜单&路由
+            RouteIndex::getMenuItems();
+            // dump(\uiadmin\core\attributes\MenuItem::$all);
+            $apiRootPath = config("uiadmin.site.apiPrefix");
+            $dataList = \uiadmin\core\attributes\MenuItem::$all;
+            foreach ($dataList as $key => $val) {
+                if (\uiadmin\core\util\Str::startsWith($val['path'], '/')) {
+                    $path = explode('/', $val['path']);
+                    $nameRoot = '\\' . (explode('-', $val['module'])[0]) . '\\';
+                    if (isset($path[3])) {
+                        if ($val['menuLayer'] == 'home') {
+                            // 前后端分离路由
+                            $route->rule(
+                                $apiRootPath . '/' . $val['apiPrefix'] . $val['path'] . $val['apiSuffix'],
+                                $nameRoot . $path[1] . '\controller\\' . ucfirst(\uiadmin\core\util\Str::camel($path[2])) . '@' . $path[3],
+                                $val['apiMethod']
+                            )
+                            ->ext($val['apiExt'] ? : 'html|')
+                            ->name($apiRootPath . '/' . $val['apiPrefix'] . '/' .  $path[1] . '/' . $path[2] .'/' . $path[3]);
+                            // 前后端不分离路由
+                            $route->rule(
+                                $val['path'] . $val['apiSuffix'],
+                                $nameRoot . $path[1] . '\controller\\' . ucfirst(\uiadmin\core\util\Str::camel($path[2])) . '@' . $path[3],
+                                $val['apiMethod']
+                            )->ext($val['apiExt'] ? : 'html|')
+                            ->name($path[1] . '/' . $path[2] .'/' . $path[3]); // name方法可以兼容tp5.1的多应用URL生成
+                            // 自定义规则路由
+                            if (isset($val['apiRule']) && $val['apiRule']) {
+                                $route->rule(
+                                    $val['apiRule'],
+                                    $nameRoot . $path[1] . '\controller\\' . ucfirst(\uiadmin\core\util\Str::camel($path[2])) . '@' . $path[3],
+                                    $val['apiMethod']
+                                )->ext($val['apiExt'] ? : 'html|')
+                                ->name($path[1] . '/' . $path[2] .'/' . $path[3]); // name方法可以兼容tp5.1的多应用URL生成
+                            }
+                        } else if ($val['menuLayer'] == 'admin') {
+                            $route->rule(
+                                $apiRootPath . '/' . $val['apiPrefix'] . '/' . $val['menuLayer'] . $val['path'] . $val['apiSuffix'],
+                                $nameRoot . $path[1] . '\\' . $val['menuLayer'] . '\\' . ucfirst(\uiadmin\core\util\Str::camel($path[2])) . '@' . $path[3],
+                                $val['apiMethod']
+                            )->name($apiRootPath . '/' . $val['apiPrefix'] . '/' . $val['menuLayer'] . '/' . $path[1] . '/' . $path[2] .'/' . $path[3]);
+                        } else {
+                            // 前后端不分离路由
+                            // $route->(
+                            //     '/'. $val['menuLayer'] . $val['path'] . $val['apiSuffix'],
+                            //     $path[1] . '/' . $val['menuLayer'] . '.' . $path[2] . '/' . $path[3],
+                            //     $val['apiMethod']
+                            // );
+                            // 前后端分离路由
+                            $route->rule(
+                                $apiRootPath . '/' . $val['apiPrefix'] . '/' . $val['menuLayer'] . $val['path'] . $val['apiSuffix'],
+                                $nameRoot . $path[1] . '\controller\\' . $val['menuLayer'] . '\\' . ucfirst(\uiadmin\core\util\Str::camel($path[2])) . '@' . $path[3],
+                                $val['apiMethod']
+                            )->name($apiRootPath . '/' . $val['apiPrefix'] . '/' . $val['menuLayer'] . '/' . $path[1] . '/' . $path[2] .'/' . $path[3]);
+                        }
+                    }
+                }
+            }
         });
 
         // 注册命令

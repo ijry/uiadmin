@@ -13,6 +13,7 @@
 namespace demo\blog\admin;
 
 use uiadmin\core\admin\BaseAdmin;
+use uiadmin\core\attributes\MenuItem;
 use demo\blog\model\Post as PostModel;
 
 /**
@@ -28,6 +29,9 @@ class Post extends BaseAdmin
      * @return \think\Response
      * @author jry <ijry@qq.com>
      */
+    #[MenuItem(["title" => "文章列表", "path" => "/blog/post/lists", "pmenu" => "/_tab_content",
+        "menuType" => 1, "menuLayer" => "admin", "routeType" => "list",
+        "apiSuffix" => "", "apiParams" => "", "apiMethod" => "GET", "sortnum" => 0])]
     public function lists()
     {
         $page = input('get.page/d') ?: 1;
@@ -97,6 +101,9 @@ class Post extends BaseAdmin
      * @return \think\Response
      * @author jry <ijry@qq.com>
      */
+    #[MenuItem(["title" => "添加文章", "path" => "/blog/post/add", "pmenu" => "/blog/post/lists",
+        "menuType" => 2, "menuLayer" => "admin", "routeType" => "form",
+        "apiSuffix" => "", "apiParams" => "", "apiMethod" => "GET|POST", "sortnum" => 0])]
     public function add()
     {
         if (request()->isPost()) {
@@ -161,6 +168,9 @@ class Post extends BaseAdmin
      * @return \think\Response
      * @author jry <ijry@qq.com>
      */
+    #[MenuItem(["title" => "修改文章", "path" => "/blog/post/edit", "pmenu" => "/blog/post/lists",
+        "menuType" => 2, "menuLayer" => "admin", "routeType" => "form",
+        "apiSuffix" => "/:id", "apiParams" => "", "apiMethod" => "GET|PUT", "sortnum" => 0])]
     public function edit($id)
     {
         // 文章信息
@@ -233,6 +243,9 @@ class Post extends BaseAdmin
      * @return \think\Response
      * @author jry <ijry@qq.com>
      */
+    #[MenuItem(["title" => "删除文章", "path" => "/blog/post/delete", "pmenu" => "/blog/post/lists",
+        "menuType" => 3, "menuLayer" => "admin", "routeType" => "form",
+        "apiSuffix" => "/:id", "apiParams" => "", "apiMethod" => "DELETE", "sortnum" => 0])]
     public function delete($id)
     {
         // 删除文章

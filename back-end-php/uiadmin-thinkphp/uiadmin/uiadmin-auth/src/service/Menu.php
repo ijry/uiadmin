@@ -44,6 +44,16 @@ class Menu
         $dataList = MenuModel::where('menu_layer', '=', 'admin')
             ->order('sortnum asc,id asc')
             ->select()->toArray();
+        
+        // 注解菜单
+        $adminList = [];
+        foreach (\uiadmin\core\attributes\MenuItem::$all as $key => $menuItem) {
+            if ($menuItem['menuLayer'] == 'admin') {
+                $adminList[] = $menuItem;
+            }
+        }
+        $dataList = array_merge($dataList, $adminList);
+
         //var_dump($dataList);
         // 下面的处理存粹是为了后台界面显示的
         foreach ($dataList as $key => &$val) {
