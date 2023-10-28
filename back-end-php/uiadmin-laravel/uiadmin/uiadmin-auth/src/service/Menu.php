@@ -47,7 +47,17 @@ class Menu
             ->orderBy('sortnum')
             ->orderBy('id')
             ->get()->toArray();
+
+        // 注解菜单
+        $adminList = [];
+        foreach (\uiadmin\core\attributes\MenuItem::$all as $key => $menuItem) {
+            if ($menuItem['menuLayer'] == 'admin') {
+                $adminList[] = $menuItem;
+            }
+        }
+        $dataList = array_merge($dataList, $adminList);
         //var_dump($dataList);
+
         // 下面的处理存粹是为了后台界面显示的
         foreach ($dataList as $key => &$val) {
             if (!in_array('super_admin', $userRoles) && !in_array('/' . $val['apiPrefix'] . '/' . $val['menu_layer'] . $val['path'], $adminAuth)) {
@@ -66,6 +76,6 @@ class Menu
         $siteInfo = config('uiadmin.site');
         $menuTree[0] = array_merge($menuTree[0], $siteInfo);
 
-        return $menuTree; 
+        return $menuTree;
     }
 }
