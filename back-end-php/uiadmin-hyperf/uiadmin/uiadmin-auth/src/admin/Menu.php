@@ -51,6 +51,16 @@ class Menu extends BaseAdmin
             ->orderBy('sortnum')
             ->orderBy('id')
             ->get()->toArray();
+
+        // 注解菜单
+        $adminList = [];
+        foreach (\uiadmin\core\attributes\MenuItem::$all as $key => $menuItem) {
+            if ($menuItem['menuLayer'] == 'admin') {
+                $adminList[] = $menuItem;
+            }
+        }
+        $dataList = array_merge($dataList, $adminList);
+
         // 下面的处理存粹是为了后台界面显示的，API使用本接口是以下数据是没用的。
         foreach ($dataList as $key => &$val) {
             if (!in_array('super_admin', $roles) && !in_array('/' . $val['apiPrefix'] . '/' . $val['menuLayer'] . $val['path'], $adminAuth)) {
