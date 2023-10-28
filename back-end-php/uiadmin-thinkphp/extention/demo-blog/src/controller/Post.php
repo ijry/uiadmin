@@ -14,6 +14,7 @@ namespace demo\blog\controller;
 use think\Request;
 use think\facade\View;
 use uiadmin\core\controller\BaseHome;
+use uiadmin\core\attributes\MenuItem;
 use demo\blog\model\Post as PostModel;
 
 /**
@@ -24,11 +25,15 @@ use demo\blog\model\Post as PostModel;
 class Post extends BaseHome
 {
     /**
-     * 获取站点信息
+     * 获取信息
      *
      * @return \think\Response
      * @author jry <ijry@qq.com>
      */
+    // 下面的注解定义了一个http://127.0.0.1/api/v1/blog/post/info/:id接口
+    #[MenuItem(["title" => "文章详情", "path" => "/blog/post/info", "pmenu" => "",
+        "menuType" => 1, "menuLayer" => "home", "routeType" => "info",
+        "apiSuffix" => "/:id", "apiParams" => "", "apiMethod" => "GET", "sortnum" => 0])]
     public function info($id)
     {
         // 文章信息

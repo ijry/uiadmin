@@ -565,7 +565,6 @@ class Ext extends BaseAdmin
                         ]
                     ],
                     "require" => [
-                        "topthink/framework" =>"^6.0.0"
                     ],
                     "autoload" => [
                         "psr-4" => [
