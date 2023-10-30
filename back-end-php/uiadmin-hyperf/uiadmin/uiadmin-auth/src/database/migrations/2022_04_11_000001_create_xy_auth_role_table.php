@@ -52,7 +52,7 @@ class CreateXyAuthRoleTable extends Migration
                 "sortnum" => 0
             ]
         );
-        \Illuminate\Support\Facades\DB::table('xy_auth_role')->insert($data);
+        Hyperf\DbConnection\Db::table('xy_auth_role')->insert($data);
     }
 
     /**
@@ -62,6 +62,6 @@ class CreateXyAuthRoleTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('xy_auth_role');
+        // Schema::dropIfExists('xy_auth_role');
     }
 }

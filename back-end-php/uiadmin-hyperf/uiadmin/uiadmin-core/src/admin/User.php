@@ -13,6 +13,8 @@ namespace uiadmin\core\admin;
 
 use Hyperf\HttpServer\Contract\RequestInterface;
 use uiadmin\core\admin\BaseAdmin;
+use Hyperf\Di\Annotation\Inject;
+use Hyperf\Contract\SessionInterface;
 
 /**
  * 用户控制器
@@ -21,6 +23,9 @@ use uiadmin\core\admin\BaseAdmin;
  */
 class User extends BaseAdmin
 {
+    #[Inject]
+    private SessionInterface $session;
+
     /**
      * 登录
      *
@@ -36,9 +41,17 @@ class User extends BaseAdmin
             $class = config('uiadmin.user.driver');
             $userService = new $class();
             $userInfo = $userService->login($account, $password);
+            if (!$userInfo) {
+                // 返回数据
+                return json([
+                    'code' => 0,
+                    'msg'  => "不存在用户",
+                    'data' => []
+                ]);
+            }
 
             // 颁发登录凭证token
-            $userkey = $userInfo['userKey']; // 秘钥
+            $userkey = $userInfo['userKey'] ? $userInfo['userKey'] : 'uiadmin'; // 秘钥
             $loginTime = time();
             $expireTime = $loginTime + 8640000; // 100天有效期
             $token = [
@@ -51,12 +64,12 @@ class User extends BaseAdmin
                     'uid' => $userInfo['id'] // 可以用户ID，可以自定义
                 ]
             ]; //Payload
-            $jwt = \Firebase\JWT\JWT::encode($token, $userkey); // 此处行进加密算法生成jwt
+            $jwt = \Firebase\JWT\JWT::encode($token, $userkey, 'HS256'); // 此处行进加密算法生成jwt
 
-            session_start();
-            $sessionId = session_id();
-            session('userInfo', $userInfo);
-            session('Authorization', 'Bearer ' . $jwt); // 支持session+jwt登录方式
+            // session
+            $sessionId = $this->session->getId();
+            $this->session->set('userInfo', $userInfo);
+            $this->session->set('Authorization', 'Bearer ' . $jwt); // 支持session+jwt登录方式
             if (!$sessionId) {
                 // 返回数据
                 return json([
@@ -75,7 +88,6 @@ class User extends BaseAdmin
                 'data' => []
             ]);
         }
-        
 
         // 返回数据
         return json([

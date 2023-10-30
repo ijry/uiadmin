@@ -4,7 +4,7 @@ namespace uiadmin\config\listener;
 use App\Event\UserRegistered;
 use Hyperf\Event\Annotation\Listener;
 use Hyperf\Event\Contract\ListenerInterface;
-use \Hyperf\Contract\ConfigInterface;
+use Hyperf\Contract\ConfigInterface;
 use Hyperf\HttpServer\Router\Router;
 use uiadmin\config\model\Config as ConfigModel;
 
@@ -27,16 +27,17 @@ class EventListener implements ListenerInterface
     public function process(object $event) :void
     {
         if (env('UIADMIN_INSTALL')) {
-            $config = new ConfigInterface();
-            // 获取数据库中的配置覆盖配置文件的配置
-            $dataList = ConfigModel::where('status', '=' , 1)
-                ->where('application', '=' , 'uiadmin')
-                ->where('profile', '=' , 'prod')
-                ->where('label', '=' , 'main')
-                ->get('value', 'name');
-            foreach ($dataList as $name => $value) {
-                $config->set($name, $value);
-            }
+            // todo数据库配置覆盖文件配置
+            // $config = new ConfigInterface();
+            // // 获取数据库中的配置覆盖配置文件的配置
+            // $dataList = ConfigModel::where('status', '=' , 1)
+            //     ->where('application', '=' , 'uiadmin')
+            //     ->where('profile', '=' , 'prod')
+            //     ->where('label', '=' , 'main')
+            //     ->get('value', 'name');
+            // foreach ($dataList as $name => $value) {
+            //     $config->set($name, $value);
+            // }
         }
     }
 }

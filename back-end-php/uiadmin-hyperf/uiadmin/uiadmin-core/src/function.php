@@ -1,6 +1,8 @@
 <?php
 // 应用公共文件
 use Hyperf\HttpServer\Contract\RequestInterface;
+use Hyperf\HttpServer\Contract\ResponseInterface;
+use Hyperf\Utils\Str;
 
 // 以下兼容TP写法
 function input($name) {
@@ -11,8 +13,35 @@ function input($name) {
         return Illuminate\Support\Facades\Request::input($name);
     }
 }
+/**
+ * 下划线转换为驼峰
+ * @param $data
+ * @return mixed
+ */
+function underscoreToHump($data): array
+{
+    $newParameters = [];
+    if ($data) {
+        foreach ($data as $key => $value) {
+            if (!is_int($key)) {
+                if (is_array($value)) {
+                    $newParameters[Str::camel($key)] = underscoreToHump($value);
+                } else {
+                    $newParameters[Str::camel($key)] = $value;
+                }
+            } else if (is_array($value)) {
+                $newParameters[$key] = underscoreToHump($value);
+            } else {
+                $newParameters[$key] = $value;
+            }
+        }
+    }
+    return $newParameters;
+}
 function json($data) {
-    return response()->json($data);
+    // $response = \Hyperf\Context\ApplicationContext::getContainer()->get(ResponseInterface::class);
+    // return $response.json($data);
+    return json_encode(underscoreToHump($data));
 }
 /**
  * 当前URL地址中的scheme参数
@@ -73,7 +102,7 @@ function array_get($array, $key, $default = null)
  */
 function get_ext_services($service_list = [])
 {
-    $dir = base_path() . '/extention/';
+    $dir = BASE_PATH . '/extention/';
     $file_arr = scandir($dir);
     $new_arr = [];
     foreach($file_arr as $item){
@@ -88,12 +117,12 @@ function get_ext_services($service_list = [])
         $source = $value . '/composer.json';
         if (is_file($source)) {
             $content = json_decode(file_get_contents($source), true);
-            if (isset($content['extra']['laravel']['providers'])
-                && count($content['extra']['laravel']['providers']) > 0) {
-                foreach ($content['extra']['laravel']['providers'] as $key => $value1) {
-                    $service_list[] = '\\' . $value1;
-                }
-            }
+            // if (isset($content['extra']['laravel']['providers'])
+            //     && count($content['extra']['laravel']['providers']) > 0) {
+            //     foreach ($content['extra']['laravel']['providers'] as $key => $value1) {
+            //         $service_list[] = '\\' . $value1;
+            //     }
+            // }
             if (isset($content['autoload']['psr-4'])) {
                 foreach ($content['autoload']['psr-4'] as $key => $value1) {
                     $psr4[$key] = $value . '/' . $value1;

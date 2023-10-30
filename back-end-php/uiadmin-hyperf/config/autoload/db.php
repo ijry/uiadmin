@@ -9,9 +9,11 @@ declare(strict_types=1);
  * @contact  group@hyperf.io
  * @license  https://github.com/hyperf/hyperf/blob/master/LICENSE
  */
+use function Hyperf\Support\env;
+
 return [
     'default' => [
-        'driver' => env('DB_DRIVER', 'mysql'),
+        'driver' => 'pdo',
         'host' => env('DB_HOST', 'localhost'),
         'port' => env('DB_PORT', 3306),
         'database' => env('DB_DATABASE', 'uiadmin-hyperf'),
@@ -19,7 +21,8 @@ return [
         'password' => env('DB_PASSWORD', ''),
         'charset' => env('DB_CHARSET', 'utf8mb4'),
         'collation' => env('DB_COLLATION', 'utf8mb4_unicode_ci'),
-        'prefix' => env('DB_PREFIX', ''),
+        'fetch_mode' => PDO::FETCH_ASSOC,
+        'defer_release' => false,
         'pool' => [
             'min_connections' => 1,
             'max_connections' => 10,
@@ -28,22 +31,12 @@ return [
             'heartbeat' => -1,
             'max_idle_time' => (float) env('DB_MAX_IDLE_TIME', 60),
         ],
-        'cache' => [
-            'handler' => Hyperf\ModelCache\Handler\RedisHandler::class,
-            'cache_key' => '{mc:%s:m:%s}:%s:%s',
-            'prefix' => 'default',
-            'ttl' => 3600 * 24,
-            'empty_model_ttl' => 600,
-            'load_script' => true,
-        ],
-        'commands' => [
-            'gen:model' => [
-                'path' => 'app/Model',
-                'force_casts' => true,
-                'inheritance' => 'Model',
-                'uses' => '',
-                'table_mapping' => [],
-            ],
+        'options' => [
+            PDO::ATTR_CASE => PDO::CASE_NATURAL,
+            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+            PDO::ATTR_ORACLE_NULLS => PDO::NULL_NATURAL,
+            PDO::ATTR_STRINGIFY_FETCHES => false,
+            PDO::ATTR_EMULATE_PREPARES => false,
         ],
     ],
 ];

@@ -720,7 +720,7 @@ class CreateXyAuthMenuTable extends Migration
                 "delete_time" => 0
                 ]
         );
-        \Illuminate\Support\Facades\DB::table('xy_auth_menu')->insert($data);
+        Hyperf\DbConnection\Db::table('xy_auth_menu')->insert($data);
     }
 
     /**
@@ -730,6 +730,6 @@ class CreateXyAuthMenuTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('xy_auth_menu');
+        // Schema::dropIfExists('xxx');
     }
 }

@@ -13,12 +13,14 @@
     "license": "Apache-2.0",
     "require": {
         "php": ">=8.0",
+        "duncan3dc/blade": "dev-master",
         "hyperf/amqp": "~3.0.0",
         "hyperf/async-queue": "~3.0.0",
         "hyperf/cache": "~3.0.0",
         "hyperf/command": "~3.0.0",
         "hyperf/config": "~3.0.0",
         "hyperf/database": "~3.0.0",
+        "hyperf/db": "^3.0",
         "hyperf/db-connection": "~3.0.0",
         "hyperf/elasticsearch": "~3.0.0",
         "hyperf/framework": "~3.0.0",
@@ -27,12 +29,12 @@
         "hyperf/logger": "~3.0.0",
         "hyperf/memory": "~3.0.0",
         "hyperf/model-cache": "~3.0.0",
-        "hyperf/task": "~3.0.0",
         "hyperf/process": "~3.0.0",
+        "hyperf/session": "^3.0",
+        "hyperf/task": "~3.0.0",
         "hyperf/tracer": "~3.0.0",
         "hyperf/view": "^3.0.0",
-        "hyperf/view-engine": "^3.0.0",
-        "duncan3dc/blade": "dev-master"
+        "hyperf/view-engine": "^3.0.0"
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^3.0",

@@ -222,7 +222,7 @@ class CreateXyConfigTable extends Migration
                 "module" => "uiadmin-core"
             ]
         );
-        \Illuminate\Support\Facades\DB::table('xy_config')->insert($data);
+        Hyperf\DbConnection\Db::table('xy_config')->insert($data);
 
         // 后台菜单
         $data = array(
@@ -331,7 +331,7 @@ class CreateXyConfigTable extends Migration
                 "delete_time" => 0
                 ]
         );
-        \Illuminate\Support\Facades\DB::table('xy_auth_menu')->insert($data);
+        Hyperf\DbConnection\Db::table('xy_auth_menu')->insert($data);
     }
 
     /**
@@ -341,6 +341,6 @@ class CreateXyConfigTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('xy_config');
+        // Schema::dropIfExists('xy_config');
     }
 }

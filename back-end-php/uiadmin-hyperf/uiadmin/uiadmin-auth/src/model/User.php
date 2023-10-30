@@ -29,7 +29,7 @@ class User extends BaseModel
      * @var array
      */
     protected array $casts = [
-        'roles' => 'array',
+        // 'roles' => 'array',
     ];
 
 }

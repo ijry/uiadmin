@@ -163,7 +163,7 @@ class CreateXyExtTable extends Migration
                 "delete_time" => 0
             ]
         );
-        \Illuminate\Support\Facades\DB::table('xy_auth_menu')->insert($data);
+        Hyperf\DbConnection\Db::table('xy_auth_menu')->insert($data);
     }
 
     /**
@@ -173,6 +173,6 @@ class CreateXyExtTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('xy_ext');
+        // Schema::dropIfExists('xy_ext');
     }
 }

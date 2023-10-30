@@ -30,8 +30,7 @@ class BaseAdmin extends BaseController
         // 登录验证
         $ret = parent::isLogin();
         if ($ret['code'] != 200) {
-            echo json_encode($ret);
-            exit;
+            json($ret);
         } else {
             return (Array)$ret['data']['data'];
         }

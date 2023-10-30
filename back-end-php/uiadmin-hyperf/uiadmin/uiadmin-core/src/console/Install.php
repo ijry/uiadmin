@@ -45,14 +45,14 @@ class Install extends HyperfCommand
             $this->call('uiadmin:publish', [
             ]);
             echo "执行文件发布完成\n";
-            $this->call('migrateh', [
+            $this->call('migrate', [
             ]);
             echo "执行数据库迁移完成\n";
-            $this->call('migrate', [
-                '-seed' => ''
-            ]);
+            // $this->call('migrate', [
+            //     '-seed' => ''
+            // ]);
             echo "执行数据库seeds迁移完成\n";
-            file_put_contents(base_path() . '/.env', "\n\nUIADMIN_INSTALL = true\n", FILE_APPEND);
+            file_put_contents('.' . '/.env', "\n\nUIADMIN_INSTALL = true\n", FILE_APPEND);
             echo "恭喜，UiAdmin-Hyperf安装完成！\n";
             echo "接下来你可以运行php bin/hyperf.php start\n";
         } else {
@@ -65,7 +65,6 @@ class Install extends HyperfCommand
             $this->call('migrate', [
                 '-seed' => ''
             ]);
-            echo "执行数据库seeds迁移完成\n";
             echo "执行数据库seeds迁移完成\n";
             echo "恭喜，UiAdmin-Hyperf更新完成！\n";
             echo "接下来你可以运行php bin/hyperf.php start\n";

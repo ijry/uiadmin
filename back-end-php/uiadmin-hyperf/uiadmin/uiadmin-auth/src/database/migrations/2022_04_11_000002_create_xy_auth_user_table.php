@@ -46,7 +46,7 @@ class CreateXyAuthUserTable extends Migration
                 "status" => 1
             )
         );
-        \Illuminate\Support\Facades\DB::table('xy_auth_user')->insert($data);
+        Hyperf\DbConnection\Db::table('xy_auth_user')->insert($data);
     }
 
     /**
@@ -56,6 +56,6 @@ class CreateXyAuthUserTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('xy_auth_user');
+        // Schema::dropIfExists('xy_auth_user');
     }
 }

@@ -51,10 +51,11 @@ class Index {
      */
     public static function getMenuItems($moduleList = []) {
         // 先看有无缓存
-        $menuItems = Cache::get("menuItems");
+        $menuItems = '';
+        // $menuItems = Cache::get("menuItems");
         if (!$menuItems || env('APP_DEBUG')) {
-            self::scanFile(root_path(), 'extention');
-            $retAll = self::scanFile(root_path(), 'uiadmin');
+            self::scanFile(BASE_PATH, '/extention');
+            $retAll = self::scanFile(BASE_PATH, '/uiadmin');
             // dump($retAll);
             foreach ($retAll as $class) {
                 try {
@@ -63,7 +64,7 @@ class Index {
                     throw $e;
                 }
             }
-            Cache::set('menuItems', \uiadmin\core\attributes\MenuItem::$all, 1800);
+            // Cache::set('menuItems', \uiadmin\core\attributes\MenuItem::$all, 1800);
         } else {
             \uiadmin\core\attributes\MenuItem::$all = $menuItems;
         }

@@ -2,8 +2,9 @@
 declare (strict_types = 1);
 
 namespace uiadmin\core;
-
+use Hyperf\Di\Annotation\Inject;
 use Hyperf\HttpServer\Contract\RequestInterface;
+use Hyperf\Contract\SessionInterface;
 
 /**
  * 控制器基础类
@@ -21,6 +22,12 @@ class BaseController
         $this->validateRule =  $validateRule;
         $this->validateMessage =  $validateMessage;
     }
+
+    #[Inject]
+    private RequestInterface $request;
+
+    #[Inject]
+    private SessionInterface $session;
 
     /**
      * 验证数据
@@ -48,7 +55,7 @@ class BaseController
 
     // 返回json
     protected function return($data) {
-        return response()->json($data);
+        json($data);
     }
 
     /**
@@ -64,14 +71,15 @@ class BaseController
             if ($this->request->query('token', '')) {
                 $token = $this->request->query('token', '');
             } else {
-                $token = \Illuminate\Support\Facades\Request::header('Authorization');
+                $token = $this->request->getHeaders()['authorization'][0];
                 if (!$token) {
-                    $token = session('Authorization'); // 支持session
+                    $token = $this->session->get('Authorization'); // 支持session
                     if (!$token) {
                         throw new \Exception("未登录", 402);
                     }
                 }
             }
+            var_dump($token);
             $userService = new \uiadmin\core\service\User();
             $ret = $userService->isLogin($token, ['pathinfo' => '']);
             return ['code' => 200, 'msg' => '成功', 'data' => $ret];

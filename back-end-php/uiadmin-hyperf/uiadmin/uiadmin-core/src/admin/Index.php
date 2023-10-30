@@ -13,6 +13,7 @@ namespace uiadmin\core\admin;
 
 use uiadmin\core\admin\BaseAdmin;
 use Hyperf\HttpServer\Contract\RequestInterface;
+use Hyperf\HttpServer\Contract\ResponseInterface;
 use Hyperf\DbConnection\Db as DB;
 
 /**
@@ -29,20 +30,21 @@ class Index extends BaseAdmin
      * @return \Response
      * @author jry <ijry@qq.com>
      */
-    public function api()
+    public function api(RequestInterface $request)
     {
         // 获取接口信息
-        $apiBase = scheme() . '://' . $_SERVER['HTTP_HOST']  . config("uiadmin.site.apiPrefix");
+        $urls = parse_url($request->url());; // http://127.0.0.1:9501/admin/api
+        $apiBase = $urls['scheme'] . '://' . $urls['host'] . ':' . $urls['port'] . config("uiadmin.site.apiPrefix");
 
         // 返回
-        return response()->json(['code' => 200, 'msg' => '成功', 'data' => [
+        return json(['code' => 200, 'msg' => '成功', 'data' => [
             'lang' => 'php',
             'framework' => 'thinkphp6.0',
             'name' => "UiAdmin",
             'title' => config("uiadmin.site.title"),
             'stype' => '应用', // 菜单分组类型
             'version' => get_config("version"),
-            'domainRoot' => scheme() . '://' . $_SERVER['HTTP_HOST'], // 主要给远程组件和iframe用
+            'domainRoot' => $urls['scheme'] . '://' . $urls['host'] . ':' . $urls['port'], // 主要给远程组件和iframe用
             'api' => [
                 'apiBase' => $apiBase,
                 'apiPrefix' => config("uiadmin.site.apiPrefix"),
@@ -186,7 +188,7 @@ class Index extends BaseAdmin
         ];
 
         // 返回数据
-        return response()->json(['code' => 200, 'msg' => '成功', 'data' => [
+        json(['code' => 200, 'msg' => '成功', 'data' => [
             'dataList' => $dataList
         ]]);
     }

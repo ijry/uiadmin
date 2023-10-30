@@ -24,7 +24,7 @@ return [
                 'username' => 'admin',
                 'password' => 'uiadmin',
                 'avatar' => '',
-                'roles' => [],
+                'roles' => ['super_admin'],
             ]
         ],
         'driver' => 'uiadmin\\auth\\service\\User'
