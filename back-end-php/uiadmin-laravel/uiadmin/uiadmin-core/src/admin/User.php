@@ -51,7 +51,7 @@ class User extends BaseAdmin
                     'uid' => $userInfo['id'] // 可以用户ID，可以自定义
                 ]
             ]; //Payload
-            $jwt = \Firebase\JWT\JWT::encode($token, $userkey); // 此处行进加密算法生成jwt
+            $jwt = \Firebase\JWT\JWT::encode($token, $userkey, 'HS256'); // 此处行进加密算法生成jwt
 
             session_start();
             $sessionId = session_id();
@@ -75,7 +75,7 @@ class User extends BaseAdmin
                 'data' => []
             ]);
         }
-        
+
 
         // 返回数据
         return json([
