@@ -24,5 +24,6 @@ dist-ssr
 *.sw?
 
 # uiadmin
-package-lock.json
+/package-lock.json
+/pnpm-lock.yaml
 

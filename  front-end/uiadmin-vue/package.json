@@ -12,10 +12,10 @@
     "@codemirror/lang-javascript": "^0.20.0",
     "@codemirror/theme-one-dark": "^0.20.0",
     "axios": "^0.27.2",
-    "element-plus": "^2.2.1",
-    "vue": "^3.2.25",
+    "element-plus": "^2.3.7",
+    "vue": "^3.3.4",
     "vue-codemirror": "^5.0.1",
-    "vue-router": "^4.0.15"
+    "vue-router": "^4.0.16"
   },
   "devDependencies": {
     "@headlessui/vue": "^1.6.3",
