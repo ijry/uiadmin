@@ -26,8 +26,6 @@
             </div>
             </div>
         </div>
-        <!-- 头部 -->
-        <UiHeader></UiHeader>
         <router-view></router-view>
         <!-- 底部 -->
         <UiFooter></UiFooter>
