@@ -62,9 +62,17 @@ abstract class BaseController
         $this->initialize();
     }
 
+    // 租户ID
+    protected $cloudId = 0;
+    // 子站
+    protected $eid = 0;
+
     // 初始化
     protected function initialize()
-    {}
+    {
+        request()->cloudId = 0;
+        $this->cloudId = request()->cloudId;
+    }
 
     protected $validateRule = [];
     protected $validateMessage = [];
