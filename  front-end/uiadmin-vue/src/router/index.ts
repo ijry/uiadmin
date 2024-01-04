@@ -37,4 +37,7 @@ const router = createRouter({
     routes, // `routes: routes` 的缩写
 })
 
-export default router
+export {
+    router,
+    createRouter
+}

@@ -36,6 +36,10 @@ class Service extends \think\Service
      */
     public function boot()
     {
+        // 数据库全局前缀
+        if (!defined('DB_PREFIX')) {
+            define('DB_PREFIX', 'xy_');
+        }
         $this->registerRoutes(function (Route $route) {
             // 分组
             $route->redirect('/' . config("uiadmin.xyadmin.entry") . '$', request()->url(true) . '/');
