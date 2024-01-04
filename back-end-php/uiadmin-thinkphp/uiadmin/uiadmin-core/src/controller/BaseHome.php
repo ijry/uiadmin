@@ -20,6 +20,11 @@ use uiadmin\core\BaseController;
  */
 class BaseHome extends BaseController
 {
+    // 租户ID
+    protected $cloudId = 0;
+    // 子站
+    protected $eid = 0;
+
     /**
      * 是否登录
      *

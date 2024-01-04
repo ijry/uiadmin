@@ -329,6 +329,14 @@ function array2xml($array)
     return $xml;
 }
 
+// json_decode封装兼容PHP8
+function xy_json_decode($data, $isArray = false) {
+    if (!$data) {
+        return $data;
+    }
+    return json_decode($data, $isArray);
+}
+
 /**
  * 根据配置类型解析配置
  * @param  string $type  配置类型
