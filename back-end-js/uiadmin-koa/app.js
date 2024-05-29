@@ -25,7 +25,7 @@ const myconfig = require('config-lite')({
 
 // 加载接口控制器需要在uiadmin调用之前
 // 注意这里需要引入所有的控制器路由装饰器才会生效
-require('./DemoController')
+require('./controller/DemoController')
 
 
 // 自动引入uiadmin

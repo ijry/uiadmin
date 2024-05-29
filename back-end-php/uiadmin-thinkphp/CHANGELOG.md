@@ -1,7 +1,7 @@
 # Change Log
 
 
-## 1.2.1
+## 1.3.0
 
 增加uiadmin-apidoc扩展
 

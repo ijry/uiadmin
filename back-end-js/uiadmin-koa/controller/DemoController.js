@@ -1,20 +1,17 @@
-import {
-    MenuItem,
-    Controller,
-    Delete,
-    Get,
-    Post,
-    XyBuilderList,
-    XyBuilderForm
-} from 'uiadmin-koa'
+const {
+    Controller, Get, RootUrl, Post, MenuItem, UiAdmin, config, XyBuilderList, XyBuilderForm
+  } = require('uiadmin-express')
 
 // 文章管理后台控制器（演示DEMO）
-@Controller("/api")
+@Controller
 class DemoController {
+  @RootUrl('/api')
+  url() {}
+
   @MenuItem({title: "文章列表", path: "/demo/lists", pmenu: "/content", menuType: 1,
     routeType: "list", apiSuffix: "", apiParams: "", apiMethod: "GET", sortnum: 0})
   @Get('/v1/admin/demo/lists')
-  async lists(ctx) {
+  lists(req, res) {
     let dataList = [
       {
         "title": "测试文章1",
@@ -47,7 +44,7 @@ class DemoController {
         "status": 1
       },
     ]
-    let xyBuilderList = new XyBuilderList()
+    let xyBuilderList = new XyBuilderList();
     xyBuilderList
       .init()
       .addColumn("title", "标题", {
@@ -102,19 +99,19 @@ class DemoController {
       })
       .setDataList(dataList)
 
-    ctx.body = {
+    res.json({
       code: 200,
       msg: '成功',
       data: {
         listData: xyBuilderList.getData()
       }
-    }
+    });
   }
 
   @MenuItem({title: "文章新增", path: "/demo/add", pmenu: "/demo/lists", menuType: 2,
     routeType: "form", apiSuffix: "", apiParams: "", apiMethod: "GET", sortnum: 0})
   @Get('/v1/admin/demo/add')
-  async add(ctx) {
+  add(req, res) {
     let xyBuilderForm = new XyBuilderForm();
     xyBuilderForm.init()
       .addFormItem("name", "文章标题", "text", "", {})
@@ -127,19 +124,19 @@ class DemoController {
         ]
       })
 
-    ctx.body = {
+    res.json({
       code: 200,
       msg: '成功',
       data: {
         formData: xyBuilderForm.getData()
       }
-    }
+    });
   }
 
   @MenuItem({title: "文章修改", path: "/demo/edit", pmenu: "/demo/lists", menuType: 2,
     routeType: "form", apiSuffix: "", apiParams: "", apiMethod: "GET", sortnum: 0})
   @Get('/v1/admin/demo/edit/:id')
-  async edit(ctx) {
+  edit(req, res) {
     let xyBuilderForm = new XyBuilderForm();
     xyBuilderForm.init()
       .addFormItem("id", "ID", "text", "", {
@@ -161,12 +158,15 @@ class DemoController {
         level: 2
       })
 
-    ctx.body = {
+    res.json({
       code: 200,
       msg: '成功',
       data: {
         formData: xyBuilderForm.getData()
       }
-    }
+    });
   }
+
 }
+
+module.exports = DemoController;
