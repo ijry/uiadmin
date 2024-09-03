@@ -1,6 +1,6 @@
 {
   "name": "uiadmin-express-starter",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "a express version of uiadmin",
   "main": "app.js",
   "private": true,

@@ -10,10 +10,7 @@
         "laravel/framework": "^9.2",
         "laravel/sanctum": "^2.14.1",
         "laravel/tinker": "^2.7",
-        "uiadmin/uiadmin-core": "dev-master",
-        "uiadmin/uiadmin-auth": "dev-master",
-        "uiadmin/uiadmin-config": "dev-master",
-        "uiadmin/uiadmin-ext": "dev-master"
+        "uiadmin/uiadmin-core": "dev-master"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9.1",
@@ -25,19 +22,7 @@
     },
     "repositories": [{
             "type": "path",
-            "url": "uiadmin/uiadmin-core/"
-        },
-        {
-            "type": "path",
-            "url": "uiadmin/uiadmin-auth/"
-        },
-        {
-            "type": "path",
-            "url": "uiadmin/uiadmin-config/"
-        },
-        {
-            "type": "path",
-            "url": "uiadmin/uiadmin-ext/"
+            "url": "appext/uiadmin-core/"
         },
         {
             "type": "composer",

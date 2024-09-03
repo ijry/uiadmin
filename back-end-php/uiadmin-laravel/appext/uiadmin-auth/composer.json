@@ -1,0 +1,28 @@
+{
+    "name": "uiadmin/uiadmin-auth",
+    "description": "渐进式开源低代码零前端后台-用户与权限模块",
+    "type": "library",
+    "license": "Apache-2.0",
+    "authors": [
+        {
+            "name": "jry",
+            "email": "ijry@qq.com"
+        }
+    ],
+    "require": {
+    },
+    "autoload": {
+        "psr-4": {
+            "uiadmin\\auth\\": "./"
+        },
+        "files":[
+        ]
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "uiadmin\\auth\\LrvServiceProvider"
+            ]
+        }
+    }
+}

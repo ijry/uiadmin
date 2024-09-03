@@ -27,8 +27,8 @@ const myconfig = require('config-lite')({
 
 // 自动引入
 var fs = require("fs");
-var checkDir = fs.existsSync("uiadmin-core");
-let uiadminAlias = './uiadmin-core';
+var checkDir = fs.existsSync("./appext/uiadmin-core");
+let uiadminAlias = './appext/uiadmin-core';
 if (!checkDir) {
   uiadminAlias = 'uiadmin-express'
 }
@@ -52,7 +52,7 @@ class IndexController {
 }
 app.use(new IndexController())
 
-const DemoController = require('./controller/DemoController.js')
+const DemoController = require('./appext/demo-blog/controller/DemoController.js')
 app.use(new DemoController())
 
 

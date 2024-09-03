@@ -1,0 +1,44 @@
+{
+  "name": "uiadmin-express",
+  "version": "1.2.0",
+  "description": "a express version of uiadmin",
+  "main": "index.js",
+  "dependencies": {
+    "@tuzilow/express-decorator": "0.0.4",
+    "axios": "^1.3.1",
+    "config-lite": "^3.0.0",
+    "express": "^4.18.2",
+    "body-parser": "^1.20.2",
+    "@babel/core": "^7.20.12",
+    "@babel/register": "^7.18.9",
+    "@babel/cli": "^7.20.7",
+    "@babel/node": "^7.0.0",
+    "@babel/plugin-proposal-class-properties": "^7.10.4",
+    "@babel/plugin-proposal-decorators": "^7.10.5",
+    "@babel/plugin-proposal-private-methods": "^7.18.6",
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
+    "@babel/preset-env": "^7.0.0",
+    "babel-eslint": "^9.0.0",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "babel-plugin-transform-decorators-legacy": "^1.3.5",
+    "babel-plugin-transform-export-extensions": "^6.22.0",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "core-js": "^3.27.2"
+  },
+  "devDependencies": {
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
+  "scripts": {
+    "dev": "babel-node app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "uiadmin"
+  ],
+  "author": "jry",
+  "license": "Apache2",
+  "website": "https://uiadmin.net"
+}

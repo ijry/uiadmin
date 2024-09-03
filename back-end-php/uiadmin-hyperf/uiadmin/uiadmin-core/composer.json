@@ -16,10 +16,10 @@
     },
     "autoload": {
         "psr-4": {
-            "uiadmin\\core\\": "src/"
+            "uiadmin\\core\\": "./"
         },
         "files":[
-            "src/function.php"
+            "function.php"
         ] 
     },
     "extra": {
@@ -31,7 +31,7 @@
                 "uiadmin\\core\\LrvServiceProvider"
             ],
             "config":{
-                "uiadmin": "src/config.php"
+                "uiadmin": "config.php"
             }
         }
     }

@@ -13,7 +13,7 @@
     },
     "autoload": {
         "psr-4": {
-            "uiadmin\\auth\\": "src/"
+            "uiadmin\\auth\\": "./"
         },
         "files":[
         ] 
