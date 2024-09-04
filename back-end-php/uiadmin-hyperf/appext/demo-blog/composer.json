@@ -2,7 +2,7 @@
     "name": "demo/demo-blog",
     "title": "演示demo模块",
     "description": "uiadmin演示demo模块",
-    "version": "1.2.0",
+    "version": "2.0.0",
     "type": "library",
     "license": "Apache-2.0",
     "authors": [
@@ -15,10 +15,10 @@
     },
     "autoload": {
         "psr-4": {
-            "demo\\blog\\": "src/"
+            "demo\\blog\\": "./"
         },
         "files":[
-            "src/function.php"
+            "function.php"
         ]
     },
     "extra": {

@@ -145,6 +145,13 @@ class Role extends BaseAdmin
             $dataList = MenuModel::where('menu_layer', '=', 'admin')
                 ->orderBy('sortnum')
                 ->get()->toArray();
+            foreach (\uiadmin\core\attributes\MenuItem::$all as $key => $menuItem) {
+                if ($menuItem['menuLayer'] == 'admin'
+                    && $menuItem['path'] != '/_root_admin') {
+                    $adminList[] = $menuItem;
+                }
+            }
+            $dataList = array_merge($dataList, $adminList);
             foreach ($dataList as $key => &$val) {
                 $val['adminAuth'] = '/' . $val['api_prefix'] . '/admin' . $val['path'];
             }
@@ -272,6 +279,13 @@ class Role extends BaseAdmin
             $dataList = MenuModel::where('menu_layer', '=', 'admin')
                 ->orderBy('sortnum')
                 ->get()->toArray();
+            foreach (\uiadmin\core\attributes\MenuItem::$all as $key => $menuItem) {
+                if ($menuItem['menuLayer'] == 'admin'
+                    && $menuItem['path'] != '/_root_admin') {
+                    $adminList[] = $menuItem;
+                }
+            }
+            $dataList = array_merge($dataList, $adminList);
             $all = [];
             foreach ($dataList as $key => &$val) {
                 $val['adminAuth'] = '/' . $val['api_prefix'] . '/admin' . $val['path'];
