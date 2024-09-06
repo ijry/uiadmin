@@ -1,7 +1,7 @@
 # 说明
 python版本uiadmin实现， API接口自动生成管理后台，无需前端参与。
 
-![UiAdmin列表](https://raw.githubusercontent.com/ijry/uiadmin/master/back-end-js/uiadmin-express/uiadmin-core/preview/lists.png)
+![UiAdmin列表](https://raw.githubusercontent.com/ijry/uiadmin/master/back-end-js/uiadmin-express/appext/uiadmin-core/preview/lists.png)
 
 https://pypi.org/project/Uiadmin-FastApi/
 
