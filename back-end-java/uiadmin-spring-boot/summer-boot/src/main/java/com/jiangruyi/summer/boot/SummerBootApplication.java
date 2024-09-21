@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 @SpringBootApplication(
 	// exclude= {DataSourceAutoConfiguration.class}
 )
-@ComponentScan({"com.jiangruyi.summer.boot", "com.jiangruyi.summer.gen"})
+@ComponentScan({"com.jiangruyi.summer.boot", "com.jiangruyi.gen"})
 @MapperScan(basePackages = "com.**.mapper")
 public class SummerBootApplication {
 
