@@ -7,3 +7,5 @@
 /.hbuilderx/
 /.vscode/
 /.vite/
+/package-lock.json
+/pnpm-lock.yaml

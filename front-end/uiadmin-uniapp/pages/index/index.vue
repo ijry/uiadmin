@@ -4,6 +4,11 @@
 		<view class="text-area">
 			<text class="title">{{title}}</text>
 		</view>
+		<up-button type="primary" text="按钮"></up-button>
+		<up-cell-group>
+			<up-cell icon="setting-fill" title="个人设置"></up-cell>
+			<up-cell icon="integral-fill" title="会员等级" value="新版本"></up-cell>
+		</up-cell-group>
 	</view>
 </template>
 
