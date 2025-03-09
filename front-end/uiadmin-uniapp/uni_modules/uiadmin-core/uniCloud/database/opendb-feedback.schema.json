@@ -1,0 +1,53 @@
+{
+	"bsonType": "object",
+	"required": [
+		"user_id",
+		"content"
+	],
+	"properties": {
+		"_id": {
+			"description": "ID，系统自动生成"
+		},
+		"user_id": {
+			"bsonType": "string",
+			"description": "留言反馈用户ID/回复留言用户ID，参考uni-id-users表",
+			"foreignKey": "uni-id-users._id"
+		},
+		"create_date": {
+			"bsonType": "timestamp",
+			"description": "留言时间/回复留言时间"
+		},
+		"content": {
+			"bsonType": "string",
+			"description": "留言内容/回复内容",
+			"trim": "right"
+		},
+		"imgs": {
+			"bsonType": "array",
+			"description": "图片列表"
+		},
+		"is_reply": {
+			"bsonType": "bool",
+			"description": "是否是回复类型"
+		},
+		"feedback_id": {
+			"bsonType": "string",
+			"description": "被回复留言ID"
+		},
+		"contact": {
+			"bsonType": "string",
+			"description": "联系人",
+			"trim": "both"
+		},
+		"mobile": {
+			"bsonType": "string",
+			"description": "联系电话",
+			"trim": "both"
+		},
+		"reply_count": {
+			"bsonType": "int",
+			"description": "被回复条数"
+		}
+	},
+	"version": "0.0.1"
+}

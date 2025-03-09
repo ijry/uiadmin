@@ -1,0 +1,454 @@
+{
+	"bsonType": "object",
+	"required": [],
+	"properties": {
+		"_id": {
+			"description": "存储文档 ID（用户 ID），系统自动生成"
+		},
+		"username": {
+			"bsonType": "string",
+			"title": "用户名",
+			"description": "用户名，不允许重复",
+			"trim": "both"
+		},
+		"password": {
+			"bsonType": "password",
+			"title": "密码",
+			"description": "密码，加密存储",
+			"trim": "both"
+		},
+		"password_secret_version": {
+			"bsonType": "int",
+			"title": "passwordSecret",
+			"description": "密码使用的passwordSecret版本"
+		},
+		"nickname": {
+			"bsonType": "string",
+			"title": "昵称",
+			"description": "用户昵称",
+			"trim": "both"
+		},
+		"gender": {
+			"bsonType": "int",
+			"title": "性别",
+			"description": "用户性别：0 未知 1 男性 2 女性",
+			"defaultValue": 0,
+			"enum": [
+				{
+					"text": "未知",
+					"value": 0
+				},
+				{
+					"text": "男",
+					"value": 1
+				},
+				{
+					"text": "女",
+					"value": 2
+				}
+			]
+		},
+		"status": {
+			"bsonType": "int",
+			"description": "用户状态：0 正常 1 禁用 2 审核中 3 审核拒绝",
+			"title": "用户状态",
+			"defaultValue": 0,
+			"enum": [
+				{
+					"text": "正常",
+					"value": 0
+				},
+				{
+					"text": "禁用",
+					"value": 1
+				},
+				{
+					"text": "审核中",
+					"value": 2
+				},
+				{
+					"text": "审核拒绝",
+					"value": 3
+				}
+			]
+		},
+		"mobile": {
+			"bsonType": "string",
+			"title": "手机号码",
+			"description": "手机号码",
+			"pattern": "^\\+?[0-9-]{3,20}$",
+			"trim": "both"
+		},
+		"mobile_confirmed": {
+			"bsonType": "int",
+			"description": "手机号验证状态：0 未验证 1 已验证",
+			"title": "手机号验证状态",
+			"defaultValue": 0,
+			"enum": [
+				{
+					"text": "未验证",
+					"value": 0
+				},
+				{
+					"text": "已验证",
+					"value": 1
+				}
+			]
+		},
+		"email": {
+			"bsonType": "string",
+			"format": "email",
+			"title": "邮箱",
+			"description": "邮箱地址",
+			"trim": "both"
+		},
+		"email_confirmed": {
+			"bsonType": "int",
+			"description": "邮箱验证状态：0 未验证 1 已验证",
+			"title": "邮箱验证状态",
+			"defaultValue": 0,
+			"enum": [
+				{
+					"text": "未验证",
+					"value": 0
+				},
+				{
+					"text": "已验证",
+					"value": 1
+				}
+			]
+		},
+		"avatar": {
+			"bsonType": "string",
+			"title": "头像地址",
+			"description": "头像地址",
+			"trim": "both"
+		},
+		"avatar_file": {
+			"bsonType": "file",
+			"title": "头像文件",
+			"description": "用file类型方便使用uni-file-picker组件"
+		},
+		"d_ids": {
+			"bsonType": "array",
+			"description": "部门ID",
+			"title": "部门",
+			"foreignKey": "opendb-department._id",
+			"enumType": "tree",
+			"enum": {
+				"collection": "opendb-department",
+				"orderby": "name asc",
+				"field": "_id as value, name as text"
+			}
+		},
+		"e_ids": {
+			"bsonType": "array",
+			"description": "企业ID",
+			"title": "企业"
+		},
+		"role": {
+			"bsonType": "array",
+			"title": "角色",
+			"description": "用户角色",
+			"enum": {
+				"collection": "uni-id-roles",
+				"field": "role_id as value, role_name as text"
+			},
+			"foreignKey": "uni-id-roles.role_id",
+			"permission": {
+				"write": false
+			}
+		},
+		"wx_unionid": {
+			"bsonType": "string",
+			"description": "微信unionid"
+		},
+		"wx_openid": {
+			"bsonType": "object",
+			"description": "微信各个平台openid",
+			"properties": {
+				"app": {
+					"bsonType": "string",
+					"description": "app平台微信openid"
+				},
+				"mp": {
+					"bsonType": "string",
+					"description": "微信小程序平台openid"
+				},
+				"h5": {
+					"bsonType": "string",
+					"description": "微信公众号平台openid"
+				},
+				"web": {
+					"bsonType": "string",
+					"description": "微信网页登录openid"
+				}
+			}
+		},
+		"ali_openid": {
+			"bsonType": "string",
+			"description": "支付宝平台openid"
+		},
+		"apple_openid": {
+			"bsonType": "string",
+			"description": "苹果登录openid"
+		},
+		"dcloud_appid": {
+			"bsonType": "array",
+			"description": "允许登录的客户端的appid列表",
+			"foreignKey": "opendb-app-list.appid"
+		},
+		"comment": {
+			"bsonType": "string",
+			"title": "备注",
+			"description": "备注",
+			"trim": "both"
+		},
+		"third_party": {
+			"bsonType": "object",
+			"description": "缓存用户在三方平台的token等信息",
+			"properties": {
+				"mp_weixin": {
+					"bsonType": "object",
+					"description": "微信小程序相关信息",
+					"properties": {
+						"session_key": {
+							"bsonType": "string",
+							"description": "微信小程序session key"
+						}
+					}
+				},
+				"app_weixin": {
+					"bsonType": "object",
+					"description": "app平台微信相关信息",
+					"properties": {
+						"access_token": {
+							"bsonType": "string",
+							"description": "app平台微信access token"
+						},
+						"access_token_expired": {
+							"bsonType": "string",
+							"description": "app平台微信access token过期时间"
+						},
+						"refresh_token": {
+							"bsonType": "string",
+							"description": "app平台微信refresh token"
+						}
+					}
+				},
+				"h5_weixin": {
+					"bsonType": "object",
+					"description": "微信公众号平台微信相关信息",
+					"properties": {
+						"access_token": {
+							"bsonType": "string",
+							"description": "微信公众号平台access token"
+						},
+						"access_token_expired": {
+							"bsonType": "string",
+							"description": "微信公众号平台access token过期时间"
+						},
+						"refresh_token": {
+							"bsonType": "string",
+							"description": "微信公众号平台refresh token"
+						}
+					}
+				},
+				"web_weixin": {
+					"bsonType": "object",
+					"description": "web平台微信相关信息",
+					"properties": {
+						"access_token": {
+							"bsonType": "string",
+							"description": "web平台微信access token"
+						},
+						"access_token_expired": {
+							"bsonType": "string",
+							"description": "web平台微信access token过期时间"
+						},
+						"refresh_token": {
+							"bsonType": "string",
+							"description": "web平台微信refresh token"
+						}
+					}
+				},
+				"mp_qq": {
+					"bsonType": "object",
+					"description": "QQ小程序相关信息",
+					"properties": {
+						"session_key": {
+							"bsonType": "string",
+							"description": "QQ小程序session key"
+						}
+					}
+				},
+				"app_qq": {
+					"bsonType": "object",
+					"description": "app平台QQ相关信息",
+					"properties": {
+						"access_token": {
+							"bsonType": "string",
+							"description": "app平台QQ access token"
+						},
+						"access_token_expired": {
+							"bsonType": "string",
+							"description": "app平台QQ access token过期时间"
+						}
+					}
+				}
+			}
+		},
+		"register_env": {
+			"bsonType": "object",
+			"description": "注册环境信息",
+			"properties": {
+				"appid": {
+					"bsonType": "string",
+					"description": "注册时的应用AppId"
+				},
+				"uni_platform": {
+					"bsonType": "string",
+					"description": "注册时的应用平台，app、h5等"
+				},
+				"os_name": {
+					"bsonType": "string",
+					"description": "注册时的客户端系统类型，ios、android、windows、mac、linux"
+				},
+				"app_name": {
+					"bsonType": "string",
+					"description": "注册时的应用名称"
+				},
+				"app_version": {
+					"bsonType": "string",
+					"description": "注册时的应用版本名称"
+				},
+				"app_version_code": {
+					"bsonType": "string",
+					"description": "注册时的应用版本号码"
+				},
+				"channel": {
+					"bsonType": "string",
+					"description": "注册时的应用渠道或小程序启动场景"
+				},
+				"client_ip": {
+					"bsonType": "string",
+					"description": "注册时的客户端ip"
+				}
+			}
+		},
+		"realname_auth": {
+			"bsonType": "object",
+			"description": "实名认证信息",
+			"required": [
+				"type",
+				"auth_status"
+			],
+			"properties": {
+				"type": {
+					"bsonType": "int",
+					"minimum": 0,
+					"maximum": 1,
+					"description": "用户类型：0 个人用户 1 企业用户"
+				},
+				"auth_status": {
+					"bsonType": "int",
+					"minimum": 0,
+					"maximum": 3,
+					"description": "认证状态：0 未认证 1 等待认证 2 认证通过 3 认证失败"
+				},
+				"auth_date": {
+					"bsonType": "timestamp",
+					"description": "认证通过时间"
+				},
+				"real_name": {
+					"bsonType": "string",
+					"description": "真实姓名/企业名称"
+				},
+				"identity": {
+					"bsonType": "string",
+					"description": "身份证号码/营业执照号码"
+				},
+				"id_card_front": {
+					"bsonType": "string",
+					"description": "身份证正面照 URL"
+				},
+				"id_card_back": {
+					"bsonType": "string",
+					"description": "身份证反面照 URL"
+				},
+				"in_hand": {
+					"bsonType": "string",
+					"description": "手持身份证照片 URL"
+				},
+				"license": {
+					"bsonType": "string",
+					"description": "营业执照 URL"
+				},
+				"contact_person": {
+					"bsonType": "string",
+					"description": "联系人姓名"
+				},
+				"contact_mobile": {
+					"bsonType": "string",
+					"description": "联系人手机号码"
+				},
+				"contact_email": {
+					"bsonType": "string",
+					"description": "联系人邮箱"
+				}
+			}
+		},
+		"score": {
+			"bsonType": "int",
+			"description": "用户积分，积分变更记录可参考：uni-id-scores表定义"
+		},
+		"register_date": {
+			"bsonType": "timestamp",
+			"description": "注册时间",
+			"forceDefaultValue": {
+				"$env": "now"
+			}
+		},
+		"register_ip": {
+			"bsonType": "string",
+			"description": "注册时 IP 地址",
+			"forceDefaultValue": {
+				"$env": "clientIP"
+			}
+		},
+		"last_login_date": {
+			"bsonType": "timestamp",
+			"description": "最后登录时间"
+		},
+		"last_login_ip": {
+			"bsonType": "string",
+			"description": "最后登录时 IP 地址"
+		},
+		"token": {
+			"bsonType": "array",
+			"description": "用户token"
+		},
+		"inviter_uid": {
+			"bsonType": "array",
+			"description": "用户全部上级邀请者",
+			"trim": "both"
+		},
+		"invite_time": {
+			"bsonType": "timestamp",
+			"description": "受邀时间"
+		},
+		"my_invite_code": {
+			"bsonType": "string",
+			"description": "用户自身邀请码"
+		},
+		"identities": {
+			"bsonType": "array",
+			"description": "三方平台身份信息；一个对象代表一个身份，参数支持: provider 身份源, userInfo 三方用户信息, openid 三方openid, unionid 三方unionid, uid 三方uid",
+			"permission": {
+				"read": "'READ_UNI_ID_USERS' in auth.permission",
+				"write": "'CREATE_UNI_ID_USERS' in auth.permission || 'UPDATE_UNI_ID_USERS' in auth.permission"
+			}
+		}
+	},
+	"version": "1.0.3"
+}

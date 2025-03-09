@@ -1,0 +1,20 @@
+{
+    "name": "uiadmin-common",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "uni-id-common": "file:..\/..\/..\/..\/..\/uni-id-common\/uniCloud\/cloudfunctions\/common\/uni-id-common",
+        "uni-config-center": "file:..\/..\/..\/..\/..\/uni-config-center\/uniCloud\/cloudfunctions\/common\/uni-config-center"
+    },
+    "origin-plugin-dev-name": "uiadmin-core",
+    "origin-plugin-version": "1.1.2",
+    "plugin-dev-name": "uiadmin-core",
+    "plugin-version": "1.1.2"
+}

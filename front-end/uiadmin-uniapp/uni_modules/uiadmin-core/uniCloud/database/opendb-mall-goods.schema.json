@@ -1,0 +1,135 @@
+{
+	"bsonType": "object",
+	"required": [
+		"goods_sn",
+		"name",
+		"remain_count",
+		"month_sell_count",
+		"total_sell_count",
+		"comment_count",
+		"is_real",
+		"is_on_sale",
+		"is_alone_sale",
+		"is_best",
+		"is_new",
+		"is_hot"
+	],
+	"permission": {
+		"read": "doc.is_on_sale == true",
+		"create": false,
+		"update": false,
+		"delete": false
+	},
+	"properties": {
+		"_id": {
+			"description": "存储文档 ID（商品 ID），系统自动生成"
+		},
+		"category_id": {
+			"bsonType": "string",
+			"description": "分类 id，参考`opendb-mall-categories`表",
+			"foreignKey": "opendb-mall-categories._id"
+		},
+		"goods_sn": {
+			"bsonType": "string",
+			"description": "商品的唯一货号",
+			"title": "货号",
+			"trim": "both"
+		},
+		"name": {
+			"bsonType": "string",
+			"description": "商品名称",
+			"title": "名称",
+			"trim": "both"
+		},
+		"keywords": {
+			"bsonType": "string",
+			"description": "商品关键字，为搜索引擎收录使用",
+			"title": "关键字",
+			"trim": "both"
+		},
+		"goods_desc": {
+			"bsonType": "string",
+			"description": "商品详细描述",
+			"title": "详细描述",
+			"trim": "both"
+		},
+		"goods_thumb": {
+			"bsonType": "string",
+			"description": "商品缩略图，用于在列表或搜索结果中预览显示",
+			"title": "缩略图地址",
+			"pattern": "^(http://|https://|/|./|@/)\\S",
+			"trim": "both"
+		},
+		"goods_banner_imgs": {
+			"bsonType": "array",
+			"description": "商品详情页的banner图地址"
+		},
+		"remain_count": {
+			"bsonType": "int",
+			"description": "库存数量",
+			"title": "库存数量"
+		},
+		"month_sell_count": {
+			"bsonType": "int",
+			"description": "月销量"
+		},
+		"total_sell_count": {
+			"bsonType": "int",
+			"description": "总销量"
+		},
+		"comment_count": {
+			"bsonType": "int",
+			"description": "累计评论数"
+		},
+		"is_real": {
+			"bsonType": "bool",
+			"description": "是否实物",
+			"title": "是否为实物"
+		},
+		"is_on_sale": {
+			"bsonType": "bool",
+			"description": "是否上架销售",
+			"title": "是否上架"
+		},
+		"is_alone_sale": {
+			"bsonType": "bool",
+			"description": "是否能单独销售；如果不能单独销售，则只能作为某商品的配件或者赠品销售"
+		},
+		"is_best": {
+			"bsonType": "bool",
+			"description": "是否精品"
+		},
+		"is_new": {
+			"bsonType": "bool",
+			"description": "是否新品",
+			"title": "是否新品"
+		},
+		"is_hot": {
+			"bsonType": "bool",
+			"description": "是否热销"
+		},
+		"add_date": {
+			"bsonType": "timestamp",
+			"description": "上架时间",
+			"defaultValue": {
+				"$env": "now"
+			}
+		},
+		"last_modify_date": {
+			"bsonType": "timestamp",
+			"description": "最后修改时间",
+			"defaultValue": {
+				"$env": "now"
+			}
+		},
+		"seller_note": {
+			"bsonType": "string",
+			"description": "商家备注，仅商家可见",
+			"trim": "both",
+			"permission": {
+				"read": false
+			}
+		}
+	},
+	"version": "0.0.1"
+}

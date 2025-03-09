@@ -1,0 +1,40 @@
+{
+  "id": "uiadmin-core",
+  "displayName": "【uniCloud通用后台】零云®UiAdmin极速开发后台(openDB配套管理后台)",
+  "version": "1.1.2",
+  "description": "JSON和API驱动的轻量级免编译Vue3+Element通用后台，openDB配套的后台管理。资讯、商城管理功能更新中。",
+  "keywords": [
+    "uiadmin",
+    "uniCloud",
+    "权限",
+    "openDB",
+    "uview-admin"
+],
+  "repository": "",
+  "engines": {
+  	"HBuilderX": "^3.1.0"
+  },
+  "dcloudext": {
+      "sale": {
+  		"regular": {
+  			"price": "0.00"
+  		},
+  		"sourcecode": {
+  			"price": "0.00"
+  		}
+  	},
+  	"contact": {
+  		"qq": "598821125"
+  	},
+  	"declaration": {
+  		"ads": "无",
+  		"data": "无",
+  		"permissions": "无"
+  	},
+      "npmurl": "",
+      "type": "unicloud-template-function"
+  },
+  "uni_modules": {
+  	"dependencies": ["uni-config-center", "uni-id-common"]
+  }
+}

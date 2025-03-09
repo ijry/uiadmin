@@ -1,7 +1,7 @@
 {
-    "name" : "uiadmin-uniapp",
     "appid" : "__UNI__CBCD48D",
-    "description" : "uiadmin前台配套uni-app脚手架",
+    "name" : "UiAdmin配套前台uni-app项目及FastView可视化模板项目"
+    "description" : "",
     "versionName" : "1.2.0",
     "versionCode" : 120,
     "transformPx" : false,
@@ -44,8 +44,7 @@
             "ios" : {},
             /* SDK配置 */
             "sdkConfigs" : {}
-        },
-        "nvueCompiler" : "uni-app"
+        }
     },
     /* 快应用特有相关 */
     "quickapp" : {},

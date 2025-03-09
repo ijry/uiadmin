@@ -1,7 +1,5 @@
 <script>
 	export default {
-		globalData: {
-		},
 		onLaunch: function() {
 			console.log('App Launch')
 		},
@@ -16,5 +14,5 @@
 
 <style lang="scss">
 	/*每个页面公共css */
-	@import "uview-plus/index.scss";
+	@import "@/uni_modules/uview-plus/index.scss";
 </style>

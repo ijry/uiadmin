@@ -1,11 +1,2 @@
-/unpackage/*
-/unpackage/dist/*
-/unpackage/cache/*
-/unpackage/release/*
-/node_modules/*
-/.idea/*
-/.hbuilderx/
-/.vscode/
-/.vite/
-/package-lock.json
-/pnpm-lock.yaml
+node_modules/
+unpackage/
