@@ -10,10 +10,13 @@
 import { createApp } from 'vue'
 import App from './App.vue'
 import './index.css'
-import { router } from './router'
+import 'virtual:uno.css'
+import router from './plugins/router';
 import ElementPlus from 'element-plus'
 import zhCn from 'element-plus/es/locale/lang/zh-cn'
 import 'element-plus/dist/index.css'  //引入element-plus样式
+import { createPinia } from 'pinia'
+const pinia = createPinia()
 
 const app = createApp(App)
 
@@ -21,6 +24,8 @@ import util from './libs/util';
 app.config.globalProperties.$util = util;
 
 app.use(router)
+
+app.use(pinia)
 
 app.use(ElementPlus, {
   locale: zhCn,
