@@ -20,7 +20,7 @@ let vue = {
 import request from './request.js';
 util.request = request.request;
 
-import {router} from '../router';
+import router from '../router';
 
 // 注销登录
 util.logout = function() {

@@ -11,7 +11,7 @@
 import qs from 'qs';
 import axios from "axios";
 import base from '../libs/base';
-import {router} from '../router';
+import router from '../router';
 
 // 配置参考:  https://github.com/axios/axios#request-config
 // axios.defaults.headers.common['CloudId'] = '0';  // 云应用ID
