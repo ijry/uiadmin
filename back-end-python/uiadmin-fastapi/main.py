@@ -8,7 +8,12 @@ from uiadmin_fastapi.utils import jsonres
 from uiadmin_fastapi.util.xybuilder.XyBuilderList import XyBuilderList
 from uiadmin_fastapi.util.xybuilder.XyBuilderForm import XyBuilderForm
 
+# 初始化FastAPI
 app = FastAPI()
+
+# 获取当前脚本所在的目录
+base_dir = Path(__file__).parent.absolute()
+app.state.base_dir = str(base_dir)  # 将基础目录存储在 app 的 state 属性中
 
 # 跨域
 app.add_middleware(

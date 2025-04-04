@@ -1,5 +1,5 @@
-rm -r ./build
-rm -r ./dist
+# rm -r ./build
+# rm -r ./dist
 
 # 创建 Source Distributions 包
 python3 setup.py sdist

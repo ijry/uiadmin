@@ -3,7 +3,7 @@ from fastapi import Request,APIRouter
 from config2.config import config
 from .CoreController import CoreController,router
 from mergedeep import merge
-from .utils import menus
+from .utils import menus,load_controllers
 
 class Uiadmin:
     # 构造函数
@@ -17,7 +17,9 @@ class Uiadmin:
     def init_app(self, app):
         print('init uiadmin-fastapi')
         app.include_router(router)
- 
+        # 加载所有的控制器
+        load_controllers(app)
+
     # 接口方法装饰器，被装饰的接口将自动生成菜单。
     def menu_item(parameter):
         # print(parameter)

@@ -25,7 +25,7 @@ https://gitee.com/uiadmin/uiadmin/tree/master/back-end-python/
 ```
 pip install "fastapi[all]"
 pip install uiadmin-fastapi
-pip list --format=freeze >requirements.txt
+pip freeze >requirements.txt
 pip install -r requirements.txt
 uvicorn main:app --reload
 ```
@@ -39,8 +39,7 @@ uvicorn main:app --reload
 ```
 pip install "fastapi[all]"
 pip install uiadmin-fastapi
-pip install mergedeep
-pip list --format=freeze >requirements.txt
+pip freeze >requirements.txt
 pip install -r requirements.txt
 ```
 
@@ -97,7 +96,11 @@ from uiadmin_fastapi.utils import jsonres
 from uiadmin_fastapi.util.xybuilder.XyBuilderList import XyBuilderList
 from uiadmin_fastapi.util.xybuilder.XyBuilderForm import XyBuilderForm
 
+# 初始化FastAPI
 app = FastAPI()
+# 获取当前脚本所在的目录
+base_dir = Path(__file__).parent.absolute()
+app.state.base_dir = str(base_dir)  # 将基础目录存储在 app 的 state 属性中
 
 # 跨域
 app.add_middleware(
