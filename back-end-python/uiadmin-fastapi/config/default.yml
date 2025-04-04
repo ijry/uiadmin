@@ -1,3 +1,5 @@
+# https://pypi.org/project/config2/
+# config2默认配置文件
 uiadmin:
   site:
     # 网站名称
