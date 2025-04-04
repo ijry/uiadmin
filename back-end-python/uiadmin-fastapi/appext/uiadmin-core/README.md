@@ -25,7 +25,7 @@ https://gitee.com/uiadmin/uiadmin/tree/master/back-end-python/
 ```
 pip install "fastapi[all]"
 pip install uiadmin-fastapi
-pip freeze >requirements.txt
+pip list --format=freeze >requirements.txt
 pip install -r requirements.txt
 uvicorn main:app --reload
 ```
@@ -39,7 +39,8 @@ uvicorn main:app --reload
 ```
 pip install "fastapi[all]"
 pip install uiadmin-fastapi
-pip freeze >requirements.txt
+pip install mergedeep
+pip list --format=freeze >requirements.txt
 pip install -r requirements.txt
 ```
 

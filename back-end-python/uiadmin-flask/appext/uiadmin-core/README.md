@@ -23,7 +23,8 @@ https://gitee.com/uiadmin/uiadmin/tree/master/back-end-python/
 ### 下载后执行
 
 ```
-pip install
+pip list --format=freeze >requirements.txt
+pip install -r requirements.txt
 export FLASK_APP=app
 flask run
 ```
@@ -42,7 +43,7 @@ flask run
 ```
 pip install Flask
 pip install uiadmin-flask
-pip freeze >requirements.txt
+pip list --format=freeze >requirements.txt
 pip install -r requirements.txt
 ```
 
