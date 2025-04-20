@@ -4,6 +4,16 @@ use Hyperf\HttpServer\Contract\RequestInterface;
 use Hyperf\HttpServer\Contract\ResponseInterface;
 use Hyperf\Utils\Str;
 
+// 后台菜单类型枚举
+enum MenuType: int
+{
+    case CATE = -1;
+    case GROUP = 0;
+    case MENU = 1;
+    case BUTTON = 2;
+    case API = 3;
+}
+
 // 以下兼容TP写法
 function input($name) {
     if (\uiadmin\core\util\Str::contains('.', $name)) {

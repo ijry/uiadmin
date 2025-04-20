@@ -14,14 +14,16 @@ class MenuItem {
 
     public static $all = [];
 
+    public string $icon = '';
     public string $fullPath = '';
     public string $module = '';
     public string $title = '';
+    public string $apiRule = '';
     public string $path = '';
     public string $pmenu = '';
     public string $tip = '';
     public string $menuLayer = 'admin';
-    public int $menuType = 1;
+    public int|string $menuType = 1;
     public string $routeType = 'form';
     public string $apiPrefix = 'v1';
     public string $apiSuffix = '';
@@ -33,6 +35,9 @@ class MenuItem {
     public int $sortnum = 0;
     public string $pathSuffix = '';
     public string $outUrl = '';
+    public int $isAgent = 0;
+    public array $hiddenSites = [];
+    public array $showSites = [];
 
     public function __construct()
     {
@@ -46,15 +51,16 @@ class MenuItem {
      */
     public function addRoute() :void
     {
-        self::$all[] = [
+        $route = [
+            "icon" => $this->icon,
             "fullPath" => $this->fullPath,
             "module" => $this->module,
             "title" => $this->title,
+            "apiRule" => $this->apiRule,
             "path" => $this->path,
             "pmenu" => $this->pmenu,
             "tip" => $this->tip,
             "menuLayer" => $this->menuLayer,
-            "menuType" => $this->menuType,
             "routeType" => $this->routeType,
             "apiPrefix" => $this->apiPrefix,
             "apiSuffix" => $this->apiSuffix,
@@ -65,7 +71,35 @@ class MenuItem {
             "status" => $this->status,
             "sortnum" => $this->sortnum,
             "pathSuffix" => $this->pathSuffix,
-            "outUrl" => $this->outUrl
+            "outUrl" => $this->outUrl,
+            "isAgent" => $this->isAgent,
+            "hiddenSites" => $this->hiddenSites,
+            "showSites" => $this->showSites,
         ];
+        if (is_string($this->menuType)) {
+            switch ($this->menuType) {
+                case 'cate': // 菜单一级分类
+                    $route['menuType'] = -1;
+                    break;
+                case 'group': // 菜单分组
+                    $route['menuType'] = 0;
+                    break;
+                case 'menu': // 菜单项目（一般是页面）
+                    $route['menuType'] = 1;
+                    break;
+                case 'button': // 页面按钮
+                    $route['menuType'] = 2;
+                    break;
+                case 'api': // 纯接口主要起定义路由作用
+                    $route['menuType'] = 3;
+                    break;
+                default :
+                    $route['menuType'] = $this->menuType;
+                    break;
+            }
+        } else if(is_int($this->menuType)) {
+            $route['menuType'] = $this->menuType;
+        }
+        self::$all[] = $route;
     }
 }

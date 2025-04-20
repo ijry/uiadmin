@@ -2,6 +2,16 @@
 // 应用公共文件
 use Illuminate\Support\Facades\Request;
 
+// 后台菜单类型枚举
+enum MenuType: int
+{
+    case CATE = -1;
+    case GROUP = 0;
+    case MENU = 1;
+    case BUTTON = 2;
+    case API = 3;
+}
+
 // 以下兼容TP写法
 function input($name) {
     if (\uiadmin\core\util\Str::contains('.', $name)) {
