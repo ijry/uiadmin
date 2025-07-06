@@ -1,7 +1,7 @@
 {
     "appid" : "__UNI__CBCD48D",
-    "name" : "UiAdmin配套前台uni-app项目及FastView可视化模板项目"
-    "description" : "",
+    "name" : "UiAdmin配套前台uni-app项目及FastView可视化模板项目",
+    "description" : "uview-plus模板项目",
     "versionName" : "1.2.0",
     "versionCode" : 120,
     "transformPx" : false,
