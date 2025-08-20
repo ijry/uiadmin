@@ -1,6 +1,7 @@
 <template>
 	<view
 	    class="u-search"
+		:class="[iconPosition === 'right' && 'u-search__reverse']"
 	    @tap="clickHandler"
 	    :style="[{
 			margin: margin,
@@ -20,12 +21,12 @@
 				</slot>
 			</template>
 			<view class="u-search__content__icon">
-				<u-icon
+				<up-icon
 					@tap="clickIcon"
 				    :size="searchIconSize"
 				    :name="searchIcon"
 				    :color="searchIconColor ? searchIconColor : color"
-				></u-icon>
+				></up-icon>
 			</view>
 			<input
 			    confirm-type="search"
@@ -45,6 +46,7 @@
 			    class="u-search__content__input"
 			    type="text"
 			    :style="[{
+					pointerEvents: disabled ? 'none' : 'auto',
 					textAlign: inputAlign,
 					color: color,
 					backgroundColor: bgColor,
@@ -56,13 +58,14 @@
 			    v-if="keyword && clearabled && focused"
 			    @click="clear"
 			>
-				<u-icon
+				<up-icon
 				    name="close"
 				    size="11"
 				    color="#ffffff"
 					customStyle="line-height: 12px"
-				></u-icon>
+				></up-icon>
 			</view>
+            <slot name="inputRight"></slot>
 		</view>
 		<text
 		    :style="[actionStyle]"
@@ -99,14 +102,15 @@
 	 * @property {String}			color				输入框字体颜色（默认 '#606266' ）
 	 * @property {String}			placeholderColor	placeholder的颜色（默认 '#909399' ）
 	 * @property {String}			searchIcon			输入框左边的图标，可以为uView图标名称或图片路径  (默认 'search' )
+	 * @property {String}			iconPosition		输入框图标位置，left-左边, right-右边  (默认 'left' )
 	 * @property {String}			margin				组件与其他上下左右元素之间的距离，带单位的字符串形式，如"30px"   (默认 '0' )
 	 * @property {Boolean} 			animation			是否开启动画，见上方说明（默认 false ）
 	 * @property {String}			value				输入框初始值
 	 * @property {String | Number}	maxlength			输入框最大能输入的长度，-1为不限制长度  (默认 '-1' )
 	 * @property {String | Number}	height				输入框高度，单位px（默认 64 ）
 	 * @property {String | Number}	label				搜索框左边显示内容
-	 * @property {Boolean}	        adjustPosition	    键盘弹起时，是否自动上推页面	
-	 * @property {Boolean}	        autoBlur	        键盘收起时，是否自动失去焦点		
+	 * @property {Boolean}	        adjustPosition	    键盘弹起时，是否自动上推页面
+	 * @property {Boolean}	        autoBlur	        键盘收起时，是否自动失去焦点
 	 * @property {Object}			customStyle			定义需要用到的外部样式
 	 *
 	 * @event {Function} change 输入框内容发生变化时触发
@@ -230,7 +234,6 @@
 </script>
 
 <style lang="scss" scoped>
-@import "../../libs/css/components.scss";
 $u-search-content-padding: 0 10px !default;
 $u-search-label-color: $u-main-color !default;
 $u-search-label-font-size: 14px !default;
@@ -326,6 +329,14 @@ $u-search-action-margin-left: 5px !default;
 			width: $u-search-action-active-width;
 			margin-left: $u-search-action-margin-left;
 		}
+	}
+
+	&__reverse &__content__icon {
+		order: 3;
+	}
+
+	&__reverse &__content__close {
+		order: 2;
 	}
 }
 </style>

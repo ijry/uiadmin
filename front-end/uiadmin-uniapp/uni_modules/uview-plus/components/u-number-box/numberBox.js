@@ -25,11 +25,16 @@ export default {
         decimalLength: null,
         longPress: true,
         color: '#323233',
+        buttonWidth: 30,
         buttonSize: 30,
+        buttonRadius: '0px',
         bgColor: '#EBECEE',
+        disabledBgColor: '#f7f8fa',
+        inputBgColor: '#EBECEE',
         cursorSpacing: 100,
         disableMinus: false,
         disablePlus: false,
-        iconStyle: ''
+        iconStyle: '',
+        miniMode: false
     }
 }

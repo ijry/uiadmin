@@ -1,3 +1,4 @@
+import test from '../../libs/function/test'
 function pickExclude(obj, keys) {
 	// 某些情况下，type可能会为
     if (!['[object Object]', '[object File]'].includes(Object.prototype.toString.call(obj))) {
@@ -22,10 +23,14 @@ function formatImage(res) {
 		name: item.name,
 		file: item
 		// #endif
+		// #ifndef H5
+		name: item.path.split('/').pop() + '.png',
+		// #endif
     }))
 }
 
 function formatVideo(res) {
+	// console.log(res)
     return [
         {
             ...pickExclude(res, ['tempFilePath', 'thumbTempFilePath', 'errMsg']),
@@ -33,9 +38,14 @@ function formatVideo(res) {
             url: res.tempFilePath,
             thumb: res.thumbTempFilePath,
 			size: res.size,
+			width: res.width || 0, // APP 2.1.0+、H5、微信小程序、京东小程序
+			height: res.height || 0, // APP 2.1.0+、H5、微信小程序、京东小程序
 			// #ifdef H5
 			name: res.name,
 			file: res
+			// #endif
+			// #ifndef H5
+			name: res.tempFilePath.split('/').pop() + '.mp4',
 			// #endif
         }
     ]
@@ -50,6 +60,9 @@ function formatMedia(res) {
 		size: item.size,
 		// #ifdef H5
 		file: item
+		// #endif
+		// #ifndef H5
+		name: item.tempFilePath.split('/').pop() + (res.type === 'video' ? '.mp4': '.png'),
 		// #endif
     }))
 }
@@ -77,6 +90,11 @@ export function chooseFile({
     maxCount,
     extension
 }) {
+    try {
+        capture = test.array(capture) ? capture : capture.split(',');
+    } catch(e) {
+        capture = [];
+    }
     return new Promise((resolve, reject) => {
         switch (accept) {
         case 'image':
@@ -112,8 +130,8 @@ export function chooseFile({
                 fail: reject
             })
             break
-            // #ifdef MP-WEIXIN || H5
-            // 只有微信小程序才支持chooseMessageFile接口
+        // #ifdef MP-WEIXIN || H5
+        // 只有微信小程序才支持chooseMessageFile接口
         case 'file':
             // #ifdef MP-WEIXIN
             wx.chooseMessageFile({
@@ -137,7 +155,7 @@ export function chooseFile({
             uni.chooseFile(params)
             // #endif
             break
-				// #endif
+		// #endif
 		default: 
 			// 此为保底选项，在accept不为上面任意一项的时候选取全部文件
 			// #ifdef MP-WEIXIN

@@ -3,9 +3,9 @@
         <textarea
             class="u-textarea__field"
             :value="innerValue"
-            :style="{ height: addUnit(height) }"
+            :style="fieldStyle"
             :placeholder="placeholder"
-            :placeholder-style="addStyle(placeholderStyle, 'string')"
+            :placeholder-style="addStyle(placeholderStyle, typeof placeholderStyle === 'string' ? 'string' : 'object')"
             :placeholder-class="placeholderClass"
             :disabled="disabled"
             :focus="focus"
@@ -146,6 +146,15 @@ export default {
         // #endif
 	},
     computed: {
+		fieldStyle() {
+			let style = {};
+			style['height'] = addUnit(this.height);
+			if (this.autoHeight) {
+				style['height'] = 'auto';
+				style['minHeight'] = addUnit(this.height);
+			}
+			return style;
+		},
         // 组件的类名
         textareaClass() {
             let classes = [],
@@ -236,8 +245,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "../../libs/css/components.scss";
-
 .u-textarea {
     border-radius: 4px;
     background-color: #fff;

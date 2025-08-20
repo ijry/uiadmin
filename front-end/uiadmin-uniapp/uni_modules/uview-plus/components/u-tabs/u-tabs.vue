@@ -23,8 +23,19 @@
 							@longpress="longPressHandler(item,index)"
 							:ref="`u-tabs__wrapper__nav__item-${index}`"
 							:style="[addStyle(itemStyle), {flex: scrollable ? '' : 1}]"
-							:class="[`u-tabs__wrapper__nav__item-${index}`, item.disabled && 'u-tabs__wrapper__nav__item--disabled']"
+							:class="[`u-tabs__wrapper__nav__item-${index}`,
+								item.disabled && 'u-tabs__wrapper__nav__item--disabled',
+								innerCurrent == index ? 'u-tabs__wrapper__nav__item-active' : '']"
 						>
+							<slot v-if="$slots.icon" name="icon" :item="item" :keyName="keyName" :index="index" />
+							<template v-else>
+								<view class="u-tabs__wrapper__nav__item__prefix-icon" v-if="item.icon">
+									<up-icon
+										:name="item.icon"
+										:customStyle="addStyle(iconStyle)"
+									></up-icon>
+								</view>
+							</template>
 							<slot v-if="$slots.content" name="content" :item="item" :keyName="keyName" :index="index" />
 							<slot v-else-if="!$slots.content && ($slots.default || $slots.$default)"
 								:item="item" :keyName="keyName" :index="index" />
@@ -93,7 +104,7 @@
 	import { mpMixin } from '../../libs/mixin/mpMixin';
 	import { mixin } from '../../libs/mixin/mixin';
 	import defProps from '../../libs/config/props.js'
-	import { addUnit, addStyle, deepMerge, getPx, sleep, sys } from '../../libs/function/index';
+	import { addUnit, addStyle, deepMerge, getPx, sleep, getWindowInfo } from '../../libs/function/index';
 	/**
 	 * Tabs 标签
 	 * @description tabs标签组件，在标签多的时候，可以配置为左右滑动，标签少的时候，可以禁止滑动。 该组件的一个特点是配置为滚动模式时，激活的tab会自动移动到组件的中间位置。
@@ -167,7 +178,14 @@
 		},
 		async mounted() {
 			this.init()
+            this.windowResizeCallback = (res) => {
+                this.init()
+            }
+            uni.onWindowResize(this.windowResizeCallback)
 		},
+        beforeUnmount() {
+            uni.offWindowResize(this.windowResizeCallback)
+        },
 		emits: ['click', 'longPress', 'change', 'update:current'],
 		methods: {
 			addStyle,
@@ -218,6 +236,8 @@
 				}, index)
 				// 如果disabled状态，返回
 				if (item.disabled) return
+				// 如果点击当前不触发change
+				if (this.innerCurrent == index) return
 				this.innerCurrent = index
 				this.resize()
 				this.$emit('update:current', index)
@@ -251,7 +271,7 @@
 						return total + curr.rect.width
 					}, 0)
 				// 此处为屏幕宽度
-				const windowWidth = sys().windowWidth
+				const windowWidth = getWindowInfo().windowWidth
 				// 将活动的tabs-item移动到屏幕正中间，实际上是对scroll-view的移动
 				let scrollLeft = offsetLeft - (this.tabsRect.width - tabRect.rect.width) / 2 - (windowWidth - this.tabsRect
 					.right) / 2 + this.tabsRect.left / 2
@@ -326,7 +346,6 @@
 </script>
 
 <style lang="scss" scoped>
-	@import "../../libs/css/components.scss";
 
 	.u-tabs {
 

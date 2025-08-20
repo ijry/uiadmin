@@ -12,7 +12,7 @@
 
 <script>
 /**
- * mp-html v2.4.1
+ * mp-html v2.5.1
  * @description 富文本组件
  * @tutorial https://github.com/jin-yufeng/mp-html
  * @property {String} container-style 容器的样式
@@ -433,7 +433,12 @@ export default {
 						} else if (href.includes('://')) {
 							// 打开外链
 							if (this.copyLink) {
-								plus.runtime.openWeb(href)
+							    // #ifdef APP-PLUS
+                                plus.runtime.openWeb(href)
+                                // #endif
+                                // #ifdef APP-HARMONY
+                                plus.runtime.openURL(href)
+                                // #endif
 							}
 						} else {
 							uni.navigateTo({

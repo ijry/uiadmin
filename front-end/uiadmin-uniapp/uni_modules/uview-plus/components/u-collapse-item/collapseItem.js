@@ -21,6 +21,11 @@ export default {
         name: '',
         icon: '',
         duration: 300,
-        showRight: true
+        showRight: true,
+        titleStyle: {},
+        iconStyle: {},
+		rightIconStyle: {},
+        cellCustomStyle: {},
+        cellCustomClass: ''
     }
 }

@@ -7,6 +7,13 @@ export const props = defineMixin({
             type: String,
             default: () => defProps.collapseItem.title
         },
+        // 标题的样式
+        titleStyle: {
+            type: [Object, String],
+			default: () => {
+				return defProps.collapseItem.titleStyle
+			}
+        },
         // 标题右侧内容
         value: {
             type: String,
@@ -62,5 +69,29 @@ export const props = defineMixin({
             type: Boolean,
             default: () => defProps.collapseItem.showRight
         },
+        // 左侧图标样式
+        iconStyle: {
+            type: [Object, String],
+            default: () => {
+				return defProps.collapseItem.iconStyle
+			}
+        },
+        // 右侧箭头图标的样式
+        rightIconStyle: {
+            type: [Object, String],
+            default: () => {
+				return defProps.collapseItem.rightIconStyle
+			}
+        },
+        cellCustomStyle: {
+            type: [Object, String],
+            default: () => {
+				return defProps.collapseItem.cellCustomStyle
+			}
+        },
+        cellCustomClass: {
+            type: String,
+            default: () => defProps.collapseItem.cellCustomClass
+        }
     }
 })

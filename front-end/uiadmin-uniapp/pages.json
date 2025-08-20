@@ -6,6 +6,27 @@
 				"navigationBarTitleText": "FastView",
 				"navigationStyle": "custom"
 			}
+		},
+		{
+			"path" : "pages/user/login",
+			"style" : 
+			{
+				"navigationBarTitleText" : ""
+			}
+		},
+		{
+			"path" : "pages/user/my",
+			"style" : 
+			{
+				"navigationBarTitleText" : ""
+			}
+		},
+		{
+			"path" : "pages/task/index",
+			"style" : 
+			{
+				"navigationBarTitleText" : ""
+			}
 		}
 	],
 	"easycom" : {
@@ -21,6 +42,26 @@
 		"navigationBarTitleText": "FastView",
 		"navigationBarBackgroundColor": "#F8F8F8",
 		"backgroundColor": "#F8F8F8"
+	},
+	"tabBar" : {
+	    "color" : "#909399",
+	    "selectedColor" : "#303133",
+	    "backgroundColor" : "#FFFFFF",
+	    "borderStyle" : "black",
+	    "list" : [
+	        {
+	            "pagePath" : "pages/index/index",
+	            "iconPath" : "/static/tabbar/default/home.png",
+	            "selectedIconPath" : "/static/tabbar/default/homeActive.png",
+	            "text" : "首页"
+	        },
+	        {
+	            "pagePath" : "pages/user/my",
+	            "iconPath" : "/static/tabbar/default/my.png",
+	            "selectedIconPath" : "/static/tabbar/default/myActive.png",
+	            "text" : "我的"
+	        }
+	    ]
 	},
 	"uniIdRouter": {}
 }

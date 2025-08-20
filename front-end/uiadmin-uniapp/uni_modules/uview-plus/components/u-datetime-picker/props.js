@@ -5,11 +5,29 @@ export const props = defineMixin({
         // 是否显示input
         hasInput: {
             type: Boolean,
-            default: () => false
+            default: false
         },
+        inputProps: {
+            type: Object,
+            default: () => {
+                return {}
+            }
+        },
+        inputBorder: {
+            type: String,
+            default: () => defProps.input.inputBorder
+        },
+		disabled: {
+            type: Boolean,
+            default: () => defProps.input.disabled
+        },
+		disabledColor:{
+			type: String,
+			default: () => defProps.input.disabledColor
+		},
         placeholder: {
             type: String,
-            default: () => '请选择'
+            default: () => defProps.input.placeholder
         },
         format: {
             type: String,

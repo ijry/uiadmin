@@ -11,6 +11,8 @@
 			@click="clickHandler"
 			:arrowDirection="expanded ? 'up' : 'down'"
 			:disabled="disabled"
+			:customClass="cellCustomClass"
+			:customStyle="cellCustomStyle"
 		>
 			<!-- 微信小程序不支持，因为微信中不支持 <slot name="title" #title />的写法 -->
 			<template #title>
@@ -22,7 +24,7 @@
 			</template>
 			<template #icon>
 				<slot name="icon">
-					<u-icon v-if="!$slots.icon && icon" :size="22" :name="icon"></u-icon>
+					<up-icon v-if="!$slots.icon && icon" :size="22" :name="icon"></up-icon>
 				</slot>
 			</template>
 			<template #value>
@@ -34,7 +36,7 @@
 			</template>
 			<template #right-icon>
 				<template v-if="showRight">
-					<u-icon v-if="!$slots['right-icon']" :size="16" name="arrow-right"></u-icon>
+					<up-icon v-if="!$slots['right-icon']" :size="16" name="arrow-right"></up-icon>
 					<slot name="right-icon">
 					</slot>
 				</template>
@@ -223,7 +225,6 @@
 </script>
 
 <style lang="scss" scoped>
-	@import "../../libs/css/components.scss";
 
 	.u-collapse-item {
 

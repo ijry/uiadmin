@@ -62,6 +62,11 @@
 				style.width = this.lineWidth
 				style.backgroundColor = this.activeColor
 				style.height = addUnit(this.height)
+				if (this.fromRight) {
+					style.right = 0;
+				} else {
+					style.left = 0;
+				}
 				return style
 			},
 			innserPercentage() {
@@ -108,7 +113,6 @@
 </script>
 
 <style lang="scss" scoped>
-	@import "../../libs/css/components.scss";
 
 	.u-line-progress {
 		align-items: stretch;
@@ -127,7 +131,6 @@
 		&__line {
 			position: absolute;
 			top: 0;
-			left: 0;
 			bottom: 0;
 			align-items: center;
 			@include flex(row);

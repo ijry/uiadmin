@@ -1,10 +1,10 @@
 <template>
 	<view
 		class="u-sticky"
-		:id="elId"
 		:style="[style]"
 	>
 		<view
+		:id="elId"
 			:style="[stickyContent]"
 			class="u-sticky__content"
 		>
@@ -17,7 +17,7 @@
 	import { props } from './props';
 	import { mpMixin } from '../../libs/mixin/mpMixin';
 	import { mixin } from '../../libs/mixin/mixin';
-	import { addUnit, addStyle, deepMerge, getPx, guid, sys, os } from '../../libs/function/index';
+	import { addUnit, addStyle, deepMerge, getPx, guid, getDeviceInfo, os } from '../../libs/function/index';
 	import zIndex from '../../libs/config/zIndex';
 	/**
 	 * sticky 吸顶
@@ -90,6 +90,11 @@
 		mounted() {
 			this.init()
 		},
+		watch: {
+			offsetTop(nval) {
+				this.getStickyTop()
+			}
+		},
 		methods: {
 			init() {
 				this.getStickyTop()
@@ -114,7 +119,7 @@
 			observeContent() {
 				// 先断掉之前的观察
 				this.disconnectObserver('contentObserver')
-				const contentObserver = uni.createIntersectionObserver({
+				const contentObserver = uni.createIntersectionObserver(this,{
 					// 检测的区间范围
 					thresholds: [0.95, 0.98, 1]
 				})
@@ -150,7 +155,7 @@
 				// #endif
 
 				// 如果安卓版本高于8.0，依然认为是支持css sticky的(因为安卓7在某些机型，可能不支持sticky)
-				if (os() === 'android' && Number(sys().system) > 8) {
+				if (os() === 'android' && Number(getDeviceInfo().system) > 8) {
 					this.cssSticky = true
 				}
 

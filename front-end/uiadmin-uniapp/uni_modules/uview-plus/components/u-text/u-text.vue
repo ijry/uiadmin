@@ -3,10 +3,7 @@
         class="u-text"
         :class="[customClass]"
         v-if="show"
-        :style="{
-            margin: margin,
-			justifyContent: align === 'left' ? 'flex-start' : align === 'center' ? 'center' : 'flex-end'
-        }"
+        :style="wrapStyle"
         @tap="clickHandler"
     >
         <text
@@ -16,10 +13,10 @@
             >￥</text
         >
         <view class="u-text__prefix-icon" v-if="prefixIcon">
-            <u-icon
+            <up-icon
                 :name="prefixIcon"
                 :customStyle="addStyle(iconStyle)"
-            ></u-icon>
+            ></up-icon>
         </view>
         <u-link
             v-if="mode === 'link'" class="u-text__value"
@@ -62,10 +59,10 @@
             >{{ value }}</text
         >
         <view class="u-text__suffix-icon" v-if="suffixIcon">
-            <u-icon
+            <up-icon
                 :name="suffixIcon"
                 :customStyle="addStyle(iconStyle)"
-            ></u-icon>
+            ></up-icon>
         </view>
     </view>
 </template>
@@ -116,6 +113,20 @@ export default {
     // #endif
 	emits: ['click'],
     computed: {
+        wrapStyle() {
+            let style = {
+                margin: this.margin,
+			    justifyContent: this.align === 'left' ? 'flex-start' : this.align === 'center' ? 'center' : 'flex-end'
+            }
+            // 占满剩余空间
+            if (this.flex1) {
+                style.flex = 1;
+				// #ifndef APP-NVUE
+				style.width = '100%';
+				// #endif
+            }
+			return style;
+        },
         valueStyle() {
             const style = {
                 textDecoration: this.decoration,
@@ -164,16 +175,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../../libs/css/components.scss';
-
 .u-text {
     @include flex(row);
     align-items: center;
     flex-wrap: nowrap;
-    flex: 1;
-	/* #ifndef APP-NVUE */
-	width: 100%;
-	/* #endif */
 
     &__price {
         font-size: 14px;

@@ -5,12 +5,12 @@
 	    @tap="clickHandler"
 	>
 		<view class="u-tabbar-item__icon">
-			<u-icon
+			<up-icon
 			    v-if="icon"
 			    :name="icon"
 			    :color="isActive? parentData.activeColor : parentData.inactiveColor"
 			    :size="20"
-			></u-icon>
+			></up-icon>
 			<template v-else>
 				<slot
 				    v-if="isActive"
@@ -120,7 +120,6 @@
 </script>
 
 <style lang="scss" scoped>
-	@import "../../libs/css/components.scss";
 	.u-tabbar-item {
 		@include flex(column);
 		align-items: center;

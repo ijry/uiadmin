@@ -28,11 +28,11 @@
 				@touchstart.stop="backspaceClick"
 				@touchend="clearTimer"
 			>
-				<u-icon
+				<up-icon
 					name="backspace"
 					color="#303133"
 					size="28"
-				></u-icon>
+				></up-icon>
 			</view>
 		</view>
 	</view>
@@ -134,7 +134,6 @@
 </script>
 
 <style lang="scss" scoped>
-	@import "../../libs/css/components.scss";
 	$u-number-keyboard-background-color:rgb(224, 228, 230) !default;
 	$u-number-keyboard-padding:8px 10rpx 8px 10rpx !default;
 	$u-number-keyboard-button-width:222rpx !default;

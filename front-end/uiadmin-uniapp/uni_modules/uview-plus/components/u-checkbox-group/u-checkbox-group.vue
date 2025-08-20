@@ -100,8 +100,7 @@
 						values.push(child.name)
 					}
 				})
-				// 发出事件
-				this.$emit('change', values)
+			
 				// 修改通过v-model绑定的值
 				// #ifdef VUE3
 				this.$emit("update:modelValue", values);
@@ -109,13 +108,14 @@
 				// #ifdef VUE2
 				this.$emit("input", values);
 				// #endif
+       			// 放在最后更新，否则change事件传出去的values不会更新
+				this.$emit('change', values)
 			},
 		}
 	}
 </script>
 
 <style lang="scss" scoped>
-	@import "../../libs/css/components.scss";
 
 	.u-checkbox-group {
 

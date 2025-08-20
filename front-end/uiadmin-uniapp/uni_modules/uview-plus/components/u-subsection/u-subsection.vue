@@ -31,6 +31,7 @@
                     'u-subsection__item--no-border-right',
                 index === 0 && 'u-subsection__item--first',
                 index === list.length - 1 && 'u-subsection__item--last',
+                getTextViewDisableClass(index),
             ]"
             :ref="`u-subsection__item--${index}`"
             :style="[itemStyle(index)]"
@@ -40,7 +41,8 @@
         >
             <text
                 class="u-subsection__item__text"
-                :style="[textStyle(index)]"
+                :class="[disabled ? 'u-subsection--disabled' : '']"
+                :style="[textStyle(index,item)]"
                 >{{ getText(item) }}</text
             >
         </view>
@@ -60,16 +62,19 @@ import { addStyle, addUnit, sleep } from '../../libs/function/index';
  * Subsection 分段器
  * @description 该分段器一般用于用户从几个选项中选择某一个的场景
  * @tutorial https://ijry.github.io/uview-plus/components/subsection.html
- * @property {Array}			list			tab的数据
- * @property {String ｜ Number}	current			当前活动的tab的index（默认 0 ）
- * @property {String}			activeColor		激活时的颜色（默认 '#3c9cff' ）
- * @property {String}			inactiveColor	未激活时的颜色（默认 '#303133' ）
- * @property {String}			mode			模式选择，mode=button为按钮形式，mode=subsection时为分段模式（默认 'button' ）
- * @property {String ｜ Number}	fontSize		字体大小，单位px（默认 12 ）
- * @property {Boolean}			bold			激活选项的字体是否加粗（默认 true ）
- * @property {String}			bgColor			组件背景颜色，mode为button时有效（默认 '#eeeeef' ）
- * @property {Object}			customStyle		定义需要用到的外部样式
- * @property {String}	        keyName	        从`list`元素对象中读取的键名（默认 'name' ）
+ * @property {Array}			list			        tab的数据
+ * @property {String ｜ Number}	current			        当前活动的tab的index（默认 0 ）
+ * @property {String}			activeColor		        激活时的颜色（默认 '#3c9cff' ）
+ * @property {String}			inactiveColor	        未激活时的颜色（默认 '#303133' ）
+ * @property {String}			mode			        模式选择，mode=button为按钮形式，mode=subsection时为分段模式（默认 'button' ）
+ * @property {String ｜ Number}	fontSize		        字体大小，单位px（默认 12 ）
+ * @property {Boolean}			bold			        激活选项的字体是否加粗（默认 true ）
+ * @property {String}			bgColor			        组件背景颜色，mode为button时有效（默认 '#eeeeef' ）
+ * @property {Object}			customStyle		        定义需要用到的外部样式
+ * @property {String}	        keyName	                从`list`元素对象中读取的键名（默认 'name' ）
+ * @property {String}	        activeColorKeyName      从`list`元素对象中读取激活时的颜色（默认 'activeColorKey' ）  如果存在字段 优先级大于 activeColor
+ * @property {String}	        inactiveColorKeyName    从`list`元素对象中读取未激活时的颜色 （默认 'inactiveColorKey' ）如果存在字段 优先级大于 inactiveColor
+ * @property {Boolean}	        disabled                是否禁用分段器 （默认 false ）
  *
  * @event {Function} change		分段器选项发生改变时触发  回调 index：选项的index索引值，从0开始
  * @example <u-subsection :list="list" :current="curNow" @change="sectionChange"></u-subsection>
@@ -158,22 +163,46 @@ export default {
             };
         },
         // 分段器文字颜色
-        textStyle(index) {
-            return (index) => {
+        textStyle(index,item) {
+            return (index,item) => {
                 const style = {};
                 style.fontWeight =
                     this.bold && this.innerCurrent === index ? "bold" : "normal";
                 style.fontSize = addUnit(this.fontSize);
+
+                let activeColorTemp = null;
+                let inactiveColorTemp = null;
+                // 如果是对象并且设置了对应的背景色字段 则优先使用设置的字段
+                if(typeof item === 'object' && item[this.activeColorKeyName]){
+                    activeColorTemp = item[this.activeColorKeyName];
+                }
+                if(typeof item === 'object' && item[this.inactiveColorKeyName]){
+                    inactiveColorTemp = item[this.inactiveColorKeyName];
+                }
+
                 // subsection模式下，激活时默认为白色的文字
                 if (this.mode === "subsection") {
-                    style.color =
-                        this.innerCurrent === index ? "#fff" : this.inactiveColor;
-                } else {
+                    // 判断当前是否激活
+                    if(this.innerCurrent === index){
+                        // 判断当前是否有自定义的颜色
+                        style.color = activeColorTemp ? activeColorTemp : '#FFF'
+                        // style.color = activeColorTemp ? activeColorTemp : this.activeColor
+                    }
+                    else{
+                        // 判断当前是否有自定义的颜色
+                        style.color = inactiveColorTemp ? inactiveColorTemp : this.inactiveColor;
+                    }
+                }
+                else {
                     // button模式下，激活时文字颜色默认为activeColor
-                    style.color =
-                        this.innerCurrent === index
-                            ? this.activeColor
-                            : this.inactiveColor;
+                    if(this.innerCurrent === index){
+                        // 判断当前是否有自定义的颜色
+                        style.color = activeColorTemp ? activeColorTemp : this.activeColor
+                    }
+                    else{
+                        // 判断当前是否有自定义的颜色
+                        style.color = inactiveColorTemp ? inactiveColorTemp : this.inactiveColor;
+                    }
                 }
                 return style;
             };
@@ -181,15 +210,19 @@ export default {
     },
     mounted() {
         this.init();
+        // #ifndef APP || MP-WEIXIN || MP-LARK|| MP-QQ || H5
         this.windowResizeCallback = (res) => {
             this.init();
         }
         uni.onWindowResize(this.windowResizeCallback)
+        // #endif
     },
     beforeUnmount() {
+        // #ifndef APP || MP-WEIXIN || MP-LARK|| MP-QQ || H5
         uni.offWindowResize(this.windowResizeCallback)
+        // #endif
     },
-	emits: ["change"],
+	emits: ["change", "update:current"],
     methods: {
         addStyle,
         init() {
@@ -217,16 +250,36 @@ export default {
             // #endif
         },
         clickHandler(index) {
-            this.innerCurrent = index
+            // 防止某些平台 css 无法阻止点击事件 在此处拦截
+            if(this.disabled){
+                return
+            }
+            this.innerCurrent = index;
+			this.$emit('update:current', index);
             this.$emit("change", index);
         },
+        /**
+         * 获取当前文字区域的 class禁用样式
+         * @param index
+         */
+        getTextViewDisableClass(index){
+            // 禁用状态下
+            if(this.disabled){
+                // 判断模式
+                if(this.mode === 'button'){
+                    return 'item-button--disabled'
+                }
+                else{
+                    return 'item-subsection--disabled'
+                }
+            }
+            return '';
+        }
     },
 };
 </script>
 
 <style lang="scss" scoped>
-@import "../../libs/css/components.scss";
-
 .u-subsection {
     @include flex;
     position: relative;
@@ -313,6 +366,40 @@ export default {
             transition-property: color;
             transition-duration: 0.3s;
         }
+    }
+
+    // 禁用标志
+    //
+    //&--subsectio--disabled{
+    //    cursor: no-drop;
+    //    background: #FFFFFF !important;
+    //    color: #BDBDBD !important;
+    //    border-color: #BDBDBD !important;
+    //}
+    //
+    //&--button--disabled{
+    //    cursor: no-drop;
+    //    color: #BDBDBD !important;
+    //    border-color: #BDBDBD !important;
+    //}
+
+}
+
+.item-button--disabled{
+    cursor: no-drop;
+    color: #BDBDBD !important;
+    border-color: #BDBDBD !important;
+    text{
+        color: #BDBDBD !important;
+    }
+}
+.item-subsection--disabled{
+    cursor: no-drop;
+    background: #FFFFFF !important;
+    color: #BDBDBD !important;
+    border-color: #BDBDBD !important;
+    text{
+        color: #BDBDBD !important;
     }
 }
 </style>

@@ -9,6 +9,7 @@
         <view class="u-float-button__main" @click="clickHandler" :style="{
             backgroundColor: backgroundColor,
             color: color,
+			display: 'flex',
             flexDirection: 'row',
             justifyContent: 'center',
             alignItems: 'center',
@@ -24,10 +25,11 @@
                 bottom: height
             }">
                 <slot name="list">
-                    <template v-for="item in list">
+                    <template :key="index" v-for="(item, index) in list">
                         <view class="u-float-button__item" :style="{
                             backgroundColor: item?.backgroundColor ? item?.backgroundColor : backgroundColor,
                             color: item?.color ? item?.color : color,
+							display: 'flex',
                             flexDirection: 'row',
                             justifyContent: 'center',
                             alignItems: 'center',
@@ -147,8 +149,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../../libs/css/components.scss';
-
 .u-float-button {
     z-index: 999;
     .show-list {

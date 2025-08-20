@@ -7,6 +7,7 @@
  * @lastTime     : 2021-08-20 16:57:48
  * @FilePath     : /u-view2.0/uview-ui/libs/config/props/datetimePicker.js
  */
+import { t } from '../../libs/i18n'
 export default {
     // datetimePicker 组件
     datetimePicker: {
@@ -26,12 +27,17 @@ export default {
         formatter: null,
         loading: false,
         itemHeight: 44,
-        cancelText: '取消',
-        confirmText: '确认',
+        cancelText: t("up.common.cancel"),
+        confirmText: t("up.common.confirm"),
         cancelColor: '#909193',
         confirmColor: '#3c9cff',
         visibleItemCount: 5,
         closeOnClickOverlay: false,
-        defaultIndex: []
+        defaultIndex: [],
+        inputBorder: 'surround',
+        disabled: false,
+        disabledColor: '',
+        placeholder: t("up.common.pleaseChoose"),
+        inputProps: {},
     }
 }

@@ -4,13 +4,13 @@
 			class="u-navbar__placeholder"
 			v-if="fixed && placeholder"
 			:style="{
-				height: addUnit(getPx(height) + sys().statusBarHeight,'px'),
+				height: addUnit(getPx(height) + getWindowInfo().statusBarHeight,'px'),
 			}"
 		></view>
 		<view :class="[fixed && 'u-navbar--fixed']">
 			<u-status-bar
 				v-if="safeAreaInsetTop"
-				:bgColor="bgColor"
+				:bgColor="statusBarBgColor ? statusBarBgColor : bgColor"
 			></u-status-bar>
 			<view
 				class="u-navbar__content"
@@ -27,12 +27,12 @@
 					@tap="leftClick"
 				>
 					<slot name="left">
-						<u-icon
+						<up-icon
 							v-if="leftIcon"
 							:name="leftIcon"
 							:size="leftIconSize"
 							:color="leftIconColor"
-						></u-icon>
+						></up-icon>
 						<text
 							v-if="leftText"
 							:style="{
@@ -57,11 +57,11 @@
 					@tap="rightClick"
 				>
 					<slot name="right">
-						<u-icon
+						<up-icon
 							v-if="rightIcon"
 							:name="rightIcon"
 							size="20"
-						></u-icon>
+						></up-icon>
 						<text
 							v-if="rightText"
 							class="u-navbar__content__right__text"
@@ -77,7 +77,8 @@
 	import { props } from './props';
 	import { mpMixin } from '../../libs/mixin/mpMixin';
 	import { mixin } from '../../libs/mixin/mixin';
-	import { addUnit, addStyle, getPx, sys } from '../../libs/function/index';
+	import config  from '../../libs/config/config';
+	import { addUnit, addStyle, getPx, getWindowInfo } from '../../libs/function/index';
 	/**
 	 * Navbar 自定义导航栏
 	 * @description 此组件一般用于在特殊情况下，需要自定义导航栏的时候用到，一般建议使用uni-app带的导航栏。
@@ -93,6 +94,7 @@
 	 * @property {String}			title				导航栏标题，如设置为空字符，将会隐藏标题占位区域
 	 * @property {String}			titleColor			文字颜色 （默认 '' ）
 	 * @property {String}			bgColor				导航栏背景设置 （默认 '#ffffff' ）
+	 * @property {String}			statusBarBgColor	状态栏背景颜色 不写同导航栏背景设置
 	 * @property {String | Number}	titleWidth			导航栏标题的最大宽度，内容超出会以省略号隐藏 （默认 '400rpx' ）
 	 * @property {String | Number}	height				导航栏高度(不包括状态栏高度在内，内部自动加上)（默认 '44px' ）
 	 * @property {String | Number}	leftIconSize		左侧返回图标的大小（默认 20px ）
@@ -114,14 +116,18 @@
 		methods: {
 			addStyle,
 			addUnit,
-			sys,
+			getWindowInfo,
 			getPx,
 			// 点击左侧区域
 			leftClick() {
 				// 如果配置了autoBack，自动返回上一页
 				this.$emit('leftClick')
-				if(this.autoBack) {
-					uni.navigateBack()
+				if (config.interceptor.navbarLeftClick != null) {
+					config.interceptor.navbarLeftClick()
+				} else {
+					if(this.autoBack) {
+						uni.navigateBack()
+					}
 				}
 			},
 			// 点击右侧区域
@@ -133,7 +139,6 @@
 </script>
 
 <style lang="scss" scoped>
-	@import "../../libs/css/components.scss";
 
 	.u-navbar {
 
@@ -165,7 +170,7 @@
 
 			&__left {
 				left: 0;
-				
+
 				&--hover {
 					opacity: 0.7;
 				}

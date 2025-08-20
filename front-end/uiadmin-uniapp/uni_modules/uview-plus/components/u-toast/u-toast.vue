@@ -2,7 +2,7 @@
 	<view class="u-toast">
 		<u-overlay
 			:show="isShow"
-			:zIndex="tmpConfig.overlay ? 10070 : -1"
+			:zIndex="tmpConfig.overlay ? tmpConfig.zIndex : -1"
 			:custom-style="overlayStyle"
 		>
 			<view
@@ -17,13 +17,13 @@
 					inactiveColor="rgb(120, 120, 120)"
 					size="25"
 				></u-loading-icon>
-				<u-icon
+				<up-icon
 					v-else-if="tmpConfig.type !== 'defalut' && iconName"
 					:name="iconName"
 					size="17"
 					:color="tmpConfig.type"
 					:customStyle="iconStyle"
-				></u-icon>
+				></up-icon>
 				<u-gap
 					v-if="tmpConfig.type === 'loading' || tmpConfig.loading"
 					height="12"
@@ -42,7 +42,7 @@
 <script>
 	import { mpMixin } from '../../libs/mixin/mpMixin';
 	import { mixin } from '../../libs/mixin/mixin';
-	import { os, sys, deepMerge, type2icon } from '../../libs/function/index';
+	import { os, getWindowInfo, deepMerge, type2icon } from '../../libs/function/index';
 	import color from '../../libs/config/color';
 	import { hexToRgb } from '../../libs/function/colorGradient';
 	/**
@@ -77,6 +77,7 @@
 				config: {
 					message: '', // 显示文本
 					type: '', // 主题类型，primary，success，error，warning，black
+					zIndex: 10090, // 层级
 					duration: 2000, // 显示的时间，毫秒
 					icon: true, // 显示的图标
 					position: 'center', // toast出现的位置
@@ -136,7 +137,7 @@
 			},
 			// 内容盒子的样式
 			contentStyle() {
-				const windowHeight = sys().windowHeight, style = {}
+				const windowHeight = getWindowInfo().windowHeight, style = {}
 				let value = 0
 				// 根据top和bottom，对Y轴进行窗体高度的百分比偏移
 				if(this.tmpConfig.position === 'top') {
@@ -193,7 +194,6 @@
 </script>
 
 <style lang="scss" scoped>
-	@import "../../libs/css/components.scss";
 
 	$u-toast-color:#fff !default;
 	$u-toast-border-radius:4px !default;
@@ -203,7 +203,7 @@
 	$u-toast-loading-border-padding: 20px 20px !default;
 	$u-toast-content-text-color:#fff !default;
 	$u-toast-content-text-font-size:15px !default;
-	$u-toast-u-icon:10rpx !default;
+	$u-toast-up-icon:10rpx !default;
 	$u-toast-u-type-primary-color:$u-primary !default;
 	$u-toast-u-type-primary-background-color:#ecf5ff !default;
 	$u-toast-u-type-primary-border-color:rgb(215, 234, 254) !default;

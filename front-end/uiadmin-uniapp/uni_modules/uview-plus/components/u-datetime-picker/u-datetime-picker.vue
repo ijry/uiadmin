@@ -1,14 +1,13 @@
 <template>
     <view class="u-datetime-picker">
         <view v-if="hasInput" class="u-datetime-picker__has-input"
-            @click="showByClickInput = !showByClickInput"
+            @click="onShowByClickInput"
         >
             <slot name="trigger" :value="inputValue">
 				<up-input
-					:placeholder="placeholder"
 					:readonly="!!showByClickInput"
-					border="surround"
 					v-model="inputValue"
+					v-bind="inputPropsInner"
 				></up-input>
 				<div class="input-cover">
 				</div>
@@ -59,7 +58,7 @@
 	import { props } from './props';
 	import { mpMixin } from '../../libs/mixin/mpMixin';
 	import { mixin } from '../../libs/mixin/mixin';
-	import dayjs from 'dayjs/esm/index';
+	import dayjs from './dayjs.esm.min.js';
 	import { range, error, padZero } from '../../libs/function/index';
 	import test from '../../libs/function/test';
 	/**
@@ -110,6 +109,12 @@
 		watch: {
 			show(newValue, oldValue) {
 				if (newValue) {
+					// #ifdef VUE3
+					this.innerValue = this.correctValue(this.modelValue)
+					// #endif
+					// #ifdef VUE2
+					this.innerValue = this.correctValue(this.value)
+					// #endif
 					this.updateColumnValue(this.innerValue)
 				}
 			},
@@ -132,7 +137,17 @@
 		computed: {
 			// 如果以下这些变量发生了变化，意味着需要重新初始化各列的值
 			propsChange() {
-				return [this.mode, this.maxDate, this.minDate, this.minHour, this.maxHour, this.minMinute, this.maxMinute, this.filter, ]
+				return [this.mode, this.maxDate, this.minDate, this.minHour, this.maxHour, this.minMinute, this.maxMinute, this.filter, this.modelValue]
+			},
+			// input的props
+			inputPropsInner() {
+				return {
+					border: this.inputBorder,
+            		placeholder: this.placeholder,
+					disabled: this.disabled,
+					disabledColor: this.disabledColor,
+					...this.inputProps
+				}
 			}
 		},
 		mounted() {
@@ -160,6 +175,9 @@
 								break;
 							case 'year-month':
 								format = 'YYYY-MM'
+								break;
+							case 'datehour':
+								format = 'YYYY-MM-DD HH'
 								break;
 							case 'datetime':
 								format = 'YYYY-MM-DD HH:mm'
@@ -427,7 +445,10 @@
 			},
 			// 根据minDate、maxDate、minHour、maxHour等边界值，判断各列的开始和结束边界值
 			getBoundary(type, innerValue) {
-			    const value = new Date(innerValue)
+			    let value = new Date(innerValue)
+                if(isNaN(value.getTime())){
+                    value = new Date()
+                }
 			    const boundary = new Date(this[`${type}Date`])
 			    const year = dayjs(boundary).year()
 			    let month = 1
@@ -461,13 +482,18 @@
 			        [`${type}Hour`]: hour,
 			        [`${type}Minute`]: minute
 			    }
+			},
+			onShowByClickInput(){
+				if(!this.disabled){
+					this.showByClickInput = !this.showByClickInput
+				}
+
 			}
 		}
 	}
 </script>
 
 <style lang="scss" scoped>
-	@import '../../libs/css/components.scss';
 	.u-datetime-picker {
 		flex: 1;
         &__has-input {

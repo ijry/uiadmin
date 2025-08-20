@@ -1,0 +1,25 @@
+{
+    "id": "a-hua-unocss",
+    "name": "unocss",
+    "displayName": "unocss",
+    "version": "1.3.9",
+    "description": "内置代码提示文件；导入后可查看 class-name 文件；",
+    "keywords": [
+        "轻量",
+        "原子化",
+        "css",
+        "style",
+        "unocss"
+    ],
+    "dcloudext": {
+        "type": "js_sdk",
+        "sale": {
+            "regular": {
+                "price": "0.00"
+            },
+            "sourcecode": {
+                "price": "0.00"
+            }
+        }
+    }
+}

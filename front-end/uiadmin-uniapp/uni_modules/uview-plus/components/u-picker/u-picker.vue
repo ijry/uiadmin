@@ -1,15 +1,26 @@
 <template>
-    <view class="u-picker-warrper">
-        <view v-if="hasInput" class="u-picker-input cursor-pointer" @click="showByClickInput = !showByClickInput">
-            <slot>
-                <view>
-					{{ inputLabel && inputLabel.length ? inputLabel.join('/') : placeholder }}
-				</view>
-            </slot>
-        </view>
+    <view class="u-picker-wraper">
+		<view v-if="hasInput" class="u-picker-input cursor-pointer" @click="onShowByClickInput">
+			<slot :value="inputLabel">
+			</slot>
+			<slot name="trigger" :value="inputLabel">
+			</slot>
+			<up-input
+				v-if="!$slots['default'] && !$slots['$default'] && !$slots['trigger']"
+				:readonly="true"
+				v-model="inputLabel"
+				v-bind="inputPropsInner">
+			</up-input>
+			<div class="input-cover"></div>
+		</view>
 		<u-popup
 			:show="show || (hasInput && showByClickInput)"
 			:mode="popupMode"
+			:zIndex="zIndex"
+			:bgColor="bgColor"
+			:round="round"
+			:duration="duration"
+			:overlayOpacity="overlayOpacity"
 			@close="closeHandler"
 		>
 			<view class="u-picker">
@@ -31,11 +42,11 @@
 				<slot name="toolbar-bottom"></slot>
 				<picker-view
 					class="u-picker__view"
-					:indicatorStyle="`height: ${addUnit(itemHeight)}`"
+					:indicatorStyle="`height: ${addUnit(itemHeight, 'px')}`"
 					:value="innerIndex"
 					:immediateChange="immediateChange"
 					:style="{
-						height: `${addUnit(visibleItemCount * itemHeight)}`
+						height: `${addUnit(visibleItemCount * itemHeight, 'px')}`
 					}"
 					@change="changeHandler"
 				>
@@ -47,11 +58,12 @@
 						<view
 							v-if="testArray(item)"
 							class="u-picker__view__column__item u-line-1"
+							:class="[index1 === innerIndex[index] && 'u-picker__view__column__item--selected']"
 							v-for="(item1, index1) in item"
 							:key="index1"
 							:style="{
-								height: addUnit(itemHeight),
-								lineHeight: addUnit(itemHeight),
+								height: addUnit(itemHeight, 'px'),
+								lineHeight: addUnit(itemHeight, 'px'),
 								fontWeight: index1 === innerIndex[index] ? 'bold' : 'normal',
 								display: 'block'
 							}"
@@ -88,6 +100,10 @@
  * @property {Boolean}			closeOnClickOverlay	是否允许点击遮罩关闭选择器（默认 false ）
  * @property {Array}			defaultIndex		各列的默认索引
  * @property {Boolean}			immediateChange		是否在手指松开时立即触发change事件（默认 true ）
+ * @property {String | Number}	round				圆角值（默认 0）
+ * @property {String }	        bgColor				背景色值（默认 '' ）
+ * @property {String | Number}	duration			动画时长，单位ms （默认 300 ）
+ * @property {String | Number}	overlayDuration		遮罩层动画时长，单位ms （默认 350 ）
  * @event {Function} close		关闭选择器时触发
  * @event {Function} cancel		点击取消按钮触发
  * @event {Function} change		当选择值变化时触发
@@ -112,17 +128,10 @@ export default {
 			// 上一次的变化列索引
 			columnIndex: 0,
             showByClickInput: false,
+			currentActiveValue: [] //当前用户选中，但是还没确认的值，用户没做change操作时候，点击确认可以默认选中第一个
 		}
 	},
 	watch: {
-		// 监听默认索引的变化，重新设置对应的值
-		defaultIndex: {
-			immediate: true,
-			deep:true,
-			handler(n) {
-				this.setIndexs(n, true)
-			}
-		},
 		// 监听columns参数的变化
 		columns: {
 			immediate: true,
@@ -131,29 +140,108 @@ export default {
 				this.setColumns(n)
 			}
 		},
+		// 监听默认索引的变化，重新设置对应的值
+		defaultIndex: {
+			immediate: true,
+			deep:true,
+			handler(n,o) {
+				// 修复uniapp调用子组件直接:defaultIndex="[0]"这样写
+				// v-model的值变化时候导致defaultIndexwatch也会执行的问题
+				//单纯vue不会出现
+				if (!o || n.join("/") != o.join("/")) {
+					this.setIndexs(n, true)
+				}
+			}
+		},
+		modelValue: {
+			immediate: true,
+			deep:true,
+			handler(n,o) {
+				// 修复uniapp调用子组件直接:defaultIndex="[0]"这样写
+				// v-model的值变化时候导致defaultIndexwatch也会执行的问题
+				//单纯vue不会出现
+				if (!o || n.join("/") != o.join("/")) {
+					let arr = [];
+					if (n != null) {
+						n.forEach((element, index) => {
+							let currentCols = this.getColumnValues(index)
+							if (currentCols && Object.prototype.toString.call(currentCols) === '[object Object]') {
+								currentCols.forEach((item, index2) => {
+									if (item[this.keyName] == element) {
+										arr.push(index2)
+									}
+								})
+							} else {
+								currentCols.forEach((item, index2) => {
+									if (item == element) {
+										arr.push(index2)
+									}
+								})
+							}
+						});
+						// alert(arr)
+						if (arr.length == 0 && this.defaultIndex) {
+						} else {
+							this.setIndexs(arr, true)
+						}
+					}
+				}
+			}
+		}
 	},
 	emits: ['close', 'cancel', 'confirm', 'change', 'update:modelValue', 'update:show'],
     computed: {
-        inputLabel() {
-            let items = this.innerColumns.map((item, index) => item[this.innerIndex[index]])
-            let res = []
-            items.forEach(element => {
-                res.push(element[this.keyName])
-            });
-            return res
-        },
-        inputValue() {
-            let items = this.innerColumns.map((item, index) => item[this.innerIndex[index]])
-            let res = []
-            items.forEach(element => {
-                res.push(element['id'])
-            });
-            return res
-        }
+		// input的props
+		inputPropsInner() {
+			return {
+				border: this.inputBorder,
+				placeholder: this.placeholder,
+				disabled: this.disabled,
+				disabledColor: this.disabledColor,
+				...this.inputProps
+			}
+		},
+		//已选&&已确认的值显示在input上面的文案
+		inputLabel() {
+			let firstItem = this.innerColumns[0] && this.innerColumns[0][0];
+			// //区分是不是对象数组
+			if (firstItem && Object.prototype.toString.call(firstItem) === '[object Object]') {
+				let res = this.innerColumns[0].filter(item => this.modelValue.includes(item['id']))
+				res = res.map(item => item[this.keyName]);
+				return res.join("/");
+
+			} else {
+				//用户确定的值，才显示到输入框
+				return this.modelValue.join("/");
+			}
+		},
+		//已选，待确认的值
+		inputValue() {
+			let items = this.innerColumns.map((item, index) => item[this.innerIndex[index]])
+			let res = []
+			//区分是不是对象数组
+			if (items[0] && Object.prototype.toString.call(items[0]) === '[object Object]') {
+				//对象数组返回属性值集合
+				items.forEach(element => {
+					res.push(element && element[this.valueName])
+				});
+			} else {
+				//非对象数组返回元素集合
+				items.forEach((element, index) => {
+					res.push(element)
+				});
+			}
+			return res
+		}
     },
 	methods: {
 		addUnit,
 		testArray: test.array,
+		onShowByClickInput(){
+			if(!this.disabled){
+				this.showByClickInput=!this.showByClickInput;
+			}
+		},
 		// 获取item需要显示的文字，判别为对象还是文本
 		getItemText(item) {
 			if (test.object(item)) {
@@ -168,6 +256,7 @@ export default {
                 if (this.hasInput) {
                     this.showByClickInput = false
                 }
+				this.setDefault()
 				this.$emit('update:show', false)
 				this.$emit('close')
 			}
@@ -177,15 +266,37 @@ export default {
             if (this.hasInput) {
                 this.showByClickInput = false
             }
+			this.setDefault()
 			this.$emit('update:show', false)
 			this.$emit('cancel')
 		},
+		setDefault() {
+			let arr = [0]
+			if (this.lastIndex.length == 0) {
+				//如果有默认值&&默认值的数组长度是正确的，就用默认值
+				if (Array.isArray(this.defaultIndex) && this.defaultIndex.length == this.innerColumns.length) {
+					arr = [...this.defaultIndex];
+				} else {
+					//否则默认都选中第一个
+					arr = Array(this.innerColumns.length).fill(0);
+				}
+			} else {
+				arr = deepClone(this.lastIndex)
+			}
+			this.setLastIndex(arr)
+			this.setIndexs(arr)
+		},
 		// 点击工具栏的确定按钮
 		confirm() {
+			// 如果用户有没有触发过change
+			if (!this.currentActiveValue.length) {
+				this.setDefault()
+			}
             this.$emit('update:modelValue', this.inputValue)
             if (this.hasInput) {
                 this.showByClickInput = false
             }
+			this.setLastIndex(this.innerIndex)
 			this.$emit('update:show', false)
 			this.$emit('confirm', {
 				indexs: this.innerIndex,
@@ -200,6 +311,8 @@ export default {
 			} = e.detail
 			let index = 0,
 				columnIndex = 0
+			//记录用户选中但是还没确认的值
+			this.currentActiveValue = value;	
 			// 通过对比前后两次的列索引，得出当前变化的是哪一列
 			for (let i = 0; i < value.length; i++) {
 				let item = value[i]
@@ -214,11 +327,14 @@ export default {
 			this.columnIndex = columnIndex
 			const values = this.innerColumns
 			// 将当前的各项变化索引，设置为"上一次"的索引变化值
-			this.setLastIndex(value)
+			// this.setLastIndex(value)
 			this.setIndexs(value)
-
-            this.$emit('update:modelValue', this.inputValue)
-
+			//如果是非自带输入框才会在change时候触发v-model绑值的变化
+			//否则会非常的奇怪，用户未确认，值就变了
+			// if (!this.hasInput) {
+			// 	this.$emit('update:modelValue', this.inputValue)
+			// }
+			
 			this.$emit('change', {
 				// #ifndef MP-WEIXIN || MP-LARK
 				// 微信小程序不能传递this，会因为循环引用而报错
@@ -297,11 +413,21 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-	@import "../../libs/css/components.scss";
 
 	.u-picker {
 		position: relative;
-
+		&-input {
+			position: relative;
+			.input-cover {
+				opacity: 0;
+				position: absolute;
+				top: 0;
+				bottom: 0;
+				left: 0;
+				right: 0;
+				z-index:1;
+			}
+		}
 		&__view {
 
 			&__column {

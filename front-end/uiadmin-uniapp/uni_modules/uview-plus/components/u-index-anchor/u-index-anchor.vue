@@ -4,6 +4,7 @@
 	<!-- #endif -->
 	<view
 	    class="u-index-anchor u-border-bottom"
+		:class="{ 'u-index-anchor--sticky': parentSticky }"
 		:ref="`u-index-anchor-${text}`"
 	    :style="{
 			height: addUnit(height),
@@ -16,7 +17,7 @@
 				fontSize: addUnit(size),
 				color: color
 			}"
-		>{{ text }}</text>
+		>{{ text.name || text }}</text>
 	</view>
 	<!-- #ifdef APP-NVUE -->
 	</header>
@@ -69,15 +70,24 @@
 					return error('u-index-anchor必须要搭配u-index-item组件使用')
 				}
 				// 设置u-index-item的id为anchor的text标识符，因为非nvue下滚动列表需要依赖scroll-view滚动到元素的特性
-				indexListItem.id = this.text.charCodeAt(0)
+				if (typeof this.text == 'string') {
+					indexListItem.id = this.text.charCodeAt(0)
+				} else {
+					indexListItem.id = this.text.name.charCodeAt(0)
+				}
 				// #endif
 			}
+		},
+		computed: {
+        parentSticky() {
+            const indexList = $parent.call(this, "u-index-list");
+            return indexList ? indexList.sticky : true;
+        	},
 		},
 	}
 </script>
 
 <style lang="scss" scoped>
-	@import "../../libs/css/components.scss";
 
 	.u-index-anchor {
 		position: sticky;
@@ -86,6 +96,11 @@
 		align-items: center;
 		padding-left: 15px;
 		z-index: 1;
+
+		&--sticky {
+        position: sticky;
+        top: 0;
+    	}
 
 		&__text {
 			@include flex;

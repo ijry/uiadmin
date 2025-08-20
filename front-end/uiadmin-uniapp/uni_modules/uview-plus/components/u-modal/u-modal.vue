@@ -11,7 +11,7 @@
 		}"
 		:closeOnClickOverlay="closeOnClickOverlay"
 		:safeAreaInsetBottom="false"
-		:duration="400"
+		:duration="duration"
 		@click="clickHandler"
 	>
 		<view
@@ -26,9 +26,7 @@
 			>{{ title }}</view>
 			<view
 				class="u-modal__content"
-				:style="{
-					paddingTop: `${title ? 12 : 25}px`
-				}"
+				:style="contentStyleCpu"
 			>
 				<slot>
 					<text class="u-modal__content__text" :style="{textAlign: contentTextAlign}">
@@ -89,6 +87,9 @@
 				</view>
 			</template>
 		</view>
+		<template #bottom>
+			<slot name="popupBottom"></slot>
+		</template>
 	</u-popup>
 </template>
 
@@ -117,6 +118,7 @@
 	 * @property {String | Number}	negativeTop			往上偏移的值，给一个负的margin-top，往上偏移，避免和键盘重合的情况，单位任意，数值则默认为px单位 （默认 0 ）
 	 * @property {String | Number}	width				modal宽度，不支持百分比，可以数值，px，rpx单位 （默认 '650rpx' ）
 	 * @property {String}			confirmButtonShape	确认按钮的样式,如设置，将不会显示取消按钮
+	 * @property {Number}			duration			弹窗动画过度时间 （默认 400 ）
 	 * @event {Function} confirm	点击确认按钮时触发
 	 * @event {Function} cancel		点击取消按钮时触发
 	 * @event {Function} close		点击遮罩关闭出发，closeOnClickOverlay为true有效
@@ -137,7 +139,14 @@
 				if (n && this.loading) this.loading = false
 			}
 		},
-		emits: ["confirm", "cancel", "close", "update:show"],
+		emits: ["confirm", "cancel", "close", "update:show", 'cancelOnAsync'],
+		computed: {
+			contentStyleCpu() {
+				let style = this.contentStyle;
+				style.paddingTop = `${this.title ? 12 : 25}px`
+				return style;
+			}
+		},
 		methods: {
 			addUnit,
 			// 点击确定按钮
@@ -152,7 +161,21 @@
 			},
 			// 点击取消按钮
 			cancelHandler() {
-				this.$emit('update:show', false)
+				// 如果点击了确定按钮，确定按钮正在请求接口执行异步操作，那么限制不能取消。
+				if (this.asyncClose && this.loading) {
+					if (this.asyncCloseTip) {
+						uni.showToast({
+							title: this.asyncCloseTip,
+							icon: 'none'
+						});
+					}
+					this.$emit('cancelOnAsync')
+				} else {
+					// 如果配置了取消时异步关闭
+					if (!this.asyncCancelClose) {
+						this.$emit('update:show', false)
+					}
+				}
 				this.$emit('cancel')
 			},
 			// 点击遮罩
@@ -171,7 +194,6 @@
 </script>
 
 <style lang="scss" scoped>
-	@import "../../libs/css/components.scss";
 	$u-modal-border-radius: 6px;
 
 	.u-modal {

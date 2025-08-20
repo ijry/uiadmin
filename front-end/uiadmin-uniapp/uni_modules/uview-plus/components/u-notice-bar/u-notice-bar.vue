@@ -17,6 +17,7 @@
 				:disable-touch="disableTouch"
 				:fontSize="fontSize"
 				:duration="duration"
+				:justifyContent="justifyContent"
 				@close="close"
 				@click="click"
 			></u-column-notice>
@@ -95,7 +96,6 @@
 </script>
 
 <style lang="scss" scoped>
-	@import "../../libs/css/components.scss";
 
 	.u-notice-bar {
 		overflow: hidden;

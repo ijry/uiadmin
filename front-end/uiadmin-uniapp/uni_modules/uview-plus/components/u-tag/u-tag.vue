@@ -24,23 +24,37 @@
 							:src="icon"
 							:style="[imgStyle]"
 						></image>
-						<u-icon
+						<up-icon
 							v-else
 							:color="elIconColor"
 							:name="icon"
 							:size="iconSize"
-						></u-icon>
+						></up-icon>
 					</view>
 				</slot>
-				<text
-					class="u-tag__text"
-					:style="[textColor]"
-					:class="[`u-tag__text--${type}`, plain && `u-tag__text--${type}--plain`, `u-tag__text--${size}`]"
-				>
-					<slot>
-						{{ text }}
+				<view class="u-tag__content">
+					<slot name="content">
 					</slot>
-				</text>
+					<template v-if="!$slots.content">
+						<text
+							v-if="!$slots.default && !$slots.$default"
+							class="u-tag__text"
+							:style="[textColor]"
+							:class="[`u-tag__text--${type}`, plain && `u-tag__text--${type}--plain`, `u-tag__text--${size}`]"
+						>
+							{{ text }}
+						</text>
+						<text
+							v-else
+							class="u-tag__text"
+							:style="[textColor]"
+							:class="[`u-tag__text--${type}`, plain && `u-tag__text--${type}--plain`, `u-tag__text--${size}`]"
+						>
+							<slot>
+							</slot>
+						</text>
+					</template>
+				</view>
 			</view>
 			<view
 				class="u-tag__close"
@@ -49,11 +63,11 @@
 				@tap.stop="closeHandler"
 				:style="{backgroundColor: closeColor}"
 			>
-				<u-icon
+				<up-icon
 					name="close"
 					:size="closeSize"
 					color="#ffffff"
-				></u-icon>
+				></up-icon>
 			</view>
 		</view>
 	</u-transition>
@@ -64,6 +78,7 @@
 	import { mpMixin } from '../../libs/mixin/mpMixin';
 	import { mixin } from '../../libs/mixin/mixin';
 	import test from '../../libs/function/test';
+	import { addUnit, genLightColor } from '../../libs/function/index';
 	/**
 	 * Tag 标签
 	 * @description tag组件一般用于标记和选择，我们提供了更加丰富的表现形式，能够较全面的涵盖您的使用场景
@@ -107,6 +122,19 @@
 				if(this.borderColor) {
 					style.borderColor = this.borderColor
 				}
+				if (this.height) {
+					style.height = addUnit(this.height)
+					style.lineHeight = addUnit(this.height)
+				}
+				if (this.padding) {
+					style.padding = this.padding
+				}
+				if (this.borderRadius) {
+					style.borderRadius = addUnit(this.borderRadius)
+				}
+				if (this.autoBgColor > 0 && this.color) {
+					style.backgroundColor = this.getBagColor(this.color)
+				}
 				return style
 			},
 			// nvue下，文本颜色无法继承父元素
@@ -114,6 +142,9 @@
 				const style = {}
 				if (this.color) {
 					style.color = this.color
+				}
+				if (this.textSize) {
+					style.textSize = addUnit(this.textSize)
 				}
 				return style
 			},
@@ -149,6 +180,10 @@
 			// 点击标签
 			clickHandler() {
 				this.$emit('click', this.name)
+			},
+			// 根据颜色计算浅色作为背景
+			getBagColor(darkColor) {
+				return genLightColor(darkColor, this.autoBgColor)
 			}
 		}
 	}
@@ -158,7 +193,6 @@
 	lang="scss"
 	scoped
 >
-	@import "../../libs/css/components.scss";
 
 	.u-tag-wrapper {
 		position: relative;

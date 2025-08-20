@@ -6,11 +6,11 @@
                 v-if="prefixIcon || $slots.prefix"
             >
                 <slot name="prefix">
-                    <u-icon
+                    <up-icon
                         :name="prefixIcon"
                         size="18"
                         :customStyle="prefixIconStyle"
-                    ></u-icon>
+                    ></up-icon>
                 </slot>
             </view>
             <view class="u-input__content__field-wrapper" @tap="clickHandler">
@@ -21,7 +21,7 @@
                     ref="input-native"
             	    class="u-input__content__field-wrapper__field"
             	    :style="[inputStyle]"
-            	    :type="type"
+            	    :type="showPassword && 'password' == type ? 'text' : type"
             	    :focus="focus"
             	    :cursor="cursor"
             	    :value="innerValue"
@@ -34,11 +34,12 @@
             	    :confirm-type="confirmType"
             	    :confirm-hold="confirmHold"
             	    :hold-keyboard="holdKeyboard"
+                    :cursor-color="cursorColor"
             	    :cursor-spacing="cursorSpacing"
             	    :adjust-position="adjustPosition"
             	    :selection-end="selectionEnd"
             	    :selection-start="selectionStart"
-            	    :password="password || type === 'password' || false"
+            	    :password="isPassword"
                     :ignoreCompositionEvent="ignoreCompositionEvent"
             	    @input="onInput"
             	    @blur="onBlur"
@@ -53,23 +54,32 @@
                 v-if="isShowClear"
                 @click="onClear"
             >
-                <u-icon
+                <up-icon
                     name="close"
                     size="11"
                     color="#ffffff"
                     customStyle="line-height: 12px"
-                ></u-icon>
+                ></up-icon>
+            </view>
+            <view
+                class="u-input__content__subfix-password-shower"
+                v-if="(type == 'password' || password) && passwordVisibilityToggle"
+            >
+                <up-icon @click="showPassword = !showPassword"
+                    :name="showPassword ? 'eye-off' : 'eye-fill'"
+                    size="18"
+                ></up-icon>
             </view>
             <view
                 class="u-input__content__subfix-icon"
                 v-if="suffixIcon || $slots.suffix"
             >
                 <slot name="suffix">
-                    <u-icon
+                    <up-icon
                         :name="suffixIcon"
                         size="18"
                         :customStyle="suffixIconStyle"
-                    ></u-icon>
+                    ></up-icon>
                 </slot>
             </view>
         </view>
@@ -105,6 +115,7 @@ import { addStyle, addUnit, deepMerge, formValidate, $parent, sleep, os } from '
  * @property {Boolean}			autoBlur				键盘收起时，是否自动失去焦点，目前仅App3.0.0+有效 （ 默认 false ）
  * @property {Boolean}			disableDefaultPadding	是否去掉 iOS 下的默认内边距，仅微信小程序，且type=textarea时有效 （ 默认 false ）
  * @property {String ｜ Number}	cursor					指定focus时光标的位置（ 默认 140 ）
+ * @property {String }          cursorColor			    光标颜色
  * @property {String ｜ Number}	cursorSpacing			输入框聚焦时底部与键盘的距离 （ 默认 30 ）
  * @property {String ｜ Number}	selectionStart			光标起始位置，自动聚集时有效，需与selection-end搭配使用 （ 默认 -1 ）
  * @property {String ｜ Number}	selectionEnd			光标结束位置，自动聚集时有效，需与selection-start搭配使用 （ 默认 -1 ）
@@ -140,7 +151,8 @@ export default {
             // value绑定值的变化是由内部还是外部引起的
             changeFromInner: false,
 			// 过滤处理方法
-			innerFormatter: value => value
+			innerFormatter: value => value,
+            showPassword: false
         };
     },
     created() {
@@ -176,6 +188,21 @@ export default {
         }
     },
     computed: {
+        // 是否密码
+        isPassword() {
+            let ret = false;
+            if(this.password) {
+                ret = true;
+            } else if (this.type == 'password') {
+                ret = true;
+            } else {
+                ret = false;
+            }
+            if (this.showPassword) {
+                ret = false;
+            }
+            return ret;
+        },
         // 是否显示清除控件
         isShowClear() {
             const { clearable, readonly, focused, innerValue } = this;
@@ -206,7 +233,7 @@ export default {
             if (this.border === "none") {
                 style.padding = "0";
             } else {
-                // 由于uni-app的iOS开发者能力有限，导致需要分开写才有效
+                // 由于uni-app的iOS端限制，导致需要分开写才有效
                 style.paddingTop = "6px";
                 style.paddingBottom = "6px";
                 style.paddingLeft = "9px";
@@ -334,8 +361,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "../../libs/css/components.scss";
-
 .u-input {
     @include flex(row);
     align-items: center;

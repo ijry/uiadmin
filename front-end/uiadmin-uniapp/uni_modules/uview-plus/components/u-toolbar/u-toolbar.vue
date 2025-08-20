@@ -86,7 +86,6 @@
 </script>
 
 <style lang="scss" scoped>
-	@import "../../libs/css/components.scss";
 
 	.u-toolbar {
 		height: 42px;
@@ -106,6 +105,7 @@
 			color: $u-main-color;
 			padding: 0 60rpx;
 			font-size: 16px;
+			font-weight: bold;
 			flex: 1;
 			text-align: center;
 		}

@@ -5,8 +5,6 @@
 import { mixin } from './libs/mixin/mixin.js'
 // 小程序特有的mixin
 import { mpMixin } from './libs/mixin/mpMixin.js'
-// 全局挂载引入http相关请求拦截插件
-import Request from './libs/luch-request'
 
 // 路由封装
 import route from './libs/util/route.js'
@@ -19,6 +17,10 @@ import test from './libs/function/test.js'
 import debounce from './libs/function/debounce.js'
 // 节流方法
 import throttle from './libs/function/throttle.js'
+// 浮点计算
+import calc from './libs/function/calc.js'
+// 浮点计算
+import digit from './libs/function/digit.js'
 // 公共文件写入的方法
 import index from './libs/function/index.js'
 
@@ -33,10 +35,18 @@ import color from './libs/config/color.js'
 // 平台
 import platform from './libs/function/platform'
 
+// http
+import http from './libs/function/http.js'
+
+// fontUtil
+import fontUtil from './components/u-icon/util.js';
+
+// i18n
+import i18n, { t } from './libs/i18n/index.js'
+
 // 导出
-const http = new Request()
 let themeType = ['primary', 'success', 'error', 'warning', 'info'];
-export { route, http, debounce, throttle, platform, themeType, mixin, mpMixin, props, color, test, zIndex }
+export { route, http, debounce, throttle, calc, digit, platform, themeType, mixin, mpMixin, props, color, test, zIndex, fontUtil, i18n ,t}
 export * from './libs/function/index.js'
 export * from './libs/function/colorGradient.js'
 
@@ -69,9 +79,10 @@ const $u = {
     zIndex,
     debounce,
     throttle,
+	calc,
     mixin,
     mpMixin,
-    props,
+    // props,
     ...index,
     color,
     platform
@@ -81,7 +92,15 @@ export const mount$u = function() {
     uni.$u = $u
 }
 
-// #ifdef H5
+function toCamelCase(str) {
+    return str.replace(/-([a-z])/g, function(match, group1) {
+      return group1.toUpperCase();
+    }).replace(/^[a-z]/, function(match) {
+      return match.toUpperCase();
+    });
+}
+
+// #ifdef APP || H5
 const importFn = import.meta.glob('./components/u-*/u-*.vue', { eager: true })
 let components = [];
 
@@ -99,21 +118,28 @@ for (const key in importFn) {
 }
 // #endif
 
-function toCamelCase(str) {
-    return str.replace(/-([a-z])/g, function(match, group1) {
-      return group1.toUpperCase();
-    }).replace(/^[a-z]/, function(match) {
-      return match.toUpperCase();
-    });
-}
-
-const install = (Vue) => {
-    // #ifdef H5
+const install = (Vue, upuiParams = '') => {
+    // #ifdef APP || H5
     components.forEach(function(component) {
         const name = component.name.replace(/u-([a-zA-Z0-9-_]+)/g, 'up-$1');
+		if (name != component.name) {
+			Vue.component(component.name, component); 
+		}
         Vue.component(name, component); 
     });
     // #endif
+	
+	// 初始化
+	if (upuiParams) {
+		uni.upuiParams = upuiParams
+		let temp = upuiParams()
+		if (temp.httpIns) {
+			temp.httpIns(http)
+		}
+		if (temp.options) {
+			setConfig(temp.options)
+		}
+	}
 
     // 同时挂载到uni和Vue.prototype中
     // $u挂载到uni对象上

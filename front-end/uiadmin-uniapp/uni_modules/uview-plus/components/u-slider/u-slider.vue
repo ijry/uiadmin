@@ -58,7 +58,7 @@
 					<view class="u-slider__button-wrap u-slider__button-wrap-0" @touchstart="onTouchStart($event, 0)"
 						@touchmove="onTouchMove($event, 0)" @touchend="onTouchEnd($event, 0)"
 						@touchcancel="onTouchEnd($event, 0)" :style="{left: (getPx(barStyle0.width) + getPx(blockSize)/2) + 'px'}">
-						<slot v-if="$slots.default  || $slots.$default"/>
+						<slot name="min" v-if="$slots.min || $slots.$min"/>
 						<view v-else class="u-slider__button" :style="[blockStyle, {
 							height: getPx(blockSize, true),
 							width: getPx(blockSize, true),
@@ -69,7 +69,8 @@
 				<view class="u-slider__button-wrap" @touchstart="onTouchStart"
 					@touchmove="onTouchMove" @touchend="onTouchEnd"
 					@touchcancel="onTouchEnd" :style="{left: (getPx(barStyle.width) + getPx(blockSize)/2) + 'px'}">
-					<slot v-if="$slots.default  || $slots.$default"/>
+					<slot name="max" v-if="isRange && ($slots.max || $slots.$max)"/>
+					<slot v-else-if="$slots.default || $slots.$default"/>
 					<view v-else class="u-slider__button" :style="[blockStyle, {
 						height: getPx(blockSize, true),
 						width: getPx(blockSize, true),
@@ -148,15 +149,31 @@
 			// #ifdef VUE3
 			modelValue(n) {
 				// 只有在非滑动状态时，才可以通过value更新滑块值，这里监听，是为了让用户触发
-				if(this.status == 'end') this.updateValue(this.modelValue, false);
+				if (this.status == 'end') {
+					const $crtFmtValue = this.updateValue(this.modelValue, false);
+					this.$emit('change', $crtFmtValue);
+				}
 			},
 			// #endif
 			// #ifdef VUE2
 			value(n) {
 				// 只有在非滑动状态时，才可以通过value更新滑块值，这里监听，是为了让用户触发
-				if(this.status == 'end') this.updateValue(this.value, false);
-			}
+				if (this.status == 'end') {
+					const $crtFmtValue = this.updateValue(this.value, false);
+					this.$emit('change', $crtFmtValue);
+				}
+			},
 			// #endif
+			rangeValue:{
+            	handler(n){
+					if (this.status == 'end') {
+						this.updateValue(this.rangeValue[0], false, 0);
+						this.updateValue(this.rangeValue[1], false, 1);
+						this.$emit('change', this.rangeValue);
+					}
+            	},
+            	deep:true
+        	}
 		},
 		created() {
 		},
@@ -166,6 +183,10 @@
 				// #ifndef APP-NVUE
 				this.$uGetRect('.u-slider__base').then(rect => {
 					this.sliderRect = rect;
+					// console.log('sliderRect', this.sliderRect)
+					if (this.sliderRect.width == 0) {
+						console.info('如在弹窗等元素中使用，请使用v-if来显示滑块，否则无法计算长度。')
+					}
 					this.init()
 				});
 				// #endif
@@ -265,8 +286,8 @@
 				this.newValue = ((this.distanceX / this.sliderRect.width) * (this.max - this.min)) + parseFloat(this.min);
 				this.status = 'moving';
 				// 发出moving事件
-				this.$emit('changing');
-				this.updateValue(this.newValue, true, index);
+				let $crtFmtValue = this.updateValue(this.newValue, true, index);
+				this.$emit('changing', $crtFmtValue);
 			},
 			onTouchMove(event, index = 1) {
 				if (this.disabled) return;
@@ -289,14 +310,14 @@
 				this.newValue = ((this.distanceX / this.sliderRect.width) * (this.max - this.min)) + parseFloat(this.min);
 				this.status = 'moving';
 				// 发出moving事件
-				this.$emit('changing');
-				this.updateValue(this.newValue, true, index);
+				let $crtFmtValue = this.updateValue(this.newValue, true, index);
+				this.$emit('changing', $crtFmtValue);
 			},
 			onTouchEnd(event, index = 1) {
 				if (this.disabled) return;
 				if (this.status === 'moving') {
-					this.updateValue(this.newValue, false, index);
-					this.$emit('change');
+					let $crtFmtValue = this.updateValue(this.newValue, false, index);
+					this.$emit('change', $crtFmtValue);
 				}
 				this.status = 'end';
 			},
@@ -369,7 +390,11 @@
 					default:
 						break;
 				}
-				
+				if (this.isRange) {
+					return this.rangeValue
+				} else {
+					return valueFormat
+				}
 			},
 			format(value, index = 1) {
 				// 将小数变成整数，为了减少对视图的更新，造成视图层与逻辑层的阻塞
@@ -402,7 +427,6 @@
 </script>
 
 <style lang="scss" scoped>
-	@import "../../libs/css/components.scss";
 	.u-slider {
 		position: relative;
 		display: flex;

@@ -50,7 +50,12 @@ export function sleep(value = 30) {
  * @link 运行期判断平台 https://uniapp.dcloud.io/frame?id=判断平台
  */
 export function os() {
+	// #ifdef APP || H5 || MP-WEIXIN
+	return uni.getDeviceInfo().platform.toLowerCase()
+	// #endif
+	// #ifndef APP || H5 || MP-WEIXIN
 	return uni.getSystemInfoSync().platform.toLowerCase()
+	// #endif
 }
 /**
  * @description 获取系统信息同步接口
@@ -58,6 +63,26 @@ export function os() {
  */
 export function sys() {
 	return uni.getSystemInfoSync()
+}
+export function getWindowInfo() {
+	let ret = {}
+	// #ifdef APP || H5
+	ret = uni.getWindowInfo()
+	// #endif
+	// #ifndef APP || H5
+	ret = sys()
+	// #endif
+	return ret
+}
+export function getDeviceInfo() {
+	let ret = {}
+	// #ifdef APP || H5 || MP-WEIXIN
+	ret = uni.getDeviceInfo()
+	// #endif
+	// #ifndef APP || H5 || MP-WEIXIN
+	ret = sys()
+	// #endif
+	return ret
 }
 
 /**
@@ -335,6 +360,10 @@ export function timeFormat(dateTime = null, formatStr = 'yyyy-mm-dd') {
   // 若用户传入字符串格式时间戳，new Date无法解析，需做兼容
   else if (typeof dateTime === 'string' && /^\d+$/.test(dateTime.trim())) {
     date = new Date(Number(dateTime))
+  }
+  // 检查是否为UTC格式的时间字符串 (2024-12-18T02:25:31.432Z)
+  else if (typeof dateTime === 'string' && /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$/.test(dateTime)) {
+    date = new Date(dateTime)
   }
   // 其他都认为符合 RFC 2822 规范
   else {
@@ -705,12 +734,100 @@ export function getValueByPath(obj, path) {
     }, obj);
 }
 
+/**
+ * 生成同色系浅色背景色
+ * @param {string} textColor - 支持 #RGB、#RRGGBB、rgb()、rgba() 格式
+ * @param {number} [lightness=85] - 目标亮度百分比（默认85%）
+ * @returns {string} 十六进制颜色值
+ */
+export function genLightColor(textColor, lightness = 95) {
+	// 手动解析颜色值（避免使用document）
+	const rgb = parseColorWithoutDOM(textColor);
+	
+	// RGB转HSL色域
+	const hsl = rgbToHsl(rgb.r, rgb.g, rgb.b);
+	
+	// 生成浅色背景
+	const bgHsl = {
+	  h: hsl.h,
+	  s: hsl.s,
+	  l: Math.min(lightness, 95)
+	};
+	
+	return hslToHex(bgHsl.h, bgHsl.s, bgHsl.l);
+  }
+  
+  /* 手动解析颜色字符串（兼容uni-app环境） */
+  function parseColorWithoutDOM(colorStr) {
+	// 统一转小写处理
+	const str = colorStr.toLowerCase().trim();
+	
+	// 处理十六进制格式
+	if (str.startsWith('#')) {
+	  const hex = str.replace('#', '');
+	  const fullHex = hex.length === 3 ? 
+		hex.split('').map(c => c + c).join('') : hex;
+		
+	  return {
+		r: parseInt(fullHex.substring(0,2), 16),
+		g: parseInt(fullHex.substring(2,4), 16),
+		b: parseInt(fullHex.substring(4,6), 16)
+	  };
+	}
+	
+	// 处理rgb/rgba格式
+	const rgbMatch = str.match(/rgba?\((\d+),\s*(\d+),\s*(\d+)/);
+	if (rgbMatch) {
+	  return {
+		r: +rgbMatch[1],
+		g: +rgbMatch[2],
+		b: +rgbMatch[3]
+	  };
+	}
+	
+	throw new Error('Invalid color format');
+  }
+
+// 辅助函数：RGB 转 HSL（色相、饱和度、亮度）
+function rgbToHsl(r, g, b) {
+ r /= 255, g /= 255, b /= 255;
+ const max = Math.max(r, g, b), min = Math.min(r, g, b);
+ let h, s, l = (max + min) / 2;
+
+ if (max === min) {
+   h = s = 0; // achromatic
+ } else {
+   const d = max - min;
+   s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+   switch (max) {
+	 case r: h = (g - b) / d + (g < b ? 6 : 0); break;
+	 case g: h = (b - r) / d + 2; break;
+	 case b: h = (r - g) / d + 4; break;
+   }
+   h = (h * 60).toFixed(1);
+ }
+ return { h: +h, s: +(s * 100).toFixed(1), l: +(l * 100).toFixed(1) };
+}
+
+// 辅助函数：HSL 转十六进制
+function hslToHex(h, s, l) {
+ l /= 100;
+ const a = s * Math.min(l, 1 - l) / 100;
+ const f = n => {
+   const k = (n + h / 30) % 12;
+   const color = l - a * Math.max(Math.min(k - 3, 9 - k, 1), -1);
+   return Math.round(255 * color).toString(16).padStart(2, '0');
+ };
+ return `#${f(0)}${f(8)}${f(4)}`;
+}
+
 export default {
 	range,
 	getPx,
 	sleep,
 	os,
 	sys,
+	getWindowInfo,
 	random,
 	guid,
 	$parent,
@@ -736,5 +853,5 @@ export default {
 	page,
 	pages,
 	getValueByPath,
-	// setConfig
+	genLightColor
 }

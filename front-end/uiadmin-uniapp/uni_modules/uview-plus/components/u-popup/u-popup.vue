@@ -1,5 +1,13 @@
 <template>
-	<view class="u-popup"  :class="[customClass]">
+	<view class="u-popup" :class="[customClass]"
+		:style="{width: show == false ? '0px' : '',
+			height: show == false ? '0px' : ''}">
+		<view class="u-popup__trigger">
+			<slot name="trigger">
+			</slot>
+			<view @click="open"
+				class="u-popup__trigger__cover"></view>
+		</view>
 		<u-overlay
 			:show="show"
 			@click="overlayClick"
@@ -17,10 +25,12 @@
 			@afterEnter="afterEnter"
 			@click="clickHandler"
 		>
+			<!-- @click.stop不能去除，去除会导致居中模式下点击内容区域触发关闭弹窗 -->
 			<view
 				class="u-popup__content"
 				:style="[contentStyle]"
-				@tap.stop="noop"
+				@click.stop="noop"
+				@touchmove.stop.prevent="noop"
 			>
 				<u-status-bar v-if="safeAreaInsetTop"></u-status-bar>
 				<slot></slot>
@@ -32,15 +42,16 @@
 					hover-class="u-popup__content__close--hover"
 					hover-stay-time="150"
 				>
-					<u-icon
+					<up-icon
 						name="close"
 						color="#909399"
 						size="18"
 						bold
-					></u-icon>
+					></up-icon>
 				</view>
 				<u-safe-bottom v-if="safeAreaInsetBottom"></u-safe-bottom>
 			</view>
+			<slot name="bottom"></slot>
 		</u-transition>
 	</view>
 </template>
@@ -49,7 +60,7 @@
 	import { props } from './props';
 	import { mpMixin } from '../../libs/mixin/mpMixin';
 	import { mixin } from '../../libs/mixin/mixin';
-	import { addUnit, addStyle, deepMerge, sleep, sys } from '../../libs/function/index';
+	import { addUnit, addStyle, deepMerge, sleep, getWindowInfo } from '../../libs/function/index';
 	/**
 	 * popup 弹窗
 	 * @description 弹出层容器，用于展示弹窗、信息提示等内容，支持上、下、左、右和中部弹出。组件只提供容器，内部内容由用户自定义
@@ -68,6 +79,7 @@
 	 * @property {Boolean}			safeAreaInsetTop	是否留出顶部安全距离（状态栏高度） （默认 false ）
 	 * @property {String}			closeIconPos		自定义关闭图标位置（默认 'top-right' ）
 	 * @property {String | Number}	round				圆角值（默认 0）
+	 * @property {String }	        bgColor				背景色值（默认 '' ）
 	 * @property {Boolean}			zoom				当mode=center时 是否开启缩放（默认 true ）
 	 * @property {Object}			customStyle			组件的样式，对象形式
 	 * @event {Function} open 弹出层打开
@@ -137,7 +149,7 @@
 				// 不使用css方案，是因为nvue不支持css的iPhoneX安全区查询属性
 				const {
 					safeAreaInsets
-				} = sys()
+				} = getWindowInfo()
 				if (this.mode !== 'center') {
 					style.flex = 1
 				}
@@ -186,6 +198,9 @@
 					this.$emit('close')
 				}
 			},
+			open(e) {
+				this.$emit('update:show', true)
+			},
 			close(e) {
 				this.$emit('update:show', false)
 				this.$emit('close')
@@ -232,12 +247,22 @@
 </script>
 
 <style lang="scss" scoped>
-	@import "../../libs/css/components.scss";
 	$u-popup-flex:1 !default;
 	$u-popup-content-background-color: #fff !default;
 
 	.u-popup {
 		flex: $u-popup-flex;
+		
+		&__trigger {
+			position: relative;
+			&__cover {
+				position: absolute;
+				top: 0;
+				left: 0;
+				right: 0;
+				bottom: 0;
+			}
+		}
 
 		&__content {
 			background-color: $u-popup-content-background-color;

@@ -1,0 +1,505 @@
+// width
+.w-,.w-full,.w-min,.w-max,.w-fit,.w-auto,.w-unset,.w-initial,.w-inherit{}
+
+// min-width
+.min-w-,.min-w-full,.min-w,.min-w-max,.min-w-fit,.min-w-auto,.min-w-unset,.min-w-initial,.min-w-inherit,.min-w-revert,.min-w-layer{}
+
+// max-width
+.max-w-,.max-w,.max-w-fit,.max-w-auto,.max-w-unset,.max-w-initial,.max-w-inherit,.max-w-revert,.max-w-layer{}
+
+// height
+.h-,.h-min,.h-max,.h-fit,.h-auto,.h-unset,.h-initial,.h-inherit{}
+
+// min-height
+.min-h-,.min-h,.min-h-max,.min-h-fit,.min-h-auto,.min-h-unset,.min-h-initial,.min-h-inherit,.min-h-revert,.min-h-layer{}
+
+// max-height
+.max-h,.max-h-,.max-h,.max-h-fit,.max-h-auto,.max-h-unset,.max-h-initial,.max-h-inherit,.max-h-revert,.max-h-layer{}
+
+// padding
+.p-,.p-full,.p-inherit.p-initial.p-revert.p-layer.p-unset{}
+
+// padding-top
+.pt-,.pt-full,.pt-inherit.pt-initial.pt-revert.pt-layer.pt-unset{}
+
+// padding-right
+.pr-,.pr-full,.pr-inherit.pr-initial.pr-revert.pr-layer.pr-unset{}
+
+// padding-bottom
+.pb-,.pb-full,.pb-inherit.pb-initial.pb-revert.pb-layer.pb-unset{}
+
+// padding-left
+.pl-,.pl-full,.pl-inherit.pl-initial.pl-revert.pl-layer.pl-unset{}
+
+// padding-top or padding-bottom
+.py-,.py-full,.py-inherit.py-initial.py-revert.py-layer.py-unset{}
+
+// padding-left or padding-right
+.px-,.px-full,.px-inherit.px-initial.px-revert.px-layer.px-unset{}
+
+// margin
+.m-,.-m-,.m-auto,.m-full,.m-inherit,.m-initial,.m-unset{}
+
+// margin-top
+.mt-,.-mt-,.mt-auto,.mt-full,.mt-inherit,.mt-initial,.mt-unset{}
+
+// margin-right
+.mr-,.-mr-,.mr-auto,.mr-full,.mr-inherit,.mr-initial,.mr-unset{}
+
+// margin-bottom
+.mb-,.-mb-,.mb-auto,.mb-full,.mb-inherit,.mb-initial,.mb-unset{}
+
+// margin-left
+.ml-,.-ml-,.ml-auto,.ml-full,.ml-inherit,.ml-initial,.ml-unset{}
+
+// margin-top or margin-bottom
+.my-,.-my-,.my-auto,.my-full,.my-inherit,.my-initial,.my-unset{}
+
+// margin-left or margin-right
+.mx-,.-mx-,.mx-auto,.mx-full,.mx-inherit,.mx-initial,.mx-unset{}
+
+// border
+.b-,.b-aliceBlue,.b-antiquewhite,.b-aqua,.b-aquamarine,.b-azure,.b-beige,.b-bisque,.b-black,.b-blanchedalmond,.b-blue,.b-blueviolet,.b-brown,.b-burlywood,.b-cadetblue,.b-chartreuse,.b-chocolate,.b-coral,.b-cornflowerblue,.b-cornsilk,.b-crimson,.b-cyan,.b-darkblue,.b-darkcyan,.b-darkgoldenrod,.b-darkgray,.b-darkgreen,.b-darkkhaki,.b-darkmagenta,.b-darkolivegreen,.b-darkorange,.b-darkorchid,.b-darkred,.b-darksalmon,.b-darkseagreen,.b-darkslateblue,.b-darkslategray,.b-darkturquoise,.b-darkviolet,.b-deeppink,.b-deepskyblue,.b-dimgray,.b-dodgerblue,.b-firebrick,.b-floralwhite,.b-forestgreen,.b-fuchsia,.b-gainsboro,.b-ghostwhite,.b-gold,.b-goldenrod,.b-gray,.b-green,.b-greenyellow,.b-honeydew,.b-hotpink,.b-indianred,.b-indigo,.b-ivory,.b-khaki,.b-lavender,.b-lavenderblush,.b-lawngreen,.b-lemonchiffon,.b-lightblue,.b-lightcoral,.b-lightcyan,.b-lightgoldenrodyellow,.b-lightgray,.b-lightgreen,.b-lightpink,.b-lightsalmon,.b-lightseagreen,.b-lightskyblue,.b-lightslategray,.b-lightsteelblue,.b-lightyellow,.b-lime,.b-limegreen,.b-linen,.b-magenta,.b-maroon,.b-mediumaquamarine,.b-mediumblue,.b-mediumorchid,.b-mediumpurple,.b-mediumseagreen,.b-mediumslateblue,.b-mediumspringgreen,.b-mediumturquoise,.b-mediumvioletred,.b-midnightblue,.b-mintcream,.b-mistyrose,.b-moccasin,.b-navajowhite,.b-navy,.b-oldlace,.b-olive,.b-olivedrab,.b-orange,.b-orangered,.b-orchid,.b-palegoldenrod,.b-palegreen,.b-paleturquoise,.b-palevioletred,.b-papayawhip,.b-peachpuff,.b-peru,.b-pink,.b-plum,.b-powderblue,.b-purple,.b-red,.b-rosybrown,.b-royalblue,.b-saddlebrown,.b-salmon,.b-sandybrown,.b-seagreen,.b-seashell,.b-sienna,.b-silver,.b-skyblue,.b-slateblue,.b-slategray,.b-snow,.b-springgreen,.b-steelblue,.b-tan,.b-teal,.b-thistle,.b-tomato,.b-turquoise,.b-violet,.b-wheat,.b-white,.b-whitesmoke,.b-yellow,.b-yellowgreen,.b-none,.b-hidden,.b-dotted,.b-dashed,.b-solid,.b-double,.b-groove,.b-ridge,.b-inset,.b-outset,.b-solid,.b-inherit,.b-initial,.b-unset{}
+
+// border-top
+.bt-,.bt-aliceBlue,.bt-antiquewhite,.bt-aqua,.bt-aquamarine,.bt-azure,.bt-beige,.bt-bisque,.bt-black,.bt-blanchedalmond,.bt-blue,.bt-blueviolet,.bt-brown,.bt-burlywood,.bt-cadetblue,.bt-chartreuse,.bt-chocolate,.bt-coral,.bt-cornflowerblue,.bt-cornsilk,.bt-crimson,.bt-cyan,.bt-darkblue,.bt-darkcyan,.bt-darkgoldenrod,.bt-darkgray,.bt-darkgreen,.bt-darkkhaki,.bt-darkmagenta,.bt-darkolivegreen,.bt-darkorange,.bt-darkorchid,.bt-darkred,.bt-darksalmon,.bt-darkseagreen,.bt-darkslateblue,.bt-darkslategray,.bt-darkturquoise,.bt-darkviolet,.bt-deeppink,.bt-deepskyblue,.bt-dimgray,.bt-dodgerblue,.bt-firebrick,.bt-floralwhite,.bt-forestgreen,.bt-fuchsia,.bt-gainsboro,.bt-ghostwhite,.bt-gold,.bt-goldenrod,.bt-gray,.bt-green,.bt-greenyellow,.bt-honeydew,.bt-hotpink,.bt-indianred,.bt-indigo,.bt-ivory,.bt-khaki,.bt-lavender,.bt-lavenderblush,.bt-lawngreen,.bt-lemonchiffon,.bt-lightblue,.bt-lightcoral,.bt-lightcyan,.bt-lightgoldenrodyellow,.bt-lightgray,.bt-lightgreen,.bt-lightpink,.bt-lightsalmon,.bt-lightseagreen,.bt-lightskyblue,.bt-lightslategray,.bt-lightsteelblue,.bt-lightyellow,.bt-lime,.bt-limegreen,.bt-linen,.bt-magenta,.bt-maroon,.bt-mediumaquamarine,.bt-mediumblue,.bt-mediumorchid,.bt-mediumpurple,.bt-mediumseagreen,.bt-mediumslateblue,.bt-mediumspringgreen,.bt-mediumturquoise,.bt-mediumvioletred,.bt-midnightblue,.bt-mintcream,.bt-mistyrose,.bt-moccasin,.bt-navajowhite,.bt-navy,.bt-oldlace,.bt-olive,.bt-olivedrab,.bt-orange,.bt-orangered,.bt-orchid,.bt-palegoldenrod,.bt-palegreen,.bt-paleturquoise,.bt-palevioletred,.bt-papayawhip,.bt-peachpuff,.bt-peru,.bt-pink,.bt-plum,.bt-powderblue,.bt-purple,.bt-red,.bt-rosybrown,.bt-royalblue,.bt-saddlebrown,.bt-salmon,.bt-sandybrown,.bt-seagreen,.bt-seashell,.bt-sienna,.bt-silver,.bt-skyblue,.bt-slateblue,.bt-slategray,.bt-snow,.bt-springgreen,.bt-steelblue,.bt-tan,.bt-teal,.bt-thistle,.bt-tomato,.bt-turquoise,.bt-violet,.bt-wheat,.bt-white,.bt-whitesmoke,.bt-yellow,.bt-yellowgreen,.bt-none,.bt-hidden,.bt-dotted,.bt-dashed,.bt-solid,.bt-double,.bt-groove,.bt-ridge,.bt-inset,.bt-outset,.bt-solid,.bt-inherit,.bt-initial,.bt-unset{}
+
+// border-right
+.br-,.br-aliceBlue,.br-antiquewhite,.br-aqua,.br-aquamarine,.br-azure,.br-beige,.br-bisque,.br-black,.br-blanchedalmond,.br-blue,.br-blueviolet,.br-brown,.br-burlywood,.br-cadetblue,.br-chartreuse,.br-chocolate,.br-coral,.br-cornflowerblue,.br-cornsilk,.br-crimson,.br-cyan,.br-darkblue,.br-darkcyan,.br-darkgoldenrod,.br-darkgray,.br-darkgreen,.br-darkkhaki,.br-darkmagenta,.br-darkolivegreen,.br-darkorange,.br-darkorchid,.br-darkred,.br-darksalmon,.br-darkseagreen,.br-darkslateblue,.br-darkslategray,.br-darkturquoise,.br-darkviolet,.br-deeppink,.br-deepskyblue,.br-dimgray,.br-dodgerblue,.br-firebrick,.br-floralwhite,.br-forestgreen,.br-fuchsia,.br-gainsboro,.br-ghostwhite,.br-gold,.br-goldenrod,.br-gray,.br-green,.br-greenyellow,.br-honeydew,.br-hotpink,.br-indianred,.br-indigo,.br-ivory,.br-khaki,.br-lavender,.br-lavenderblush,.br-lawngreen,.br-lemonchiffon,.br-lightblue,.br-lightcoral,.br-lightcyan,.br-lightgoldenrodyellow,.br-lightgray,.br-lightgreen,.br-lightpink,.br-lightsalmon,.br-lightseagreen,.br-lightskyblue,.br-lightslategray,.br-lightsteelblue,.br-lightyellow,.br-lime,.br-limegreen,.br-linen,.br-magenta,.br-maroon,.br-mediumaquamarine,.br-mediumblue,.br-mediumorchid,.br-mediumpurple,.br-mediumseagreen,.br-mediumslateblue,.br-mediumspringgreen,.br-mediumturquoise,.br-mediumvioletred,.br-midnightblue,.br-mintcream,.br-mistyrose,.br-moccasin,.br-navajowhite,.br-navy,.br-oldlace,.br-olive,.br-olivedrab,.br-orange,.br-orangered,.br-orchid,.br-palegoldenrod,.br-palegreen,.br-paleturquoise,.br-palevioletred,.br-papayawhip,.br-peachpuff,.br-peru,.br-pink,.br-plum,.br-powderblue,.br-purple,.br-red,.br-rosybrown,.br-royalblue,.br-saddlebrown,.br-salmon,.br-sandybrown,.br-seagreen,.br-seashell,.br-sienna,.br-silver,.br-skyblue,.br-slateblue,.br-slategray,.br-snow,.br-springgreen,.br-steelblue,.br-tan,.br-teal,.br-thistle,.br-tomato,.br-turquoise,.br-violet,.br-wheat,.br-white,.br-whitesmoke,.br-yellow,.br-yellowgreen,.br-none,.br-hidden,.br-dotted,.br-dashed,.br-solid,.br-double,.br-groove,.br-ridge,.br-inset,.br-outset,.br-solid,.br-inherit,.br-initial,.br-unset{}
+
+// border-bottom
+.bb-,.bb-aliceBlue,.bb-antiquewhite,.bb-aqua,.bb-aquamarine,.bb-azure,.bb-beige,.b-bisque,.bb-black,.bb-blanchedalmond,.bb-blue,.bb-blueviolet,.bb-brown,.bb-burlywood,.bb-cadetblue,.bb-chartreuse,.bb-chocolate,.bb-coral,.bb-cornflowerblue,.bb-cornsilk,.bb-crimson,.bb-cyan,.bb-darkblue,.bb-darkcyan,.bb-darkgoldenrod,.bb-darkgray,.bb-darkgreen,.bb-darkkhaki,.bb-darkmagenta,.bb-darkolivegreen,.bb-darkorange,.bb-darkorchid,.bb-darkred,.bb-darksalmon,.bb-darkseagreen,.bb-darkslateblue,.bb-darkslategray,.bb-darkturquoise,.bb-darkviolet,.bb-deeppink,.bb-deepskyblue,.bb-dimgray,.bb-dodgerblue,.bb-firebrick,.bb-floralwhite,.bb-forestgreen,.bb-fuchsia,.bb-gainsboro,.bb-ghostwhite,.bb-gold,.bb-goldenrod,.bb-gray,.bb-green,.bb-greenyellow,.bb-honeydew,.bb-hotpink,.bb-indianred,.bb-indigo,.bb-ivory,.bb-khaki,.bb-lavender,.bb-lavenderblush,.bb-lawngreen,.bb-lemonchiffon,.bb-lightblue,.bb-lightcoral,.bb-lightcyan,.bb-lightgoldenrodyellow,.bb-lightgray,.bb-lightgreen,.bb-lightpink,.bb-lightsalmon,.bb-lightseagreen,.bb-lightskyblue,.bb-lightslategray,.bb-lightsteelblue,.bb-lightyellow,.bb-lime,.bb-limegreen,.bb-linen,.bb-magenta,.bb-maroon,.bb-mediumaquamarine,.bb-mediumblue,.bb-mediumorchid,.bb-mediumpurple,.bb-mediumseagreen,.bb-mediumslateblue,.bb-mediumspringgreen,.bb-mediumturquoise,.bb-mediumvioletred,.bb-midnightblue,.bb-mintcream,.bb-mistyrose,.bb-moccasin,.bb-navajowhite,.bb-navy,.bb-oldlace,.bb-olive,.bb-olivedrab,.bb-orange,.bb-orangered,.bb-orchid,.bb-palegoldenrod,.bb-palegreen,.bb-paleturquoise,.bb-palevioletred,.bb-papayawhip,.bb-peachpuff,.bb-peru,.bb-pink,.bb-plum,.bb-powderblue,.bb-purple,.bb-red,.bb-rosybrown,.bb-royalblue,.bb-saddlebrown,.bb-salmon,.bb-sandybrown,.bb-seagreen,.bb-seashell,.bb-sienna,.bb-silver,.bb-skyblue,.bb-slateblue,.bb-slategray,.bb-snow,.bb-springgreen,.bb-steelblue,.bb-tan,.bb-teal,.bb-thistle,.bb-tomato,.bb-turquoise,.bb-violet,.bb-wheat,.bb-white,.bb-whitesmoke,.bb-yellow,.bb-yellowgreen,.bb-none,.bb-hidden,.bb-dotted,.bb-dashed,.bb-solid,.bb-double,.bb-groove,.bb-ridge,.bb-inset,.bb-outset,.bb-solid,.bb-inherit,.bb-initial,.bb-unset{}
+
+// botder-left
+.bl-,.bl-aliceBlue,.bl-antiquewhite,.bl-aqua,.bl-aquamarine,.bl-azure,.bl-beige,.bl-bisque,.bl-black,.bl-blanchedalmond,.bl-blue,.bl-blueviolet,.bl-brown,.bl-burlywood,.bl-cadetblue,.bl-chartreuse,.bl-chocolate,.bl-coral,.bl-cornflowerblue,.bl-cornsilk,.bl-crimson,.bl-cyan,.bl-darkblue,.bl-darkcyan,.bl-darkgoldenrod,.bl-darkgray,.bl-darkgreen,.bl-darkkhaki,.bl-darkmagenta,.bl-darkolivegreen,.bl-darkorange,.bl-darkorchid,.bl-darkred,.bl-darksalmon,.bl-darkseagreen,.bl-darkslateblue,.bl-darkslategray,.bl-darkturquoise,.bl-darkviolet,.bl-deeppink,.bl-deepskyblue,.bl-dimgray,.bl-dodgerblue,.bl-firebrick,.bl-floralwhite,.bl-forestgreen,.bl-fuchsia,.bl-gainsboro,.bl-ghostwhite,.bl-gold,.bl-goldenrod,.bl-gray,.bl-green,.bl-greenyellow,.bl-honeydew,.bl-hotpink,.bl-indianred,.bl-indigo,.bl-ivory,.bl-khaki,.bl-lavender,.bl-lavenderblush,.bl-lawngreen,.bl-lemonchiffon,.bl-lightblue,.bl-lightcoral,.bl-lightcyan,.bl-lightgoldenrodyellow,.bl-lightgray,.bl-lightgreen,.bl-lightpink,.bl-lightsalmon,.bl-lightseagreen,.bl-lightskyblue,.bl-lightslategray,.bl-lightsteelblue,.bl-lightyellow,.bl-lime,.bl-limegreen,.bl-linen,.bl-magenta,.bl-maroon,.bl-mediumaquamarine,.bl-mediumblue,.bl-mediumorchid,.bl-mediumpurple,.bl-mediumseagreen,.bl-mediumslateblue,.bl-mediumspringgreen,.bl-mediumturquoise,.bl-mediumvioletred,.bl-midnightblue,.bl-mintcream,.bl-mistyrose,.bl-moccasin,.bl-navajowhite,.bl-navy,.bl-oldlace,.bl-olive,.bl-olivedrab,.bl-orange,.bl-orangered,.bl-orchid,.bl-palegoldenrod,.bl-palegreen,.bl-paleturquoise,.bl-palevioletred,.bl-papayawhip,.bl-peachpuff,.bl-peru,.bl-pink,.bl-plum,.bl-powderblue,.bl-purple,.bl-red,.bl-rosybrown,.bl-royalblue,.bl-saddlebrown,.bl-salmon,.bl-sandybrown,.bl-seagreen,.bl-seashell,.bl-sienna,.bl-silver,.bl-skyblue,.bl-slateblue,.bl-slategray,.bl-snow,.bl-springgreen,.bl-steelblue,.bl-tan,.bl-teal,.bl-thistle,.bl-tomato,.bl-turquoise,.bl-violet,.bl-wheat,.bl-white,.bl-whitesmoke,.bl-yellow,.bl-yellowgreen,.bl-none,.bl-hidden,.bl-dotted,.bl-dashed,.bl-solid,.bl-double,.bl-groove,.bl-ridge,.bl-inset,.bl-outset,.bl-solid,.bl-inherit,.bl-initial,.bl-unset{}
+
+// border-top or border-bottom
+.by-,.by-aliceByue,.by-antiquewhite,.by-aqua,.by-aquamarine,.by-azure,.by-beige,.by-bisque,.by-black,.by-blanchedalmond,.by-blue,.by-blueviolet,.by-brown,.by-burlywood,.by-cadetblue,.by-chartreuse,.by-chocolate,.by-coral,.by-cornflowerblue,.by-cornsilk,.by-crimson,.by-cyan,.by-darkblue,.by-darkcyan,.by-darkgoldenrod,.by-darkgray,.by-darkgreen,.by-darkkhaki,.by-darkmagenta,.by-darkolivegreen,.by-darkorange,.by-darkorchid,.by-darkred,.by-darksalmon,.by-darkseagreen,.by-darkslateblue,.by-darkslategray,.by-darkturquoise,.by-darkviolet,.by-deeppink,.by-deepskyblue,.by-dimgray,.by-dodgerblue,.by-firebrick,.by-floralwhite,.by-forestgreen,.by-fuchsia,.by-gainsboro,.by-ghostwhite,.by-gold,.by-goldenrod,.by-gray,.by-green,.by-greenyellow,.by-honeydew,.by-hotpink,.by-indianred,.by-indigo,.by-ivory,.by-khaki,.by-lavender,.by-lavenderblush,.by-lawngreen,.by-lemonchiffon,.by-lightblue,.by-lightcoral,.by-lightcyan,.by-lightgoldenrodyellow,.by-lightgray,.by-lightgreen,.by-lightpink,.by-lightsalmon,.by-lightseagreen,.by-lightskyblue,.by-lightslategray,.by-lightsteelblue,.by-lightyellow,.by-lime,.by-limegreen,.by-linen,.by-magenta,.by-maroon,.by-mediumaquamarine,.by-mediumblue,.by-mediumorchid,.by-mediumpurple,.by-mediumseagreen,.by-mediumslateblue,.by-mediumspringgreen,.by-mediumturquoise,.by-mediumvioletred,.by-midnightblue,.by-mintcream,.by-mistyrose,.by-moccasin,.by-navajowhite,.by-navy,.by-oldlace,.by-olive,.by-olivedrab,.by-orange,.by-orangered,.by-orchid,.by-palegoldenrod,.by-palegreen,.by-paleturquoise,.by-palevioletred,.by-papayawhip,.by-peachpuff,.by-peru,.by-pink,.by-plum,.by-powderblue,.by-purple,.by-red,.by-rosybrown,.by-royalblue,.by-saddlebrown,.by-salmon,.by-sandybrown,.by-seagreen,.by-seashell,.by-sienna,.by-silver,.by-skyblue,.by-slateblue,.by-slategray,.by-snow,.by-springgreen,.by-steelblue,.by-tan,.by-teal,.by-thistle,.by-tomato,.by-turquoise,.by-violet,.by-wheat,.by-white,.by-whitesmoke,.by-yellow,.by-yellowgreen,.by-none,.by-hidden,.by-dotted,.by-dashed,.by-solid,.by-double,.by-groove,.by-ridge,.by-inset,.by-outset,.by-solid,.by-inherit,.by-initial,.by-unset{}
+
+// border-left or border-right
+.bx-,.bx-aliceBlue,.b-x-antiquewhite,.b-x-aqua,.b-x-aquamarine,.b-x-azure,.b-x-beige,.b-x-bisque,.b-x-black,.b-x-blanchedalmond,.b-x-blue,.b-x-blueviolet,.b-x-brown,.b-x-burlywood,.b-x-cadetblue,.b-x-chartreuse,.b-x-chocolate,.b-x-coral,.b-x-cornflowerblue,.b-x-cornsilk,.b-x-crimson,.b-x-cyan,.b-x-darkblue,.b-x-darkcyan,.b-x-darkgoldenrod,.b-x-darkgray,.b-x-darkgreen,.b-x-darkkhaki,.b-x-darkmagenta,.b-x-darkolivegreen,.b-x-darkorange,.b-x-darkorchid,.b-x-darkred,.b-x-darksalmon,.b-x-darkseagreen,.b-x-darkslateblue,.b-x-darkslategray,.b-x-darkturquoise,.b-x-darkviolet,.b-x-deeppink,.b-x-deepskyblue,.b-x-dimgray,.b-x-dodgerblue,.b-x-firebrick,.b-x-floralwhite,.b-x-forestgreen,.b-x-fuchsia,.b-x-gainsboro,.b-x-ghostwhite,.b-x-gold,.b-x-goldenrod,.b-x-gray,.b-x-green,.b-x-greenyellow,.b-x-honeydew,.b-x-hotpink,.b-x-indianred,.b-x-indigo,.b-x-ivory,.b-x-khaki,.b-x-lavender,.b-x-lavenderblush,.b-x-lawngreen,.b-x-lemonchiffon,.b-x-lightblue,.b-x-lightcoral,.b-x-lightcyan,.b-x-lightgoldenrodyellow,.b-x-lightgray,.b-x-lightgreen,.b-x-lightpink,.b-x-lightsalmon,.b-x-lightseagreen,.b-x-lightskyblue,.b-x-lightslategray,.b-x-lightsteelblue,.b-x-lightyellow,.b-x-lime,.b-x-limegreen,.b-x-linen,.b-x-magenta,.b-x-maroon,.b-x-mediumaquamarine,.b-x-mediumblue,.b-x-mediumorchid,.b-x-mediumpurple,.b-x-mediumseagreen,.b-x-mediumslateblue,.b-x-mediumspringgreen,.b-x-mediumturquoise,.b-x-mediumvioletred,.b-x-midnightblue,.b-x-mintcream,.b-x-mistyrose,.b-x-moccasin,.b-x-navajowhite,.b-x-navy,.b-x-oldlace,.b-x-olive,.b-x-olivedrab,.b-x-orange,.b-x-orangered,.b-x-orchid,.b-x-palegoldenrod,.b-x-palegreen,.b-x-paleturquoise,.b-x-palevioletred,.b-x-papayawhip,.b-x-peachpuff,.b-x-peru,.b-x-pink,.b-x-plum,.b-x-powderblue,.b-x-purple,.b-x-red,.b-x-rosybrown,.b-x-royalblue,.b-x-saddlebrown,.b-x-salmon,.b-x-sandybrown,.b-x-seagreen,.b-x-seashell,.b-x-sienna,.b-x-silver,.b-x-skyblue,.b-x-slateblue,.b-x-slategray,.b-x-snow,.b-x-springgreen,.b-x-steelblue,.b-x-tan,.b-x-teal,.b-x-thistle,.b-x-tomato,.b-x-turquoise,.b-x-violet,.b-x-wheat,.b-x-white,.b-x-whitesmoke,.b-x-yellow,.b-x-yellowgreen,.b-x-none,.b-x-hidden,.b-x-dotted,.b-x-dashed,.b-x-solid,.b-x-double,.b-x-groove,.b-x-ridge,.b-x-inset,.b-x-outset,.b-x-solid,.b-x-inherit,.b-x-initial,.b-x-unset{}
+
+// border-radius
+.rd-,.rd-full,.rd-inherit,.rd-initial,.rd-revert,.rd-layer,.rd-unset{}
+
+// border-top-left-radius
+.rd-tl-,.rd-tl-full,.rd-tl-inherit,.rd-tl-initial,.rd-tl-revert,.rd-tl-layer,.rd-tl-unset{}
+
+// border-top-right-radius
+.rd-tr-,.rd-tr-full,.rd-tr-inherit,.rd-tr-initial,.rd-tr-revert,.rd-tr-layer,.rd-tr-unset{}
+
+// border-bottom-right-radius
+.rd-br-,.rd-br-full,.rd-br-inherit,.rd-br-initial,.rd-br-revert,.rd-br-layer,.rd-br-unset{}
+
+// border-bottom-left-radius
+.rd-bl-,.rd-bl-full,.rd-bl-inherit,.rd-bl-initial,.rd-bl-revert,.rd-bl-layer,.rd-bl-unset{}
+
+// border-top-left-radius or border-top-right-radius
+.rd-t-,.rd-t-full,.rd-t-inherit,.rd-t-initial,.rd-t-revert,.rd-t-layer,.rd-t-unset{}
+
+// border-top-right-radius or border-bottom-right-radius
+.rd-r-,.rd-r-full,.rd-r-inherit,.rd-r-initial,.rd-r-revert,.rd-r-layer,.rd-r-unset{}
+
+// border-bottom-left-radius or border-bottom-right-radius
+.rd-b-,.rd-b-full,.rd-b-inherit,.rd-b-initial,.rd-b-revert,.rd-b-layer,.rd-b-unset{}
+
+// border-top-left-radius or border-bottom-left-radius
+.rd-l-,.rd-l-full,.rd-l-inherit,.rd-l-initial,.rd-l-revert,.rd-l-layer,.rd-l-unset{}
+
+// position
+.position-inherit,.position-initial,.position-revert,.position-layer,.position-unset{}
+
+// static
+.static{}
+
+// fixed
+.fixed-,.-fixed-,.fixed{}
+
+// sticky
+.sticky-,.-sticky-,.sticky{}
+
+// relative
+.relative-,.-relative-,.relative{}
+
+// absolute
+.absolute-,.-absolute-,.absolute{}
+
+// z-index
+.z-,.-z-,.z-inherit,.z-initial,.z-unset{}
+
+// opacity
+.op-,.op-inherit,.op-initial,.op-revert,.op-layer,.op-unset{}
+
+// line-height
+.lh-,.lh-normal,.lh-inherit,.lh-initial,.lh-unset{}
+
+// background-color
+.bg-,.bg-current.bg-transparent,.bg-inherit,.bg-initial,.bg-revert,.bg-unset,.bg-layer,.bg-aliceBlue,.bg-antiquewhite,.bg-aqua,.bg-aquamarine,.bg-azure,.bg-beige,.bg-bisque,.bg-black,.bg-blanchedalmond,.bg-blue,.bg-blueviolet,.bg-brown,.bg-burlywood,.bg-cadetblue,.bg-chartreuse,.bg-chocolate,.bg-coral,.bg-cornflowerblue,.bg-cornsilk,.bg-crimson,.bg-cyan,.bg-darkblue,.bg-darkcyan,.bg-darkgoldenrod,.bg-darkgray,.bg-darkgreen,.bg-darkkhaki,.bg-darkmagenta,.bg-darkolivegreen,.bg-darkorange,.bg-darkorchid,.bg-darkred,.bg-darksalmon,.bg-darkseagreen,.bg-darkslateblue,.bg-darkslategray,.bg-darkturquoise,.bg-darkviolet,.bg-deeppink,.bg-deepskyblue,.bg-dimgray,.bg-dodgerblue,.bg-firebrick,.bg-floralwhite,.bg-forestgreen,.bg-fuchsia,.bg-gainsboro,.bg-ghostwhite,.bg-gold,.bg-goldenrod,.bg-gray,.bg-green,.bg-greenyellow,.bg-honeydew,.bg-hotpink,.bg-indianred,.bg-indigo,.bg-ivory,.bg-khaki,.bg-lavender,.bg-lavenderblush,.bg-lawngreen,.bg-lemonchiffon,.bg-lightblue,.bg-lightcoral,.bg-lightcyan,.bg-lightgoldenrodyellow,.bg-lightgray,.bg-lightgreen,.bg-lightpink,.bg-lightsalmon,.bg-lightseagreen,.bg-lightskyblue,.bg-lightslategray,.bg-lightsteelblue,.bg-lightyellow,.bg-lime,.bg-limegreen,.bg-linen,.bg-magenta,.bg-maroon,.bg-mediumaquamarine,.bg-mediumblue,.bg-mediumorchid,.bg-mediumpurple,.bg-mediumseagreen,.bg-mediumslateblue,.bg-mediumspringgreen,.bg-mediumturquoise,.bg-mediumvioletred,.bg-midnightblue,.bg-mintcream,.bg-mistyrose,.bg-moccasin,.bg-navajowhite,.bg-navy,.bg-oldlace,.bg-olive,.bg-olivedrab,.bg-orange,.bg-orangered,.bg-orchid,.bg-palegoldenrod,.bg-palegreen,.bg-paleturquoise,.bg-palevioletred,.bg-papayawhip,.bg-peachpuff,.bg-peru,.bg-pink,.bg-plum,.bg-powderblue,.bg-purple,.bg-red,.bg-rosybrown,.bg-royalblue,.bg-saddlebrown,.bg-salmon,.bg-sandybrown,.bg-seagreen,.bg-seashell,.bg-sienna,.bg-silver,.bg-skyblue,.bg-slateblue,.bg-slategray,.bg-snow,.bg-springgreen,.bg-steelblue,.bg-tan,.bg-teal,.bg-thistle,.bg-tomato,.bg-turquoise,.bg-violet,.bg-wheat,.bg-white,.bg-whitesmoke,.bg-yellow,.bg-yellowgreen{}
+
+// font-size
+.fs-,.fs-xx-small,.fs-x-small,.fs-small,.fs-medium,.fs-large,.fs-x-large,.fs-xx-large,.fs-xxx-large,.fs-smaller,.fs-larger,.fs-math,.fs-inherit,.fs-initial,.fs-revert,.fs-layer,.fs-unset,
+.text-,.text-xx-small,.text-x-small,.text-small,.text-medium,.text-large,.text-x-large,.text-xx-large,.text-xxx-large,.text-smaller,.text-larger,.text-math,.text-size-inherit,.text-size-initial,.text-size-revert,.text-size-layer,.text-size-unset{}
+
+// color
+.text-current,.text-transparent,.text-inherit,.text-initial,.text-revert,.text-unset,.text-layer,.text-aliceBlue,.text-antiquewhite,.text-aqua,.text-aquamarine,.text-azure,.text-beige,.text-bisque,.text-black,.text-blanchedalmond,.text-blue,.text-blueviolet,.text-brown,.text-burlywood,.text-cadetblue,.text-chartreuse,.text-chocolate,.text-coral,.text-cornflowerblue,.text-cornsilk,.text-crimson,.text-cyan,.text-darkblue,.text-darkcyan,.text-darkgoldenrod,.text-darkgray,.text-darkgreen,.text-darkkhaki,.text-darkmagenta,.text-darkolivegreen,.text-darkorange,.text-darkorchid,.text-darkred,.text-darksalmon,.text-darkseagreen,.text-darkslateblue,.text-darkslategray,.text-darkturquoise,.text-darkviolet,.text-deeppink,.text-deepskyblue,.text-dimgray,.text-dodgerblue,.text-firebrick,.text-floralwhite,.text-forestgreen,.text-fuchsia,.text-gainsboro,.text-ghostwhite,.text-gold,.text-goldenrod,.text-gray,.text-green,.text-greenyellow,.text-honeydew,.text-hotpink,.text-indianred,.text-indigo,.text-ivory,.text-khaki,.text-lavender,.text-lavenderblush,.text-lawngreen,.text-lemonchiffon,.text-lightblue,.text-lightcoral,.text-lightcyan,.text-lightgoldenrodyellow,.text-lightgray,.text-lightgreen,.text-lightpink,.text-lightsalmon,.text-lightseagreen,.text-lightskyblue,.text-lightslategray,.text-lightsteelblue,.text-lightyellow,.text-lime,.text-limegreen,.text-linen,.text-magenta,.text-maroon,.text-mediumaquamarine,.text-mediumblue,.text-mediumorchid,.text-mediumpurple,.text-mediumseagreen,.text-mediumslateblue,.text-mediumspringgreen,.text-mediumturquoise,.text-mediumvioletred,.text-midnightblue,.text-mintcream,.text-mistyrose,.text-moccasin,.text-navajowhite,.text-navy,.text-oldlace,.text-olive,.text-olivedrab,.text-orange,.text-orangered,.text-orchid,.text-palegoldenrod,.text-palegreen,.text-paleturquoise,.text-palevioletred,.text-papayawhip,.text-peachpuff,.text-peru,.text-pink,.text-plum,.text-powderblue,.text-purple,.text-red,.text-rosybrown,.text-royalblue,.text-saddlebrown,.text-salmon,.text-sandybrown,.text-seagreen,.text-seashell,.text-sienna,.text-silver,.text-skyblue,.text-slateblue,.text-slategray,.text-snow,.text-springgreen,.text-steelblue,.text-tan,.text-teal,.text-thistle,.text-tomato,.text-turquoise,.text-violet,.text-wheat,.text-white,.text-whitesmoke,.text-yellow,.text-yellowgreen,
+.color-current.color-transparent,.color-inherit,.color-initial,.color-revert,.color-unset,.color-layer,.color-aliceBlue,.color-antiquewhite,.color-aqua,.color-aquamarine,.color-azure,.color-beige,.color-bisque,.color-black,.color-blanchedalmond,.color-blue,.color-blueviolet,.color-brown,.color-burlywood,.color-cadetblue,.color-chartreuse,.color-chocolate,.color-coral,.color-cornflowerblue,.color-cornsilk,.color-crimson,.color-cyan,.color-darkblue,.color-darkcyan,.color-darkgoldenrod,.color-darkgray,.color-darkgreen,.color-darkkhaki,.color-darkmagenta,.color-darkolivegreen,.color-darkorange,.color-darkorchid,.color-darkred,.color-darksalmon,.color-darkseagreen,.color-darkslateblue,.color-darkslategray,.color-darkturquoise,.color-darkviolet,.color-deeppink,.color-deepskyblue,.color-dimgray,.color-dodgerblue,.color-firebrick,.color-floralwhite,.color-forestgreen,.color-fuchsia,.color-gainsboro,.color-ghostwhite,.color-gold,.color-goldenrod,.color-gray,.color-green,.color-greenyellow,.color-honeydew,.color-hotpink,.color-indianred,.color-indigo,.color-ivory,.color-khaki,.color-lavender,.color-lavenderblush,.color-lawngreen,.color-lemonchiffon,.color-lightblue,.color-lightcoral,.color-lightcyan,.color-lightgoldenrodyellow,.color-lightgray,.color-lightgreen,.color-lightpink,.color-lightsalmon,.color-lightseagreen,.color-lightskyblue,.color-lightslategray,.color-lightsteelblue,.color-lightyellow,.color-lime,.color-limegreen,.color-linen,.color-magenta,.color-maroon,.color-mediumaquamarine,.color-mediumblue,.color-mediumorchid,.color-mediumpurple,.color-mediumseagreen,.color-mediumslateblue,.color-mediumspringgreen,.color-mediumturquoise,.color-mediumvioletred,.color-midnightblue,.color-mintcream,.color-mistyrose,.color-moccasin,.color-navajowhite,.color-navy,.color-oldlace,.color-olive,.color-olivedrab,.color-orange,.color-orangered,.color-orchid,.color-palegoldenrod,.color-palegreen,.color-paleturquoise,.color-palevioletred,.color-papayawhip,.color-peachpuff,.color-peru,.color-pink,.color-plum,.color-powderblue,.color-purple,.color-red,.color-rosybrown,.color-royalblue,.color-saddlebrown,.color-salmon,.color-sandybrown,.color-seagreen,.color-seashell,.color-sienna,.color-silver,.color-skyblue,.color-slateblue,.color-slategray,.color-snow,.color-springgreen,.color-steelblue,.color-tan,.color-teal,.color-thistle,.color-tomato,.color-turquoise,.color-violet,.color-wheat,.color-white,.color-whitesmoke,.color-yellow,.color-yellowgreen{}
+
+// text-wrap
+.text-wrap,.text-nowrap,.text-balance,.text-pretty,.text-stable,.text-wrap-inherit,.text-wrap-initial,.text-wrap-revert,.text-wrap-layer,.text-wrap-unset{}
+
+// text-indent
+.text-indent-,.text-indent-inherit,.text-indent-initial,.text-indent-revert,.text-indent-layer,.text-indent-unset{}
+
+// text-justify
+.text-justify-none,.text-justify-hidden,.text-justify-auto,.text-justify-character,.text-justify-word,.text-justify-distribute,.text-justify-inherit,.text-justify-initial,.text-justify-revert,.text-justify-layer,.text-justify-unset{}
+
+// text-overflow
+.text-clip,.text-ellipsis,.text-overflow-inherit,.text-overflow-initial,.text-overflow-revert,.text-overflow-layer,.text-overflow-unset{}
+
+// text-orientation
+.text-orientation-mixed,.text-orientation-upright,.text-orientation-sideways,.text-orientation-right,.text-orientation-use,.text-orientation-inherit,.text-orientation-initial,.text-orientation-revert,.text-orientation-layer,.text-orientation-unset{}
+
+// text-rendering
+.text-rendering-auto,.text-rendering-speed,.text-rendering-legibility,.text-rendering-geometric,.text-rendering-inherit,.text-rendering-initial,.text-rendering-revert,.text-rendering-layer,.text-rendering-unset{}
+
+// text-transform
+.text-transform-none,.text-transform-hidden,.text-transform-capitalize,.text-transform-uppercase,.text-transform-lowercase,.text-transform-width,.text-transform-size,.text-transform-inherit,.text-transform-initial,.text-transform-revert,.text-transform-layer,.text-transform-unset{}
+
+// text-align
+.text-start,.text-end,.text-left,.text-right,.text-center,.text-justify,.text-all,.text-match,.text-align-inherit,.text-align-initial,.text-align-revert,.text-align-layer,.text-align-unset{}
+
+// text-align-last
+.text-last-auto,.text-last-start,.text-last-end,.text-last-left,.text-last-right,.text-last-center,.text-last-justify,.text-last-inherit,.text-last-initial,.text-last-revert,.text-last-layer,.text-last-unset{}
+
+// text-anchor
+.text-anchor-start,.text-anchor-middle,.text-anchor-end,.text-anchor-inherit,.text-anchor-initial,.text-anchor-revert,.text-anchor-layer,.text-anchor-unset{}
+
+// text-combine-upright
+.text-combine-none,.text-combine-hidden,.text-combine-all,.text-combine-inherit,.text-combine-initial,.text-combine-revert,.text-combine-layer,.text-combine-unset{}
+
+// text-decoration
+.text-decoration-inherit,.text-decoration-initial,.text-decoration-revert,.text-decoration-layer,.text-decoration-unset{}
+
+// text-decoration-color
+.text-decoration-,.text-decoration-current.text-decoration-transparent,.text-decoration-color-inherit,.text-decoration-color-initial,.text-decoration-color-revert,.text-decoration--colorunset,.text-decoration-color-layer,.text-decoration-aliceBlue,.text-decoration-antiquewhite,.text-decoration-aqua,.text-decoration-aquamarine,.text-decoration-azure,.text-decoration-beige,.text-decoration-bisque,.text-decoration-black,.text-decoration-blanchedalmond,.text-decoration-blue,.text-decoration-blueviolet,.text-decoration-brown,.text-decoration-burlywood,.text-decoration-cadetblue,.text-decoration-chartreuse,.text-decoration-chocolate,.text-decoration-coral,.text-decoration-cornflowerblue,.text-decoration-cornsilk,.text-decoration-crimson,.text-decoration-cyan,.text-decoration-darkblue,.text-decoration-darkcyan,.text-decoration-darkgoldenrod,.text-decoration-darkgray,.text-decoration-darkgreen,.text-decoration-darkkhaki,.text-decoration-darkmagenta,.text-decoration-darkolivegreen,.text-decoration-darkorange,.text-decoration-darkorchid,.text-decoration-darkred,.text-decoration-darksalmon,.text-decoration-darkseagreen,.text-decoration-darkslateblue,.text-decoration-darkslategray,.text-decoration-darkturquoise,.text-decoration-darkviolet,.text-decoration-deeppink,.text-decoration-deepskyblue,.text-decoration-dimgray,.text-decoration-dodgerblue,.text-decoration-firebrick,.text-decoration-floralwhite,.text-decoration-forestgreen,.text-decoration-fuchsia,.text-decoration-gainsboro,.text-decoration-ghostwhite,.text-decoration-gold,.text-decoration-goldenrod,.text-decoration-gray,.text-decoration-green,.text-decoration-greenyellow,.text-decoration-honeydew,.text-decoration-hotpink,.text-decoration-indianred,.text-decoration-indigo,.text-decoration-ivory,.text-decoration-khaki,.text-decoration-lavender,.text-decoration-lavenderblush,.text-decoration-lawngreen,.text-decoration-lemonchiffon,.text-decoration-lightblue,.text-decoration-lightcoral,.text-decoration-lightcyan,.text-decoration-lightgoldenrodyellow,.text-decoration-lightgray,.text-decoration-lightgreen,.text-decoration-lightpink,.text-decoration-lightsalmon,.text-decoration-lightseagreen,.text-decoration-lightskyblue,.text-decoration-lightslategray,.text-decoration-lightsteelblue,.text-decoration-lightyellow,.text-decoration-lime,.text-decoration-limegreen,.text-decoration-linen,.text-decoration-magenta,.text-decoration-maroon,.text-decoration-mediumaquamarine,.text-decoration-mediumblue,.text-decoration-mediumorchid,.text-decoration-mediumpurple,.text-decoration-mediumseagreen,.text-decoration-mediumslateblue,.text-decoration-mediumspringgreen,.text-decoration-mediumturquoise,.text-decoration-mediumvioletred,.text-decoration-midnightblue,.text-decoration-mintcream,.text-decoration-mistyrose,.text-decoration-moccasin,.text-decoration-navajowhite,.text-decoration-navy,.text-decoration-oldlace,.text-decoration-olive,.text-decoration-olivedrab,.text-decoration-orange,.text-decoration-orangered,.text-decoration-orchid,.text-decoration-palegoldenrod,.text-decoration-palegreen,.text-decoration-paleturquoise,.text-decoration-palevioletred,.text-decoration-papayawhip,.text-decoration-peachpuff,.text-decoration-peru,.text-decoration-pink,.text-decoration-plum,.text-decoration-powderblue,.text-decoration-purple,.text-decoration-red,.text-decoration-rosybrown,.text-decoration-royalblue,.text-decoration-saddlebrown,.text-decoration-salmon,.text-decoration-sandybrown,.text-decoration-seagreen,.text-decoration-seashell,.text-decoration-sienna,.text-decoration-silver,.text-decoration-skyblue,.text-decoration-slateblue,.text-decoration-slategray,.text-decoration-snow,.text-decoration-springgreen,.text-decoration-steelblue,.text-decoration-tan,.text-decoration-teal,.text-decoration-thistle,.text-decoration-tomato,.text-decoration-turquoise,.text-decoration-violet,.text-decoration-wheat,.text-decoration-white,.text-decoration-whitesmoke,.text-decoration-yellow,.text-decoration-yellowgreen{}
+
+// text-decoration-line
+.text-decoration-none,.text-decoration-hidden,.text-decoration-underline,.text-decoration-overline,.text-decoration-line,.text-decoration-line,.text-decoration-blink,.text-decoration-line-inherit,.text-decoration-line-initial,.text-decoration-line-revert,.text-decoration-line-layer,.text-decoration-line-unset{}
+
+// text-decoration-skip-ink
+.text-skip-none,.text-skip-hidden,.text-skip-auto,.text-skip-all,.text-skip-inherit,.text-skip-initial,.text-skip-revert,.text-skip-layer,.text-skip-unset{}
+
+// text-decoration-style
+.text-decoration-solid,.text-decoration-double,.text-decoration-dotted,.text-decoration-dashed,.text-decoration-wavy,.text-decoration-style-inherit,.text-decoration-style-initial,.text-decoration-style-revert,.text-decoration-style-layer,.text-decoration-style-unset{}
+
+// text-decoration-thickness
+.text-decoration-,.text-decoration-auto,.text-decoration-from,.text-decoration-thickness-inherit,.text-decoration-thickness-initial,.text-decoration-thickness-revert,.text-decoration-thickness-layer,.text-decoration-thickness-unset{}
+
+// text-emphasis
+.text-emphasis-inherit,.text-emphasis-initial,.text-emphasis-revert,.text-emphasis-layer,.text-emphasis-unset{}
+
+// text-emphasis-color
+.text-emphasis-,.text-emphasis-current.text-emphasis-transparent,.text-emphasis-color-inherit,.text-emphasis-color-initial,.text-emphasis-color-revert,.text-emphasis--colorunset,.text-emphasis-color-layer,.text-emphasis-aliceBlue,.text-emphasis-antiquewhite,.text-emphasis-aqua,.text-emphasis-aquamarine,.text-emphasis-azure,.text-emphasis-beige,.text-emphasis-bisque,.text-emphasis-black,.text-emphasis-blanchedalmond,.text-emphasis-blue,.text-emphasis-blueviolet,.text-emphasis-brown,.text-emphasis-burlywood,.text-emphasis-cadetblue,.text-emphasis-chartreuse,.text-emphasis-chocolate,.text-emphasis-coral,.text-emphasis-cornflowerblue,.text-emphasis-cornsilk,.text-emphasis-crimson,.text-emphasis-cyan,.text-emphasis-darkblue,.text-emphasis-darkcyan,.text-emphasis-darkgoldenrod,.text-emphasis-darkgray,.text-emphasis-darkgreen,.text-emphasis-darkkhaki,.text-emphasis-darkmagenta,.text-emphasis-darkolivegreen,.text-emphasis-darkorange,.text-emphasis-darkorchid,.text-emphasis-darkred,.text-emphasis-darksalmon,.text-emphasis-darkseagreen,.text-emphasis-darkslateblue,.text-emphasis-darkslategray,.text-emphasis-darkturquoise,.text-emphasis-darkviolet,.text-emphasis-deeppink,.text-emphasis-deepskyblue,.text-emphasis-dimgray,.text-emphasis-dodgerblue,.text-emphasis-firebrick,.text-emphasis-floralwhite,.text-emphasis-forestgreen,.text-emphasis-fuchsia,.text-emphasis-gainsboro,.text-emphasis-ghostwhite,.text-emphasis-gold,.text-emphasis-goldenrod,.text-emphasis-gray,.text-emphasis-green,.text-emphasis-greenyellow,.text-emphasis-honeydew,.text-emphasis-hotpink,.text-emphasis-indianred,.text-emphasis-indigo,.text-emphasis-ivory,.text-emphasis-khaki,.text-emphasis-lavender,.text-emphasis-lavenderblush,.text-emphasis-lawngreen,.text-emphasis-lemonchiffon,.text-emphasis-lightblue,.text-emphasis-lightcoral,.text-emphasis-lightcyan,.text-emphasis-lightgoldenrodyellow,.text-emphasis-lightgray,.text-emphasis-lightgreen,.text-emphasis-lightpink,.text-emphasis-lightsalmon,.text-emphasis-lightseagreen,.text-emphasis-lightskyblue,.text-emphasis-lightslategray,.text-emphasis-lightsteelblue,.text-emphasis-lightyellow,.text-emphasis-lime,.text-emphasis-limegreen,.text-emphasis-linen,.text-emphasis-magenta,.text-emphasis-maroon,.text-emphasis-mediumaquamarine,.text-emphasis-mediumblue,.text-emphasis-mediumorchid,.text-emphasis-mediumpurple,.text-emphasis-mediumseagreen,.text-emphasis-mediumslateblue,.text-emphasis-mediumspringgreen,.text-emphasis-mediumturquoise,.text-emphasis-mediumvioletred,.text-emphasis-midnightblue,.text-emphasis-mintcream,.text-emphasis-mistyrose,.text-emphasis-moccasin,.text-emphasis-navajowhite,.text-emphasis-navy,.text-emphasis-oldlace,.text-emphasis-olive,.text-emphasis-olivedrab,.text-emphasis-orange,.text-emphasis-orangered,.text-emphasis-orchid,.text-emphasis-palegoldenrod,.text-emphasis-palegreen,.text-emphasis-paleturquoise,.text-emphasis-palevioletred,.text-emphasis-papayawhip,.text-emphasis-peachpuff,.text-emphasis-peru,.text-emphasis-pink,.text-emphasis-plum,.text-emphasis-powderblue,.text-emphasis-purple,.text-emphasis-red,.text-emphasis-rosybrown,.text-emphasis-royalblue,.text-emphasis-saddlebrown,.text-emphasis-salmon,.text-emphasis-sandybrown,.text-emphasis-seagreen,.text-emphasis-seashell,.text-emphasis-sienna,.text-emphasis-silver,.text-emphasis-skyblue,.text-emphasis-slateblue,.text-emphasis-slategray,.text-emphasis-snow,.text-emphasis-springgreen,.text-emphasis-steelblue,.text-emphasis-tan,.text-emphasis-teal,.text-emphasis-thistle,.text-emphasis-tomato,.text-emphasis-turquoise,.text-emphasis-violet,.text-emphasis-wheat,.text-emphasis-white,.text-emphasis-whitesmoke,.text-emphasis-yellow,.text-emphasis-yellowgreen{}
+
+// text-emphasis-position
+.text-emphasis-ol,.text-emphasis-or,.text-emphasis-ul,.text-emphasis-ur,.text-emphasis-lo,.text-emphasis-ro,.text-emphasis-lu,.text-emphasis-ru,.text-emphasis-position-inherit,.text-emphasis-position-initial,.text-emphasis-position-revert,.text-emphasis-position-layer,.text-emphasis-position-unset{}
+
+// text-emphasis-style
+.text-emphasis-none,.text-emphasis-hidden,.text-emphasis-filled,.text-emphasis-open,.text-emphasis-dot,.text-emphasis-circle,.text-emphasis-triangle,.text-emphasis-style-inherit,.text-emphasis-style-initial,.text-emphasis-style-revert,.text-emphasis-style-layer,.text-emphasis-style-unset{}
+
+// text-underline-offset
+.text-offset-,.text-offset-auto,.text-offset-inherit,.text-offset-initial,.text-offset-revert,.text-offset-layer,.text-offset-unset{}
+
+// text-underline-position
+.text-position-ol,.text-position-or,.text-position-ul,.text-position-ur,.text-position-lo,.text-position-ro,.text-position-lu,.text-position-ru,.text-position-inherit,.text-position-initial,.text-position-revert,.text-position-layer,.text-position-unset{}
+
+// font-weight
+.font-,.font-normal,.font-bold,.font-lighter,.font-bolder,.font-weight-inherit,.font-weight-initial,.font-weight-revert,.font-weight-layer,.font-weight-unset{}
+
+// font-stretch
+.font-ultra-condensed,.font-extra-condensed,.font-condensed,.font-semi-condensed,.font-semi-expanded,.font-expanded,.font-extra-expanded,.font-ultra-expanded,.font-stretch-normal,.font-stretch-inherit,.font-stretch-initial,.font-stretch-revert,.font-stretch-layer,.font-stretch-unset{}
+
+// font-style
+.font-italic,.font-oblique,.font-style-normal,.font-style-inherit,.font-style-initial,.font-style-revert,.font-style-layer,.font-style-unset{}
+
+// font-synthesis
+.font-none,.font-hidden,.font-weight,.font-style,.font-position,.font-synthesis-inherit,.font-synthesis-initial,.font-synthesis-revert,.font-synthesis-layer,.font-synthesis-unset{}
+
+// white-space
+.ws-normal,.ws-nowrap,.ws-pre,.ws-wrap,.ws-line,.ws-wss,.ws-inherit,.ws-initial,.ws-revert,.ws-layer,.ws-unset,
+.space-normal,.space-nowrap,.space-pre,.space-wrap,.space-line,.space-spaces,.space-inherit,.space-initial,.space-revert,.space-layer,.space-unset{}
+
+// white-space-collapse
+.ws-collapse,.ws-collapse-preserve,.ws-collapse-breaks,.ws-collapse-break,.ws-collapse-wss,.ws-collapse-inherit,.ws-collapse-initial,.ws-collapse-revert,.ws-collapse-layer,.ws-collapse-unset,
+.space-collapse,.space-collapse-preserve,.space-collapse-breaks,.space-collapse-break,.space-collapse-spaces,.space-collapse-inherit,.space-collapse-initial,.space-collapse-revert,.space-collapse-layer,.space-collapse-unset{}
+
+// word-break
+.word-normal,.word-break,.word-keep,.word-auto,.word-inherit,.word-initial,.word-revert,.word-layer,.word-unset{}
+
+// word-spacing
+.word-,.word-spacing-inherit,.word-spacing-initial,.word-spacing-revert,.word-spacing-layer,.word-spacing-unset{}
+
+// flex
+.flex-,.flex-none,.flex-hidden,.flex-auto.flex-inherit,.flex-initial,.flex-revert,.flex-layer,.flex-unset{}
+
+// flex-basis
+.flex-basis-,.flex-basis-max,.flex-basis-min,.flex-basis-fit,.flex-basis-auto,.flex-basis-inherit,.flex-basis-initial,.flex-basis-revert,.flex-basis-layer,.flex-basis-unset{}
+
+// flex-direction
+.flex-row,.flex-row-reverse,.flex-col,.flex-col-reverse,.flex-direction-inherit,.flex-direction-initial,.flex-direction-revert,.flex-direction-layer,.flex-direction-unset{}
+
+// flex-flow
+.flex-flow-nowrap,.flex-flow-wrap-reverse,.flex-flow-wrap,.flex-flow-row,.flex-flow-row-reverse,.flex-flow-col,.flex-flow-col-reverse,.flex-flow-inherit,.flex-flow-initial,.flex-flow-revert,.flex-flow-layer,.flex-flow-unset{}
+
+// flex-grow
+.flex-grow-,.flex-grow-inherit,.flex-grow-initial,.flex-grow-revert,.flex-grow-layer,.flex-grow-unset{}
+
+// flex-shrink
+.flex-shrink-,.flex-shrink-inherit,.flex-shrink-initial,.flex-shrink-revert,.flex-shrink-layer,.flex-shrink-unset{}
+
+// flex-wrap
+.flex-wrap,.flex-nowrap,.flex-reverse,.flex-wrap-inherit,.flex-wrap-initial,.flex-wrap-revert,.flex-wrap-layer,.flex-wrap-unset{}
+
+// align-items or justify-content or flex-direction
+.flex-center,.flex-col-center,.flex-row-center,.flex-start,.flex-col-start,.flex-row-start,.flex-end,.flex-col-end,.flex-row-end,.flex-baseline,.flex-col-baseline,.flex-row-baseline,.flex-stretch,.flex-col-stretch,.flex-row-stretch,
+.flex-center-between,.flex-col-center-between,.flex-row-center-between,.flex-start-between,.flex-col-start-between,.flex-row-start-between,.flex-end-between,.flex-col-end-between,.flex-row-end-between,.flex-baseline-between,.flex-col-baseline-between,.flex-row-baseline-between,.flex-stretch-between,.flex-col-stretch-between,.flex-row-stretch-between,.flex-normal-between,.flex-col-normal-between,.flex-row-normal-between,.flex-self-start-between,.flex-col-self-start-between,.flex-row-self-start-between,.flex-self-end-between,.flex-col-self-end-between,.flex-row-self-end-between,
+.flex-normal-center,.flex-col-normal-center,.flex-row-normal-center,.flex-self-start,.flex-col-self-start,.flex-row-self-end,.flex-self-end,.flex-col-self-end,.flex-row-self-end,.flex-normal-baseline,.flex-col-normal-baseline,.flex-row-normal-baseline,.flex-normal-stretch,.flex-col-normal-stretch,.flex-row-normal-stretch,.flex-self-start-center,.flex-col-self-start-center,.flex-row-self-start-center,.flex-self-start-baseline,.flex-col-self-start-baseline,.flex-row-self-start-baseline,.flex-self-start-stretch,.flex-col-self-start-stretch,.flex-row-self-start-stretch{}
+
+// grid
+.grid-none,.grid-hidden,.grid-inherit,.grid-initial,.grid-revert,.grid-layer,.grid-unset{}
+
+// grid-area
+.grid-area-,.grid-area-auto,.grid-area-some,.grid-area-inherit,.grid-area-initial,.grid-area-revert,.grid-area-layer,.grid-area-unset{}
+
+// grid-auto-columns
+.grid-auto-cols-,.grid-auto-cols,.grid-auto-cols-min,.grid-auto-cols-max,.grid-auto-cols-inherit,.grid-auto-cols-initial,.grid-auto-cols-revert,.grid-auto-cols-layer,.grid-auto-cols-unset{}
+
+// grid-auto-rows
+.grid-auto-rows-,.grid-auto-rows,.grid-auto-rows-min,.grid-auto-rows-max,.grid-auto-rows-inherit,.grid-auto-rows-initial,.grid-auto-rows-revert,.grid-auto-rows-layer,.grid-auto-rows-unset{}
+
+// grid-auto-flow
+.grid-auto-flow-row,.grid-auto-flow-column,.grid-auto-flow-dense,.grid-auto-flow-inherit,.grid-auto-flow-initial,.grid-auto-flow-revert,.grid-auto-flow-layer,.grid-auto-flow-unset{}
+
+// grid-column
+.grid-col-,.grid-col-auto,.grid-col-somegridarea,.grid-col-inherit,.grid-col-initial,.grid-col-revert,.grid-col-layer,.grid-col-unset{}
+
+// grid-column-end
+.grid-col-end-,.grid-col-end-auto,.grid-col-end-somegridarea,.grid-col-end-inherit,.grid-col-end-initial,.grid-col-end-revert,.grid-col-end-layer,.grid-col-end-unset{}
+
+// grid-column-start
+.grid-col-start-,.grid-col-start-auto,.grid-col-start-somegridarea,.grid-col-start-inherit,.grid-col-start-initial,.grid-col-start-revert,.grid-col-start-layer,.grid-col-start-unset{}
+
+// grid-row-end
+.grid-row-end-,.grid-row-end-auto,.grid-row-end-somegridarea,.grid-row-end-inherit,.grid-row-end-initial,.grid-row-end-revert,.grid-row-end-layer,.grid-row-end-unset{}
+
+// grid-row-start
+.grid-row-start-,.grid-row-start-auto,.grid-row-start-somegridarea,.grid-row-start-inherit,.grid-row-start-initial,.grid-row-start-revert,.grid-row-start-layer,.grid-row-start-unset{}
+
+// grid-template-columns
+.grid-cols-,.grid-cols-none,.grid-cols-hidden,.grid-cols-inherit,.grid-cols-initial,.grid-cols-revert,.grid-cols-layer,.grid-cols-unset{}
+
+// grid-template-rows
+.grid-rows-,.grid-rows-none,.grid-rows-hidden,.grid-rows-inherit,.grid-rows-initial,.grid-rows-revert,.grid-rows-layer,.grid-rows-unset{}
+
+// list-style
+.list-square,.list-inside,.list-none,.list-hidden,.list-inherit,.list-initial,.list-revert,.list-layer,.list-unset{}
+
+// list-style-image
+.list-image-none,.list-image-hidden,.list-image-inherit,.list-image-initial,.list-image-revert,.list-image-layer,.list-image-unset{}
+
+// list-style-position
+.list-position-outside,.list-position-inside,.list-position-inherit,.list-position-initial,.list-position-revert,.list-position-layer,.list-position-unset{}
+
+// list-style-type
+.list-type-disc,.list-type-circle,.list-type-square,.list-type-decimal,.list-type-georgian,.list-type-trad,.list-type-kannada,.list-type-custom,.list-type-none,.list-type-hidden,.list-type-inherit,.list-type-initial,.list-type-revert,.list-type-layer,.list-type-unset{}
+
+// table-layout
+.table-auto,.table-fixed,.table-inherit,.table-initial,.table-revert,.table-layer,.table-unset{}
+
+// display
+.block,.inline,.inline-block,.flex,.inline-flex,.grid,.inline-grid,.flow-root,.none,.hidden,.contents,.table,.table-row,.list-item,.display-inherit,.display-initial,.display-revert,.display-layer,.display-unset{}
+
+// justify-content
+.justify-center,.justify-start,.justify-end,.justify-flex-start,.justify-flex-end,.justify-left,.justify-right,.justify-normal,.justify-between,.justify-around,.justify-evenly,.justify-stretch,.justify-inherit,.justify-initial,.justify-revert,.justify-layer,.justify-unset{}
+
+// justify-self
+.justify-self-auto,.justify-self-anchor,.justify-self-baseline,.justify-self-self-start,.justify-self-self-end,.justify-self-center,.justify-self-start,.justify-self-end,.justify-self-flex-start,.justify-self-flex-end,.justify-self-left,.justify-self-right,.justify-self-normal,.justify-self-between,.justify-self-around,.justify-self-evenly,.justify-self-stretch,.justify-self-inherit,.justify-self-initial,.justify-self-revert,.justify-self-layer,.justify-self-unset{}
+
+// justify-items
+.justify-items-anchor,.justify-items-baseline,.justify-items-self-start,.justify-items-self-end,.justify-items-center,.justify-items-start,.justify-items-end,.justify-items-flex-start,.justify-items-flex-end,.justify-items-left,.justify-items-right,.justify-items-normal,.justify-items-between,.justify-items-around,.justify-items-evenly,.justify-items-stretch,.justify-items-inherit,.justify-items-initial,.justify-items-revert,.justify-items-layer,.justify-items-unset{}
+
+// align-items
+.items-normal,.items-stretch,.items-center,.items-start,.items-end,.items-flex-start,.items-flex-end,.items-self-start,.items-self-end,.items-anchor,.items-baseline,.items-inherit,.items-initial,.items-revert,.items-layer,.items-unset{}
+
+// align-self
+.self-auto,.self-normal,.self-stretch,.self-center,.self-start,.self-end,.self-flex-start,.self-flex-end,.self-self-start,.self-self-end,.self-anchor,.self-baseline,.self-inherit,.self-initial,.self-revert,.self-layer,.self-unset{}
+
+// content
+.content-empty,.content-none,.content-hidden,.content-open,.content-close,.content-no-open,.content-no-close{}
+
+// align-content
+.content-normal,.content-start,.content-center,.content-end,.content-flex-start,.content-flex-end,.content-baseline,.content-between,.content-around,.content-evenly,.content-stretch,.content-inherit,.content-initial,.content-revert,.content-layer,.content-unset{}
+
+// top
+.top-,.-top-,.top-full,.top-auto,.top-inherit,.top-initial,.top-revert,.top-layer,.top-unset{}
+
+// right
+.right-,.-right-,.right-full,.right-auto,.right-inherit,.right-initial,.right-revert,.right-layer,.right-unset{}
+
+// bottom
+.bottom-,.-bottom-,.bottom-full,.bottom-auto,.bottom-inherit,.bottom-initial,.bottom-revert,.bottom-layer,.bottom-unset{}
+
+// left
+.left-,.-left-,.left-full,.left-auto,.left-inherit,.left-initial,.left-revert,.left-layer,.left-unset{}
+
+// transform
+.transform-none,.transform-hidden,.transform-inherit,.transform-initial,.transform-revert,.transform-layer,.transform-unset{}
+
+// rotate
+.rotate-,.-rotate-,.rotate-x-,.-rotate-x-,.rotate-y-,.-rotate-y-,.rotate-z-,.-rotate-z-{}
+
+// skew
+.skew-,.-skew-,.skew-x-,.-skew-x-,.skew-y-,.-skew-y-{}
+
+// scale
+.scale-,.-scale-,.scale-x-,.-scale-x-,.scale-y-,.-scale-y-{}
+
+// translate
+.translate-,.-translate-,.translate-x-,.-translate-x-,.translate-y-,.-translate-y-,.translate-z-,.-translate-z-{}
+
+// transform-box
+.transform-content,.transform-border,.transform-fill,.transform-stroke,.transform-view,.transform-box-inherit,.transform-box-initial,.transform-box-revert,.transform-box-layer,.transform-box-unset{}
+
+// transform-style
+.transform-3d,.transform-flat,.transform-style-inherit,.transform-style-initial,.transform-style-revert,.transform-style-layer,.transform-style-unset{}
+
+// transform-origin
+.transform-ct,.transform-cr,.transform-cb,.transform-cl,.transform-cc,.transform-tc,.transform-tt,.transform-tr,.transform-tb,.transform-tl,.transform-rc,.transform-rt,.transform-rr,.transform-rb,.transform-rl,.transform-bc,.transform-bt,.transform-br,.transform-bb,.transform-bl,.transform-lc,.transform-lt,.transform-lr,.transform-lb,.transform-ll,.transform-c,.transform-t,.transform-r,.transform-b,.transform-l,.transform-origin-inherit,.transform-origin-initial,.transform-origin-revert,.transform-origin-layer,.transform-origin-unset{}
+
+// perspective
+.perspective-,.perspective-none,.perspective-hidden,.perspective-inherit,.perspective-initial,.perspective-revert,.perspective-layer,.perspective-unset{}
+
+// perspective-origin
+.perspective-x,.perspective-xx,.perspective-xy,.perspective-y,.perspective-yx,.perspective-yy,.perspective-origin-inherit,.perspective-origin-initial,.perspective-origin-revert,.perspective-origin-layer,.perspective-origin-unset{}
+
+// overflow
+.of-visible,.of-hidden,.of-clip,.of-scroll,.of-auto,.of-inherit,.of-initial,.of-revert,.of-layer,.of-unset,
+.overflow-visible,.overflow-hidden,.overflow-clip,.overflow-scroll,.overflow-auto,.overflow-inherit,.overflow-initial,.overflow-revert,.overflow-layer,.overflow-unset{}
+
+// overflow-block
+.of-block-visible,.of-block-hidden,.of-block-clip,.of-block-scroll,.of-block-auto,.of-block-inherit,.of-block-initial,.of-block-revert,.of-block-layer,.of-block-unset,
+.overflow-block-visible,.overflow-block-hidden,.overflow-block-clip,.overflow-block-scroll,.overflow-block-auto,.overflow-block-inherit,.overflow-block-initial,.overflow-block-revert,.overflow-block-layer,.overflow-block-unset{}
+
+// overflow-inline
+.of-inline-visible,.of-inline-hidden,.of-inline-clip,.of-inline-scroll,.of-inline-auto,.of-inline-inherit,.of-inline-initial,.of-inline-revert,.of-inline-layer,.of-inline-unset,
+.overflow-inline-visible,.overflow-inline-hidden,.overflow-inline-clip,.overflow-inline-scroll,.overflow-inline-auto,.overflow-inline-inherit,.overflow-inline-initial,.overflow-inline-revert,.overflow-inline-layer,.overflow-inline-unset{}
+
+// overflow-x
+.of-x-visible,.of-x-hidden,.of-x-clip,.of-x-scroll,.of-x-auto,.of-x-inherit,.of-x-initial,.of-x-revert,.of-x-layer,.of-x-unset,
+.overflow-x-visible,.overflow-x-hidden,.overflow-x-clip,.overflow-x-scroll,.overflow-x-auto,.overflow-x-inherit,.overflow-x-initial,.overflow-x-revert,.overflow-x-layer,.overflow-x-unset{}
+
+// overflow-y
+.of-y-visible,.of-y-hidden,.of-y-clip,.of-y-scroll,.of-y-auto,.of-y-inherit,.of-y-initial,.of-y-revert,.of-y-layer,.of-y-unset,
+.overflow-y-visible,.overflow-y-hidden,.overflow-y-clip,.overflow-y-scroll,.overflow-y-auto,.overflow-y-inherit,.overflow-y-initial,.overflow-y-revert,.overflow-y-layer,.overflow-y-unset{}
+
+// overflow-anchor
+.of-anchor-hidden,.of-anchor-none,.of-anchor-auto,.of-anchor-inherit,.of-anchor-initial,.of-anchor-revert,.of-anchor-layer,.of-anchor-unset,
+.overflow-anchor-hidden,.overflow-anchor-none,.overflow-anchor-auto,.overflow-anchor-inherit,.overflow-anchor-initial,.overflow-anchor-revert,.overflow-anchor-layer,.overflow-anchor-unset{}
+
+// overflow-clip-margin
+.of-,.of-clip-inherit,.of-clip-initial,.of-clip-revert,.of-clip-layer,.of-clip-unset,
+.overflow-,.overflow-clip-inherit,.overflow-clip-initial,.overflow-clip-revert,.overflow-clip-layer,.overflow-clip-unset{}
+
+// overflow-wrap
+.of-normal,.of-break,.of-anywhere,.of-wrap-inherit,.of-wrap-initial,.of-wrap-revert,.of-wrap-layer,.of-wrap-unset,
+.overflow-normal,.overflow-break,.overflow-anywhere,.overflow-wrap-inherit,.overflow-wrap-initial,.overflow-wrap-revert,.overflow-wrap-layer,.overflow-wrap-unset{}
+
+// gap
+.gap-,.gap-inherit,.gap-initial,.gap-revert,.gap-layer,.gap-unset{}
+
+// column-gap
+.gap-col-,.gap-col-normal,.gap-col-inherit,.gap-col-initial,.gap-col-revert,.gap-col-layer,.gap-col-unset{}
+
+// gap-row
+.gap-row-,.gap-row-inherit,.gap-row-initial,.gap-row-revert,.gap-row-layer,.gap-row-unset{}
+
+// column-count
+.col-count-,.col-count-auto,.col-count-inherit,.col-count-initial,.col-count-revert,.col-count-layer,.col-count-unset{}
+
+// column-fill
+.col-fill-balance,.col-fill-auto,.col-fill-inherit,.col-fill-initial,.col-fill-revert,.col-fill-layer,.col-fill-unset{}
+
+// column-rule
+.col-rule-inherit,.col-rule-initial,.col-rule-revert,.col-rule-layer,.col-rule-unset{}
+
+// column-rule-color
+.col-rule-color-inherit,.col-rule-color-initial,.col-rule-color-revert,.col-rule-color-layer,.col-rule-color-unset,.col-rule-color-aliceBlue,.col-rule-color-antiquewhite,.col-rule-color-aqua,.col-rule-color-aquamarine,.col-rule-color-azure,.col-rule-color-beige,.col-rule-color-bisque,.col-rule-color-black,.col-rule-color-blanchedalmond,.col-rule-color-blue,.col-rule-color-blueviolet,.col-rule-color-brown,.col-rule-color-burlywood,.col-rule-color-cadetblue,.col-rule-color-chartreuse,.col-rule-color-chocolate,.col-rule-color-coral,.col-rule-color-cornflowerblue,.col-rule-color-cornsilk,.col-rule-color-crimson,.col-rule-color-cyan,.col-rule-color-darkblue,.col-rule-color-darkcyan,.col-rule-color-darkgoldenrod,.col-rule-color-darkgray,.col-rule-color-darkgreen,.col-rule-color-darkkhaki,.col-rule-color-darkmagenta,.col-rule-color-darkolivegreen,.col-rule-color-darkorange,.col-rule-color-darkorchid,.col-rule-color-darkred,.col-rule-color-darksalmon,.col-rule-color-darkseagreen,.col-rule-color-darkslateblue,.col-rule-color-darkslategray,.col-rule-color-darkturquoise,.col-rule-color-darkviolet,.col-rule-color-deeppink,.col-rule-color-deepskyblue,.col-rule-color-dimgray,.col-rule-color-dodgerblue,.col-rule-color-firebrick,.col-rule-color-floralwhite,.col-rule-color-forestgreen,.col-rule-color-fuchsia,.col-rule-color-gainsboro,.col-rule-color-ghostwhite,.col-rule-color-gold,.col-rule-color-goldenrod,.col-rule-color-gray,.col-rule-color-green,.col-rule-color-greenyellow,.col-rule-color-honeydew,.col-rule-color-hotpink,.col-rule-color-indianred,.col-rule-color-indigo,.col-rule-color-ivory,.col-rule-color-khaki,.col-rule-color-lavender,.col-rule-color-lavenderblush,.col-rule-color-lawngreen,.col-rule-color-lemonchiffon,.col-rule-color-lightblue,.col-rule-color-lightcoral,.col-rule-color-lightcyan,.col-rule-color-lightgoldenrodyellow,.col-rule-color-lightgray,.col-rule-color-lightgreen,.col-rule-color-lightpink,.col-rule-color-lightsalmon,.col-rule-color-lightseagreen,.col-rule-color-lightskyblue,.col-rule-color-lightslategray,.col-rule-color-lightsteelblue,.col-rule-color-lightyellow,.col-rule-color-lime,.col-rule-color-limegreen,.col-rule-color-linen,.col-rule-color-magenta,.col-rule-color-maroon,.col-rule-color-mediumaquamarine,.col-rule-color-mediumblue,.col-rule-color-mediumorchid,.col-rule-color-mediumpurple,.col-rule-color-mediumseagreen,.col-rule-color-mediumslateblue,.col-rule-color-mediumspringgreen,.col-rule-color-mediumturquoise,.col-rule-color-mediumvioletred,.col-rule-color-midnightblue,.col-rule-color-mintcream,.col-rule-color-mistyrose,.col-rule-color-moccasin,.col-rule-color-navajowhite,.col-rule-color-navy,.col-rule-color-oldlace,.col-rule-color-olive,.col-rule-color-olivedrab,.col-rule-color-orange,.col-rule-color-orangered,.col-rule-color-orchid,.col-rule-color-palegoldenrod,.col-rule-color-palegreen,.col-rule-color-paleturquoise,.col-rule-color-palevioletred,.col-rule-color-papayawhip,.col-rule-color-peachpuff,.col-rule-color-peru,.col-rule-color-pink,.col-rule-color-plum,.col-rule-color-powderblue,.col-rule-color-purple,.col-rule-color-red,.col-rule-color-rosybrown,.col-rule-color-royalblue,.col-rule-color-saddlebrown,.col-rule-color-salmon,.col-rule-color-sandybrown,.col-rule-color-seagreen,.col-rule-color-seashell,.col-rule-color-sienna,.col-rule-color-silver,.col-rule-color-skyblue,.col-rule-color-slateblue,.col-rule-color-slategray,.col-rule-color-snow,.col-rule-color-springgreen,.col-rule-color-steelblue,.col-rule-color-tan,.col-rule-color-teal,.col-rule-color-thistle,.col-rule-color-tomato,.col-rule-color-turquoise,.col-rule-color-violet,.col-rule-color-wheat,.col-rule-color-white,.col-rule-color-whitesmoke,.col-rule-color-yellow,.col-rule-color-yellowgreen{}
+
+// column-rule-style
+.col-rule-none,.col-rule-solid,.col-rule-style-inherit,.col-rule-style-initial,.col-rule-style-revert,.col-rule-style-layer,.col-rule-style-unset{}
+
+// column-rule-width
+.col-rule-,.col-rule-thin,.col-rule-medium,.col-rule-thick,.col-rule-width-inherit,.col-rule-width-initial,.col-rule-width-revert,.col-rule-width-layer,.col-rule-width-unset{}
+
+// column-span
+.col-none,.col-all,.col-span-inherit,.col-span-initial,.col-span-revert,.col-span-layer,.col-span-unset{}
+
+// column-width
+.col-,.col-auto,.col-width-inherit,.col-width-initial,.col-width-revert,.col-width-layer,.col-width-unset{}
+
+// object-fit
+.fit-contain,.fit-cover,.fit-fill,.fit-none,.fit-scale,.fit-hidden,.fit-inherit,.fit-initial,.fit-revert,.fit-layer,.fit-unset{}
+
+// transition
+.transition-,.transition,.transition-none,.transition-hidden,.transition-all,.transition-margin,.transition-padding,.transition-min-width,.transition-width,.transition-max-width,.transition-height,.transition-min-height,.transition-max-height,.transition-opacity,.transition-color,.transition-bg,.transition-border,.transition-transform,.transition-size,.transition-shadow,.transition-colors,.transition-inherit,.transition-initial,.transition-revert,.transition-layer,.transition-unset{}
+
+// transition-property
+.transition-property-none,.transition-property-hidden,.transition-property-all,.transition-property-margin,.transition-property-padding,.transition-property-min-width,.transition-property-width,.transition-property-max-width,.transition-property-height,.transition-property-min-height,.transition-property-max-height,.transition-property-opacity,.transition-property-color,.transition-property-bg,.transition-property-border,.transition-property-transform,.transition-property-size,.transition-property-shadow,.transition-property-colors,.transition-property-inherit,.transition-property-initial,.transition-property-revert,.transition-property-layer,.transition-property-unset{}
+
+// transition-behavior
+.transition-allow,.transition-normal,.transition-behavior-inherit,.transition-behavior-initial,.transition-behavior-revert,.transition-behavior-layer,.transition-behavior-unset{}
+
+// transition-delay
+.transition-delay-,.transition-delay-inherit,.transition-delay-initial,.transition-delay-revert,.transition-delay-layer,.transition-delay-unset{}
+
+// transition-duration
+.transition-duration-,.transition-duration-inherit,.transition-duration-initial,.transition-duration-revert,.transition-duration-layer,.transition-duration-unset{}
+
+// transition-timing-function
+.transition-ease,.transition-ease-in,.transition-ease-out,.transition-ease-in-out,.transition-linear,.transition-start,.transition-end,.transition-timing-inherit,.transition-timing-initial,.transition-timing-revert,.transition-timing-layer,.transition-timing-unset{}
+
+// line-break
+.line-auto,.line-loose,.line-normal,.line-strict,.line-anywhere,.line-inherit,.line-initial,.line-revert,.line-layer,.line-unset{}
+
+// line-clamp
+.line-clamp-,.line-clamp-none,.line-clamp-hidden,.line-clamp-inherit,.line-clamp-initial,.line-clamp-revert,.line-clamp-layer,.line-clamp-unset{}
+
+// box-decoration-break
+.box-slice,.box-clone,.box-break-inherit,.box-break-initial,.box-break-revert,.box-break-layer,.box-break-unset{}
+
+// box-decoration-break
+.box-slice,.box-clone,.box-break-inherit,.box-break-initial,.box-break-revert,.box-break-layer,.box-break-unset{}
+
+// box-sizing
+.box-none,.box-hidden,.box-shadow-inherit,.box-shadow-initial,.box-shadow-revert,.box-shadow-layer,.box-shadow-unset{}
+
+// box-shadow
+.box-none,.box-hidden,.box-shadow-inherit,.box-shadow-initial,.box-shadow-revert,.box-shadow-layer,.box-shadow-unset{}
+
+// break-after
+.break-after-auto,.break-after-avoid,.break-after-always,.break-after-all,.break-after-avoid-page,.break-after-page,.break-after-left,.break-after-right,.break-after-recto,.break-after-verso,.break-after-avoid-column,.break-after-column,.break-after-avoid-region,.break-after-region,.break-after-inherit,.break-after-initial,.break-after-revert,.break-after-layer,.break-after-unset{}
+
+// break-before
+.break-before-auto,.break-before-avoid,.break-before-always,.break-before-all,.break-before-avoid-page,.break-before-page,.break-before-left,.break-before-right,.break-before-recto,.break-before-verso,.break-before-avoid-column,.break-before-column,.break-before-avoid-region,.break-before-region,.break-before-inherit,.break-before-initial,.break-before-revert,.break-before-layer,.break-before-unset{}
+
+// break-inside
+.break-inside-auto,.break-inside-avoid,.break-inside-avoid-page,.break-inside-avoid-column,.break-inside-avoid-region,.break-inside-inherit,.break-inside-initial,.break-inside-revert,.break-inside-layer,.break-inside-unset{}
+
+// vertical-align
+.v-,.-v-,.v-baseline,.v-sub,.v-super,.v-text-top,.v-text-bottom,.v-middle,.v-top,.v-bottom,.v-inherit,.v-initial,.v-revert,.v-layer,.v-unset,
+.va-,.-va-,.va-baseline,.va-sub,.va-super,.va-text-top,.va-text-bottom,.va-middle,.va-top,.va-bottom,.va-inherit,.va-initial,.va-revert,.va-layer,.va-unset{}
+
+// letter-spacing
+.letter-,.letter-normal,.letter-inherit,.letter-initial,.letter-unset{}
+
+// aspect-ratio

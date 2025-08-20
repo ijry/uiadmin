@@ -13,6 +13,7 @@
 				:subtitle="subtitle"
 				:showSubtitle="showSubtitle"
 				:showTitle="showTitle"
+				:weekText="weekText"
 			></uHeader>
 			<scroll-view
 				:style="{
@@ -41,6 +42,9 @@
 					:rangePrompt="rangePrompt"
 					:showRangePrompt="showRangePrompt"
 					:allowSameDay="allowSameDay"
+					:forbidDays="forbidDays"
+					:forbidDaysToast="forbidDaysToast"
+					:monthFormat="monthFormat"
 					ref="month"
 					@monthSelected="monthSelected"
 					@updateMonthTop="updateMonthTop"
@@ -68,7 +72,7 @@ import uHeader from './header.vue'
 import uMonth from './month.vue'
 import { props } from './props.js'
 import util from './util.js'
-import dayjs from 'dayjs/esm/index'
+import dayjs from '../u-datetime-picker/dayjs.esm.min.js';
 import Calendar from '../../libs/util/calendar.js'
 import { mpMixin } from '../../libs/mixin/mpMixin.js'
 import { mixin } from '../../libs/mixin/mixin.js'
@@ -106,6 +110,7 @@ import test from '../../libs/function/test';
  * @property {Boolean}				allowSameDay	    是否允许日期范围的起止时间为同一天，mode = range时有效 (默认 false )
  * @property {Number|String}	    round				圆角值，默认无圆角  (默认 0 )
  * @property {Number|String}	    monthNum			最多展示的月份数量  (默认 3 )
+ * @property {Array}	            weekText			星期文案  (默认 ['一', '二', '三', '四', '五', '六', '日'] )
  *
  * @event {Function()} confirm 		点击确定按钮时触发		选择日期相关的返回参数
  * @event {Function()} close 		日历关闭时触发			可定义页面关闭时的回调事件
@@ -182,9 +187,11 @@ export default {
 		subtitle() {
 			// 初始化时，this.months为空数组，所以需要特别判断处理
 			if (this.months.length) {
-				return `${this.months[this.monthIndex].year}年${
-					this.months[this.monthIndex].month
-				}月`
+				if (uni.getLocale() == 'zh-Hans' || uni.getLocale() == 'zh-Hant') {
+					return this.months[this.monthIndex].year + '年' + (this.months[this.monthIndex].month < 10 ? '0' + this.months[this.monthIndex].month : this.months[this.monthIndex].month) + '月'
+				} else {
+					return (this.months[this.monthIndex].month < 10 ? '0' + this.months[this.monthIndex].month : this.months[this.monthIndex].month) + '/' + this.months[this.monthIndex].year
+				}
 			} else {
 				return ''
 			}
@@ -399,8 +406,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../../libs/css/components.scss';
-
 .u-calendar {
 	&__confirm {
 		padding: 7px 18px;

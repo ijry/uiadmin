@@ -18,7 +18,7 @@
 			}"
 			@tap="headClick"
 		>
-			<view v-if="!$slots.head" class="u-flex u-row-between">
+			<view v-if="!$slots.head" class="u-flex u-flex-between">
 				<view class="u-card__head--left u-flex u-line-1" v-if="title">
 					<image
 						:src="thumb"
@@ -136,8 +136,6 @@
 </script>
 
 <style lang="scss" scoped>
-@import "../../libs/css/components.scss";
-	
 .u-card {
 	position: relative;
 	overflow: hidden;

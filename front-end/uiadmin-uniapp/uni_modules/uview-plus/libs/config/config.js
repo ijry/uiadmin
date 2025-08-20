@@ -37,6 +37,20 @@ export default {
         'up-tips-color': '#909399',
         'up-light-color': '#c0c4cc'
     },
+    // 字体图标地址
+    iconUrl: 'https://at.alicdn.com/t/font_2225171_8kdcwk4po24.ttf',
+     // 自定义图标
+    customIcon: {
+        family: '',
+        url: ''
+    },
+    customIcons: {}, // 自定义图标与unicode对应关系
 	// 默认单位，可以通过配置为rpx，那么在用于传入组件大小参数为数值时，就默认为rpx
-	unit: 'px'
+	unit: 'px',
+	// 拦截器
+	interceptor: {
+		navbarLeftClick: null
+	},
+    // 只加载一次字体
+    loadFontOnce: false
 }

@@ -30,7 +30,7 @@
 			:previousMargin="addUnit(previousMargin)"
 			:nextMargin="addUnit(nextMargin)"
 			:acceleration="acceleration"
-			:displayMultipleItems="displayMultipleItems"
+			:displayMultipleItems="list.length > 0 ? displayMultipleItems : 0"
 			:easingFunction="easingFunction"
 		>
 			<swiper-item
@@ -143,7 +143,7 @@
 				this.currentIndex = val; // 和上游数据关联上
 			}
 		},
-		emits: ["click", "change"],
+		emits: ["click", "change", "update:current"],
 		computed: {
 			itemStyle() {
 				return index => {
@@ -189,6 +189,7 @@
 				} = e.detail
 				this.pauseVideo(this.currentIndex)
 				this.currentIndex = current
+				this.$emit('update:current', this.currentIndex)
 				this.$emit('change', e.detail)
 			},
 			// 切换轮播时，暂停视频播放
@@ -213,7 +214,6 @@
 </script>
 
 <style lang="scss" scoped>
-	@import "../../libs/css/components.scss";
 	
 	.u-swiper__wrapper {
 		flex: 1;

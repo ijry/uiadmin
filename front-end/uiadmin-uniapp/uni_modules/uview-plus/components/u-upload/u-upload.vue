@@ -12,24 +12,60 @@
 					    :src="item.thumb || item.url"
 					    :mode="imageMode"
 					    class="u-upload__wrap__preview__image"
-					    @tap="onPreviewImage(item, index)"
+					    @tap="onClickPreview(item, index)"
 						:style="[{
 							width: addUnit(width),
 							height: addUnit(height)
 						}]"
 					/>
+					<view class="u-upload__wrap__preview__video"
+						:style="{
+							width: addUnit(width),
+							height: addUnit(height)
+						}"
+						v-else-if="(item.isVideo || (item.type && item.type === 'video')) && getVideoThumb">
+						<image
+							v-if="item.thumb"
+						    :src="item.thumb"
+						    :mode="imageMode"
+						    class="u-upload__wrap__preview__image"
+						    @tap="onClickPreview(item, index)"
+							:style="[{
+								width: addUnit(width),
+								height: addUnit(height)
+							}]"
+						/>
+						<up-icon
+							v-else
+						    color="#80CBF9"
+						    size="26"
+						    :name="item.isVideo || (item.type && item.type === 'video') ? 'movie' : 'file-text'"
+						></up-icon>
+						<view v-if="item.status === 'success'"
+							class="u-upload__wrap__play"
+							@tap="onClickPreview(item, index)">
+							<slot name="playIcon"></slot>
+							<up-icon v-if="!$slots['playIcon']"
+								class="u-upload__wrap__play__icon"
+								name="play-right" size="22px"></up-icon>
+						</view>
+					</view>
 					<view
 					    v-else
 					    class="u-upload__wrap__preview__other"
 						@tap="onClickPreview(item, index)"
+						:style="[{
+							width: addUnit(width),
+							height: addUnit(height)
+						}]"
 					>
-						<u-icon
+						<up-icon
 						    color="#80CBF9"
 						    size="26"
 						    :name="item.isVideo || (item.type && item.type === 'video') ? 'movie' : 'folder'"
-						></u-icon>
+						></up-icon>
 						<text class="u-upload__wrap__preview__other__text">
-							{{item.isVideo || (item.type && item.type === 'video') ? '视频' : '文件'}}
+							{{item.isVideo || (item.type && item.type === 'video') ? item.name || t("up.common.video") : item.name || t("up.common.file")}}
 						</text>
 					</view>
 					<view
@@ -37,7 +73,7 @@
 					    v-if="item.status === 'uploading' || item.status === 'failed'"
 					>
 						<view class="u-upload__status__icon">
-							<u-icon
+							<up-icon
 							    v-if="item.status === 'failed'"
 							    name="close-circle"
 							    color="#ffffff"
@@ -46,7 +82,6 @@
 							<u-loading-icon
 							    size="22"
 							    mode="circle"
-							    color="#ffffff"
 							    v-else
 							/>
 						</view>
@@ -54,6 +89,8 @@
 						    v-if="item.message"
 						    class="u-upload__status__message"
 						>{{ item.message }}</text>
+						<up-gap class="u-upload__progress" height="3px"
+							:style="{width: item.progress + '%'}"></up-gap>
 					</view>
 					<view
 					    class="u-upload__deletable"
@@ -61,37 +98,39 @@
 					    @tap.stop="deleteItem(index)"
 					>
 						<view class="u-upload__deletable__icon">
-							<u-icon
+							<up-icon
 							    name="close"
 							    color="#ffffff"
 							    size="10"
-							></u-icon>
+							></up-icon>
 						</view>
 					</view>
-					<view
-					    class="u-upload__success"
-					    v-if="item.status === 'success'"
-					>
-						<!-- #ifdef APP-NVUE -->
-						<image
-						    :src="successIcon"
-						    class="u-upload__success__icon"
-						></image>
-						<!-- #endif -->
-						<!-- #ifndef APP-NVUE -->
-						<view class="u-upload__success__icon">
-							<u-icon
-							    name="checkmark"
-							    color="#ffffff"
-							    size="12"
-							></u-icon>
+					<slot name="success">
+						<view
+							class="u-upload__success"
+							v-if="item.status === 'success'"
+						>
+							<!-- #ifdef APP-NVUE -->
+							<image
+								:src="successIcon"
+								class="u-upload__success__icon"
+							></image>
+							<!-- #endif -->
+							<!-- #ifndef APP-NVUE -->
+							<view class="u-upload__success__icon">
+								<up-icon
+									name="checkmark"
+									color="#ffffff"
+									size="12"
+								></up-icon>
+							</view>
+							<!-- #endif -->
 						</view>
-						<!-- #endif -->
-					</view>
+					</slot>
 				</view>
-				
 			</template>
-			
+			<canvas id="myCanvas" type="2d"
+				style="width: 100px; height: 150px;display: none;"></canvas>
 			<template v-if="isInCount">
 				<view
 				    v-if="$slots.trigger"
@@ -117,11 +156,11 @@
 						height: addUnit(height)
 					}]"
 				>
-					<u-icon
+					<up-icon
 					    :name="uploadIcon"
 					    size="26"
 					    :color="uploadIconColor"
-					></u-icon>
+					></up-icon>
 					<text
 					    v-if="uploadText"
 					    class="u-upload__button__text"
@@ -129,6 +168,19 @@
 				</view>
 			</template>
 		</view>
+		<up-popup
+			mode="center"
+			v-model:show="popupShow">
+			<video id="myVideo" v-if="popupShow"
+				:src="currentItemIndex >= 0 ? lists[currentItemIndex].url : ''"
+				@error="videoErrorCallback" show-center-play-btn
+				:object-fit='videoPreviewObjectFit' show-fullscreen-btn='true'
+				enable-play-gesture controls
+				:autoplay="true" auto-pause-if-open-native
+				@loadedmetadata="loadedVideoMetadata"
+				:initial-time='0.1'>
+			</video>
+		</up-popup>
 	</view>
 </template>
 
@@ -142,12 +194,14 @@
 	import { mixin } from '../../libs/mixin/mixin';
 	import { addStyle, addUnit, toast } from '../../libs/function/index';
 	import test from '../../libs/function/test';
+	import { t } from '../../libs/i18n'
 	/**
 	 * upload 上传
 	 * @description 该组件用于上传图片场景
 	 * @tutorial https://uview-plus.jiangruyi.com/components/upload.html
 	 * @property {String}			accept				接受的文件类型, 可选值为all media image file video （默认 'image' ）
 	 * @property {String | Array}	capture				图片或视频拾取模式，当accept为image类型时设置capture可选额外camera可以直接调起摄像头（默认 ['album', 'camera'] ）
+	 * @property {Array}			extension			选择文件的后缀名，暂只支持.zip、.png等，不支持application/msword等值
 	 * @property {Boolean}			compressed			当accept为video时生效，是否压缩视频，默认为true（默认 true ）
 	 * @property {String}			camera				当accept为video时生效，可选值为back或front（默认 'back' ）
 	 * @property {Number}			maxDuration			当accept为video时生效，拍摄视频最长拍摄时间，单位秒（默认 60 ）
@@ -185,6 +239,8 @@
 				// #endif
 				lists: [],
 				isInCount: true,
+				popupShow: false,
+				currentItemIndex: -1
 			}
 		},
 		watch: {
@@ -204,60 +260,117 @@
 			},
 			accept(newVal) {
 				this.formatFileList()
+			},
+			popupShow(newVal) {
+				if (!newVal) {
+					this.currentItemIndex = -1;
+				}
 			}
 		},
 		// #ifdef VUE3
-		emits: ['error', 'beforeRead', 'oversize', 'afterRead', 'delete', 'clickPreview'],
+		emits: ['error', 'beforeRead', 'oversize', 'afterRead', 'delete', 'clickPreview', 'update:fileList', 'afterAutoUpload'],
 		// #endif
 		methods: {
+			t,
 			addUnit,
 			addStyle,
+			videoErrorCallback() {},
+			loadedVideoMetadata(e) {
+				if (this.currentItemIndex < 0) {
+					return;
+				}
+				if (this.autoUploadDriver != 'local') {
+					return;
+				}
+				if (!this.getVideoThumb) {
+					return;
+				}
+				// 截取第一帧作为封面，oss等云存储场景直接使用拼接参数。
+				let w = this.lists[this.currentItemIndex].width;
+				let h = this.lists[this.currentItemIndex].height;
+				const dpr = uni.getSystemInfoSync().pixelRatio;
+				uni.createSelectorQuery().select('#myVideo').context(res => {
+					console.log('select video', res)
+					const myVideo = res.context
+					uni.createSelectorQuery()
+					  .select('#myCanvas')
+					  .fields({ node: true, size: true })
+					  .exec(([res]) => {
+						console.log('select canvas', res)
+						const ctx1 = res[0].node.getContext('2d')
+						res[0].node.width = w * dpr
+						res[0].node.height = h * dpr
+						// Draw the first frame and export it as an image
+						// myVideo.onPlay(() => {
+							setTimeout(() => {
+								captureFirstFrame()
+							}, 500)
+						// })
+						const captureFirstFrame = () => {
+							ctx1.drawImage(myVideo, 0, 0, w * dpr, h * dpr)
+							wx.canvasToTempFilePath({
+								canvas: res[0].node,
+								success: (result) => {
+									console.log('First frame image path:', result
+										.tempFilePath)
+									// Now you can use the image path (result.tempFilePath)
+									this.fileList['currentItemIndex'].thumb = result.tempFilePath
+								},
+								fail: (err) => {
+									console.error('Failed to export image:', err)
+								}
+							})
+						}
+
+						// Capture the first frame
+						setInterval(() => {
+							ctx1.drawImage(myVideo, 0, 0, w * dpr, h * dpr);
+						}, 1000 / 24)
+					}).exec()
+				}).exec()
+			},
 			formatFileList() {
 				const {
 					fileList = [], maxCount
 				} = this;
-				const lists = fileList.map((item) =>
-					Object.assign(Object.assign({}, item), {
+				const lists = fileList.map((item) => {
+					const name = item.name || item.url || item.thumb
+					return Object.assign(Object.assign({}, item), {
 						// 如果item.url为本地选择的blob文件的话，无法判断其为video还是image，此处优先通过accept做判断处理
-						isImage: this.accept === 'image' || test.image(item.url || item.thumb),
-						isVideo: this.accept === 'video' || test.video(item.url || item.thumb),
-						deletable: typeof(item.deletable) === 'boolean' ? item.deletable : this.deletable,
+						isImage: item.name ? test.image(item.name) : (this.accept === 'image' || test.image(name)),
+						isVideo: item.name ? test.video(item.name) : (this.accept === 'video' || test.video(name)),
+						deletable: typeof item.deletable === 'boolean' ? item.deletable : this.deletable,
 					})
-				);
+				});
 				this.lists = lists
 				this.isInCount = lists.length < maxCount
 			},
-			chooseFile() {
+			chooseFile(params) {
 				const {
 					maxCount,
 					multiple,
 					lists,
 					disabled
 				} = this;
-				if (disabled) return;
-				// 如果用户传入的是字符串，需要格式化成数组
-				let capture;
-				try {
-					capture = test.array(this.capture) ? this.capture : this.capture.split(',');
-				}catch(e) {
-					capture = [];
-				}
-				chooseFile(
-						Object.assign({
-							accept: this.accept,
-							extension: this.extension,
-							multiple: this.multiple,
-							capture: capture,
-							compressed: this.compressed,
-							maxDuration: this.maxDuration,
-							sizeType: this.sizeType,
-							camera: this.camera,
-						}, {
-							maxCount: maxCount - lists.length,
-						})
-					)
+				if (disabled) return Promise.reject();
+				const chooseParams = Object.assign({
+					accept: this.accept,
+					extension: this.extension,
+					multiple: this.multiple,
+					capture: this.capture,
+					compressed: this.compressed,
+					maxDuration: this.maxDuration,
+					sizeType: this.sizeType,
+					camera: this.camera,
+				}, {
+					maxCount: maxCount - lists.length,
+					...params
+				})
+				return chooseFile(chooseParams)
 					.then((res) => {
-						this.onBeforeRead(multiple ? res : res[0]);
+						const result = chooseParams.multiple ? res : res[0]
+						this.onBeforeRead(result);
+						return result
 					})
 					.catch((error) => {
 						this.$emit('error', error);
@@ -269,7 +382,7 @@
 					beforeRead,
 					useBeforeRead,
 				} = this;
-				let res = true
+				let res = file
 				// beforeRead是否为一个方法
 				if (test.func(beforeRead)) {
 					// 如果用户定义了此方法，则去执行此方法，并传入读取的文件回调
@@ -289,13 +402,10 @@
 						);
 					});
 				}
-				if (!res) {
-					return;
-				}
 				if (test.promise(res)) {
 					res.then((data) => this.onAfterRead(data || file));
 				} else {
-					this.onAfterRead(file);
+					this.onAfterRead(res || file);
 				}
 			},
 			getDetail(index) {
@@ -304,7 +414,7 @@
 					index: index == null ? this.fileList.length : index,
 				};
 			},
-			onAfterRead(file) {
+			async onAfterRead(file) {
 				const {
 					maxSize,
 					afterRead
@@ -313,25 +423,200 @@
 					file.some((item) => item.size > maxSize) :
 					file.size > maxSize;
 				if (oversize) {
+					uni.showToast({
+						title: t("up.upload.sizeExceed")
+					})
 					this.$emit('oversize', Object.assign({
 						file
 					}, this.getDetail()));
 					return;
 				}
-				if (typeof afterRead === 'function') {
-					afterRead(file, this.getDetail());
+				let len = this.fileList.length;
+				if (this.autoUpload) {
+					// 当设置 mutiple 为 true 时, file 为数组格式，否则为对象格式
+					let lists = [].concat(file);
+					let fileListLen = this.fileList.length;
+					lists.map((item) => {
+						this.fileList.push({
+							...item,
+							status: 'uploading',
+							message: t("up.upload.uploading"),
+							progress: 0
+						});
+					});
+					let that = this;
+					this.$emit('update:fileList', this.fileList);
+					for (let i = 0; i < lists.length; i++) {
+						let j = i;
+						let result = '';
+						switch(this.autoUploadDriver) {
+							case 'cos': // 腾讯云
+								break;
+							case 'kodo': // 七牛云
+								break;
+							case 'oss':
+							case 'upload_oss':
+								// 阿里云前端直传
+								// 获取签名
+								console.log()
+								let formData = {};
+								let ret = await uni.request({
+									url: this.autoUploadAuthUrl,
+									method: 'get',
+									header: this.autoUploadHeader,
+									data: {
+										filename: lists[j].name
+									}
+								});
+								// console.log(ret);
+								let res0 = ret.data;
+								if (res0.code == 200) {
+									// 路径 + 文件名 + 扩展名
+									// 不传递filename就要拼接key
+									// res0.data.params.key = res0.data.params.dir + res0.data.params.uniqidName + fileExt;
+									formData = res0.data.params;
+								} else {
+									uni.showToast({
+										title: res0.msg,
+										duration: 1500
+									});
+									return;
+								}
+								var uploadTask = uni.uploadFile({
+									url: res0.data.params.host,
+									filePath: lists[j].url,
+									name: 'file',
+									// fileType: 'video', // 仅支付宝小程序，且必填。
+									// header: header,
+									formData: formData,
+									success: (uploadFileRes) => {
+										let thumb = '';
+										let afterPromise = '';
+										if (that.customAfterAutoUpload) {
+											afterPromise = new Promise((resolve, reject) => {
+												that.$emit(
+													'afterAutoUpload',
+													Object.assign(res0, {
+														callback: (r) => {
+															r.url ? resolve(r) : reject();
+														},
+													})
+												);
+											});
+										}
+										if (test.promise(afterPromise)) {
+											afterPromise.then((data) => that.succcessUpload(len + j, data.url, data.thumb));
+										} else {
+											result = res0.data.params.host + '/' + res0.data.params.key;
+											if (that.accept === 'video' || test.video(result)) {
+												thumb = result + '?x-oss-process=video/snapshot,t_10000,m_fast';
+											}
+											that.succcessUpload(len + j, result, thumb);
+										}
+									}
+								});
+								uploadTask.onProgressUpdate((res) => {
+									that.updateUpload(len + j, {
+										progress: res.progress
+									});
+									// console.log('上传进度' + res.progress);
+									// console.log('已经上传的数据长度' + res.totalBytesSent);
+									// console.log('预期需要上传的数据总长度' + res.totalBytesExpectedToSend);
+								});
+								break;
+							case 'local':
+							default:
+								// 服务器本机上传
+								var uploadTask = uni.uploadFile({
+									url: this.autoUploadApi,
+									filePath: lists[j].url,
+									name: 'file',
+									// fileType: 'video', // 仅支付宝小程序，且必填。
+									header: this.autoUploadHeader,
+									success: (uploadFileRes) => {
+										let res0 = uploadFileRes.data;
+										let afterPromise = '';
+										if (that.customAfterAutoUpload) {
+											afterPromise = new Promise((resolve, reject) => {
+												that.$emit(
+													'afterAutoUpload',
+													Object.assign(res0, {
+														callback: (r) => {
+															r.url ? resolve(r) : reject();
+														}
+													})
+												);
+											});
+										}
+										if (test.promise(afterPromise)) {
+											afterPromise.then((data) => that.succcessUpload(len + j, data.url));
+										} else {
+											if (res0.code != 200) {
+												uni.showToast({
+													title: res0.msg
+												});
+											} else {
+												result = res0.data.url;
+												that.succcessUpload(len + j, result);
+											}
+										}
+									}
+								});
+								uploadTask.onProgressUpdate((res) => {
+									that.updateUpload(len + j, {
+										progress: res.progress
+									});
+									// console.log('上传进度' + res.progress);
+									// console.log('已经上传的数据长度' + res.totalBytesSent);
+									// console.log('预期需要上传的数据总长度' + res.totalBytesExpectedToSend);
+								});
+								break;
+						}
+					}
+				} else {
+					if (typeof afterRead === 'function') {
+						afterRead(file, this.getDetail());
+					}
+					this.$emit('afterRead', Object.assign({
+						file
+					}, this.getDetail()));
 				}
-				this.$emit('afterRead', Object.assign({
-					file
-				}, this.getDetail()));
+			},
+			updateUpload(index, param) {
+				let item = this.fileList[index];
+				this.fileList.splice(index, 1, {
+					...item,
+					// 注意这里不判断会出现succcessUpload先执行又被覆盖的问题
+					status: param.progress == 100 ? 'success' : 'uploading',
+					message: '',
+					progress: param.progress
+				});
+				this.$emit('update:fileList', this.fileList);
+			},
+			succcessUpload(index, url, thumb = '') {
+				let item = this.fileList[index];
+				this.fileList.splice(index, 1, {
+					...item,
+					status: 'success',
+					message: '',
+					url: url,
+					progress: 100,
+					thumb: thumb
+				});
+				this.$emit('update:fileList', this.fileList);
 			},
 			deleteItem(index) {
-				this.$emit(
-					'delete',
-					Object.assign(Object.assign({}, this.getDetail(index)), {
-						file: this.fileList[index],
-					})
-				);
+				if (this.autoDelete) {
+					this.fileList.splice(index, 1);
+					this.$emit('update:fileList', this.fileList);
+				} else {
+					this.$emit(
+						'delete',
+						Object.assign(Object.assign({}, this.getDetail(index)), {
+							file: this.fileList[index],
+						})
+					);
+				}
 			},
 			// 预览图片
 			onPreviewImage(previewItem, index) {
@@ -356,11 +641,11 @@
                     urls: urls,
                     current: current,
 					fail() {
-						toast('预览图片失败')
+						toast(t("up.upload.previewImageFail"))
 					},
 				});
 			},
-			onPreviewVideo(index) {
+			onPreviewVideo(previewItem, index) {
 				if (!this.previewFullImage) return;
                 let current = 0;
                 const sources = [];
@@ -380,24 +665,33 @@
                 if (sources.length < 1) {
                     return;
                 }
+				// #ifndef MP-WEIXIN
+				this.popupShow = true;
+				this.currentItemIndex = index;
+				console.log(this.lists[this.currentItemIndex])
+				// #endif
 				// #ifdef MP-WEIXIN
 				wx.previewMedia({
 					sources: sources,
 					current: current,
 					fail() {
-						toast('预览视频失败')
+						toast(t("up.upload.previewVideoFail"))
 					},
 				});
 				// #endif
 			},
 			onClickPreview(item, index) {
-				if (!this.previewFullImage) return;
-				switch (item.type) {
-					case 'video':
-						this.onPreviewVideo(index);
-						break;
-					default:
-						break;
+				if (this.previewFullImage) {
+					switch (item.type) {
+						case 'image':
+							this.onPreviewImage(item, index);
+							break;
+						case 'video':
+							this.onPreviewVideo(item, index);
+							break;
+						default:
+							break;
+					}
 				}
 				this.$emit(
 					'clickPreview',
@@ -409,7 +703,6 @@
 </script>
 
 <style lang="scss" scoped>
-	@import '../../libs/css/components.scss';
 	$u-upload-preview-border-radius: 2px !default;
 	$u-upload-preview-margin: 0 8px 8px 0 !default;
 	$u-upload-image-width:80px !default;
@@ -483,6 +776,7 @@
 					height: $u-upload-image-height;
 				}
 
+				&__video,
 				&__other {
 					width: $u-upload-image-width;
 					height: $u-upload-image-height;
@@ -499,6 +793,21 @@
 					}
 				}
 			}
+		}
+		&__wrap__play {
+			position: absolute;
+			top: 0px;
+			left: 0px;
+			bottom: 0px;
+			right: 0px;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			&__icon {
+				background: #fff;
+				border-radius: 100px;
+				opacity: 0.8;
+			};
 		}
 
 		&__deletable {
@@ -556,6 +865,12 @@
 				height: $u-upload-icon-height;
 				/* #endif */
 			}
+		}
+		&__progress {
+			background-color: $u-primary !important;
+			position: absolute;
+			bottom: 0;
+			left: 0;
 		}
 
 		&__status {

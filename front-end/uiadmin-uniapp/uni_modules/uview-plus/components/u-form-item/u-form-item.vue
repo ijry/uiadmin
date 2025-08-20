@@ -15,7 +15,7 @@
 					v-if="required || leftIcon || label"
 					:style="{
 						width: addUnit(labelWidth || parentData.labelWidth),
-						marginBottom: parentData.labelPosition === 'left' ? 0 : '5px',
+						marginBottom: (labelPosition || parentData.labelPosition) === 'left' ? 0 : '5px',
 					}"
 				>
 					<!-- 为了块对齐 -->
@@ -29,10 +29,10 @@
 							class="u-form-item__body__left__content__icon"
 							v-if="leftIcon"
 						>
-							<u-icon
+							<up-icon
 								:name="leftIcon"
 								:custom-style="leftIconStyle"
-							></u-icon>
+							></up-icon>
 						</view>
 						<text
 							class="u-form-item__body__left__content__label"
@@ -62,7 +62,7 @@
 				v-if="!!message && parentData.errorType === 'message'"
 				class="u-form-item__body__right__message"
 				:style="{
-					marginLeft:  addUnit(parentData.labelPosition === 'top' ? 0 : (labelWidth || parentData.labelWidth))
+					marginLeft:  addUnit((labelPosition || parentData.labelPosition) === 'top' ? 0 : (labelWidth || parentData.labelWidth))
 				}"
 			>{{ message }}</text>
 		</slot>
@@ -185,7 +185,6 @@
 </script>
 
 <style lang="scss" scoped>
-	@import "../../libs/css/components.scss";
 
 	.u-form-item {
 		@include flex(column);
@@ -240,10 +239,8 @@
 
 					&__slot {
 						flex: 1;
-						/* #ifndef MP */
 						@include flex;
 						align-items: center;
-						/* #endif */
 					}
 
 					&__icon {

@@ -25,6 +25,11 @@ export default {
 		closable: false,
 		show: true,
 		icon: '',
-		iconColor: ''
+		iconColor: '',
+		textSize: '',
+		height: '',
+		padding: '',
+		borderRadius: '',
+		autoBgColor: 0
 	}
 }

@@ -37,6 +37,10 @@ export default {
     transformerAttributify(),
 
     // https://github.com/MellowCo/unocss-preset-weapp/tree/main/src/transformer/transformerClass
-    transformerClass(),
+    // 20250820发现此插件与marked库存在冲突会报错Uncaught SyntaxError: Unexpected identifier '_plus_V_lbl_r_lbr__plus_'
+	// 通过配置exclude排除可以解决报错
+	transformerClass({
+		exclude: [/[\\/]node_modules[\\/]/, /[\\/]\.git[\\/]/, /marked\.esm\.js$/],
+	})
   ]
 }

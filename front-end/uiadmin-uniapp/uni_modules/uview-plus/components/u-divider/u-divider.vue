@@ -14,11 +14,13 @@
 		    v-if="dot"
 		    class="u-divider__dot"
 		>●</text>
-		<text
-		    v-else-if="text"
-		    class="u-divider__text"
-		    :style="[textStyle]"
-		>{{text}}</text>
+		<slot>
+			<text
+				v-if="!dot && text"
+				class="u-divider__text"
+				:style="[textStyle]"
+			>{{text}}</text>
+		</slot>
 		<u-line
 		    :color="lineColor"
 		    :customStyle="rightLineStyle"
@@ -95,7 +97,6 @@
 </script>
 
 <style lang="scss" scoped>
-	@import '../../libs/css/components.scss';
 	$u-divider-margin:15px 0 !default;
 	$u-divider-text-margin:0 15px !default;
 	$u-divider-dot-font-size:12px !default;

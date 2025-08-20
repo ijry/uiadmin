@@ -2,7 +2,7 @@
 	<view class="u-calendar-month-wrapper" ref="u-calendar-month-wrapper">
 		<view v-for="(item, index) in months" :key="index" :class="[`u-calendar-month-${index}`]"
 			:ref="`u-calendar-month-${index}`" :id="`month-${index}`">
-			<text v-if="index !== 0" class="u-calendar-month__title">{{ item.year }}年{{ item.month }}月</text>
+			<text v-if="index !== 0" class="u-calendar-month__title">{{ monthTitle(item) }}</text>
 			<view class="u-calendar-month__days">
 				<view v-if="showMark" class="u-calendar-month__days__month-mark-wrapper">
 					<text class="u-calendar-month__days__month-mark-wrapper__text">{{ item.month }}</text>
@@ -12,11 +12,11 @@
 					:class="[item1.selected && 'u-calendar-month__days__day__select--selected']">
 					<view class="u-calendar-month__days__day__select" :style="[daySelectStyle(index, index1, item1)]">
 						<text class="u-calendar-month__days__day__select__info"
-							:class="[item1.disabled && 'u-calendar-month__days__day__select__info--disabled']"
+							:class="[(item1.disabled || isForbid(item1) ) ? 'u-calendar-month__days__day__select__info--disabled' : '']"
 							:style="[textStyle(item1)]">{{ item1.day }}</text>
 						<text v-if="getBottomInfo(index, index1, item1)"
 							class="u-calendar-month__days__day__select__buttom-info"
-							:class="[item1.disabled && 'u-calendar-month__days__day__select__buttom-info--disabled']"
+							:class="[(item1.disabled || isForbid(item1) ) ? 'u-calendar-month__days__day__select__buttom-info--disabled' : '']"
 							:style="[textStyle(item1)]">{{ getBottomInfo(index, index1, item1) }}</text>
 						<text v-if="item1.dot" class="u-calendar-month__days__day__select__dot"></text>
 					</view>
@@ -37,7 +37,8 @@
 	import { colorGradient } from '../../libs/function/colorGradient';
 	import test from '../../libs/function/test';
 	import defProps from '../../libs/config/props';
-	import dayjs from 'dayjs/esm/index'
+	import dayjs from '../u-datetime-picker/dayjs.esm.min.js';
+	import { t } from '../../libs/i18n'
 	export default {
 		name: 'u-calendar-month',
 		mixins: [mpMixin, mixin],
@@ -126,6 +127,14 @@
 			allowSameDay: {
 				type: Boolean,
 				default: false
+			},
+			forbidDays: {
+				type: Array,
+				default: () => []
+			},
+			forbidDaysToast: {
+				type: String,
+				default: ''
 			}
 		},
 		data() {
@@ -167,7 +176,7 @@
 						style.marginLeft = addUnit(week * dayWidth, 'px')
 					}
 					if (this.mode === 'range') {
-						// 之所以需要这么写，是因为DCloud公司的iOS客户端的开发者能力有限导致的bug
+						// 之所以需要这么写，是因为DCloud公司的iOS客户端导致的bug
 						style.paddingLeft = 0
 						style.paddingRight = 0
 						style.paddingBottom = 0
@@ -213,7 +222,7 @@
 								style.opacity = 0.7
 							}
 						} else if (this.selected.length === 1) {
-							// 之所以需要这么写，是因为DCloud公司的iOS客户端的开发者能力有限导致的bug
+							// 之所以需要这么写，是因为uni-app的iOS客户端的bug
 							// 进行还原操作，否则在nvue的iOS，uni-app有bug，会导致诡异的表现
 							style.borderTopLeftRadius = '3px'
 							style.borderBottomLeftRadius = '3px'
@@ -284,6 +293,7 @@
 		mounted() {
 			this.init()
 		},
+		emits: ['monthSelected', 'updateMonthTop'],
 		methods: {
 			init() {
 				// 初始化默认选中
@@ -296,6 +306,20 @@
 						this.getMonthRect()
 					})
 				})
+			},
+			monthTitle(item) {
+				if (uni.getLocale() == 'zh-Hans' || uni.getLocale() == 'zh-Hant') {
+					return item.year + '年' + (item.month < 10 ? '0' + item.month : item.month) + '月'
+				} else {
+					return (item.month < 10 ? '0' + item.month : item.month) + '/' + item.year
+				}
+			},
+			isForbid(item) {
+				let date = dayjs(item.date).format("YYYY-MM-DD")
+				if (this.mode !== 'range' && this.forbidDays.includes(date)) {
+					return true
+				}
+				return false
 			},
 			// 判断两个日期是否相等
 			dateSame(date1, date2) {
@@ -362,6 +386,12 @@
 				this.item = item
 				const date = dayjs(item.date).format("YYYY-MM-DD")
 				if (item.disabled) return
+				if (this.isForbid(item)) {
+					uni.showToast({
+						title: this.forbidDaysToast
+					})
+					return
+				}
 				// 对上一次选择的日期数组进行深度克隆
 				let selected = deepClone(this.selected)
 				if (this.mode === 'single') {
@@ -393,7 +423,7 @@
 								if(this.rangePrompt) {
 									toast(this.rangePrompt)
 								} else {
-									toast(`选择天数不能超过 ${this.maxRange} 天`)
+									toast(t("up.calendar.daysExceed", { days: this.maxRange }))
 								}
 								return
 							}
@@ -459,7 +489,6 @@
 </script>
 
 <style lang="scss" scoped>
-	@import "../../libs/css/components.scss";
 
 	.u-calendar-month-wrapper {
 		margin-top: 4px;
