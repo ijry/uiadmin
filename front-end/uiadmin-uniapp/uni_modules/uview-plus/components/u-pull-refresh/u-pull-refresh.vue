@@ -22,9 +22,9 @@
         <!-- 默认下拉状态 -->
         <view class="refresh-content">
           <view class="refresh-indicator">
-            <up-icon name="arrow-downward" size="26px"></up-icon>
+            <up-icon name="arrow-downward" size="26px" color="var(--up-content-color, #606266)"></up-icon>
           </view>
-          <text class="refresh-text">{{ t("up.pullRefresh.pullRefresh") }}</text>
+          <text class="refresh-text">{{ t("up.pullRefresh.pull") }}</text>
         </view>
       </slot>
       
@@ -37,7 +37,7 @@
         <!-- 默认释放状态 -->
         <view class="refresh-content">
           <view class="refresh-indicator">
-            <up-icon name="arrow-upward" size="26px"></up-icon>
+            <up-icon name="arrow-upward" size="26px" color="var(--up-content-color, #606266)"></up-icon>
           </view>
           <text class="refresh-text">{{ t("up.pullRefresh.release") }}</text>
         </view>
@@ -316,8 +316,8 @@ export default {
 .spinner {
   width: 16px;
   height: 16px;
-  border: 2px solid #f3f3f3;
-  border-top: 2px solid #666;
+  border: 2px solid var(--up-border-color, #f3f3f3);
+  border-top: 2px solid var(--up-content-color, #666);
   border-radius: 50%;
   animation: spin 1s linear infinite;
 }
@@ -329,6 +329,6 @@ export default {
 
 .refresh-text {
   font-size: 14px;
-  color: #666;
+  color: var(--up-main-color, #303133);
 }
 </style>

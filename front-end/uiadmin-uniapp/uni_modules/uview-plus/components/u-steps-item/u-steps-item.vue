@@ -23,7 +23,7 @@
 					}" class="u-steps-item__wrapper__circle">
 					<text v-if="statusClass === 'process' || statusClass === 'wait'"
 						class="u-steps-item__wrapper__circle__text" :style="{
-							color: index == parentData.current ? '#ffffff' : parentData.inactiveColor
+							color: index == parentData.current ? activeStepTextColor : parentData.inactiveColor
 						}">{{ index + 1}}</text>
 					<up-icon v-else :color="statusClass === 'error' ? 'error' : parentData.activeColor" size="12"
 						:name="statusClass === 'error' ? 'close' : 'checkmark'"></up-icon>
@@ -39,7 +39,8 @@
 				<view class="u-steps-item__content__title">
 					<slot name="title">
 					</slot>
-					<up-text v-if="!$slots['title']" :text="title" :type="parentData.current == index ? 'main' : 'content'" lineHeight="20px"
+					<up-text v-if="!$slots['title']" :text="title" lineHeight="20px"
+						:type="parentData.current == index ? 'main' : 'content'"
 						:size="parentData.current == index ? 14 : 13"></up-text>
 				</view>
 				<view class="u-steps-item__content__desc">
@@ -180,6 +181,9 @@
 				}
 
 				return style
+			},
+			activeStepTextColor() {
+				return this.upThemeVar('--up-white', '#ffffff')
 			}
 		},
 		mounted() {
@@ -251,7 +255,7 @@
 			justify-content: center;
 			align-items: center;
 			position: relative;
-			background-color: #fff;
+			background-color: var(--up-card-bg-color, #fff);
 			border-radius: 50px;
 
 			&--column {
@@ -312,6 +316,12 @@
 		&__content {
 			@include flex;
 			flex: 1;
+
+			&__title {
+				// #ifdef H5
+				cursor: pointer;
+				// #endif
+			}
 
 			&--row {
 				flex-direction: column;

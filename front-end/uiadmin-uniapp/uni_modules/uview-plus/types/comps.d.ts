@@ -18,6 +18,7 @@ declare module 'vue' {
     ['up-form']: typeof import('./comps/form')['Form']
     ['up-form-item']: typeof import('./comps/formItem')['FormItem']
     ['up-calendar']: typeof import('./comps/calendar')['Calendar']
+    ['up-calendar-strip']: typeof import('./comps/calendarStrip')['CalendarStrip']
     ['up-keyboard']: typeof import('./comps/keyboard')['Keyboard']
     ['up-picker']: typeof import('./comps/picker')['Picker']
     ['up-datetime-picker']: typeof import('./comps/datetimePicker')['DatetimePicker']
@@ -45,6 +46,7 @@ declare module 'vue' {
 
     // 反馈组件
     ['up-tooltip']: typeof import('./comps/tooltip')['Tooltip']
+    ['up-guide']: typeof import('./comps/guide')['Guide']
     ['up-action-sheet']: typeof import('./comps/actionSheet')['ActionSheet']
     ['up-alert']: typeof import('./comps/alert')['Alert']
     ['up-toast']: typeof import('./comps/toast')['Toast']

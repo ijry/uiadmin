@@ -8,13 +8,13 @@
 			<view class="u-dropdown__menu__item" v-for="(item, index) in menuList" :key="index" @tap.stop="menuClick(index)">
 				<view class="u-flex u-flex-row">
 					<text class="u-dropdown__menu__item__text" :style="{
-						color: item.disabled ? '#c0c4cc' : (index === current || highlightIndexList.includes(index)) ? activeColor : inactiveColor,
+						color: item.disabled ? menuDisabledColor : (index === current || highlightIndexList.includes(index)) ? resolvedActiveColor : resolvedInactiveColor,
 						fontSize: addUnit(titleSize)
 					}">{{item.title}}</text>
 					<view class="u-dropdown__menu__item__arrow" :class="{
 						'u-dropdown__menu__item__arrow--rotate': index === current
 					}">
-						<up-icon :custom-style="{display: 'flex'}" :name="menuIcon" :size="addUnit(menuIconSize)" :color="index === current || highlightIndexList.includes(index) ? activeColor : '#c0c4cc'"></up-icon>
+						<up-icon :custom-style="{display: 'flex'}" :name="menuIcon" :size="addUnit(menuIconSize)" :color="index === current || highlightIndexList.includes(index) ? resolvedActiveColor : menuDisabledColor"></up-icon>
 					</view>
 				</view>
 			</view>
@@ -41,7 +41,7 @@
 	/**
 	 * dropdown 下拉菜单
 	 * @description 该组件一般用于向下展开菜单，同时可切换多个选项卡的场景
-	 * @tutorial https://ijry.github.io/uview-plus/components/dropdown.html
+	 * @tutorial https://uview-plus.jiangruyi.com/components/dropdown.html
 	 * @property {String} active-color 标题和选项卡选中的颜色（默认#2979ff）
 	 * @property {String} inactive-color 标题和选项卡未选中的颜色（默认#606266）
 	 * @property {Boolean} close-on-click-mask 点击遮罩是否关闭菜单（默认true）
@@ -77,6 +77,19 @@
 			}
 		},
 		computed: {
+			resolvedActiveColor() {
+				return this.activeColor === '#2979ff'
+					? this.upThemeVar('--up-primary', '#2979ff')
+					: this.activeColor
+			},
+			resolvedInactiveColor() {
+				return this.inactiveColor === '#606266'
+					? this.upThemeVar('--up-content-color', '#606266')
+					: this.inactiveColor
+			},
+			menuDisabledColor() {
+				return this.upThemeVar('--up-disabled-color', '#c0c4cc')
+			},
 			// 下拉出来部分的样式
 			popupStyle() {
 				let style = {};

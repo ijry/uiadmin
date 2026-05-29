@@ -11,7 +11,7 @@
 				v-model="inputLabel"
 				v-bind="inputPropsInner">
 			</up-input>
-			<div class="input-cover"></div>
+			<cover-view class="input-cover"></cover-view>
 		</view>
 		<u-popup
 			:show="show || (hasInput && showByClickInput)"
@@ -20,6 +20,7 @@
 			:bgColor="bgColor"
 			:round="round"
 			:duration="duration"
+			:pageInline="pageInline"
 			:overlayOpacity="overlayOpacity"
 			@close="closeHandler"
 		>
@@ -42,6 +43,8 @@
 				<slot name="toolbar-bottom"></slot>
 				<picker-view
 					class="u-picker__view"
+					:mask-class="maskClass"
+					:mask-style="maskStyleInner"
 					:indicatorStyle="`height: ${addUnit(itemHeight, 'px')}`"
 					:value="innerIndex"
 					:immediateChange="immediateChange"
@@ -165,9 +168,12 @@ export default {
 					if (n != null) {
 						n.forEach((element, index) => {
 							let currentCols = this.getColumnValues(index)
-							if (currentCols && Object.prototype.toString.call(currentCols) === '[object Object]') {
+							if(!Array.isArray(currentCols) && currentCols.length===0) {
+								return
+							}
+							if (typeof currentCols[0] === 'object') {
 								currentCols.forEach((item, index2) => {
-									if (item[this.keyName] == element) {
+									if (item[this.valueName] == element) {
 										arr.push(index2)
 									}
 								})
@@ -206,7 +212,7 @@ export default {
 			let firstItem = this.innerColumns[0] && this.innerColumns[0][0];
 			// //区分是不是对象数组
 			if (firstItem && Object.prototype.toString.call(firstItem) === '[object Object]') {
-				let res = this.innerColumns[0].filter(item => this.modelValue.includes(item['id']))
+				let res = this.innerColumns[0].filter(item => this.modelValue.includes(item[this.valueName]))
 				res = res.map(item => item[this.keyName]);
 				return res.join("/");
 
@@ -232,6 +238,18 @@ export default {
 				});
 			}
 			return res
+		},
+		maskStyleInner() {
+			// 显式传入时，始终以外部传参为准（即使传空字符串）
+			if (this.upHasProp('maskStyle')) {
+				return this.maskStyle || ''
+			}
+			if (this.upThemeIsDark) {
+				const topBottomStrong = 'rgba(28, 28, 30, 0.95)'
+				const topBottomWeak = 'rgba(28, 28, 30, 0.6)'
+				return `background-image: linear-gradient(180deg, ${topBottomStrong}, ${topBottomWeak}), linear-gradient(0deg, ${topBottomStrong}, ${topBottomWeak});`
+			}
+			return ''
 		}
     },
 	methods: {
@@ -316,7 +334,7 @@ export default {
 			// 通过对比前后两次的列索引，得出当前变化的是哪一列
 			for (let i = 0; i < value.length; i++) {
 				let item = value[i]
-				if (item !== (this.lastIndex[i] || 0)) { // 把undefined转为合法假值0
+				if (item !== undefined && item !== (this.lastIndex[i] || 0)) { // 把undefined转为合法假值0
 					// 设置columnIndex为当前变化列的索引
 					columnIndex = i
 					// index则为变化列中的变化项的索引
@@ -465,7 +483,7 @@ export default {
 			@include flex;
 			justify-content: center;
 			align-items: center;
-			background-color: rgba(255, 255, 255, 0.87);
+			background-color: var(--up-card-bg-color, #ffffff);
 			z-index: 1000;
 		}
 	}

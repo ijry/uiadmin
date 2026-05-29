@@ -1,15 +1,18 @@
 <template>
     <view class="u-table2" :class="{ 'u-table-border': border }">
-        <scroll-view scroll-x class="u-table2-content" :style="{ height: height ? height + 'px' : 'auto' }" @scroll="onScroll">
+        <scroll-view scroll-x scroll-y class="u-table2-content"
+            :style="{ height: height ? addUnit(height) : 'auto' }"
+            @scroll="onScroll">
             <!-- 表头 -->
-            <view v-if="showHeader" class="u-table-header" :class="{ 'u-table-sticky': fixedHeader }" :style="{minWidth: scrollWidth}">
+            <view v-if="showHeader" class="u-table-header"
+                :class="{ 'u-table-sticky': fixedHeader }"
+                :style="{minWidth: scrollWidth}">
                 <view class="u-table-row">
                     <view v-for="(col, colIndex) in columns" :key="col.key" class="u-table-cell"
-                        :style="headerColStyle(col)"
-                        :class="[col.align ? 'u-text-' + col.align : '',
+                        :class="[col.headerAlign ? 'u-text-' + col.headerAlign : (col.align ? 'u-text-' + col.align : '') ,
                             headerCellClassName ? headerCellClassName(col) : '',
                             getFixedClass(col)
-                        ]" @click="handleHeaderClick(col)">
+                        ]" :style="headerColStyle(col)" @click="handleHeaderClick(col)">
                         <slot name="header" :column="col" :columnIndex="colIndex" :level="1">
                         </slot>
                         <text v-if="!$slots['header']">{{ col.title }}</text>
@@ -28,6 +31,41 @@
             <!-- 表体 -->
             <view class="u-table-body" :style="{ minWidth: scrollWidth, maxHeight: maxHeight ? maxHeight + 'px' : 'none' }">
                 <template v-if="data && data.length > 0">
+                    <!-- #ifdef MP-WEIXIN -->
+                    <template v-for="(item, flatIndex) in flattenedSortedData" :key="item.row[rowKey] || flatIndex">
+                        <view class="u-table-row u-table-row-child" :class="[highlightCurrentRow && currentRow === item.row ? 'u-table-row-highlight' : '',
+                            rowClassName ? rowClassName(item.row, item.rowIndex) : '',
+                            stripe && flatIndex % 2 === 1 ? 'u-table-row-zebra' : ''
+                        ]" :style="{ height: rowHeight }" @click="handleRowClick(item.row)">
+                            <view v-for="(col, colIndex) in columns" :key="col.key" class="u-table-cell"
+                                :class="[col.align ? 'u-text-' + col.align : '',
+                                    cellClassName ? cellClassName(item.row, col) : '',
+                                    getFixedClass(col),
+                                    getCellSpanClass(item.row, col, item.rowIndex, colIndex)
+                                ]"
+                                :style="[cellStyleInner({ row: item.row, column: col, rowIndex: item.rowIndex, columnIndex: colIndex, level: item.level }), getCellSpanStyle(item.row, col, item.rowIndex, colIndex)]">
+                                <view v-if="col.type === 'selection'">
+                                    <checkbox :checked="isSelected(item.row)" @click.stop="toggleSelect(item.row)" />
+                                </view>
+                                <template v-else>
+                                    <view v-if="col.key === computedMainCol && hasTree" @click.stop="toggleExpand(item.row)"
+                                        :style="{ width: expandWidth }">
+                                        <view v-if="item.row[treeProps.children] && item.row[treeProps.children].length > 0">
+                                            {{ isExpanded(item.row) ? '▼' : '▶' }}
+                                        </view>
+                                    </view>
+                                    <slot name="cell" :row="item.row" :column="col" :prow="item.parentRow"
+                                        :rowIndex="item.rowIndex" :columnIndex="colIndex" :level="item.level">
+                                        <view class="u-table-cell_content">
+                                            {{ item.row[col.key] }}
+                                        </view>
+                                    </slot>
+                                </template>
+                            </view>
+                        </view>
+                    </template>
+                    <!-- #endif -->
+                    <!-- #ifndef MP-WEIXIN -->
                     <table-row 
                         v-for="(row, rowIndex) in sortedData"
                         :key="row[rowKey] || rowIndex"
@@ -54,6 +92,7 @@
                         :selectedRows="selectedRows"
                         :expandWidth="expandWidth"
                         :computedMainCol="computedMainCol"
+                        :span-method="spanMethod"
                         @toggle-select="toggleSelect"
                         @row-click="handleRowClick"
                         @toggle-expand="toggleExpand"
@@ -64,6 +103,7 @@
                             </slot>                      
                         </template>
                     </table-row>
+                    <!-- #endif -->
                 </template>
                 <template v-else>
                     <slot name="empty">
@@ -102,6 +142,41 @@
             <!-- 表体 -->
             <view class="u-table-body" :style="{ minWidth: scrollWidth, maxHeight: maxHeight ? maxHeight + 'px' : 'none' }">
                 <template v-if="data && data.length > 0">
+                    <!-- #ifdef MP-WEIXIN -->
+                    <template v-for="(item, flatIndex) in flattenedSortedData" :key="item.row[rowKey] || flatIndex">
+                        <view class="u-table-row u-table-row-child" :class="[highlightCurrentRow && currentRow === item.row ? 'u-table-row-highlight' : '',
+                            rowClassName ? rowClassName(item.row, item.rowIndex) : '',
+                            stripe && flatIndex % 2 === 1 ? 'u-table-row-zebra' : ''
+                        ]" :style="{ height: rowHeight }" @click="handleRowClick(item.row)">
+                            <view v-for="(col, colIndex) in visibleFixedLeftColumns" :key="col.key" class="u-table-cell"
+                                :class="[col.align ? 'u-text-' + col.align : '',
+                                    cellClassName ? cellClassName(item.row, col) : '',
+                                    getFixedClass(col),
+                                    getCellSpanClass(item.row, col, item.rowIndex, colIndex)
+                                ]"
+                                :style="[cellStyleInner({ row: item.row, column: col, rowIndex: item.rowIndex, columnIndex: colIndex, level: item.level }), getCellSpanStyle(item.row, col, item.rowIndex, colIndex)]">
+                                <view v-if="col.type === 'selection'">
+                                    <checkbox :checked="isSelected(item.row)" @click.stop="toggleSelect(item.row)" />
+                                </view>
+                                <template v-else>
+                                    <view v-if="col.key === computedMainCol && hasTree" @click.stop="toggleExpand(item.row)"
+                                        :style="{ width: expandWidth }">
+                                        <view v-if="item.row[treeProps.children] && item.row[treeProps.children].length > 0">
+                                            {{ isExpanded(item.row) ? '▼' : '▶' }}
+                                        </view>
+                                    </view>
+                                    <slot name="cell" :row="item.row" :column="col" :prow="item.parentRow"
+                                        :rowIndex="item.rowIndex" :columnIndex="colIndex" :level="item.level">
+                                        <view class="u-table-cell_content">
+                                            {{ item.row[col.key] }}
+                                        </view>
+                                    </slot>
+                                </template>
+                            </view>
+                        </view>
+                    </template>
+                    <!-- #endif -->
+                    <!-- #ifndef MP-WEIXIN -->
                     <template v-for="(row, rowIndex) in sortedData" :key="row[rowKey] || rowIndex">
                         <!-- 子级渲染 (递归组件) -->
                         <table-row 
@@ -128,6 +203,7 @@
                             :selectedRows="selectedRows"
                             :expandWidth="expandWidth"
                             :computedMainCol="computedMainCol"
+                            :span-method="spanMethod"
                             @toggle-select="toggleSelect"
                             @row-click="handleRowClick"
                             @toggle-expand="toggleExpand"
@@ -139,6 +215,7 @@
                             </template>
                         </table-row>
                     </template>
+                    <!-- #endif -->
                 </template>
             </view>
         </view>
@@ -298,8 +375,13 @@ export default {
             default: '25px'
         },
         rowHeight: {
-            String,
-            default: '40px'
+            type: String,
+            default: '36px'
+        },
+        // 添加spanMethod属性，用于合并单元格
+        spanMethod: {
+            type: Function,
+            default: null
         }
     },
     emits: [
@@ -369,6 +451,24 @@ export default {
                 return 0;
             });
         },
+        flattenedSortedData() {
+            const result = [];
+            const childrenKey = this.treeProps.children;
+
+            const walk = (rows, parentRow = null, level = 1) => {
+                if (!Array.isArray(rows) || rows.length === 0) return;
+                rows.forEach((row, rowIndex) => {
+                    result.push({ row, parentRow, level, rowIndex });
+                    const children = row && row[childrenKey];
+                    if (children && children.length > 0 && this.isExpanded(row)) {
+                        walk(children, row, level + 1);
+                    }
+                });
+            };
+
+            walk(this.sortedData);
+            return result;
+        },
         // 计算当前应该显示的固定左侧列
         visibleFixedLeftColumns() {
             if (this.scrollLeft <= 0) {
@@ -434,6 +534,64 @@ export default {
     },
     methods: {
         addUnit,
+        isSelected(row) {
+            return this.selectedRows.some(r => r[this.rowKey] === row[this.rowKey]);
+        },
+        getCellSpan(row, column, rowIndex, columnIndex) {
+            if (typeof this.spanMethod !== 'function') {
+                return { rowspan: 1, colspan: 1 };
+            }
+
+            const result = this.spanMethod({
+                row,
+                column,
+                rowIndex,
+                columnIndex
+            });
+
+            if (Array.isArray(result)) {
+                const [rowspan, colspan] = result;
+                return { rowspan: rowspan != null ? rowspan : 1, colspan: colspan != null ? colspan : 1 };
+            }
+
+            if (result && typeof result === 'object') {
+                const { rowspan, colspan } = result;
+                return { rowspan: rowspan != null ? rowspan : 1, colspan: colspan != null ? colspan : 1 };
+            }
+
+            return { rowspan: 1, colspan: 1 };
+        },
+        getCellSpanClass(row, column, rowIndex, columnIndex) {
+            const span = this.getCellSpan(row, column, rowIndex, columnIndex);
+            if (span.rowspan === 0 || span.colspan === 0) {
+                return 'u-table-cell-hidden';
+            }
+            if (span.rowspan > 1 || span.colspan > 1) {
+                return 'u-table-cell-merged';
+            }
+            return '';
+        },
+        getCellSpanStyle(row, column, rowIndex, columnIndex) {
+            const span = this.getCellSpan(row, column, rowIndex, columnIndex);
+            const style = {};
+
+            if (span.rowspan > 1) {
+                const currentHeight = parseInt(this.rowHeight);
+                if (!isNaN(currentHeight)) {
+                    style.height = `${span.rowspan * currentHeight}px`;
+                }
+            }
+
+            if (span.colspan > 1) {
+                style.flex = span.colspan;
+            }
+
+            if (span.rowspan === 0 || span.colspan === 0) {
+                style.display = 'none';
+            }
+
+            return style;
+        },
         onScroll(e) {
             this.scrollLeft = e.detail.scrollLeft;
             // 获取所有左侧固定列
@@ -631,17 +789,21 @@ export default {
     overflow: auto;
     white-space: nowrap;
     position: relative;
+    color: var(--up-content-color, #606266);
+    background-color: var(--up-card-bg-color, #ffffff);
 
     .u-table-header {
         min-width: 100% !important;
         width: fit-content;
-        background-color: #f5f7fa;
+        background-color: var(--up-table2-header-bg-color, var(--up-bg-color, #f5f7fa));
+        color: var(--up-main-color, #303133);
     }
 
     .u-table-body {
         min-width: 100% !important;
         width: fit-content;
         position: relative;
+        background-color: var(--up-card-bg-color, #ffffff);
     }
 
     .u-table-sticky {
@@ -653,8 +815,6 @@ export default {
     .u-table-row {
         display: flex;
         flex-direction: row;
-        align-items: center;
-        border-bottom: 1px solid #ebeef5;
         overflow: hidden;
         position: relative;
         // min-height: 40px;
@@ -662,11 +822,11 @@ export default {
 
     // 添加border样式支持
     &.u-table-border {
-        border-top: 1px solid #ebeef5;
-        border-left: 1px solid #ebeef5;
-        border-right: 1px solid #ebeef5;
+        border-top: 1px solid var(--up-border-color, #ebeef5);
+        border-left: 1px solid var(--up-border-color, #ebeef5);
+        border-right: 1px solid var(--up-border-color, #ebeef5);
         .u-table-cell {
-            border-right: 1px solid #ebeef5;
+            border-right: 1px solid var(--up-border-color, #ebeef5);
         }
         
         .u-table-cell:last-child {
@@ -678,38 +838,49 @@ export default {
         flex: 1;
         display: flex;
         flex-direction: row;
-        padding: 10px 10px;
+        align-items: center;
+        padding: 10px 1px;
         font-size: 14px;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
         line-height: 1.1;
+        color: var(--up-content-color, #606266);
+        border-bottom: 1px solid var(--up-border-color, #ebeef5);
+        &.u-text-left {
+            justify-content: flex-start;
+            text-align: left;
+        }
+        &.u-text-center {
+            justify-content: center;
+            text-align: center;
+        }
+        &.u-text-right {
+            justify-content: flex-end;
+            text-align: right;
+        }
     }
 
     .u-table-row-zebra {
-        background-color: #fafafa;
+        background-color: var(--up-table2-zebra-bg-color, rgba(255, 255, 255, 0.03));
     }
 
     .u-table-row-highlight {
-        background-color: #f5f7fa;
+        background-color: var(--up-table2-highlight-bg-color, var(--up-bg-color, #f5f7fa));
     }
 
     .u-table-empty {
         text-align: center;
         padding: 20px;
-        color: #999;
+        color: var(--up-tips-color, #999);
     }
 
-    .u-text-left {
-        text-align: left;
+    .u-table-cell-hidden {
+        opacity: 0;
     }
 
-    .u-text-center {
-        text-align: center;
-    }
-
-    .u-text-right {
-        text-align: right;
+    .u-table-cell-merged {
+        z-index: 1;
     }
 }
 
@@ -722,7 +893,8 @@ export default {
     z-index: 20;
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.15);
     overflow: hidden;
-    background-color: #ffffff;
+    background-color: var(--up-card-bg-color, #ffffff);
+    color: var(--up-content-color, #606266);
 }
 
 // .u-table-fixed-row {
@@ -736,7 +908,7 @@ export default {
 // 为固定列也添加border样式支持
 .u-table-fixed-shadow .u-table-border {
     .u-table-cell {
-        border-right: 1rpx solid #ebeef5;
+        border-right: 1rpx solid var(--up-border-color, #ebeef5);
     }
     
     .u-table-cell:last-child {

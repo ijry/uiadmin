@@ -34,6 +34,7 @@
     "up.calendar.chooseDates": "Sélection de dates",
     "up.calendar.disabled": "Cette date est désactivée",
     "up.calendar.daysExceed": "Le nombre de jours sélectionnés ne peut pas dépasser {days} jours",
+    "up.calendar.today": "Aujourd'hui",
     "up.cityLocate.locateCity": "Localiser la ville",
     "up.cityLocate.fail": "Échec de localisation, veuillez cliquer pour réessayer.",
     "up.cityLocate.locating": "Localisation en cours",
@@ -76,5 +77,10 @@
     "up.upload.sizeExceed": "Dépassement de la limite de taille",
     "up.upload.uploading": "Téléchargement en cours",
     "up.upload.previewImageFail": "Échec de l'aperçu de l'image",
-    "up.upload.previewVideoFail": "Échec de l'aperçu de la vidéo"
+    "up.upload.previewVideoFail": "Échec de l'aperçu de la vidéo",
+    "up.goodsSku.stock": "Stock",
+    "up.goodsSku.price": "Prix",
+    "up.goodsSku.amount": "Pièces",
+    "up.goodsSku.choosed": "Sélectionné",
+    "up.goodsSku.buyAmount": "Quantité"
 }

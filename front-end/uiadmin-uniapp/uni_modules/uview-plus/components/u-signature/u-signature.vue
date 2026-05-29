@@ -1,37 +1,40 @@
 <template>
 	<view class="u-signature">
-		<view class="u-signature__canvas-wrap">
-			<canvas 
-				class="u-signature__canvas" 
-				:canvas-id="canvasId" 
-				:disable-scroll="true"
-				@touchstart="touchStart"
-				@touchmove="touchMove"
+		<view class="u-signature__canvas-wrap" :style="{background: resolvedBgColor}">
+			<up-canvas 
+				ref="signatureCanvas"
+				:canvas-id="canvasId"
+				:width="canvasWidth"
+				:height="canvasHeight"
+				:bg-color="resolvedBgColor"
+				@touchstart="touchStart" 
+				@touchmove="touchMove" 
 				@touchend="touchEnd"
+				:disable-scroll="true"
+				class="u-signature__canvas"
 				:style="{
 					width: canvasWidth + 'px',
 					height: canvasHeight + 'px',
-					background: bgColor
-				}"
-			></canvas>
+				}">
+			</up-canvas>
 		</view>
 		
 		<view v-if="showToolbar" class="u-signature__toolbar">
 			<view class="u-signature__toolbar-icons u-flex u-flex-x">
 				<view class="u-signature__toolbar-icon" @click="undo">
-					<up-icon name="arrow-left" size="22" :color="pathStack.length === 0 ? '#ccc' : '#999'"></up-icon>
+					<up-icon name="arrow-left" size="22" :color="pathStack.length === 0 ? iconDisabledColor : iconDefaultColor"></up-icon>
 				</view>
 				<view class="u-signature__toolbar-icon" @click="clear">
-					<up-icon name="trash" size="25" color="#999"></up-icon>
+					<up-icon name="trash" size="25" :color="iconDefaultColor"></up-icon>
 				</view>
 				<view class="u-signature__toolbar-icon" @click="toggleBrushSettings">
-					<up-icon name="edit-pen" size="25" color="#999"></up-icon>
+					<up-icon name="edit-pen" size="25" :color="iconDefaultColor"></up-icon>
 				</view>
 				<view class="u-signature__toolbar-icon" @click="toggleColorSettings">
-					<up-icon name="grid" size="24" color="#999"></up-icon>
+					<up-icon name="grid" size="24" :color="iconDefaultColor"></up-icon>
 				</view>
 				<view class="u-signature__toolbar-icon" @click="exportSignature">
-					<up-icon name="checkmark" size="25" :color="isEmpty ? '#ccc' : '#999'"></up-icon>
+					<up-icon name="checkmark" size="25" :color="isEmpty ? iconDisabledColor : iconDefaultColor"></up-icon>
 				</view>
 			</view>
 			
@@ -111,12 +114,11 @@
 				canvasId: 'u-signature-' + Math.random().toString(36).substr(2, 9),
 				canvasWidth: 300,
 				canvasHeight: 200,
-				lineColor: '#000000',
+				lineColor: '',
 				lineWidth: 3,
 				isDrawing: false,
 				pathStack: [], // 存储绘制路径用于回退
 				currentPath: [], // 当前绘制路径
-				ctx: null,
 				isEmpty: true,
 				presetColors: [
 					'#000000', // 黑色
@@ -130,11 +132,29 @@
 				],
 				showBrushSettings: false,
 				showColorSettings: false,
-				lastPoint: null // 保存上一个点的坐标
+				lastPoint: null, // 保存上一个点的坐标
+				canvasInstance: null // 缓存canvas实例
+			}
+		},
+		computed: {
+			resolvedBgColor() {
+				return this.bgColor === '#ffffff'
+					? (this.upThemeIsDark ? '#1c1c1e' : '#ffffff')
+					: this.bgColor
+			},
+			iconDefaultColor() {
+				return this.upThemeVar('--up-content-color', '#999999')
+			},
+			iconDisabledColor() {
+				return this.upThemeVar('--up-disabled-color', '#c8c9cc')
 			}
 		},
 		mounted() {
-			this.initCanvas()
+			// 初始化时获取canvas实例
+			this.$nextTick(() => {
+				this.getCanvasInstance();
+				this.clearCanvas();
+			});
 		},
 		watch: {
 			width: {
@@ -151,7 +171,7 @@
 			},
 			color: {
 				handler(newVal) {
-					this.lineColor = newVal
+					this.lineColor = this.resolveStrokeColor(newVal)
 				},
 				immediate: true
 			},
@@ -163,32 +183,47 @@
 			}
 		},
 		methods: {
-			initCanvas() {
-				// #ifndef APP-NVUE
-				const ctx = uni.createCanvasContext(this.canvasId, this)
-				this.ctx = ctx
-				this.clearCanvas()
-				// #endif
+			t,
+			resolveStrokeColor(color) {
+				if (color === '#000000') {
+					return this.upThemeIsDark ? '#f5f5f5' : '#000000'
+				}
+				return color
+			},
+			
+			// 获取签名画布实例
+			getCanvasInstance() {
+				if (this.canvasInstance) {
+					return this.canvasInstance;
+				}
 				
-				// #ifdef APP-NVUE
-				// NVUE环境下的处理
-				// #endif
+				const canvasRef = this.$refs.signatureCanvas;
+				if (canvasRef) {
+					this.canvasInstance = canvasRef;
+					return canvasRef;
+				}
+				return null;
 			},
 			
 			touchStart(e) {
-				if (!this.ctx) return
+				if (!this.canvasInstance || !this.canvasInstance.ctx) {
+					this.getCanvasInstance();
+				}
 				
-				this.isDrawing = true
-				this.isEmpty = false
-				this.currentPath = []
+				if (!this.canvasInstance || !this.canvasInstance.ctx) return;
 				
-				const { x, y } = this.getCanvasPoint(e)
-				this.ctx.beginPath()
-				this.ctx.moveTo(x, y)
-				this.ctx.setLineCap('round')
-				this.ctx.setLineJoin('round')
-				this.ctx.setStrokeStyle(this.lineColor)
-				this.ctx.setLineWidth(this.lineWidth)
+				this.isDrawing = true;
+				this.isEmpty = false;
+				this.currentPath = [];
+				
+				const { x, y } = this.getCanvasPoint(e);
+				
+				// 设置线条样式
+				this.canvasInstance.setLineStyle(this.lineColor, this.lineWidth);
+				
+				// 开始路径
+				this.canvasInstance.beginPath();
+				this.canvasInstance.moveTo(x, y);
 				
 				// 记录起始点
 				this.currentPath.push({
@@ -197,83 +232,69 @@
 					type: 'start',
 					color: this.lineColor,
 					width: this.lineWidth
-				})
+				});
 				
 				// 保存上一个点
-				this.lastPoint = { x, y }
+				this.lastPoint = { x, y };
 				
 				// 阻止默认事件以提高性能
-				e.preventDefault()
+				e.preventDefault();
 			},
 			
 			touchMove(e) {
-				if (!this.isDrawing || !this.ctx) return
+				if (!this.isDrawing || !this.canvasInstance || !this.canvasInstance.ctx) return;
 				
 				// 阻止默认事件以提高性能
-				e.preventDefault()
+				e.preventDefault();
 				
-				const { x, y } = this.getCanvasPoint(e)
+				const { x, y } = this.getCanvasPoint(e);
 				
-				// 使用更密集的点采样确保线条连贯性
-				if (this.lastPoint) {
-					// 计算两点间距离
-					const distance = Math.sqrt(Math.pow(x - this.lastPoint.x, 2) + Math.pow(y - this.lastPoint.y, 2))
-					// 根据距离确定插值点数量，确保点间距不超过1像素以获得更平滑的线条
-					const steps = Math.max(1, Math.floor(distance / 1))
-					
-					// 在两点间插入插值点
-					for (let i = 1; i <= steps; i++) {
-						const t = i / steps
-						const midX = this.lastPoint.x + (x - this.lastPoint.x) * t
-						const midY = this.lastPoint.y + (y - this.lastPoint.y) * t
-						
-						this.ctx.lineTo(midX, midY)
-						this.ctx.stroke()
-						this.currentPath.push({
-							x: midX,
-							y: midY,
-							type: 'move'
-						})
-					}
-				} else {
-					this.ctx.lineTo(x, y)
-					this.ctx.stroke()
-					this.currentPath.push({
-						x,
-						y,
-						type: 'move'
-					})
-				}
-				
-				this.ctx.draw(true)
+				// 从上一个点画线到当前点
+				this.canvasInstance.lineTo(x, y);
+				this.canvasInstance.stroke(); // 实时绘制当前线段
+				this.currentPath.push({
+					x,
+					y,
+					type: 'move'
+				});
+				this.canvasInstance.draw(false);
 				
 				// 更新上一个点
-				this.lastPoint = { x, y }
+				this.lastPoint = { x, y };
 			},
 			
 			touchEnd(e) {
-				if (!this.isDrawing || !this.ctx) return
+				if (!this.isDrawing || !this.canvasInstance || !this.canvasInstance.ctx) return;
 				
-				this.isDrawing = false
-				this.ctx.closePath()
-				this.lastPoint = null
+				this.isDrawing = false;
+				this.canvasInstance.closePath();
+				this.lastPoint = null;
 				
 				// 将当前路径加入栈中用于回退
 				if (this.currentPath.length > 0) {
-					this.pathStack.push([...this.currentPath])
+					this.pathStack.push([...this.currentPath]);
 				}
+				
+				// 最后统一执行一次绘制
+				this.canvasInstance.draw(true);
 			},
 			
 			// 同步获取canvas坐标点（兼容处理）
 			getCanvasPoint(e) {
-				const touch = e.touches[0]
-				const canvas = uni.createSelectorQuery().in(this).select('.u-signature__canvas')
+				// #ifdef MP-WEIXIN
+				const touch = e.touches && e.touches[0] ? e.touches[0] : e.mp.touches[0];
+				// #endif
+				// #ifndef MP-WEIXIN
+				const touch = e.touches[0];
+				// #endif
 				
-				// 返回一个包含坐标的对象
+				// 计算相对于canvas的坐标
+				// 由于无法直接获取canvas位置，这里简化处理
+				// 实际应用中可能需要通过uni.createSelectorQuery获取canvas位置
 				return {
 					x: touch.x,
 					y: touch.y
-				}
+				};
 			},
 			
 			// 选择颜色
@@ -294,84 +315,94 @@
 			
 			// 重新绘制所有路径
 			redraw() {
-				this.clearCanvas()
-				
-				if (this.pathStack.length === 0) {
-					this.isEmpty = true
-					return
+				if (!this.canvasInstance) {
+					this.getCanvasInstance();
 				}
 				
-				this.isEmpty = false
+				if (!this.canvasInstance) return;
 				
-				// #ifndef APP-NVUE
+				// 先清空画布
+				this.canvasInstance.clearCanvas();
+				
+				if (this.pathStack.length === 0) {
+					this.isEmpty = true;
+					return;
+				}
+				
+				this.isEmpty = false;
+				
+				// 逐个绘制路径
 				this.pathStack.forEach(path => {
-					if (path.length === 0) return
+					if (path.length === 0) return;
 					
-					this.ctx.beginPath()
-					this.ctx.setLineCap('round')
-					this.ctx.setLineJoin('round')
+					this.canvasInstance.beginPath();
 					
-					let lastPoint = null
+					let lastPoint = null;
 					path.forEach((point, index) => {
 						if (index === 0 && point.type === 'start') {
-							// 设置起始点样式
-							this.ctx.setStrokeStyle(point.color)
-							this.ctx.setLineWidth(point.width)
-							this.ctx.moveTo(point.x, point.y)
-							lastPoint = { x: point.x, y: point.y }
+							// 设置线条样式
+							this.canvasInstance.setLineStyle(point.color, point.width);
+							this.canvasInstance.moveTo(point.x, point.y);
+							lastPoint = { x: point.x, y: point.y };
 						} else if (point.type === 'move') {
-							this.ctx.lineTo(point.x, point.y)
-							lastPoint = { x: point.x, y: point.y }
+							this.canvasInstance.lineTo(point.x, point.y);
+							lastPoint = { x: point.x, y: point.y };
 						}
-					})
-					
-					this.ctx.stroke()
-					this.ctx.draw(true)
-				})
-				// #endif
-			},
-			
-			// 清空画布
-			clear() {
-				this.pathStack = []
-				this.currentPath = []
-				this.isEmpty = true
-				this.lastPoint = null
-				this.clearCanvas()
+					});
+					this.canvasInstance.stroke();
+					this.canvasInstance.draw(true);
+				});
 			},
 			
 			// 清空画布内容
 			clearCanvas() {
-				if (!this.ctx) return
+				if (!this.canvasInstance) {
+					this.getCanvasInstance();
+				}
 				
-				// #ifndef APP-NVUE
-				this.ctx.setFillStyle(this.bgColor)
-				this.ctx.fillRect(0, 0, this.canvasWidth, this.canvasHeight)
-				this.ctx.draw()
-				// #endif
+				if (!this.canvasInstance) return;
+				
+				this.canvasInstance.clearCanvas();
+			},
+
+			// 对外暴露的清空方法（供工具栏与ref调用）
+			clear() {
+				this.pathStack = []
+				this.currentPath = []
+				this.lastPoint = null
+				this.isDrawing = false
+				this.isEmpty = true
+				this.clearCanvas()
+				this.$emit('clear')
 			},
 			
 			// 导出签名图片
-			exportSignature() {
-				if (this.isEmpty) return
+			async exportSignature() {
+				if (this.isEmpty) {
+					console.warn('签名为空，无法导出');
+					return;
+				}
 				
-				// #ifndef APP-NVUE
-				uni.canvasToTempFilePath({
-					canvasId: this.canvasId,
-					fileType: 'png',
-					quality: 1,
-					success: (res) => {
-						this.$emit('confirm', res.tempFilePath)
-					},
-					fail: (err) => {
-						this.$emit('error', err)
-					}
-				}, this)
-				// #endif
+				if (!this.canvasInstance) {
+					this.getCanvasInstance();
+				}
 				
-				// #ifdef APP-NVUE
-				// NVUE环境下可能需要特殊处理
-				// #endif
+				if (!this.canvasInstance) {
+					console.error('无法获取画布实例');
+					return;
+				}
+				
+				try {
+					// 先重绘整个签名内容
+					this.redraw();
+					
+					// 导出图片
+					const imagePath = await this.canvasInstance.exportImage('png', 1);
+					this.$emit('confirm', imagePath);
+				} catch (error) {
+					console.error('导出签名图片失败:', error);
+					this.$emit('error', error);
+				}
 			},
 			
 			// 切换笔画设置显示
@@ -399,7 +430,7 @@
 		flex-direction: column;
 		
 		&__canvas-wrap {
-			border: 1px solid #e0e0e0;
+			border: 1px solid var(--up-border-color, #e0e0e0);
 			border-radius: 4px;
 			overflow: hidden;
 		}
@@ -411,7 +442,7 @@
 		
 		&__toolbar {
 			margin-top: 5px;
-            background-color: #fff;
+            background-color: var(--up-card-bg-color, #fff);
 		}
 		
 		&__toolbar-icons {
@@ -440,7 +471,7 @@
 				display: block;
 				margin-bottom: 10px;
 				font-size: 14px;
-				color: #999;
+				color: var(--up-tips-color, #999);
 			}
 		}
 		
@@ -452,7 +483,7 @@
 			display: block;
 			margin-bottom: 10px;
 			font-size: 14px;
-			color: #999;
+			color: var(--up-tips-color, #999);
 		}
 		
 		&__colors {
@@ -466,11 +497,11 @@
 			width: 30px;
 			height: 30px;
 			border-radius: 50%;
-			border: 2px solid #f0f0f0;
+			border: 2px solid var(--up-border-color, #f0f0f0);
 			cursor: pointer;
 			
 			&--active {
-				border-color: #2979ff;
+				border-color: var(--up-primary, #2979ff);
 				transform: scale(1.1);
 			}
 		}

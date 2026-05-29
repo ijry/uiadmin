@@ -3,9 +3,10 @@
         width: 100%;;
         display: inline-block;
         flex-direction: column;
+        color: var(--up-main-color, #303133);
         .agreement-url {
             display: inline-block;
-            color: blue;
+            color: var(--up-primary, #2979ff);
             // #ifdef H5
             cursor: pointer;
             // #endif

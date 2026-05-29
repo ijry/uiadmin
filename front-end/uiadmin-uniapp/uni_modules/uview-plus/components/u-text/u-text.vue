@@ -78,7 +78,7 @@ import { addStyle, addUnit, deepMerge } from '../../libs/function/index';
 /**
  * Text 文本
  * @description 此组件集成了文本类在项目中的常用功能，包括状态，拨打电话，格式化日期，*替换，超链接...等功能。 您大可不必在使用特殊文本时自己定义，text组件几乎涵盖您能使用的大部分场景。
- * @tutorial https://ijry.github.io/uview-plus/components/loading.html
+ * @tutorial https://uview-plus.jiangruyi.com/components/loading.html
  * @property {String} 					type		主题颜色
  * @property {Boolean} 					show		是否显示（默认 true ）
  * @property {String | Number}			text		显示的值
@@ -134,7 +134,9 @@ export default {
                 wordWrap: this.wordWrap,
                 fontSize: addUnit(this.size)
             }
-            !this.type && (style.color = this.color)
+            if (!this.type) {
+                style.color = this.color || this.upThemeVar('--up-content-color', this.$u?.color?.contentColor || '#606266')
+            }
             this.isNvue && this.lines && (style.lines = this.lines)
             this.lineHeight &&
                 (style.lineHeight = addUnit(this.lineHeight))

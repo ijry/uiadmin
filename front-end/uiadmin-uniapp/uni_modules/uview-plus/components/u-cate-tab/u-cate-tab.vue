@@ -19,26 +19,28 @@
                 	</slot>
 				</view>
 				<view class="u-cate-tab__page-view">
-					<view class="u-cate-tab__page-item" :id="'item' + index"
-						v-for="(item , index) in tabList" :key="index">
-                        <slot name="itemList" :item="item">
-                        </slot>
-						<template v-if="!$slots['itemList']">
-							<view class="item-title">
-                                <text>{{item[tabKeyName]}}</text>
-                            </view>
-                            <view class="item-container">
-                                <template v-for="(item1, index1) in item.children" :key="index1">
-                                    <slot name="pageItem" :pageItem="item1">
-                                        <view class="thumb-box" >
-                                            <image class="item-menu-image" :src="item1.icon" mode=""></image>
-                                            <view class="item-menu-name">{{item1[itemKeyName]}}</view>
-                                        </view>
-                                    </slot>
-                                </template>
-                            </view>
-						</template>
-					</view>
+					<template :key="index" v-for="(item , index) in tabList">
+						<view v-if="mode == 'follow' || ( mode == 'tab' && index == innerCurrent)"
+							class="u-cate-tab__page-item" :id="'item' + index">
+							<slot name="itemList" :item="item">
+							</slot>
+							<template v-if="!$slots['itemList']">
+								<view class="item-title">
+									<text>{{item[tabKeyName]}}</text>
+								</view>
+								<view class="item-container">
+									<template v-for="(item1, index1) in item.children" :key="index1">
+										<slot name="pageItem" :pageItem="item1">
+											<view class="thumb-box" >
+												<image class="item-menu-image" :src="item1.icon" mode=""></image>
+												<view class="item-menu-name">{{item1[itemKeyName]}}</view>
+											</view>
+										</slot>
+									</template>
+								</view>
+							</template>
+						</view>
+					</template>
 				</view>
 			</scroll-view>
 		</view>
@@ -49,6 +51,10 @@
 	export default {
 		name: 'up-cate-tab',
         props: {
+			mode: {
+                type: String,
+                default: 'follow' // follo跟随联动, tab单一显示。
+            },
 			height: {
                 type: String,
                 default: '100%'
@@ -77,14 +83,18 @@
 				deep: true,
 				handler(newVal, oldVal) {
 					// this.observer();
-					sleep(30);
-					this.getMenuItemTop();
-					this.leftMenuStatus(this.innerCurrent);
+					sleep(30).then(() => {
+						this.getMenuItemTop();
+						this.leftMenuStatus(this.innerCurrent);
+					})
 				}
 			},
 			current(nval) {
 				this.innerCurrent = nval;
 				this.leftMenuStatus(this.innerCurrent);
+				sleep(30).then(() => {
+					this.swichMenu(this.innerCurrent)
+				})
 			},
 			height() {
 				// console.log('height change');
@@ -114,15 +124,24 @@
 			this.innerCurrent = this.current;
 			this.leftMenuStatus(this.innerCurrent);
 			this.getMenuItemTop()
+			// 设置默认index
+			sleep(50).then(() => {
+				this.swichMenu(this.innerCurrent)
+			})
 		},
 		methods: {
 			addUnit,
 			// 点击左边的栏目切换
 			async swichMenu(index) {
-				if(this.arr.length == 0) {
-					await this.getMenuItemTop();
+				if (this.mode == 'follow') {
+					if(this.arr.length == 0) {
+						await this.getMenuItemTop();
+					}
+					if (this.scrollIntoView != 'item' + index) {
+						this.scrollIntoView = 'item' + index;
+					}
 				}
-				this.scrollIntoView = 'item' + index;
+
 				if (index == this.innerCurrent) return;
 				this.$nextTick(function(){
 					this.innerCurrent = index;
@@ -216,6 +235,7 @@
 			},
 			// 右边菜单滚动
 			async rightScroll(e) {
+				if (this.mode !== 'follow') return;
 				this.oldScrollTop = e.detail.scrollTop;
                 // console.log(e.detail.scrollTop)
                 // console.log(JSON.stringify(this.arr))
@@ -261,11 +281,12 @@
 	.u-cate-tab__wrap {
 		flex: 1;
 		display: flex;
+		flex-direction: row;
 		overflow: hidden;
 	}
 
 	.u-search-inner {
-		background-color: rgb(234, 234, 234);
+		background-color: var(--up-bg-color, rgb(234, 234, 234));
 		border-radius: 100rpx;
 		display: flex;
 		align-items: center;
@@ -285,23 +306,23 @@
 
 	.u-cate-tab__item {
 		height: 110rpx;
-		background: #f6f6f6;
+		background: var(--up-bg-color, #f6f6f6);
 		box-sizing: border-box;
 		display: flex;
 		align-items: center;
 		justify-content: center;
 		font-size: 26rpx;
-		color: #444;
+		color: var(--up-content-color, #444);
 		font-weight: 400;
 		line-height: 1;
 	}
 
 	.u-cate-tab__item-active {
 		position: relative;
-		color: #000;
+		color: var(--up-main-color, #000);
 		font-size: 30rpx;
 		font-weight: 600;
-		background: #fff;
+		background: var(--up-card-bg-color, #fff);
 	}
 
 	.u-cate-tab__item-active::before {
@@ -319,7 +340,7 @@
 
 	.u-cate-tab__right-box {
 		flex: 1;
-		background-color: rgb(250, 250, 250);
+		background-color: var(--up-page-bg-color, var(--up-bg-color, rgb(250, 250, 250)));
 	}
 
 	.u-cate-tab__page-view {
@@ -328,7 +349,8 @@
 
 	.u-cate-tab__page-item {
 		margin-bottom: 30rpx;
-		background-color: #fff;
+		background-color: var(--up-card-bg-color, #fff);
+		border: 1px solid var(--up-border-color, #e5e7eb);
 		padding: 16rpx;
 		border-radius: 8rpx;
 	}
@@ -339,14 +361,14 @@
 
 	.item-title {
 		font-size: 26rpx;
-		color: $u-main-color;
+		color: var(--up-main-color, $u-main-color);
 		font-weight: bold;
 	}
 
 	.item-menu-name {
 		font-weight: normal;
 		font-size: 24rpx;
-		color: $u-main-color;
+		color: var(--up-main-color, $u-main-color);
 	}
 
 	.item-container {

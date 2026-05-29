@@ -34,6 +34,7 @@
     "up.calendar.chooseDates": "日期选择",
     "up.calendar.disabled": "该日期已禁用",
     "up.calendar.daysExceed": "选择天数不能超过{days}天",
+    "up.calendar.today": "今天",
     "up.cityLocate.locateCity": "定位城市",
     "up.cityLocate.fail": "定位失败，请点击重试。",
     "up.cityLocate.locating": "定位中",
@@ -76,5 +77,10 @@
     "up.upload.sizeExceed": "超过大小限制",
     "up.upload.uploading": "上传中",
     "up.upload.previewImageFail": "预览图片失败",
-    "up.upload.previewVideoFail": "预览视频失败"
+    "up.upload.previewVideoFail": "预览视频失败",
+    "up.goodsSku.stock": "库存",
+    "up.goodsSku.price": "价格",
+    "up.goodsSku.amount": "件",
+    "up.goodsSku.choosed": "已选",
+    "up.goodsSku.buyAmount": "购买数量"
 }

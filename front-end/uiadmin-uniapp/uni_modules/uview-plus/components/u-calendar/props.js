@@ -143,6 +143,16 @@ export const props = defineMixin({
 			type: [Number, String],
 			default: 3
 		},
+		// 是否启用非滚动的单月切换模式
+		monthSwitch: {
+			type: Boolean,
+			default: () => defProps.calendar.monthSwitch
+		},
+		// 是否显示今天按钮
+		showToday: {
+			type: Boolean,
+			default: () => defProps.calendar.showToday
+		},
         // 星期文案
         weekText: {
 			type: Array,
@@ -159,6 +169,11 @@ export const props = defineMixin({
         monthFormat:{
 			type: String,
 			default: defProps.calendar.monthFormat
+		},
+        // 是否页面内展示
+        pageInline:{
+			type: Boolean,
+			default: defProps.calendar.pageInline
 		}
     }
 })

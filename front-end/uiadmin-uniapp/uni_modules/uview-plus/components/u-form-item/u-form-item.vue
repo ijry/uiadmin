@@ -1,10 +1,10 @@
 <template>
-	<view class="u-form-item" :class="{'u-form-item--error':(!!message && parentData.errorType === 'message')}">
+	<view class="u-form-item" :class="{'u-form-item--error':(message != '' && parentData['errorType'] === 'message')}">
 		<view
 			class="u-form-item__body"
 			@tap="clickHandler"
 			:style="[addStyle(customStyle), {
-                flexDirection: (labelPosition || parentData.labelPosition) === 'left' ? 'row' : 'column'
+                flexDirection: (labelPosition || parentData['labelPosition']) === 'left' ? 'row' : 'column'
 			}]"
 		>
 			<!-- 微信小程序中，将一个参数设置空字符串，结果会变成字符串"true" -->
@@ -12,10 +12,10 @@
 				<!-- {{required}} -->
 				<view
 					class="u-form-item__body__left"
-					v-if="required || leftIcon || label"
+					v-if="required || leftIcon != '' || label != ''"
 					:style="{
-						width: addUnit(labelWidth || parentData.labelWidth),
-						marginBottom: (labelPosition || parentData.labelPosition) === 'left' ? 0 : '5px',
+						width: addUnit(labelWidth || parentData['labelWidth']),
+						marginBottom: (labelPosition || parentData['labelPosition']) === 'left' ? 0 : '5px',
 					}"
 				>
 					<!-- 为了块对齐 -->
@@ -36,8 +36,8 @@
 						</view>
 						<text
 							class="u-form-item__body__left__content__label"
-							:style="[parentData.labelStyle, {
-								justifyContent: parentData.labelAlign === 'left' ? 'flex-start' : parentData.labelAlign === 'center' ? 'center' : 'flex-end'
+							:style="[labelDynamicStyle, parentData.labelStyle, {
+								justifyContent: parentData['labelAlign'] === 'left' ? 'flex-start' : parentData['labelAlign'] === 'center' ? 'center' : 'flex-end'
 							}]"
 						>{{ label }}</text>
 					</view>
@@ -50,7 +50,7 @@
 					</view>
 					<view
 						class="item__body__right__content__icon"
-						v-if="$slots.right"
+						v-if="$slots['right']"
 					>
 						<slot name="right" />
 					</view>
@@ -59,17 +59,17 @@
 		</view>
 		<slot name="error">
 			<text
-				v-if="!!message && parentData.errorType === 'message'"
+				v-if="message != '' && parentData['errorType'] === 'message'"
 				class="u-form-item__body__right__message"
 				:style="{
-					marginLeft:  addUnit((labelPosition || parentData.labelPosition) === 'top' ? 0 : (labelWidth || parentData.labelWidth))
+					marginLeft:  addUnit((labelPosition || parentData['labelPosition']) === 'top' ? 0 : (labelWidth || parentData['labelWidth']))
 				}"
 			>{{ message }}</text>
 		</slot>
 		<u-line
 			v-if="borderBottom"
-			:color="message && parentData.errorType === 'border-bottom' ? color.error : propsLine.color"
-			:customStyle="`margin-top: ${message && parentData.errorType === 'message' ? '5px' : 0}`"
+			:color="message != '' && parentData['errorType'] === 'border-bottom' ? color['error'] : propsLine['color']"
+			:customStyle="`margin-top: ${message != '' && parentData['errorType'] === 'message' ? '5px' : 0}`"
 		></u-line>
 	</view>
 </template>
@@ -84,7 +84,7 @@
 	/**
 	 * Form 表单
 	 * @description 此组件一般用于表单场景，可以配置Input输入框，Select弹出框，进行表单验证等。
-	 * @tutorial https://ijry.github.io/uview-plus/components/form.html
+	 * @tutorial https://uview-plus.jiangruyi.com/components/form.html
 	 * @property {String}			label			input的label提示语
 	 * @property {String}			prop			绑定的值
 	 * @property {Array}			rules			绑定的规则
@@ -98,7 +98,7 @@
 	 * @example <u-form-item label="姓名" prop="userInfo.name" borderBottom ref="item1"></u-form-item>
 	 */
 	export default {
-		name: 'u-form-item',
+		name: 'up-form-item',
 		mixins: [mpMixin, mixin, props],
 		data() {
 			return {
@@ -122,12 +122,19 @@
 		},
 		// 组件创建完成时，将当前实例保存到u-form中
 		computed: {
+			labelDynamicStyle() {
+				return {
+					color: this.upThemeVar('--up-main-color', '#303133')
+				}
+			},
 			propsLine() {
 				return defProps.line
 			}
 		},
 		mounted() {
-			this.init()
+			this.$nextTick(() => {
+				this.init()
+			})
 		},
 		emits: ["click"],
 		watch: {
@@ -146,7 +153,7 @@
 				// 父组件的实例
 				this.updateParentData()
 				if (!this.parent) {
-					error('u-form-item需要结合u-form组件使用')
+					error('u-form-item需要结合up-form组件使用')
 				}
 			},
 			// 手动设置校验的规则，如果规则中有函数的话，微信小程序中会过滤掉，所以只能手动调用设置规则
@@ -161,20 +168,20 @@
 			// 获取父组件的参数
 			updateParentData() {
 				// 此方法写在mixin中
-				this.getParentData('u-form');
+				this.getParentData('up-form');
 			},
 			// 移除u-form-item的校验结果
 			clearValidate() {
-				this.message = null
+				this.message = ''
 			},
 			// 清空当前的组件的校验结果，并重置为初始值
 			resetField() {
 				// 找到原始值
-				const value = getProperty(this.parent.originalModel, this.prop)
-				// 将u-form的model的prop属性链还原原始值
-				setProperty(this.parent.model, this.prop, value)
+				const value = getProperty(this.parent.$data['originalModel'], this.prop)
+				// 将up-form的model的prop属性链还原原始值
+				setProperty(this.parent.$props['model'], this.prop, value)
 				// 移除校验结果
-				this.message = null
+				this.message = ''
 			},
 			// 点击组件
 			clickHandler() {

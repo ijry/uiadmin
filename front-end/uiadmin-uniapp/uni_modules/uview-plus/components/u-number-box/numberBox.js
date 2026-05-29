@@ -1,11 +1,11 @@
 /*
  * @Author       : LQ
  * @Description  :
- * @version      : 1.0
+ * @version      : 3.0
  * @Date         : 2021-08-20 16:44:21
- * @LastAuthor   : LQ
- * @lastTime     : 2021-08-20 17:11:46
- * @FilePath     : /u-view2.0/uview-ui/libs/config/props/numberBox.js
+ * @LastAuthor   : jry
+ * @lastTime     : 2025-12-19 08:55:21
+ * @FilePath     : /uview-plus/libs/config/props/numberBox.js
  */
 export default {
     // 步进器组件
@@ -24,13 +24,13 @@ export default {
         showPlus: true,
         decimalLength: null,
         longPress: true,
-        color: '#323233',
+        color: '',
         buttonWidth: 30,
         buttonSize: 30,
         buttonRadius: '0px',
-        bgColor: '#EBECEE',
-        disabledBgColor: '#f7f8fa',
-        inputBgColor: '#EBECEE',
+        bgColor: '',
+        disabledBgColor: '',
+        inputBgColor: '',
         cursorSpacing: 100,
         disableMinus: false,
         disablePlus: false,

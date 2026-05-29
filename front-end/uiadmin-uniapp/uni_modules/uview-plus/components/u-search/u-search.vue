@@ -10,9 +10,9 @@
 		<view
 		    class="u-search__content"
 		    :style="{
-				backgroundColor: bgColor,
+				backgroundColor: resolvedBgColor,
 				borderRadius: shape == 'round' ? '100px' : '4px',
-				borderColor: borderColor,
+				borderColor: resolvedBorderColor,
 			}"
 		>
 			<template v-if="$slots.label || label !== null">
@@ -25,12 +25,12 @@
 					@tap="clickIcon"
 				    :size="searchIconSize"
 				    :name="searchIcon"
-				    :color="searchIconColor ? searchIconColor : color"
+				    :color="searchIconColor ? searchIconColor : resolvedColor"
 				></up-icon>
 			</view>
 			<input
 			    confirm-type="search"
-			    @blur="blur"
+			    @blur="blurFunc"
 			    :value="keyword"
 			    @confirm="search"
 			    @input="inputChange"
@@ -42,20 +42,20 @@
 				:auto-blur="autoBlur"
 			    placeholder-class="u-search__content__input--placeholder"
 			    :placeholder="placeholder"
-			    :placeholder-style="`color: ${placeholderColor}`"
+			    :placeholder-style="`color: ${resolvedPlaceholderColor}`"
 			    class="u-search__content__input"
 			    type="text"
 			    :style="[{
 					pointerEvents: disabled ? 'none' : 'auto',
 					textAlign: inputAlign,
-					color: color,
-					backgroundColor: bgColor,
+					color: resolvedColor,
+					backgroundColor: resolvedBgColor,
 					height: addUnit(height)
 				}, inputStyle]"
 			/>
 			<view
 			    class="u-search__content__icon u-search__content__close"
-			    v-if="keyword && clearabled && focused"
+			    v-if="isShowClear"
 			    @click="clear"
 			>
 				<up-icon
@@ -84,7 +84,7 @@
 	/**
 	 * search 搜索框
 	 * @description 搜索组件，集成了常见搜索框所需功能，用户可以一键引入，开箱即用。
-	 * @tutorial https://ijry.github.io/uview-plus/components/search.html
+	 * @tutorial https://uview-plus.jiangruyi.com/components/search.html
 	 * @property {String}			shape				搜索框形状，round-圆形，square-方形（默认 'round' ）
 	 * @property {String}			bgColor				搜索框背景颜色（默认 '#f2f2f2' ）
 	 * @property {String}			placeholder			占位文字内容（默认 '请输入关键字' ）
@@ -111,6 +111,7 @@
 	 * @property {String | Number}	label				搜索框左边显示内容
 	 * @property {Boolean}	        adjustPosition	    键盘弹起时，是否自动上推页面
 	 * @property {Boolean}	        autoBlur	        键盘收起时，是否自动失去焦点
+	 * @property {Boolean}	        onlyClearableOnFocused	是否仅在聚焦时显示清除控件（默认 true ）
 	 * @property {Object}			customStyle			定义需要用到的外部样式
 	 *
 	 * @event {Function} change 输入框内容发生变化时触发
@@ -125,7 +126,6 @@
 		data() {
 			return {
 				keyword: '',
-				showClear: false, // 是否显示右边的清除图标
 				show: false,
 				// 标记input当前状态是否处于聚焦中，如果是，才会显示右侧的清除控件
 				focused: this.focus
@@ -163,8 +163,43 @@
 			// #endif
 		},
 		computed: {
+			resolvedBgColor() {
+				if (this.bgColor) {
+					return this.bgColor
+				}
+				return this.upThemeVar('--up-card-bg-color', this.$u?.color?.bgColor || '#f2f2f2')
+			},
+			resolvedBorderColor() {
+				// 外部显式传参时保持原行为
+				if (this.upHasProp('borderColor') || (this.borderColor && this.borderColor !== 'transparent')) {
+					return this.borderColor
+				}
+				// 暗黑模式默认给弱边框，避免背景同色时轮廓不明显
+				if (this.upThemeIsDark) {
+					return this.upThemeVar('--up-border-color', 'rgba(255, 255, 255, 0.12)')
+				}
+				return 'transparent'
+			},
+			resolvedColor() {
+				return this.color || this.upThemeVar('--up-content-color', this.$u?.color?.contentColor || '#606266')
+			},
+			resolvedPlaceholderColor() {
+				return this.placeholderColor || this.upThemeVar('--up-tips-color', this.$u?.color?.tipsColor || '#909399')
+			},
 			showActionBtn() {
 				return !this.animation && this.showAction
+			},
+			// 是否显示清除控件
+			isShowClear() {
+				const { clearabled, focused, keyword, onlyClearableOnFocused } = this;
+				if (!clearabled) {
+					return false;
+				}
+				if (onlyClearableOnFocused) {
+					return !!focused && keyword !== "";
+				} else {
+					return keyword !== "";
+				}
 			}
 		},
 		emits: ['clear', 'search', 'custom', 'focus', 'blur', 'click', 'clickIcon', 'update:modelValue', 'change'],
@@ -208,7 +243,7 @@
 				this.$emit('focus', this.keyword);
 			},
 			// 失去焦点
-			blur() {
+			blurFunc() {
 				// 最开始使用的是监听图标@touchstart事件，自从hx2.8.4后，此方法在微信小程序出错
 				// 这里改为监听点击事件，手点击清除图标时，同时也发生了@blur事件，导致图标消失而无法点击，这里做一个延时
 				setTimeout(() => {

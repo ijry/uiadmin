@@ -21,6 +21,7 @@ import Backtop from '../../components/u-back-top/backtop'
 import Badge from '../../components/u-badge/badge'
 import Button from '../../components/u-button/button'
 import Calendar from '../../components/u-calendar/calendar'
+import CalendarStrip from '../../components/u-calendar-strip/calendarStrip'
 import CarKeyboard from '../../components/u-car-keyboard/carKeyboard'
 import Card from '../../components/u-card/card'
 import Cell from '../../components/u-cell/cell'
@@ -40,8 +41,9 @@ import DatetimePicker from '../../components/u-datetime-picker/datetimePicker'
 import Divider from '../../components/u-divider/divider'
 import Empty from '../../components/u-empty/empty'
 import Form from '../../components/u-form/form'
-import GormItem from '../../components/u-form-item/formItem'
+import FormItem from '../../components/u-form-item/formItem'
 import Gap from '../../components/u-gap/gap'
+import Guide from '../../components/u-guide/guide'
 import Grid from '../../components/u-grid/grid'
 import GridItem from '../../components/u-grid-item/gridItem'
 import Icon from '../../components/u-icon/icon'
@@ -112,6 +114,7 @@ const props = {
     ...Badge,
     ...Button,
     ...Calendar,
+    ...CalendarStrip,
     ...CarKeyboard,
     ...Card,
     ...Cell,
@@ -131,8 +134,9 @@ const props = {
     ...Divider,
     ...Empty,
     ...Form,
-    ...GormItem,
+    ...FormItem,
     ...Gap,
+    ...Guide,
     ...Grid,
     ...GridItem,
     ...Icon,
@@ -202,7 +206,7 @@ function setConfig(configs) {
 }
 
 // 初始化自定义配置
-if (uni && uni.upuiParams) {
+if (typeof uni !== 'undefined' && uni && uni.upuiParams) {
 	console.log('setting uview-plus')
 	let temp = uni.upuiParams()
 	if (temp.httpIns) {

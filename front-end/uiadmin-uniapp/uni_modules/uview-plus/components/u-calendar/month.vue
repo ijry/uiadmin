@@ -135,6 +135,11 @@
 			forbidDaysToast: {
 				type: String,
 				default: ''
+			},
+			// 今天日期，用于独立高亮
+			todayDate: {
+				type: String,
+				default: ''
 			}
 		},
 		data() {
@@ -169,7 +174,7 @@
 					// #ifdef APP-NVUE
 					style.width = addUnit(dayWidth, 'px')
 					// #endif
-					style.height = addUnit(this.rowHeight)
+					style.height = addUnit(this.rowHeight, 'px')
 					if (index2 === 0) {
 						// 获取当前为星期几，如果为0，则为星期天，减一为每月第一天时，需要向左偏移的item个数
 						week = (week === 0 ? 7 : week) - 1
@@ -192,6 +197,10 @@
 					// 判断date是否在selected数组中，因为月份可能会需要补0，所以使用dateSame判断，而不用数组的includes判断
 					if (this.selected.some(item => this.dateSame(item, date))) {
 						style.backgroundColor = this.color
+					}
+					if (this.todayDate && this.dateSame(date, this.todayDate) && !this.selected.some(item => this.dateSame(item, date))) {
+						style.border = `1px solid ${this.color}`
+						style.boxSizing = 'border-box'
 					}
 					if (this.mode === 'single') {
 						if (date === this.selected[0]) {
@@ -217,9 +226,10 @@
 							// 处于第一和最后一个之间的日期，背景色设置为浅色，通过将对应颜色进行等分，再取其尾部的颜色值
 							if (dayjs(date).isAfter(dayjs(this.selected[0])) && dayjs(date).isBefore(dayjs(this
 									.selected[len]))) {
-								style.backgroundColor = colorGradient(this.color, '#ffffff', 100)[90]
+								const rangeEndColor = this.upThemeVar('--up-card-bg-color', this.upThemeIsDark ? '#1c1c1e' : '#ffffff')
+								style.backgroundColor = colorGradient(this.color, rangeEndColor, 100)[90]
 								// 增加一个透明度，让范围区间的背景色也能看到底部的mark水印字符
-								style.opacity = 0.7
+								style.opacity = this.upThemeIsDark ? 0.85 : 0.7
 							}
 						} else if (this.selected.length === 1) {
 							// 之所以需要这么写，是因为uni-app的iOS客户端的bug
@@ -359,7 +369,7 @@
 			// 获取每个月份区域的尺寸
 			getMonthRectByPromise(el) {
 				// #ifndef APP-NVUE
-				// $uGetRect为uView自带的节点查询简化方法，详见文档介绍：https://ijry.github.io/uview-plus/js/getRect.html
+				// $uGetRect为uView自带的节点查询简化方法，详见文档介绍：https://uview-plus.jiangruyi.com/js/getRect.html
 				// 组件内部一般用this.$uGetRect，对外的为uni.$u.getRect，二者功能一致，名称不同
 				return new Promise(resolve => {
 					this.$uGetRect(`.${el}`).then(size => {
@@ -502,7 +512,7 @@
 			font-size: 14px;
 			line-height: 42px;
 			height: 42px;
-			color: $u-main-color;
+			color: var(--up-main-color, $u-main-color);
 			text-align: center;
 			font-weight: bold;
 		}
@@ -524,7 +534,7 @@
 
 				&__text {
 					font-size: 155px;
-					color: rgba(231, 232, 234, 0.83);
+					color: var(--up-calendar-month-mark-color, rgba(231, 232, 234, 0.83));
 				}
 			}
 
@@ -555,7 +565,7 @@
 					}
 
 					&__buttom-info {
-						color: $u-content-color;
+						color: var(--up-content-color, $u-content-color);
 						text-align: center;
 						position: absolute;
 						bottom: 5px;
@@ -569,20 +579,21 @@
 						}
 
 						&--disabled {
-							color: #cacbcd;
+							color: var(--up-disabled-color, #cacbcd);
 						}
 					}
 
 					&__info {
 						text-align: center;
 						font-size: 16px;
+						color: var(--up-main-color, $u-main-color);
 
 						&--selected {
 							color: #ffffff;
 						}
 
 						&--disabled {
-							color: #cacbcd;
+							color: var(--up-disabled-color, #cacbcd);
 						}
 					}
 
@@ -613,4 +624,5 @@
 			}
 		}
 	}
+
 </style>

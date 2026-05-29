@@ -29,7 +29,7 @@
             	    :disabled="disabled || readonly"
             	    :maxlength="maxlength"
             	    :placeholder="placeholder"
-            	    :placeholder-style="placeholderStyle"
+            	    :placeholder-style="placeholderStyleInner"
             	    :placeholder-class="placeholderClass"
             	    :confirm-type="confirmType"
             	    :confirm-hold="confirmHold"
@@ -188,6 +188,12 @@ export default {
         }
     },
     computed: {
+        placeholderStyleInner() {
+            if (this.placeholderStyle) {
+                return this.placeholderStyle;
+            }
+            return `color: ${this.upThemeVar('--up-tips-color', this.$u?.color?.tipsColor || '#909399')}`;
+        },
         // 是否密码
         isPassword() {
             let ret = false;
@@ -205,29 +211,52 @@ export default {
         },
         // 是否显示清除控件
         isShowClear() {
-            const { clearable, readonly, focused, innerValue } = this;
-            return !!clearable && !readonly && !!focused && innerValue !== "";
+            const { clearable, readonly, focused, innerValue, onlyClearableOnFocused } = this;
+            if (!clearable || readonly) {
+                return false;
+            }
+            if (onlyClearableOnFocused) {
+                return !!focused && innerValue !== "";
+            } else {
+                return innerValue !== "";
+            }
         },
         // 组件的类名
         inputClass() {
             let classes = [],
                 { border, disabled, shape } = this;
             border === "surround" &&
-                (classes = classes.concat(["u-border", "u-input--radius"]));
+                (classes = classes.concat(["u-input--radius"]));
             classes.push(`u-input--${shape}`);
             border === "bottom" &&
                 (classes = classes.concat([
-                    "u-border-bottom",
                     "u-input--no-radius",
                 ]));
             return classes.join(" ");
+        },
+        inputBorderColor() {
+            const lightBorder = this.upThemeVar('--up-border-color', '#dadbde');
+            return this.upThemeVar(
+                '--up-input-border-color',
+                this.upThemeIsDark ? 'rgba(255, 255, 255, 0.08)' : lightBorder
+            );
         },
         // 组件的样式
         wrapperStyle() {
             const style = {};
             // 禁用状态下，被背景色加上对应的样式
             if (this.disabled) {
-                style.backgroundColor = this.disabledColor;
+                style.backgroundColor = this.disabledColor || this.upThemeVar('--up-bg-color', this.$u?.color?.bgColor || '#f3f4f6');
+            }
+            if (this.border === "surround") {
+                style.borderWidth = "0.5px";
+                style.borderStyle = "solid";
+                style.borderColor = this.inputBorderColor;
+            }
+            if (this.border === "bottom") {
+                style.borderBottomWidth = "0.5px";
+                style.borderBottomStyle = "solid";
+                style.borderBottomColor = this.inputBorderColor;
             }
             // 无边框时，去除内边距
             if (this.border === "none") {
@@ -244,7 +273,7 @@ export default {
         // 输入框的样式
         inputStyle() {
             const style = {
-                color: this.color,
+                color: this.color || this.upThemeVar('--up-main-color', this.$u?.color?.mainColor || '#303133'),
                 fontSize: addUnit(this.fontSize),
 				textAlign: this.inputAlign
             };
@@ -295,7 +324,9 @@ export default {
         },
         // 点击完成按钮时触发
         onConfirm(event) {
-            this.$emit("confirm", this.innerValue);
+            const detail = event && event.detail ? event.detail : {};
+            const confirmValue = typeof detail.value !== "undefined" ? detail.value : this.innerValue;
+            this.$emit("confirm", confirmValue);
         },
         // 键盘高度发生变化的时候触发此事件
         // 兼容性：微信小程序2.7.0+、App 3.1.0+
@@ -315,14 +346,17 @@ export default {
                 if (!isOut || this.clearInput) {
                     // 标识value值的变化是由内部引起的
                     this.changeFromInner = true;
-                    this.$emit("change", value);
-
+                   
                     // #ifdef VUE3
                     this.$emit("update:modelValue", value);
                     // #endif
                     // #ifdef VUE2
                     this.$emit("input", value);
                     // #endif
+					
+					//change方法需要放在下面，否则会引起change先触发，model后变化的异常
+					this.$emit("change", value);
+					
                 }
 
                 // 尝试调用u-form的验证方法

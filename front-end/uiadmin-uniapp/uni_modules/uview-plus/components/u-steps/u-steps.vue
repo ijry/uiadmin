@@ -36,13 +36,13 @@
 			children() {
 				this.updateChildData()
 			},
-			parentData() {
+			parentDataCpu() {
 				this.updateChildData()
 			}
 		},
 		computed: {
 			// 监听参数的变化，通过watch中，手动去更新子组件的数据，否则子组件不会自动变化
-			parentData() {
+			parentDataCpu() {
 				return [this.current, this.direction, this.activeColor, this.inactiveColor, this.activeIcon, this.inactiveIcon, this.dot]
 			}
 		},

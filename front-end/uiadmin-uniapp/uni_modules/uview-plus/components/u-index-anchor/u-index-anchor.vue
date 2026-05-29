@@ -8,14 +8,14 @@
 		:ref="`u-index-anchor-${text}`"
 	    :style="{
 			height: addUnit(height),
-			backgroundColor: bgColor
+			backgroundColor: resolvedBgColor
 		}"
 	>
 		<text
 		    class="u-index-anchor__text"
 		    :style="{
 				fontSize: addUnit(size),
-				color: color
+				color: resolvedColor
 			}"
 		>{{ text.name || text }}</text>
 	</view>
@@ -79,6 +79,17 @@
 			}
 		},
 		computed: {
+			resolvedColor() {
+				return this.color === '#606266'
+					? this.upThemeVar('--up-content-color', '#606266')
+					: this.color
+			},
+			resolvedBgColor() {
+				const isDefaultBgColor = this.bgColor === '#f1f1f1' || this.bgColor === '#dedede'
+				return isDefaultBgColor
+					? this.upThemeVar('--up-bg-color', '#f1f1f1')
+					: this.bgColor
+			},
         parentSticky() {
             const indexList = $parent.call(this, "u-index-list");
             return indexList ? indexList.sticky : true;

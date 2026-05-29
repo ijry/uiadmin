@@ -1,11 +1,11 @@
 /*
  * @Author       : LQ
  * @Description  :
- * @version      : 1.0
+ * @version      : 3.0
  * @Date         : 2021-08-20 16:44:21
- * @LastAuthor   : LQ
- * @lastTime     : 2021-08-20 16:52:43
- * @FilePath     : /u-view2.0/uview-ui/libs/config/props/calendar.js
+ * @LastAuthor   : jry
+ * @lastTime     : 2025-12-19 08:55:21
+ * @FilePath     : /uview-plus/libs/config/props/calendar.js
  */
 import { t } from '../../libs/i18n'
 export default {
@@ -39,9 +39,12 @@ export default {
         allowSameDay: false,
 		round: 0,
 		monthNum: 3,
+        monthSwitch: false,
+        showToday: true,
         weekText: [t("up.week.one"), t("up.week.two"), t("up.week.three"), t("up.week.four"), t("up.week.five"), t("up.week.six"), t("up.week.seven")],
         forbidDays: [],
         forbidDaysToast: t("up.calendar.disabled"),
-        monthFormat: ''
+        monthFormat: '',
+        pageInline: false
     }
 }

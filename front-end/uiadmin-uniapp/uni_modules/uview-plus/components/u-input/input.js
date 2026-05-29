@@ -1,7 +1,7 @@
 /*
  * @Author       : LQ
  * @Description  :
- * @version      : 1.0
+ * @version      : 3.0
  * @Date         : 2021-08-20 16:44:21
  * @LastAuthor   : jry
  * @lastTime     : 2025-08-20 10:21:55
@@ -14,13 +14,13 @@ export default {
 		type: 'text',
 		fixed: false,
 		disabled: false,
-		disabledColor: '#f5f7fa',
+		disabledColor: '',
 		clearable: false,
 		password: false,
 		maxlength: 140,
 		placeholder: null,
 		placeholderClass: 'input-placeholder',
-		placeholderStyle: 'color: #c0c4cc',
+		placeholderStyle: '',
 		showWordLimit: false,
 		confirmType: 'done',
 		confirmHold: false,
@@ -35,7 +35,7 @@ export default {
 		adjustPosition: true,
 		inputAlign: 'left',
 		fontSize: '15px',
-		color: '#303133',
+		color: '',
 		prefixIcon: '',
 		prefixIconStyle: '',
 		suffixIcon: '',
@@ -44,7 +44,7 @@ export default {
 		readonly: false,
 		shape: 'square',
 		formatter: null,
-		cursorColor: '',
+		cursorColor: '#53c21d',
 		passwordVisibilityToggle: true
 	}
 }

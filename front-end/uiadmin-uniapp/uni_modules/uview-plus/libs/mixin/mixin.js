@@ -2,9 +2,21 @@ import { defineMixin } from '../vue'
 import { deepMerge, $parent, sleep } from '../function/index'
 import test from '../function/test'
 import route from '../util/route'
+import {
+    applyNativeThemeUI,
+    applyNativeThemeUIDeferred,
+    getThemeCardStyle,
+    getThemeIsDark,
+    getThemePageStyle,
+    getThemeVar,
+    getThemeVarsForStyle,
+    syncThemeRuntimeFromStorage
+} from '../theme/runtime'
 // #ifdef APP-NVUE
 // 由于weex为阿里的KPI业绩考核的产物，所以不支持百分比单位，这里需要通过dom查询组件的宽度
-const dom = uni.requireNativePlugin('dom')
+const dom = (typeof uni !== 'undefined' && uni && typeof uni.requireNativePlugin === 'function')
+    ? uni.requireNativePlugin('dom')
+    : null
 // #endif
 
 export const mixin = defineMixin({
@@ -31,32 +43,83 @@ export const mixin = defineMixin({
         }
     },
     data() {
-        return {}
+        return {
+            __upPageThemeChangeHandler: null,
+            upThemeVersion: 0
+        }
     },
     onLoad() {
         // getRect挂载到$u上，因为这方法需要使用in(this)，所以无法把它独立成一个单独的文件导出
-        this.$u.getRect = this.$uGetRect
+        this.upBindGetRect()
+        this.upInitThemeVersion()
+        if (this.upIsPageScope()) {
+            this.upApplyNativeThemeUI()
+            if (typeof uni !== 'undefined' && typeof uni.$on === 'function' && !this.__upPageThemeChangeHandler) {
+                this.__upPageThemeChangeHandler = () => {
+                    this.upApplyNativeThemeUI()
+                }
+                uni.$on('uThemeChange', this.__upPageThemeChangeHandler)
+            }
+        }
+    },
+    onShow() {
+        if (this.upIsPageScope()) {
+            this.upApplyNativeThemeUI()
+        }
     },
     created() {
         // 组件当中，只有created声明周期，为了能在组件使用，故也在created中将方法挂载到$u
-        this.$u.getRect = this.$uGetRect
+        this.upBindGetRect()
+        this.upInitThemeVersion()
+        if (typeof uni !== 'undefined' && typeof uni.$on === 'function') {
+            this.__uThemeChangeHandler = (payload = {}) => {
+                this.upSyncThemeVersion(payload)
+                this.chacheU = null
+                if (typeof this.$forceUpdate === 'function') {
+                    this.$forceUpdate()
+                }
+            }
+            uni.$on('uThemeChange', this.__uThemeChangeHandler)
+        }
     },
     computed: {
         // 在2.x版本中，将会把$u挂载到uni对象下，导致在模板中无法使用uni.$u.xxx形式
         // 所以这里通过computed计算属性将其附加到this.$u上，就可以在模板或者js中使用uni.$u.xxx
         // 只在nvue环境通过此方式引入完整的$u，其他平台会出现性能问题，非nvue则按需引入（主要原因是props过大）
         $u() {
+            this.upThemeVersion
             // #ifndef APP-NVUE
             // 在非nvue端，移除props，http，mixin等对象，避免在小程序setData时数据过大影响性能
-            return deepMerge(uni.$u, {
+            let mergeU = deepMerge(uni.$u, {
                 props: undefined,
                 http: undefined,
                 mixin: undefined
             })
+			// 缓存结果避免每次计算
+			if (!this.chacheU) {
+				this.chacheU = mergeU
+			}
+			return this.chacheU
             // #endif
             // #ifdef APP-NVUE
             return uni.$u
             // #endif
+        },
+        upThemeIsDark() {
+            this.upThemeVersion
+            return getThemeIsDark(this.$u)
+        },
+        upThemeVars() {
+            this.upThemeVersion
+            return getThemeVarsForStyle(this.$u)
+        },
+        upThemePageStyle() {
+            this.upThemeVersion
+            return getThemePageStyle(this.$u)
+        },
+        upThemeCardStyle() {
+            this.upThemeVersion
+            return getThemeCardStyle(this.$u)
         },
         /**
          * 生成bem规则类名
@@ -93,6 +156,47 @@ export const mixin = defineMixin({
         }
     },
     methods: {
+        upBindGetRect() {
+            const upU = this.$u || (typeof uni !== 'undefined' ? uni.$u : null)
+            if (upU) {
+                upU.getRect = this.$uGetRect
+            } else if (typeof uni !== 'undefined') {
+                uni.$u = {
+                    getRect: this.$uGetRect
+                }
+            }
+        },
+        upReadThemeVersion() {
+            return Number((typeof uni !== 'undefined' && uni.$u && uni.$u.theme && uni.$u.theme.version) || 0)
+        },
+        upInitThemeVersion() {
+            const version = this.upReadThemeVersion()
+            if (version) {
+                this.upThemeVersion = version
+            }
+        },
+        upSyncThemeVersion(payload = {}) {
+            const version = Number(payload.version || this.upReadThemeVersion() || 0)
+            this.upThemeVersion = version || Number(this.upThemeVersion || 0) + 1
+        },
+        upIsPageScope() {
+            return !!(this.$page || this.route || this.$options?.mpType === 'page')
+        },
+        upHasProp(propName) {
+            const vnodeProps = this.$?.vnode?.props || {}
+            const kebabName = propName.replace(/[A-Z]/g, (s) => `-${s.toLowerCase()}`)
+            return Object.prototype.hasOwnProperty.call(vnodeProps, propName)
+                || Object.prototype.hasOwnProperty.call(vnodeProps, kebabName)
+        },
+        upThemeVar(varName, fallbackColor) {
+            this.upThemeVersion
+            return getThemeVar(varName, fallbackColor, this.$u)
+        },
+        upApplyNativeThemeUI() {
+            syncThemeRuntimeFromStorage(this.$u)
+            this.upSyncThemeVersion()
+            applyNativeThemeUIDeferred(this.$u)
+        },
         // 跳转某一个页面
         openPage(urlKey = 'url') {
             const url = this[urlKey]
@@ -194,6 +298,14 @@ export const mixin = defineMixin({
                     childrenList.splice(index, 1)
                 }
             })
+        }
+        if (typeof uni !== 'undefined' && typeof uni.$off === 'function' && this.__uThemeChangeHandler) {
+            uni.$off('uThemeChange', this.__uThemeChangeHandler)
+            this.__uThemeChangeHandler = null
+        }
+        if (typeof uni !== 'undefined' && typeof uni.$off === 'function' && this.__upPageThemeChangeHandler) {
+            uni.$off('uThemeChange', this.__upPageThemeChangeHandler)
+            this.__upPageThemeChangeHandler = null
         }
     }
 })

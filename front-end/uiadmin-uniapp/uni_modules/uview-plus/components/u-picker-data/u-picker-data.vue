@@ -18,13 +18,15 @@
 			:columns="optionsInner"
 			:keyName="labelKey"
 			:defaultIndex="defaultIndex"
-			@confirm="select"
-			@cancel="cancel">
+			@confirm="confirm"
+			@cancel="cancel"
+			@close="close">
 		</up-picker>
 	</view>
 </template>
 
 <script>
+import { formValidate } from '../../libs/function/index';
 export default {
 	name: 'u-picker-data',
     props: {
@@ -70,6 +72,8 @@ export default {
 					this.defaultIndex = [index]
 				}
 			})
+		} else {
+			this.clear();
 		}
     },
 	watch: {
@@ -81,6 +85,8 @@ export default {
 						this.defaultIndex = [index]
 					}
 				})
+			} else {
+				this.clear();
 			}
 		}
 	},
@@ -89,15 +95,23 @@ export default {
 			return [this.options];
 		}
 	},
-    emits: ['update:modelValue'],
+    emits: ['update:modelValue', 'cancel', 'close', 'confirm'],
     methods: {
         hideKeyboard() {
             uni.hideKeyboard()
         },
 		cancel() {
 			this.show = false;
+			this.$emit('cancel')
 		},
-        select(e) {
+		close() {
+			this.$emit('close')
+		},
+		clear() {
+			this.current = '';
+			this.defaultIndex = [];
+		},
+        confirm(e) {
 			const {
 			    columnIndex,
 			    index,
@@ -108,6 +122,9 @@ export default {
             this.$emit('update:modelValue', value[0][this.valueKey]);
 			this.defaultIndex = columnIndex;
 			this.current = value[0][this.labelKey];
+			this.$emit('confirm')
+			// 表单验证
+			formValidate(this, 'change')
         }
     }
 }

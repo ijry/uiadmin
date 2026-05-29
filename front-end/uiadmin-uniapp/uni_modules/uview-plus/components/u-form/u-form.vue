@@ -16,7 +16,7 @@
 	/**
 	 * Form 表单
 	 * @description 此组件一般用于表单场景，可以配置Input输入框，Select弹出框，进行表单验证等。
-	 * @tutorial https://ijry.github.io/uview-plus/components/form.html
+	 * @tutorial https://uview-plus.jiangruyi.com/components/form.html
 	 * @property {Object}						model			当前form的需要验证字段的集合
 	 * @property {Object | Function | Array}	rules			验证规则
 	 * @property {String}						errorType		错误的提示方式，见上方说明 ( 默认 message )
@@ -28,7 +28,7 @@
 	 * @example <up-form labelPosition="left" :model="model1" :rules="rules" ref="form1"></up-form>
 	 */
 	export default {
-		name: "u-form",
+		name: "up-form",
 		mixins: [mpMixin, mixin, props],
 		provide() {
 			return {
@@ -121,7 +121,7 @@
 				this.children.map((child) => {
 					// 如果u-form-item的prop在props数组中，则清除对应的校验结果信息
 					if (props[0] === undefined || props.includes(child.prop)) {
-						child.message = null;
+						child.message = '';
 					}
 				});
 			},
@@ -194,7 +194,7 @@
 											//没有配置，或者配置了showErrorMsg为true时候，才修改子组件message，默认没有配置
 											if(!options||options?.showErrorMsg==true){
 												child.message =
-													childErrors[0]?.message ? childErrors[0].message : null;
+													childErrors[0]?.message ? childErrors[0].message : '';
 											}
 											if (i == (rules.length - 1)) {
 												resolve(errorsRes)

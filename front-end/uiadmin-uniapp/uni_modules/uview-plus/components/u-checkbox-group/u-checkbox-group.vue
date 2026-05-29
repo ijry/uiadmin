@@ -14,7 +14,7 @@
 	/**
 	 * checkboxGroup 复选框组
 	 * @description 复选框组件一般用于需要多个选择的场景，该组件功能完整，使用方便
-	 * @tutorial https://ijry.github.io/uview-plus/components/checkbox.html
+	 * @tutorial https://uview-plus.jiangruyi.com/components/checkbox.html
 	 * @property {String}			name			标识符 
 	 * @property {Array}			value			绑定的值
 	 * @property {String}			shape			形状，circle-圆形，square-方形 （默认 'square' ）
@@ -109,7 +109,10 @@
 				this.$emit("input", values);
 				// #endif
        			// 放在最后更新，否则change事件传出去的values不会更新
-				this.$emit('change', values)
+				this.$emit('change', values, {
+					isChecked: childInstance.$data['isChecked'],
+					name: childInstance.$props['name'] // 当前变动的checkbox的name值
+				})
 			},
 		}
 	}

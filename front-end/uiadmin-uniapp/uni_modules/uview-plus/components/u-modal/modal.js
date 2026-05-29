@@ -1,11 +1,11 @@
 /*
  * @Author       : LQ
  * @Description  :
- * @version      : 1.0
+ * @version      : 3.0
  * @Date         : 2021-08-20 16:44:21
- * @LastAuthor   : LQ
- * @lastTime     : 2021-08-20 17:15:59
- * @FilePath     : /u-view2.0/uview-ui/libs/config/props/modal.js
+ * @LastAuthor   : jry
+ * @lastTime     : 2025-12-19 08:55:21
+ * @FilePath     : /uview-plus/libs/config/props/modal.js
  */
 import { t } from '../../libs/i18n'
 export default {
@@ -29,7 +29,7 @@ export default {
         confirmButtonShape: '',
         duration: 400,
         contentTextAlign: 'left',
-        asyncCloseTip: t("up.common.inOperatio") + '...',
+        asyncCloseTip: t("up.common.inOperation") + '...',
         asyncCancelClose: false,
         contentStyle: {}
     }

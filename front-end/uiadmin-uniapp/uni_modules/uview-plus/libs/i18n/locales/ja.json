@@ -34,6 +34,7 @@
     "up.calendar.chooseDates": "日付選択",
     "up.calendar.disabled": "この日付は無効です",
     "up.calendar.daysExceed": "選択日数は{days}日を超えることはできません",
+    "up.calendar.today": "今日",
     "up.cityLocate.locateCity": "都市の位置を特定",
     "up.cityLocate.fail": "位置特定に失敗しました。再試行するにはクリックしてください。",
     "up.cityLocate.locating": "位置特定中",
@@ -76,5 +77,10 @@
     "up.upload.sizeExceed": "サイズ制限を超えています",
     "up.upload.uploading": "アップロード中",
     "up.upload.previewImageFail": "画像プレビュー失敗",
-    "up.upload.previewVideoFail": "ビデオプレビュー失敗"
+    "up.upload.previewVideoFail": "ビデオプレビュー失敗",
+    "up.goodsSku.stock": "在庫",
+    "up.goodsSku.price": "価格",
+    "up.goodsSku.amount": "個",
+    "up.goodsSku.choosed": "選択済み",
+    "up.goodsSku.buyAmount": "購入数量"
 }

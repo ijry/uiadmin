@@ -2,7 +2,7 @@
 	<view class="u-toast">
 		<u-overlay
 			:show="isShow"
-			:zIndex="tmpConfig.overlay ? tmpConfig.zIndex : -1"
+			:zIndex="tmpConfig.zIndex"
 			:custom-style="overlayStyle"
 		>
 			<view
@@ -48,7 +48,7 @@
 	/**
 	 * toast 消息提示
 	 * @description 此组件表现形式类似uni的uni.showToastAPI，但也有不同的地方。
-	 * @tutorial https://ijry.github.io/uview-plus/components/toast.html
+	 * @tutorial https://uview-plus.jiangruyi.com/components/toast.html
 	 * @property {String | Number}	zIndex		toast展示时的zIndex值 (默认 10090 )
 	 * @property {Boolean}			loading		是否加载中 （默认 false ）
 	 * @property {String | Number}	message		显示的文字内容
@@ -112,6 +112,10 @@
 				}
 				// 将遮罩设置为100%透明度，避免出现灰色背景
 				style.backgroundColor = 'rgba(0, 0, 0, 0)'
+				// overlay=false时不阻止点击穿透
+				if (!this.tmpConfig.overlay) {
+					style.pointerEvents = 'none'
+				}
 				return style
 			},
 			iconStyle() {
@@ -205,20 +209,20 @@
 	$u-toast-content-text-font-size:15px !default;
 	$u-toast-up-icon:10rpx !default;
 	$u-toast-u-type-primary-color:$u-primary !default;
-	$u-toast-u-type-primary-background-color:#ecf5ff !default;
-	$u-toast-u-type-primary-border-color:rgb(215, 234, 254) !default;
+	$u-toast-u-type-primary-background-color:$u-primary-light !default;
+	$u-toast-u-type-primary-border-color:$u-primary-disabled !default;
 	$u-toast-u-type-primary-border-width:1px !default;
 	$u-toast-u-type-success-color: $u-success !default;
-	$u-toast-u-type-success-background-color: #dbf1e1 !default;
-	$u-toast-u-type-success-border-color: #BEF5C8 !default;
+	$u-toast-u-type-success-background-color: $u-success-light !default;
+	$u-toast-u-type-success-border-color: $u-success-disabled !default;
 	$u-toast-u-type-success-border-width: 1px !default;
 	$u-toast-u-type-error-color:$u-error !default;
-	$u-toast-u-type-error-background-color:#fef0f0 !default;
-	$u-toast-u-type-error-border-color:#fde2e2 !default;
+	$u-toast-u-type-error-background-color:$u-error-light !default;
+	$u-toast-u-type-error-border-color:$u-error-disabled !default;
 	$u-toast-u-type-error-border-width: 1px !default;
 	$u-toast-u-type-warning-color:$u-warning !default;
-	$u-toast-u-type-warning-background-color:#fdf6ec !default;
-	$u-toast-u-type-warning-border-color:#faecd8 !default;
+	$u-toast-u-type-warning-background-color:$u-warning-light !default;
+	$u-toast-u-type-warning-border-color:$u-warning-disabled !default;
 	$u-toast-u-type-warning-border-width: 1px !default;
 	$u-toast-u-type-default-color:#fff !default;
 	$u-toast-u-type-default-background-color:#585858 !default;

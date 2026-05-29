@@ -1,13 +1,23 @@
 <template>
     <view class="u-dragsort"
-        :class="[direction == 'horizontal' ? 'u-dragsort--horizontal' : '', direction == 'all' ? 'u-dragsort--all' : '']">
-        <movable-area class="u-dragsort-area" :style="movableAreaStyle">
+        :class="[direction == 'horizontal' ? 'u-dragsort--horizontal' : '', direction == 'vertical' ? 'u-dragsort--vertical' : '', direction == 'all' ? 'u-dragsort--all' : '']"
+        :style="movableAreaStyle"
+        >
+        <movable-area class="u-dragsort-area">
             <movable-view v-for="(item, index) in list" :key="item.id" :id="`u-dragsort-item-${index}`"
-                class="u-dragsort-item" :class="{ 'dragging': dragIndex === index }"
+                class="u-dragsort-item" :class="{ 'dragging': dragIndex === index, disabled: !draggable || item.draggable === false }"
                 :direction="direction === 'all' ? 'all' : direction" :x="item.x" :y="item.y" :inertia="false"
-                :disabled="!draggable || (item.draggable === false)" @change="onChange(index, $event)"
-                @touchstart="onTouchStart(index)" @touchend="onTouchEnd" @touchcancel="onTouchEnd">
+                :disabled="!draggable || dragIndex === -1 || item.draggable === false" @change="onChange(index, $event)"
+                @touchstart="onTouchStart(index, $event)" @touchend="onTouchEnd" @touchcancel="onTouchEnd" @touchmove="onTouchMove">
                 <view class="u-dragsort-item-content">
+                    <view
+                        class="ui-dragSort-item-handler"
+                        v-if="$slots.handler"
+                        data-action="handler"
+                        @touchstart="onTouchStart(index, $event)"
+                    >
+                        <slot name="handler" :item="item" :index="index"></slot>
+                    </view>
                     <slot :item="item" :index="index">
                         {{ item.label }}
                     </slot>
@@ -20,7 +30,7 @@
 <script>
 import { mpMixin } from '../../libs/mixin/mpMixin';
 import { mixin } from '../../libs/mixin/mixin';
-import { addStyle, addUnit, sleep } from '../../libs/function/index';
+import { sleep } from '../../libs/function/index';
 export default {
     name: 'u-dragsort',
     // #ifdef MP
@@ -39,6 +49,10 @@ export default {
             type: Boolean,
             default: true
         },
+        vibrate: {
+            type: Boolean,
+            default: true
+        },
         direction: {
             type: String,
             default: 'vertical',
@@ -54,11 +68,11 @@ export default {
         return {
             list: [],
             dragIndex: -1,
-            itemHeight: 40,
-            itemWidth: 80,
+            sortChanged: false,
+            itemHeight: 0,
+            itemWidth: 0,
             areaWidth: 0, // 可拖动区域宽度
             areaHeight: 0, // 可拖动区域高度
-            originalPositions: [], // 保存原始位置
             currentPosition: {
                 x: 0,
                 y: 0
@@ -69,21 +83,21 @@ export default {
         movableAreaStyle() {
             if (this.direction === 'vertical') {
                 return {
-                    height: `${this.list.length * this.itemHeight}px`,
+                    height: this.itemHeight ? `${this.list.length * this.itemHeight}px` : 'auto',
                     width: '100%'
-                };
+                }
             } else if (this.direction === 'horizontal') {
                 return {
-                    height: '100%',
-                    width: `${this.list.length * this.itemWidth}px`
-                };
+                    height: this.itemHeight ? `${this.itemHeight}px` : 'auto',
+                    width: this.itemWidth ? `${this.list.length * this.itemWidth}px` : 'auto'
+                }
             } else {
                 // all模式，计算网格布局所需的高度
-                const rows = Math.ceil(this.list.length / this.columns);
+                const rows = Math.ceil(this.list.length / this.columns)
                 return {
-                    height: `${rows * this.itemHeight}px`,
+                    height: this.itemHeight ? `${rows * this.itemHeight}px` : 'auto',
                     width: '100%'
-                };
+                }
             }
         }
     },
@@ -98,37 +112,29 @@ export default {
         initList() {
             // 初始化列表项的位置
             this.list = this.initialList.map((item, index) => {
-                let x = 0, y = 0;
+                let x
+                let y
 
-                if (this.direction === 'horizontal') {
-                    x = index * this.itemWidth;
-                    y = 0;
-                } else if (this.direction === 'vertical') {
-                    x = 0;
-                    y = index * this.itemHeight;
-                } else {
+                if (this.direction === 'horizontal' && this.itemWidth) {
+                    x = index * this.itemWidth
+                    y = 0
+                } else if (this.direction === 'vertical' && this.itemHeight) {
+                    x = 0
+                    y = index * this.itemHeight
+                } else if (this.itemWidth && this.itemHeight) {
                     // all模式，网格布局
-                    const col = index % this.columns;
-                    const row = Math.floor(index / this.columns);
-                    x = col * this.itemWidth;
-                    y = row * this.itemHeight;
+                    const col = index % this.columns
+                    const row = Math.floor(index / this.columns)
+                    x = col * this.itemWidth
+                    y = row * this.itemHeight
                 }
 
                 return {
                     ...item,
                     x,
                     y
-                };
-            });
-            // 保存初始位置
-            this.saveOriginalPositions();
-        },
-        saveOriginalPositions() {
-            // 保存当前位置作为原始位置
-            this.originalPositions = this.list.map(item => ({
-                x: item.x,
-                y: item.y
-            }));
+                }
+            })
         },
         async calculateItemSize() {
             // 计算项目尺寸
@@ -144,8 +150,6 @@ export default {
 
                             // 更新所有项目的位置
                             this.updatePositions();
-                            // 保存原始位置
-                            this.saveOriginalPositions();
                         }
                         resolve(res);
                     })
@@ -169,28 +173,56 @@ export default {
                     .exec();
             });
         },
-        updatePositions() {
+        updatePositions(isDragging) {
             // 更新所有项目的位置
-            this.list.forEach((item, index) => {
-                if (this.direction === 'vertical') {
-                    item.y = index * this.itemHeight;
-                    item.x = 0;
-                } else if (this.direction === 'horizontal') {
-                    item.x = index * this.itemWidth;
-                    item.y = 0;
-                } else {
-                    // all模式，网格布局
-                    const col = index % this.columns;
-                    const row = Math.floor(index / this.columns);
-                    item.x = col * this.itemWidth;
-                    item.y = row * this.itemHeight;
+            this.list = this.list.map((item, index) => {
+                // 当前正在拖动的项目保持拖动位置不动，避免抖动
+                if (isDragging && this.dragIndex === index) {
+                    return item
                 }
-            });
+
+                if (this.direction === 'vertical') {
+                    return {
+                        ...item,
+                        x: 0,
+                        y: index * this.itemHeight
+                    }
+                }
+
+                if (this.direction === 'horizontal') {
+                    return {
+                        ...item,
+                        x: index * this.itemWidth,
+                        y: 0
+                    }
+                }
+
+                // all模式，网格布局
+                const col = index % this.columns
+                const row = Math.floor(index / this.columns)
+
+                return {
+                    ...item,
+                    x: col * this.itemWidth,
+                    y: row * this.itemHeight
+                }
+            })
         },
-        onTouchStart(index) {
+        onTouchStart(index, e) {
+            if (this.$slots.handler && e.currentTarget.dataset.action !== 'handler') {
+                return
+            }
+            if (this.list[index]?.draggable === false) return;
+            if (this.timer) clearTimeout(this.timer);
+            this.sortChanged = false;
             this.dragIndex = index;
-            // 保存当前位置作为原始位置
-            this.saveOriginalPositions();
+        },
+        onTouchMove(e) {
+            if (this.dragIndex !== -1) {
+                // 目前只对H5生效, 如果该组件放置在开启了下拉刷新的scroll-view中, 向下拖动item还是会触发下拉刷新
+                e.stopPropagation()
+                e.preventDefault()
+            }
         },
         onChange(index, event) {
             if (!event.detail.source || event.detail.source !== 'touch') return;
@@ -244,21 +276,22 @@ export default {
             const movedItem = this.list.splice(fromIndex, 1)[0];
             this.list.splice(toIndex, 0, movedItem);
 
-            // 震动反馈
-            if (uni.vibrateShort) {
-                uni.vibrateShort();
-            }
-
             // 更新当前拖拽项目的新索引
             this.dragIndex = toIndex;
+            this.sortChanged = true;
 
             // 更新所有项目的位置
-            this.updatePositions();
+            this.updatePositions(true);
 
-            // 保存当前位置作为原始位置
-            this.saveOriginalPositions();
+            // 震动反馈
+            if (this.vibrate && uni.vibrateShort) {
+                uni.vibrateShort({ type: 'light' });
+            }
         },
         onTouchEnd() {
+            // 未发生位移
+            if (this.dragIndex === -1) return
+
             // 0.001是为了解决拖动过快等某些极限场景下位置还原不生效问题
             if (this.direction === 'horizontal') {
                 this.list[this.dragIndex].x = this.currentPosition.x + 0.001;
@@ -269,12 +302,14 @@ export default {
 
             // 重置到位置，需要延迟触发动，否则无效。
             sleep(50).then(() => {
-                this.list.forEach((item, index) => {
-                    item.x = this.originalPositions[index].x;
-                    item.y = this.originalPositions[index].y;
-                });
-                this.dragIndex = -1;
-                this.$emit('drag-end', [...this.list]);
+                this.updatePositions();
+                if (this.sortChanged) {
+                    this.$emit('drag-end', [...this.list]);
+                    this.sortChanged = false;
+                }
+                this.timer = setTimeout(() => {
+                    this.dragIndex = -1
+                }, 600)
             });
         }
     },
@@ -285,7 +320,7 @@ export default {
                     this.initList();
                 });
             },
-            deep: true
+            // deep: true
         },
         direction: {
             handler() {
@@ -302,7 +337,6 @@ export default {
                     this.$nextTick(() => {
                         this.initList();
                         this.updatePositions();
-                        this.saveOriginalPositions();
                     });
                 }
             }
@@ -314,15 +348,19 @@ export default {
 <style scoped lang="scss">
 .u-dragsort {
     width: 100%;
+    height: auto;
 
     .u-dragsort-area {
         width: 100%;
+        height: 100%;
         position: relative;
     }
 
     .u-dragsort-item {
         position: absolute;
         width: 100%;
+        transition: box-shadow 0.45s ease-out;
+        cursor: pointer;
 
         &.dragging {
             z-index: 1000;
@@ -330,12 +368,18 @@ export default {
         }
 
         .u-dragsort-item-content {
-            padding: 0px;
-            text-align: center;
+            position: relative;
+            padding: 0;
             box-sizing: border-box;
-            padding-bottom: 6px;
-            border-radius: 8rpx;
-            transition: all 0.3s ease;
+            border: 1px solid var(--up-border-color, rgba(125, 126, 128, 0.35));
+            border-radius: 8px;
+            background-color: var(--up-card-bg-color, #ffffff);
+        }
+    }
+
+    &.u-dragsort--vertical {
+        .u-dragsort-item {
+            height: auto;
         }
     }
 
@@ -343,21 +387,15 @@ export default {
         .u-dragsort-area {
             display: flex;
             white-space: nowrap;
-            height: auto;
         }
 
         .u-dragsort-item {
-            display: flex;
             width: auto;
-            height: 100%;
+            height: auto;
         }
     }
 
     &.u-dragsort--all {
-        .u-dragsort-area {
-            height: auto;
-        }
-
         .u-dragsort-item {
             width: auto;
             height: auto;

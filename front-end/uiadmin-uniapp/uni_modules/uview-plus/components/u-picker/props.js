@@ -16,6 +16,10 @@ export const props = defineMixin({
                 return {}
             }
         },
+        inputBorder: {
+            type: String,
+            default: () => defProps.input.inputBorder
+        },
         disabled: {
             type: Boolean,
             default: () => defProps.picker.disabled
@@ -142,6 +146,21 @@ export const props = defineMixin({
         overlayOpacity: {
             type: [Number, String],
             default: () => defProps.picker.overlayOpacity
-        }
+        },
+        // 是否页面内展示
+        pageInline:{
+			type: Boolean,
+			default: () => defProps.picker.pageInline
+		},
+		// 蒙层样式样式
+		maskClass: {
+			type: String,
+			defualt: ''
+		},
+		// 蒙层样式样式
+		maskStyle: {
+			type: String,
+			defualt: ''
+		}
     }
 })
